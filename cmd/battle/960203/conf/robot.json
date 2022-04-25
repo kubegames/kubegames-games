@@ -1,0 +1,24 @@
+{
+  // 延迟操作时间
+  "action_time": {
+
+    // 最短等待时间
+    "shortest": 1000,
+
+    // 最长等待时间
+    "longest": 4000
+  },
+
+  // 大牌抢庄概率分布
+  "big_cards_rob_rate_dis": [5, 30, 35, 30],
+
+  // 大牌投注概率分布
+  "big_cards_bet_rate_dis": [0, 25, 40, 35],
+
+  // 小牌抢庄概率分布
+  "small_cards_rob_rate_dis": [45, 35, 15, 5],
+
+  // 小牌投注概率分布
+  "small_cards_bet_rate_dis": [45, 40, 15, 0]
+
+}

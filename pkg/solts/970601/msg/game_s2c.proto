@@ -1,0 +1,116 @@
+
+syntax = "proto3";
+package msg;
+
+
+
+/*
+    ICON_BAIYU = 1 //白玉
+	ICON_BIYU  = 2 //碧玉
+	ICON_MOYU  = 3 //墨玉
+	ICON_MANAO = 4 //玛瑙
+	ICON_HUPO  = 5 //琥珀
+	//第二关
+	ICON_ZUMULV     = 11 //祖母绿
+	ICON_MAOYANSHI  = 12 //猫眼石
+	ICON_ZISHUIJING = 13 //紫水晶
+	ICON_FEICUISHI  = 14 //翡翠石
+	ICON_BAIZHENZHU = 15 //白珍珠
+	//第三关
+	ICON_HONGBAOSHI  = 21 //红宝石
+	ICON_LVBAOSHI    = 22 //绿宝石
+	ICON_HUANGBAOSHI = 23 //黄宝石
+	ICON_LANBAOSHI   = 24 //蓝宝石
+	ICON_BAIZUANSHI  = 25 //白钻石
+
+	//钥匙
+	ICON_KEY = 100
+*/
+
+//错误code列表
+/*
+
+*/
+
+//所有的服务端->客户端的协议
+enum S2CMsgType {
+    ROOM_INFO_RES = 0 ; //房间信息
+    END_GAME_RES = 1;//结束比赛         S2CEndGame
+    LEVEL_CHANGE = 2;//变换关卡         S2CChangeLevel
+    START_GAME_RES = 3;//点击开始游戏之后返回用户扣钱之后的余额    S2CUserScore
+    RES_CAIJIN = 4;//玩家进入彩金游戏，返回彩金数额
+    NORMAL_QUIT_RES = 5;// 正常退出     S2CQuit
+    KICK_TIME_OUT = 6;//超时 3分钟 没玩儿就将玩家踢出去
+}
+
+message S2CUid {
+    int64 uid = 1;//
+}
+
+//房间信息，断线重连也用该结构体
+message S2CRoomInfo{
+    repeated int64  bottom = 1;//底注 单注金额
+    repeated int64 count = 2;//注数
+    int32 firstBoxNum = 3;//第一关宝箱数量
+    int32 secondBoxNum = 4;//第二关宝箱数量
+    int32 thirdBoxNum = 5;//第三关宝箱数量
+    int32 level = 6;//当前关卡
+    int64 totalInvest = 7;//总投入
+    bool isIntoCaijin = 8;// true :正在彩金游戏
+}
+
+
+
+message S2CChangeLevel {
+    int32 level = 1;//当前关卡，一共有1、2、3 关
+}
+
+
+
+//结束比赛
+//比如第一次中奖坐标有[{1,0},{1,1},{1,2},{1,3}]四个绿宝石 和 [{3,0},{3,1},{3,2},{3,3}]四个蓝宝石
+message S2CEndGame{
+    repeated int32 icons = 1;//最开始的16（25、36）个游戏图标二维数组 钥匙是在icons数组当中，比如绿宝石为1，钥匙的值是100，具体的各个图标对应的值在上面
+    repeated int32 topIcons = 2;//最开始的顶部的4个图标最终值
+    repeated AllWinInfo allWinInfoArr = 3;//中奖信息
+    int64 score = 4;//玩家最新积分余额
+    bool isIntoSmallGame = 5;//是否进入小游戏
+    int32 nextLevel = 6;//下一次关卡
+    int64 winScore = 7;//玩家赢的总额
+    int32 curLevel = 8;//当前关卡
+    int64 totalInvest = 9;//总投入
+}
+
+//中奖信息
+message DisappearInfo{
+    int32 count = 1;//中奖的图标数量
+    int64 winScore = 2;//中奖的金额
+    repeated AxisValue winAxis = 3;//中奖的坐标值 用于消除中奖的图标
+}
+
+//每次中奖信息
+message AllWinInfo {
+    int32 serial = 1;//序列，1：第一次中奖，2：第二次中奖，依次类推
+    repeated DisappearInfo disappearInfoArr = 2;//该次中奖信息 比如第一次中奖坐标有[{1,0},{1,1},{1,2},{1,3}]四个绿宝石 和 [{3,0},{3,1},{3,2},{3,3}]四个蓝宝石
+    repeated AxisValue fillArr = 3;//消除之后的坐标填充新的值
+    repeated int32 topIcons = 4;//顶部的4个图标
+}
+
+//坐标位置对应的图标值
+message AxisValue {
+    int32 X = 1;//横坐标
+    int32 Y = 2;//纵坐标
+    int32 value = 3;//该坐标位置对应的图标值 比如蓝宝石
+}
+
+message S2CUserScore {
+    int64 score = 1;
+}
+
+message S2CCaijin {
+    int64 score = 2;//返回的彩金数额
+}
+
+message S2CQuit {
+    int64 uid = 1;
+}

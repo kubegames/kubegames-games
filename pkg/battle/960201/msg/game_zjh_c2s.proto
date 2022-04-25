@@ -1,0 +1,51 @@
+
+syntax = "proto3";
+package msg;
+/* 客户端发送给服务器的所有协议及参数结构
+以下注释格式为：备注 + subCmd + 参数数据结构
+             进入房间 + 0 + C2S_START_GAME
+             用户发言 + 1 + C2SUserAction
+             比牌    + 2 + C2SCompareCards
+             离开房间 + 3 + C2SIntoGame
+             重开比赛 + 4 + C2SIntoGame
+             获取可比牌用户 + 5 + C2SIntoGame
+             客户端发牌动画结束，通知服务器开始倒计时 + 6 + C2SIntoGame
+
+
+             C2S_SET_CARD_TYPE        = 9 //为玩家设置指定牌型
+             C2S_SEE_OTHER_CARDS        = 10 //看其他玩家的牌  C2SSeeOtherCards
+*/
+//进入游戏
+message C2SIntoGame{    //subCmd 0
+    int64 userId = 1;
+    string userName = 2;    //暂时先随便传
+    bool isRestart = 3;//是否为重新开始
+    string level = 4;//房间级别， 初级、中级、高级
+}
+//玩家发言
+message C2SUserAction{  //subCmd 1
+    int64 userId = 1;
+    string option = 2;  //"give_up"：弃牌 raise:加注 see_cards:看牌  all_in:全押  follow:跟注  follow_all_the_way:跟到底  cancel_follow:取消跟到底
+    int64 amount=3;
+}
+//比牌
+message C2SCompareCards{
+    int64 firstUserId = 1;//发起人
+    int64 secondUserId = 2;//被比牌的人
+}
+
+
+//玩家点击开始游戏
+message C2SUserStartGame{
+    bool isRestart = 1;//true：重新开赛，false：第一次进入直接点击开赛
+}
+
+//玩家设置指定牌型
+message C2SSetCardType {
+    bytes cards = 1;//给玩家的牌
+//    int32 cardType = 1; // 牌型：8:豹子 7:顺金   5:金花  4:顺子  2:对子  1:单张
+}
+
+message C2SSeeOtherCards {
+    int64 uid = 1;
+}

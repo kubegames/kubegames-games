@@ -1,0 +1,83 @@
+
+zidong.png
+size: 622,622
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+BG/BG00
+  rotate: false
+  xy: 2, 467
+  size: 200, 153
+  orig: 200, 153
+  offset: 0, 0
+  index: -1
+BG/BG01
+  rotate: false
+  xy: 2, 312
+  size: 200, 153
+  orig: 200, 153
+  offset: 0, 0
+  index: -1
+BG/BG02
+  rotate: false
+  xy: 204, 467
+  size: 200, 153
+  orig: 200, 153
+  offset: 0, 0
+  index: -1
+BG/BG03
+  rotate: false
+  xy: 2, 157
+  size: 200, 153
+  orig: 200, 153
+  offset: 0, 0
+  index: -1
+BG/BG04
+  rotate: false
+  xy: 204, 312
+  size: 200, 153
+  orig: 200, 153
+  offset: 0, 0
+  index: -1
+BG/BG05
+  rotate: false
+  xy: 406, 467
+  size: 200, 153
+  orig: 200, 153
+  offset: 0, 0
+  index: -1
+BG/BG06
+  rotate: false
+  xy: 2, 2
+  size: 200, 153
+  orig: 200, 153
+  offset: 0, 0
+  index: -1
+BG/BG07
+  rotate: false
+  xy: 204, 157
+  size: 200, 153
+  orig: 200, 153
+  offset: 0, 0
+  index: -1
+BG/BG08
+  rotate: false
+  xy: 406, 312
+  size: 200, 153
+  orig: 200, 153
+  offset: 0, 0
+  index: -1
+BG/BG09
+  rotate: false
+  xy: 204, 2
+  size: 200, 153
+  orig: 200, 153
+  offset: 0, 0
+  index: -1
+BG/BG10
+  rotate: false
+  xy: 406, 157
+  size: 200, 153
+  orig: 200, 153
+  offset: 0, 0
+  index: -1

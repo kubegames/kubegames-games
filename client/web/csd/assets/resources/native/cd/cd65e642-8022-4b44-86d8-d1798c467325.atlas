@@ -1,0 +1,132 @@
+
+effects_csd_dashi.png
+size: 364,364
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+effects_csd_ui_10_01
+  rotate: true
+  xy: 119, 34
+  size: 111, 62
+  orig: 111, 62
+  offset: 0, 0
+  index: -1
+effects_csd_ui_10_02
+  rotate: false
+  xy: 183, 21
+  size: 63, 47
+  orig: 63, 47
+  offset: 0, 0
+  index: -1
+effects_csd_ui_10_03
+  rotate: false
+  xy: 183, 70
+  size: 70, 54
+  orig: 70, 54
+  offset: 0, 0
+  index: -1
+effects_csd_ui_10_04
+  rotate: false
+  xy: 255, 70
+  size: 51, 38
+  orig: 51, 38
+  offset: 0, 0
+  index: -1
+effects_csd_ui_10_05
+  rotate: false
+  xy: 282, 52
+  size: 20, 16
+  orig: 20, 16
+  offset: 0, 0
+  index: -1
+effects_csd_ui_10_06
+  rotate: true
+  xy: 308, 86
+  size: 22, 16
+  orig: 22, 16
+  offset: 0, 0
+  index: -1
+effects_csd_ui_10_07
+  rotate: true
+  xy: 67, 2
+  size: 28, 61
+  orig: 28, 61
+  offset: 0, 0
+  index: -1
+effects_csd_ui_10_08
+  rotate: false
+  xy: 271, 110
+  size: 53, 32
+  orig: 53, 32
+  offset: 0, 0
+  index: -1
+effects_csd_ui_10_09
+  rotate: true
+  xy: 271, 144
+  size: 85, 60
+  orig: 85, 60
+  offset: 0, 0
+  index: -1
+effects_csd_ui_10_10
+  rotate: false
+  xy: 248, 28
+  size: 32, 40
+  orig: 32, 40
+  offset: 0, 0
+  index: -1
+effects_csd_ui_10_11
+  rotate: false
+  xy: 203, 126
+  size: 66, 105
+  orig: 70, 109
+  offset: 2, 1
+  index: -1
+effects_csd_ui_10_12
+  rotate: true
+  xy: 2, 3
+  size: 27, 63
+  orig: 27, 63
+  offset: 0, 0
+  index: -1
+effects_csd_ui_10_13
+  rotate: false
+  xy: 279, 231
+  size: 69, 130
+  orig: 69, 131
+  offset: 0, 1
+  index: -1
+effects_csd_ui_10_14
+  rotate: false
+  xy: 203, 233
+  size: 74, 128
+  orig: 74, 129
+  offset: 0, 1
+  index: -1
+effects_csd_ui_10_15
+  rotate: true
+  xy: 350, 344
+  size: 17, 7
+  orig: 17, 7
+  offset: 0, 0
+  index: -1
+effects_csd_ui_10_16
+  rotate: false
+  xy: 333, 223
+  size: 15, 6
+  orig: 15, 6
+  offset: 0, 0
+  index: -1
+effects_csd_ui_10_17
+  rotate: false
+  xy: 2, 147
+  size: 199, 214
+  orig: 200, 214
+  offset: 1, 0
+  index: -1
+effects_csd_ui_10_18
+  rotate: false
+  xy: 2, 32
+  size: 115, 113
+  orig: 129, 113
+  offset: 10, 0
+  index: -1

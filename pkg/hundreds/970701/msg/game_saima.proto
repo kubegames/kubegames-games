@@ -1,0 +1,227 @@
+
+syntax = "proto3";
+package msg;
+
+enum MsgId {
+    ZERO = 0;
+    INTO_ROOM_Res = 1; //进入房间
+
+    Bet_Fail_Res = 2; //下注失败
+
+    Status_Change_Res = 3; //状态切换
+
+    Bet_Req = 4; //下注
+    Bet_Res = 5;
+
+    UserList_Req = 6;  // 请求玩家列表
+    UserList_Res = 7;  //
+
+    GameInfo_Req = 8;  // 请求最近一定局数一二名信息
+    GameInfo_Res = 9;  //
+
+    ReBet_Req = 10;  // 请求重复下注
+    ReBet_Res = 11;
+
+    Count_Res = 12;  //结算
+
+    Bet_Clear_Req = 13;  //取消下注
+    Bet_Clear_Res = 14;
+
+    Bet_Notice_Res = 15; //下注通知
+
+    Order_Notice_Res = 16; //顺序通知
+
+    Sync_Res = 17; //同步玩家信息
+}
+
+//游戏阶段
+enum GameStatus {
+    game_End = 0;
+    game_Start = 1;  //游戏开始动画
+    game_Bet = 2;   //游戏下注
+    game_Bet_End = 3; //结束下注动画
+    game_Count = 4;//游戏结算
+}
+
+//下注区域
+enum BetArea {
+    invild = 0;
+    champion_1 = 1;  //冠军
+    champion_2 = 2;
+    champion_3 = 3;
+    champion_4 = 4;
+    champion_5 = 5;
+    champion_6 = 6;
+    champion_7 = 7;
+    champion_8 = 8;
+
+    first_second_12 = 9; // 一二名
+    first_second_13 = 10; // 一二名
+    first_second_14 = 11; // 一二名
+    first_second_15 = 12; // 一二名
+    first_second_16 = 13; // 一二名
+    first_second_17 = 14; // 一二名
+    first_second_18 = 15; // 一二名
+    first_second_23 = 16; // 一二名
+    first_second_24 = 17; // 一二名
+    first_second_25 = 18; // 一二名
+    first_second_26 = 19; // 一二名
+    first_second_27 = 20; // 一二名
+    first_second_28 = 21; // 一二名
+    first_second_34 = 22; // 一二名
+    first_second_35 = 23; // 一二名
+    first_second_36 = 24; // 一二名
+    first_second_37 = 25; // 一二名
+    first_second_38 = 26; // 一二名
+    first_second_45 = 27; // 一二名
+    first_second_46 = 28; // 一二名
+    first_second_47 = 29; // 一二名
+    first_second_48 = 30; // 一二名
+    first_second_56 = 31; // 一二名
+    first_second_57 = 32; // 一二名
+    first_second_58 = 33; // 一二名
+    first_second_67 = 34; // 一二名
+    first_second_68 = 35; // 一二名
+    first_second_78 = 36; // 一二名
+
+    champion_Man = 37;  //冠军性别
+    champion_Woman = 38;
+
+}
+
+//牌桌信息
+message TableInfo{
+    int32 tableId = 1;
+    string tableName = 2;
+    repeated UserInfo userInfoArr = 3;//其他玩家的信息
+    GameStatus gameStatus = 4; // 游戏状态
+    repeated BetInfo betInfo = 5; //下注信息
+    repeated GameInfo gameinfo = 6; //最近一定局数一二名信息
+    repeated int64 BetList = 7; // 筹码列表
+    repeated int32 rankIndexs = 8; //名次下标
+    repeated BetInfo allBetInfo = 9; //所有下注信息
+    int64 t = 10; //当前状态剩余时间
+}
+
+//请求玩家列表
+message UserListReq {
+
+}
+
+//请求玩家列表
+message UserListRes {
+    repeated UserInfo userInfoArr = 1;//其他玩家的信息
+}
+
+//请求最近一定局数一二名信息
+message GameInfoReq {
+
+}
+
+//请求最近一定局数一二名信息
+message GameInfoRes {
+    repeated GameInfo gameinfo = 1; //最近一定局数一二名信息
+}
+
+//局信息
+message GameInfo{
+    int32 firstIndex = 1; // 第一名
+    int32 secondIndex = 2; // 第二名
+}
+
+//用户信息
+message UserInfo{
+    int64 userId = 1;
+    string userName = 2;
+    int32 sex = 3;//玩家性别
+    string head = 4;//玩家头像
+    int64 amount = 5;//玩家当前携带的金额
+}
+
+//下注信息
+message BetInfo{
+    BetArea betArea = 1; // 下注区域
+    int64 score = 2; //下注筹码
+}
+
+//进入房间
+message EnterRoomRes {
+    TableInfo tableInfo = 1;
+}
+
+//游戏状态改变
+message GameStatusChangeRes {
+    GameStatus gameStatus = 1; //状态
+    int32 waitTime = 2; // 时间 毫秒
+}
+
+//下注
+message BetReq {
+    int64 userId = 1;
+    int32 index = 2; //筹码下标
+    BetArea betArea = 3; // 下注区域
+}
+
+//下注
+message ReBetReq {
+    int64 userId = 1;
+    repeated CountInfo countInfo = 2; //结算信息列表
+}
+
+message ReBetRes {
+    int64 userId = 1;
+    repeated CountInfo countInfo = 2; //结算信息列表
+}
+
+message BetRes {
+    int64 userId = 1;
+    int32 index = 2; //筹码下标
+    BetArea betArea = 3; // 下注区域
+}
+
+message BetFailedRes {
+    int64 userId = 1;
+    string reason = 2; //失败原因
+}
+
+//下注
+message BetNoticeRes {
+    repeated BetInfo betInfo = 1; //下注信息列表
+}
+
+//顺序通知
+message OrderNoticeRes {
+    repeated int32 rankIndexs = 1; //名次下标
+    repeated TimeList timeList = 2; //时间列表
+}
+
+//时间列表
+message TimeList {
+    repeated int32 times = 1; //时间列表
+}
+
+//结算
+message CountRes {
+    repeated CountInfo countInfo = 1; //结算信息列表
+}
+
+//结算信息
+message CountInfo{
+    BetArea betArea = 1; // 下注区域
+    int64 score = 2; //分数
+}
+
+//取消下注
+message BetClearReq{
+
+}
+
+//取消下注
+message BetClearRes{
+
+}
+
+//同步金币
+message SyncUserInfoRes{
+    int64 amount = 1;//玩家当前携带的金额
+}

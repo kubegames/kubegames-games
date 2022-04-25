@@ -1,0 +1,237 @@
+
+sp1587538841.png
+size: 2023,1572
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+effects_csd_icon_yuanbao_0
+  rotate: false
+  xy: 1331, 1299
+  size: 110, 110
+  orig: 110, 110
+  offset: 0, 0
+  index: -1
+effects_csd_icon_yuanbao_1
+  rotate: false
+  xy: 1426, 1119
+  size: 109, 110
+  orig: 109, 110
+  offset: 0, 0
+  index: -1
+effects_csd_icon_yuanbao_2
+  rotate: false
+  xy: 1299, 1005
+  size: 109, 113
+  orig: 109, 113
+  offset: 0, 0
+  index: -1
+effects_csd_icon_yuanbao_3
+  rotate: false
+  xy: 1413, 872
+  size: 109, 113
+  orig: 109, 113
+  offset: 0, 0
+  index: -1
+effects_csd_icon_yuanbao_4
+  rotate: false
+  xy: 1615, 874
+  size: 108, 114
+  orig: 108, 114
+  offset: 0, 0
+  index: -1
+effects_csd_icon_yuanbao_5
+  rotate: false
+  xy: 1726, 874
+  size: 108, 114
+  orig: 108, 114
+  offset: 0, 0
+  index: -1
+effects_csd_icon_yuanbao_6
+  rotate: false
+  xy: 1154, 1301
+  size: 109, 111
+  orig: 109, 111
+  offset: 0, 0
+  index: -1
+effects_csd_icon_yuanbao_7
+  rotate: true
+  xy: 419, 1464
+  size: 107, 110
+  orig: 107, 110
+  offset: 0, 0
+  index: -1
+effects_csd_icon_yuanbao_8
+  rotate: false
+  xy: 532, 1464
+  size: 104, 107
+  orig: 104, 107
+  offset: 0, 0
+  index: -1
+effects_csd_icon_yuanbao_9
+  rotate: true
+  xy: 1529, 1409
+  size: 105, 104
+  orig: 105, 104
+  offset: 0, 0
+  index: -1
+effects_csd_icon_yuanbao_10
+  rotate: false
+  xy: 1635, 1208
+  size: 104, 104
+  orig: 104, 104
+  offset: 0, 0
+  index: -1
+effects_csd_icon_yuanbao_11
+  rotate: false
+  xy: 1636, 1401
+  size: 104, 104
+  orig: 104, 104
+  offset: 0, 0
+  index: -1
+effects_csd_icon_yuanbao_12
+  rotate: false
+  xy: 1743, 1401
+  size: 104, 104
+  orig: 104, 104
+  offset: 0, 0
+  index: -1
+effects_csd_icon_yuanbao_13
+  rotate: false
+  xy: 1538, 1059
+  size: 104, 105
+  orig: 104, 105
+  offset: 0, 0
+  index: -1
+effects_csd_icon_yuanbao_14
+  rotate: false
+  xy: 1444, 1297
+  size: 105, 109
+  orig: 105, 109
+  offset: 0, 0
+  index: -1
+effects_csd_icon_yuanbao_15
+  rotate: true
+  xy: 1645, 1129
+  size: 76, 106
+  orig: 76, 106
+  offset: 0, 0
+  index: -1
+effects_csd_icon_yuanbao_16
+  rotate: true
+  xy: 1920, 995
+  size: 76, 96
+  orig: 76, 96
+  offset: 0, 0
+  index: -1
+effects_csd_icon_yuanbao_17
+  rotate: true
+  xy: 1829, 1273
+  size: 75, 86
+  orig: 75, 86
+  offset: 0, 0
+  index: -1
+effects_csd_icon_yuanbao_18
+  rotate: false
+  xy: 1855, 1493
+  size: 75, 77
+  orig: 75, 77
+  offset: 0, 0
+  index: -1
+effects_csd_icon_yuanbao_19
+  rotate: false
+  xy: 204, 1498
+  size: 76, 73
+  orig: 76, 73
+  offset: 0, 0
+  index: -1
+effects_csd_icon_yuanbao_20
+  rotate: true
+  xy: 1932, 1338
+  size: 76, 70
+  orig: 76, 70
+  offset: 0, 0
+  index: -1
+effects_csd_icon_yuanbao_21
+  rotate: true
+  xy: 1766, 991
+  size: 76, 65
+  orig: 76, 65
+  offset: 0, 0
+  index: -1
+effects_csd_icon_yuanbao_22
+  rotate: false
+  xy: 1539, 1232
+  size: 76, 62
+  orig: 76, 62
+  offset: 0, 0
+  index: -1
+effects_csd_icon_yuanbao_23
+  rotate: false
+  xy: 1636, 1508
+  size: 86, 63
+  orig: 86, 63
+  offset: 0, 0
+  index: -1
+effects_csd_icon_yuanbao_24
+  rotate: false
+  xy: 1538, 1167
+  size: 94, 62
+  orig: 94, 62
+  offset: 0, 0
+  index: -1
+effects_csd_icon_yuanbao_25
+  rotate: false
+  xy: 1920, 843
+  size: 102, 62
+  orig: 102, 62
+  offset: 0, 0
+  index: -1
+effects_csd_icon_yuanbao_26
+  rotate: false
+  xy: 1426, 1232
+  size: 110, 62
+  orig: 110, 62
+  offset: 0, 0
+  index: -1
+effects_csd_icon_yuanbao_27
+  rotate: false
+  xy: 1646, 991
+  size: 117, 62
+  orig: 117, 62
+  offset: 0, 0
+  index: -1
+effects_csd_icon_yuanbao_28
+  rotate: false
+  xy: 1897, 164
+  size: 125, 62
+  orig: 125, 62
+  offset: 0, 0
+  index: -1
+effects_csd_icon_yuanbao_29
+  rotate: true
+  xy: 1297, 1415
+  size: 136, 64
+  orig: 136, 64
+  offset: 0, 0
+  index: -1
+effects_csd_icon_yuanbao_30
+  rotate: false
+  xy: 1920, 1160
+  size: 92, 92
+  orig: 92, 92
+  offset: 0, 0
+  index: -1
+effects_csd_icon_yuanbao_31
+  rotate: false
+  xy: 1725, 1508
+  size: 77, 63
+  orig: 77, 63
+  offset: 0, 0
+  index: -1
+effects_csd_icon_yuanbao_32
+  rotate: false
+  xy: 916, 1525
+  size: 47, 36
+  orig: 47, 36
+  offset: 0, 0
+  index: -1

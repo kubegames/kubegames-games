@@ -1,0 +1,9 @@
+{
+  "roundNum" : 10,
+  "bloodKey" : 3000,
+  "diZhu"    : 100,
+  "tax"      : 500,
+  "startCoin"      : 10000000000,
+  "xiaZhu" : 2,
+  "xiaZhuNum" : 10
+}

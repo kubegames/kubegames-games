@@ -1,0 +1,83 @@
+
+fi.png
+size: 766,766
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+danru_27
+  rotate: false
+  xy: 2, 596
+  size: 578, 168
+  orig: 578, 168
+  offset: 0, 0
+  index: -1
+huangguang
+  rotate: false
+  xy: 582, 655
+  size: 141, 109
+  orig: 141, 109
+  offset: 0, 0
+  index: -1
+jinbian_01
+  rotate: false
+  xy: 2, 220
+  size: 310, 374
+  orig: 310, 374
+  offset: 0, 0
+  index: -1
+jinbian_02
+  rotate: true
+  xy: 2, 37
+  size: 181, 389
+  orig: 181, 389
+  offset: 0, 0
+  index: -1
+lougo
+  rotate: false
+  xy: 618, 2
+  size: 110, 119
+  orig: 110, 119
+  offset: 0, 0
+  index: -1
+saizi
+  rotate: true
+  xy: 656, 576
+  size: 77, 75
+  orig: 77, 75
+  offset: 0, 0
+  index: -1
+wangpai
+  rotate: false
+  xy: 314, 293
+  size: 290, 301
+  orig: 290, 301
+  offset: 0, 0
+  index: -1
+xingxing
+  rotate: false
+  xy: 314, 224
+  size: 74, 67
+  orig: 74, 67
+  offset: 0, 0
+  index: -1
+yingwen
+  rotate: true
+  xy: 618, 123
+  size: 530, 36
+  orig: 530, 36
+  offset: 0, 0
+  index: -1
+yuanpan
+  rotate: true
+  xy: 393, 45
+  size: 246, 223
+  orig: 246, 223
+  offset: 0, 0
+  index: -1
+zipai
+  rotate: false
+  xy: 656, 525
+  size: 51, 49
+  orig: 51, 49
+  offset: 0, 0
+  index: -1

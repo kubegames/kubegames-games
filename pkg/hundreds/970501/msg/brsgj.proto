@@ -1,0 +1,168 @@
+syntax = "proto3";
+
+package proto;
+
+// 客户端到服务器发送消息的类型
+enum ReceiveMessageType {
+    StartID = 0;
+    DoBet = 1; // 下注信息
+    GetUserList = 2; //获取玩家列表
+	GetTrendHistory = 3 ;// 获取中奖历史
+	DoTest = 4 ;// 测试专用
+	BetReptReq = 5;// 重复下注
+	RoundEnd = 6;// 转圈结束
+	TopUserReq = 7;// 请求3位玩家
+	BackInReq = 8;// 切后台重新进入
+}
+
+// 服务器发送给客户端的消息类型
+enum SendToClientMessageType {
+    RestartID = 0;
+    BetRet = 1; // 下注消息
+    BetFailID = 2; // 下注失败
+	Status = 3;		//状态消息
+	Settle = 4;		//结算消息
+	UserList = 5;//玩家列表
+	RoomSence = 6;	//场次场景信息
+	TrendRet = 8; // 中奖历史消息
+	UserNum =10  ; // 用户数量消息
+	LoopBetNotice = 11; // 循环下注通知
+	BetReptResp = 12;// 重复下注响应
+	GoldNow = 13;// 当前的金额
+	TopUserResp = 14;// 请求3位玩家响应
+	BackInResp = 15;// 切后台重新进入
+}
+
+//游戏阶段
+enum GameStatus{
+	StartStatus = 0;
+	StartMovie = 1;//开始动画 
+	BetStatus = 2; //下注阶段
+	EndBetMovie = 3; //结束下注动画
+	SettleStatus = 4; //结算阶段
+}
+
+
+message StatusMessage{
+	int32 Status = 1;		//状态
+	int32 StatusTime = 2;	//状态的持续时间
+}
+
+message BackInRespMsg{
+	int32 LeftTime = 1;	//状态的持续时间
+}
+
+message BetFailMsg{
+	string BetFailInfo = 1;	//下注失败原因
+	bool IsKickOut = 2;// 是否剔除玩家
+	bool IsNeedDown = 3; // 是否需要降低挡位; true:降低一个挡位；false：不需要降低挡位
+	bool IsMan = 4;// 是否下满了
+}
+
+// 下注客户端传服务端参数
+message UserBet{
+	int64 UserID = 1;// 玩家ID
+	int32 BetType = 2;	//下注区的索引
+	int32 BetIndex = 3;	//筹码区的索引
+}
+
+
+//结算消息
+message SettleMsg{
+    UserSettleInfo Self = 1;// 自己输赢信息
+    int32 Begin = 2 ; //  开火车时得起点位置(1-24) 
+	int64 GoldNow = 3 ; // 玩家当前的金币
+}
+
+
+// 玩家结算消息
+message UserSettleInfo{
+	int64 userId = 1; // 玩家id
+	int32 outId = 2;// 外圈id
+	int32 GoodluckType = 3; // goodluck 类型
+	int64 WinGold = 4 ; // 玩家赢的金币 // 以此排序
+}
+
+// 玩家列表请求参数
+message UserListReq{
+	int32 PageIndex = 1; // 当前页
+}
+
+// 玩家列表响应参数
+message UserListResp{
+	repeated UserInfo UserList = 1;
+}
+
+
+// 区域下注
+message sceneAllBets {
+    int64 allGold = 1; // 区域总下注值
+    int64 userID = 2;// 
+    int64 userGold = 3;// 自己下注
+} 
+// 场次场景信息（1次/s）
+message RoomSceneInfo {
+	repeated int64 bets = 1;// 筹码区
+	int64 gold = 2; // 玩家金币
+	int32 onlineCount = 3; //玩家列表个数（总个数） 
+	repeated SceneMyBet myBets = 4;// 我的下注 
+	repeated int32 Trend = 5; // 历史记录
+	repeated int32 Odds = 6;// 下注区的倍率
+}
+
+message SceneMyBet{
+	int64 allGold = 1; // 区域总下注值
+    int64 userID = 2;// 
+    int64 userGold = 3;// 自己下注
+}
+
+
+
+//玩家列表信息
+message UserInfo{
+    int64 ID = 1;
+	string NickName = 2;
+	int64 Gold = 3; // 当前金币
+	int64 WinGold = 4 ;// 获胜总金币（近20局）// 以此排序
+	int64 BetGold = 5; // 下注的金币（近20局）
+	string Avatar = 6; // 玩家头像
+}
+
+message TrendMsg{
+    repeated int32 Trend = 1;// 房间的中奖历史
+}
+
+
+
+message UserNumMsg {
+	int32 Num = 1 ; // 玩家数量
+}
+
+
+// 循环播放下注通知
+message LoopBetNoticeMsg{
+	repeated int64 BetGold = 1;
+}
+
+
+// 客户端发送的测试结果
+message TestIn{
+	int32 OutID = 1 ;
+}
+
+
+// 重复下注
+message BetReptMsg {
+	repeated int64 BetGold = 1;
+}
+
+
+message GoldNowMsg {
+	int64 UserID = 1;
+	int64 GoldNow = 2;
+}
+
+// 前3位玩家响应消息
+message TopUserRespMsg{
+	repeated UserInfo UserList = 1;
+}

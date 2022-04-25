@@ -1,0 +1,152 @@
+// protoc --go_out=plugins=grpc:. erbagang.proto
+syntax = "proto3";
+
+package msg;
+
+// 客户端到服务器发送消息的类型
+enum ReceiveMessageType {
+    C2SRobZhuangEnd = 0; // 用户抢庄按钮按下后消息id RobZhuangEndResp
+    C2SUserBetEnd = 1; // 用户下注按钮后的消息id  UserBetEndResp
+    C2STest = 2;
+    C2SDeposit = 3;
+}
+
+// 服务器发送给客户端的消息类型
+enum SendToClientMessageType {
+    S2CUserSitDown = 0; // 玩家坐下消息id UserSitDownRes
+    S2CPlayerStart = 1; // 通知玩家游戏开始id PlayerStartRes
+    S2CRobZhuangStart = 2; // 用户抢庄按钮消息id RobZhuangStartRes
+    S2COneRobZhuangEnd = 3; // 用户抢庄完成消息id OneRobZhuangEndRes
+    S2CAllRobZhuangEnd = 4; // 所有用户抢庄完成消息id AllRobZhuangEndRes
+    S2CUserBetInfoStart = 5; // 用户开始下注消息id UserBetInfoStartRes
+    S2CUserBetInfoEnd = 6; // 用户下注完成消息id UserBetInfoEndRes
+    S2CDice = 7; // 摇骰子消息id DiceRes
+    S2CDealCard = 8; // 发牌  DealCardRes
+    S2COpenCard = 9; // 开牌消息id OpenCardRes
+    S2CSmallCloseAnAccount = 10; // 小局结算消息id SmallCloseAnAccountRes
+    S2CBigCloseAnAccount = 11; // 大局结算消息id BigCloseAnAccountRes
+}
+
+
+// 桌子上的玩家数据
+message SeatUserInfoRes {
+  string NickName = 1; // 用户昵称
+  string HeadImg = 2; // 头像
+  string Ip = 3; // 用户IP
+  int64 Gold = 4; // 金币数量
+
+  //断线重连
+  int64 MaxBet = 5; // 抢庄倍数
+  int64 Bet = 6; // 下注倍数
+  repeated int32 Tiles = 7;  //手牌
+}
+
+// UserSitDownRes 用户坐下
+message UserSitDownRes {
+  repeated SeatUserInfoRes UserData = 1; // 用户信息
+  string BureauUUID  = 2; // 牌局编号
+  int32 UserIndex = 3; // 当前玩家自己索引
+
+  //断线重连
+  int32 RoundNo = 4; // 局数
+  repeated int32 TileAppearedTimes = 5; // 每张牌出现过的次数,顺序：[白,1,2,3...]
+  repeated int32 MaxBets = 6; // 4个抢庄倍数
+  int32 MaxBetTime = 7; // 抢庄剩余时间
+  int32 Dealer = 8; // 庄用户索引
+  repeated int32 Bets = 9; // 下注可选的倍数
+  int32 BetTime = 10; // 下注剩余时间
+  repeated int32 Dices = 11; // 骰子点数
+  bool Dealed = 12; // 是否已发牌
+  int32 Bet = 13; // 底注
+  int64 RoomId = 14; // 房间id
+  bool isEndToStart = 15; // 是否结束后的等待阶段
+}
+
+
+// 通知玩家游戏开始
+message PlayerStartRes {
+    int32 Number = 1; // 局数
+}
+
+
+// RobZhuangStartRes // 开始抢庄
+message RobZhuangStartRes {
+    repeated int32 Multiples = 1; // 4个抢庄倍数
+    int32 SleepTime = 2; // 动画延时，毫秒
+}
+
+// OneRobZhuangFinishedRes
+// 单个用户抢庄后的消息
+message OneRobZhuangEndRes {
+    int32 UserIndex = 1; // 用户索引
+    int64 Multiple = 2; // 抢庄倍数
+}
+
+// AllRobZhuangEndRes
+// 所有用户都抢庄完成之后发送的消息
+message AllRobZhuangEndRes {
+    int32 UserIndex = 1; // 庄用户索引
+}
+
+// UserBetInfoStartRes 开始下注
+message UserBetInfoStartRes {
+  repeated int32 Multiples = 1; // 按钮倍数
+  int32 SleepTime = 2; // 动画延时，毫秒
+}
+
+// UserBetInfoEndRes 用户下注完成
+message UserBetInfoEndRes {
+     int32 UserIndex = 1; // 用户索引
+     int64 Multiple = 2; // 下注倍数
+}
+
+// DiceRes 摇骰子
+message DiceRes {
+  repeated int32 Numbers = 1;
+}
+
+// DealCardRes 发牌
+message DealCardRes {
+
+}
+
+message OpenCardInfo {
+  repeated int32 Number = 1;
+}
+
+// OpenCardRes 开牌
+message OpenCardRes {
+  repeated OpenCardInfo CardNumbers = 1;
+}
+
+// SmallCloseAnAccountRes 小局结算
+message SmallCloseAnAccountRes {
+  repeated int32 GoldNumbers = 1; // 输赢金币数
+}
+
+// BigCloseAnAccountRes 大局结束
+message BigCloseAnAccountRes {
+    int32 reason = 1;   // 0.正常 1. 掉线  2.钱不够
+    repeated int32 notEnoughUsers = 2;
+}
+
+
+// ==================================================== //
+
+
+// RobZhuangEndResp 用户按下抢庄按钮消息
+message RobZhuangEndResp {
+    int64 BtnIndex = 1; // 按钮的索引
+}
+
+// UserBetEndResp 用户按下下注按钮
+message UserBetEndResp {
+    int64 BtnIndex = 1; // 按钮的索引
+}
+
+message TestResp {
+    repeated int32 cards = 1; // 牌
+}
+
+message DepositResp {
+}

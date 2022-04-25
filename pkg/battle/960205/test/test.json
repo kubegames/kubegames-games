@@ -1,0 +1,9 @@
+{
+  "blood" : [250,1500,1500,1500],
+  "roundNum" : 1000,
+  "coin" : 1000000,
+  "tax"  : 500,
+  "qiangZhuangGaiLv" : [50, 50, 50, 50],
+  "qiangZhuang" : [68, 68, 68, 68],
+  "diZhu" : 500
+}

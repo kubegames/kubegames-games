@@ -1,0 +1,58 @@
+[
+  {//机器人最大牌
+    "MustLoseCheat": 3000,//必输作弊率
+    "MustLoseRate ": 2500,//必输概率
+    "BigLoseCheat": 2000,//大输作弊率
+    "BigLoseRate": 1800,//大输概率
+    "SmallLoseCheat": 1000,//小输作弊率
+    "SmallLoseRate": 1400,//小输概率
+    "SmallWinCheat":-1000, //小赢
+    "SmallWinRate":1000,
+    "BigWinCheat": -2000,//大赢作弊率
+    "BigWinRate": 800,//大赢概率
+    "MustWinCheat": -3000,//必赢作弊率
+    "MustWinRate": 500 //必赢概率
+  },
+  {//机器人第二大牌
+    "MustLoseCheat": 3000,//必输作弊率
+    "MustLoseRate ": 1000,//必输概率
+    "BigLoseCheat": 2000,//大输作弊率
+    "BigLoseRate": 1800,//大输概率
+    "SmallLoseCheat": 1000,//小输作弊率
+    "SmallLoseRate": 2300,//小输概率
+    "SmallWinCheat":-1000, //小赢
+    "SmallWinRate":2700,
+    "BigWinCheat": -2000,//大赢作弊率
+    "BigWinRate": 3000,//大赢概率
+    "MustWinCheat": -3000,//必赢作弊率
+    "MustWinRate": 3500 //必赢概率
+  },
+  {//玩家最大牌
+    "MustLoseCheat": 3000,//必输作弊率
+    "MustLoseRate ": 0,//必输概率
+    "BigLoseCheat": 2000,//大输作弊率
+    "BigLoseRate": 800,//大输概率
+    "SmallLoseCheat": 1000,//小输作弊率
+    "SmallLoseRate": 1000,//小输概率
+    "SmallWinCheat":-1000, //小赢
+    "SmallWinRate":1400,
+    "BigWinCheat": -2000,//大赢作弊率
+    "BigWinRate": 1700,//大赢概率
+    "MustWinCheat": -3000,//必赢作弊率
+    "MustWinRate": 2100 //必赢概率
+  },
+  {//玩家第二大牌
+    "MustLoseCheat": 3000,//必输作弊率
+    "MustLoseRate ": 4000,//必输概率
+    "BigLoseCheat": 2000,//大输作弊率
+    "BigLoseRate": 3200,//大输概率
+    "SmallLoseCheat": 1000,//小输作弊率
+    "SmallLoseRate": 2700,//小输概率
+    "SmallWinCheat":-1000, //小赢
+    "SmallWinRate":2300,
+    "BigWinCheat": -2000,//大赢作弊率
+    "BigWinRate": 1800,//大赢概率
+    "MustWinCheat": -3000,//必赢作弊率
+    "MustWinRate": 1000 //必赢概率
+  }
+]

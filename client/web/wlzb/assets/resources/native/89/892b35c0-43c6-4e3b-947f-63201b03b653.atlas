@@ -1,0 +1,118 @@
+
+daiji_lanlong.png
+size: 512,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+longmao1
+  rotate: false
+  xy: 279, 143
+  size: 86, 111
+  orig: 86, 111
+  offset: 0, 0
+  index: -1
+longmao2
+  rotate: true
+  xy: 160, 139
+  size: 115, 117
+  orig: 115, 117
+  offset: 0, 0
+  index: -1
+longshen
+  rotate: false
+  xy: 2, 141
+  size: 156, 113
+  orig: 156, 113
+  offset: 0, 0
+  index: -1
+longxu1
+  rotate: true
+  xy: 367, 134
+  size: 52, 83
+  orig: 52, 83
+  offset: 0, 0
+  index: -1
+longxu2
+  rotate: false
+  xy: 367, 188
+  size: 121, 66
+  orig: 121, 66
+  offset: 0, 0
+  index: -1
+longzhua
+  rotate: false
+  xy: 284, 114
+  size: 36, 27
+  orig: 36, 27
+  offset: 0, 0
+  index: -1
+meimao1
+  rotate: true
+  xy: 133, 25
+  size: 49, 51
+  orig: 49, 51
+  offset: 0, 0
+  index: -1
+meimao2
+  rotate: false
+  xy: 355, 112
+  size: 10, 29
+  orig: 10, 29
+  offset: 0, 0
+  index: -1
+shange
+  rotate: false
+  xy: 2, 25
+  size: 129, 114
+  orig: 129, 114
+  offset: 0, 0
+  index: -1
+shenhoumao
+  rotate: false
+  xy: 452, 143
+  size: 37, 43
+  orig: 37, 43
+  offset: 0, 0
+  index: -1
+xiae
+  rotate: false
+  xy: 133, 76
+  size: 80, 61
+  orig: 80, 61
+  offset: 0, 0
+  index: -1
+zhuamao1
+  rotate: false
+  xy: 186, 25
+  size: 22, 49
+  orig: 22, 49
+  offset: 0, 0
+  index: -1
+zhuamao2
+  rotate: false
+  xy: 215, 83
+  size: 28, 54
+  orig: 28, 54
+  offset: 0, 0
+  index: -1
+zhuamao3
+  rotate: false
+  xy: 245, 94
+  size: 37, 43
+  orig: 37, 43
+  offset: 0, 0
+  index: -1
+zhuamao4
+  rotate: false
+  xy: 322, 114
+  size: 31, 27
+  orig: 31, 27
+  offset: 0, 0
+  index: -1
+zhuamao5
+  rotate: false
+  xy: 2, 2
+  size: 37, 21
+  orig: 37, 21
+  offset: 0, 0
+  index: -1

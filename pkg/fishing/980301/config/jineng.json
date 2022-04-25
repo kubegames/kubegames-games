@@ -1,0 +1,26 @@
+{
+  "1": {
+    "jinengid": 1,
+    "chixushijian": 0,
+    "cd": 15000,
+    "jinenggailv": 100,
+    "yuluxian": "zhaohuan",
+    "yuid": [
+      "15",
+      "16",
+      "17",
+      "18",
+      "19",
+      "20",
+      "21"
+    ]
+  },
+  "2": {
+    "jinengid": 2,
+    "chixushijian": 10000,
+    "cd": 10000,
+    "jinenggailv": 70,
+    "yuluxian": 0,
+    "yuid": 0
+  }
+}

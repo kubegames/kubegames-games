@@ -1,0 +1,238 @@
+{
+  "1": {
+
+    "1": {
+      "Id": "1",
+      "mingzi": "普通1",
+      "xiaoyu": 10,
+      "zhongyu": 40,
+      "dayu": 50,
+      "zuidabeishu": 1000,
+	  "bossxiaoyu": 20,
+      "bosszhongyu": 40,
+      "bossdayu": 40,
+      "bosszuidabeishu": 800,
+	  "publ": 5,
+      "bossID": "32",
+	  "ycpeizhi": [
+	           "yuzhen",
+			   "yuzhen2"
+	  ]	  
+    },
+    "2": {
+      "Id": "2",
+      "mingzi": "普通2",
+      "xiaoyu": 10,
+      "zhongyu": 40,
+      "dayu": 50,
+      "zuidabeishu": 1000,
+	  "bossxiaoyu": 20,
+      "bosszhongyu": 40,
+      "bossdayu": 40,
+      "bosszuidabeishu": 800,
+	  "publ": 5,
+      "bossID": "33",
+	  "ycpeizhi": [
+	           "yuzhen",
+			   "yuzhen2"
+	  ]	  
+    },	
+	"3": {
+      "Id": "3",
+      "mingzi": "普通3",
+      "xiaoyu": 10,
+      "zhongyu": 40,
+      "dayu": 50,
+      "zuidabeishu": 1000,
+	  "bossxiaoyu": 20,
+      "bosszhongyu": 40,
+      "bossdayu": 40,
+      "bosszuidabeishu": 800,
+	  "publ": 5,
+      "bossID": "34",
+	  "ycpeizhi": [
+	           "yuzhen",
+			   "yuzhen2"
+	  ]	  
+    },	
+    "pool" : 10000
+  },
+  "2": {
+
+    "1": {
+      "Id": "1",
+      "mingzi": "普通1",
+      "xiaoyu": 10,
+      "zhongyu": 40,
+      "dayu": 50,
+      "zuidabeishu": 1000,
+	  "bossxiaoyu": 20,
+      "bosszhongyu": 40,
+      "bossdayu": 40,
+      "bosszuidabeishu": 800,
+	  "publ": 5,
+      "bossID": "32",
+	  "ycpeizhi": [
+	           "yuzhen",
+			   "yuzhen2"
+	  ]	  
+    },
+    "2": {
+      "Id": "2",
+      "mingzi": "普通2",
+      "xiaoyu": 10,
+      "zhongyu": 40,
+      "dayu": 50,
+      "zuidabeishu": 1000,
+	  "bossxiaoyu": 20,
+      "bosszhongyu": 40,
+      "bossdayu": 40,
+      "bosszuidabeishu": 800,
+	  "publ": 5,
+      "bossID": "33",
+	  "ycpeizhi": [
+	           "yuzhen",
+			   "yuzhen2"
+	  ]	  
+    },	
+	"3": {
+      "Id": "3",
+      "mingzi": "普通3",
+      "xiaoyu": 10,
+      "zhongyu": 40,
+      "dayu": 50,
+      "zuidabeishu": 1000,
+	  "bossxiaoyu": 20,
+      "bosszhongyu": 40,
+      "bossdayu": 40,
+      "bosszuidabeishu": 800,
+	  "publ": 5,
+      "bossID": "34",
+	  "ycpeizhi": [
+	           "yuzhen",
+			   "yuzhen2"
+	  ]	  
+    },	
+    "pool" : 10000
+  },
+  "3": {
+
+    "1": {
+      "Id": "1",
+      "mingzi": "普通1",
+      "xiaoyu": 10,
+      "zhongyu": 40,
+      "dayu": 50,
+      "zuidabeishu": 1000,
+	  "bossxiaoyu": 20,
+      "bosszhongyu": 40,
+      "bossdayu": 40,
+      "bosszuidabeishu": 800,
+	  "publ": 5,
+      "bossID": "32",
+	  "ycpeizhi": [
+	           "yuzhen",
+			   "yuzhen2"
+	  ]	  
+    },
+    "2": {
+      "Id": "2",
+      "mingzi": "普通2",
+      "xiaoyu": 10,
+      "zhongyu": 40,
+      "dayu": 50,
+      "zuidabeishu": 1000,
+	  "bossxiaoyu": 20,
+      "bosszhongyu": 40,
+      "bossdayu": 40,
+      "bosszuidabeishu": 800,
+	  "publ": 5,
+      "bossID": "33",
+	  "ycpeizhi": [
+	           "yuzhen",
+			   "yuzhen2"
+	  ]	  
+    },	
+	"3": {
+      "Id": "3",
+      "mingzi": "普通3",
+      "xiaoyu": 10,
+      "zhongyu": 40,
+      "dayu": 50,
+      "zuidabeishu": 1000,
+	  "bossxiaoyu": 20,
+      "bosszhongyu": 40,
+      "bossdayu": 40,
+      "bosszuidabeishu": 800,
+	  "publ": 5,
+      "bossID": "34",
+	  "ycpeizhi": [
+	           "yuzhen",
+			   "yuzhen2"
+	  ]	  
+    },	
+    "pool" : 10000
+  },
+  "4": {
+
+    "1": {
+      "Id": "1",
+      "mingzi": "普通1",
+      "xiaoyu": 10,
+      "zhongyu": 40,
+      "dayu": 50,
+      "zuidabeishu": 1000,
+	  "bossxiaoyu": 20,
+      "bosszhongyu": 40,
+      "bossdayu": 40,
+      "bosszuidabeishu": 800,
+	  "publ": 5,
+      "bossID": "32",
+	  "ycpeizhi": [
+	           "yuzhen",
+			   "yuzhen2"
+	  ]	  
+    },
+    "2": {
+      "Id": "2",
+      "mingzi": "普通2",
+      "xiaoyu": 10,
+      "zhongyu": 40,
+      "dayu": 50,
+      "zuidabeishu": 1000,
+	  "bossxiaoyu": 20,
+      "bosszhongyu": 40,
+      "bossdayu": 40,
+      "bosszuidabeishu": 800,
+	  "publ": 5,
+      "bossID": "33",
+	  "ycpeizhi": [
+	           "yuzhen",
+			   "yuzhen2"
+	  ]	  
+    },	
+	"3": {
+      "Id": "3",
+      "mingzi": "普通3",
+      "xiaoyu": 10,
+      "zhongyu": 40,
+      "dayu": 50,
+      "zuidabeishu": 1000,
+	  "bossxiaoyu": 20,
+      "bosszhongyu": 40,
+      "bossdayu": 40,
+      "bosszuidabeishu": 800,
+	  "publ": 5,
+      "bossID": "34",
+	  "ycpeizhi": [
+	           "yuzhen",
+			   "yuzhen2"
+	  ]	  
+    },	
+    "pool" : 10000
+  },
+	"shotOffTime" : 300000,
+    "roundTime" : 60000,
+	"shuayusudu" : 300,
+  "saveScoreTime" : 5000
+}

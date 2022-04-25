@@ -1,0 +1,170 @@
+
+syntax = "proto3";
+package msg;
+
+
+//subCmd列表
+/*
+    CardTypeTHS      = 11 //同花顺
+	CardTypeTHSA2345 = 10
+	CardTypeFour     = 9 //四张 1
+	CardTypeHL       = 8 //葫芦 1
+	CardTypeTH       = 7 //同花
+	CardTypeSZ       = 6 //顺子
+	CardTypeSZA2345  = 5 //
+	CardTypeTK       = 4 //三条	//Three kind
+	CardTypeTW       = 3 //两对	//Two pairs
+	CardTypeDz       = 2 //对子
+	CardTypeSingle   = 1 //单牌
+
+	//三张牌的比较
+	Card3TypeBz     = 3 //豹子
+	Card3TypeDz     = 2 //对子
+	Card3TypeSingle = 1 //单张
+
+//特殊牌型
+const (
+	SPECIAL_CARD_ZZQL = 13 //至尊青龙
+	SPECIAL_CARD_YTL  = 12 //一条龙
+	SPECIAL_CARD_SEHZ = 11 //十二皇族
+	SPECIAL_CARD_STHS = 10 //三同花顺
+	SPECIAL_CARD_SFTX = 9  //三分天下
+	SPECIAL_CARD_QD   = 8  //全大
+	SPECIAL_CARD_QX   = 7  //全小
+	SPECIAL_CARD_CYS  = 6  //凑一色
+	SPECIAL_CARD_STST = 5  //四套三条
+	SPECIAL_CARD_WDST = 4  //五对三条
+	SPECIAL_CARD_LDB  = 3  //六对半
+	SPECIAL_CARD_SSZ  = 2  //三顺子
+	SPECIAL_CARD_STH  = 1  //三同花
+	SPECIAL_CARD_NO   = 0  //没有特殊牌型
+)
+
+
+牌桌状态
+    TABLE_CUR_STATUS_WAIT            = 0 //准备开赛
+	TABLE_CUR_STATUS_WAIT_SEND_CARDS = 1 //等待客户端发牌完毕
+	TABLE_CUR_STATUS_ING             = 2 //正在游戏
+	TABLE_CUR_STATUS_END             = 3 //游戏结束
+
+*/
+
+//错误code列表
+/*
+
+*/
+
+//所有的服务端->客户端的协议
+enum S2CMsgType {
+    ROOM_INFO_RES = 0 ; //房间信息  S2CRoomInfo
+    START_MATCH_RES = 1;//开始匹配
+    START_GAME = 2;//开始比赛 S2CStartGame
+    END_GAME = 3;//结束比赛 S2CEndGame
+    SETTLE_CARDS = 4;//确定摆牌
+}
+
+//房间信息，断线重连也用该结构体
+message S2CRoomInfo{
+    int64 bottom = 1;//底注
+    int32 tableStatus = 2;//牌桌当前状态
+    repeated S2CUserInfo userArr = 3;//牌桌玩家信息
+    S2CUserEndInfo selfCards = 4;//玩家自己的牌型等信息
+    int32 ticker = 5;//摆牌倒计时
+    repeated S2CCardsAndCardType spareArr = 6;//推荐牌型以及下栏显示备选的几种
+    int32 specialType = 7;//特殊牌型 0：没有特殊牌型
+    int64 roomId = 8;//房间id
+    int64 MinLimit = 9; // 入场限制
+}
+
+
+
+//玩家确定牌型
+message S2CSettleCards{
+    int64 uid = 1;
+    int32 chairId = 2;//座椅号
+    int32 specialType = 3;//特殊牌型 0：没有特殊牌型
+}
+
+//开始比赛
+message S2CStartGame{
+    int32 specialType = 1;//特殊牌型 0：没有特殊牌型
+    repeated S2CUserInfo userArr = 2;//其他玩家信息
+    int32 ticker = 3;//摆牌倒计时
+    repeated S2CCardsAndCardType spareArr = 4;//推荐牌型以及下栏显示备选的几种
+}
+//三墩牌型和牌
+message S2CCardsAndCardType{
+    bytes headCards = 1;//头墩牌
+    bytes midCards = 2;//中墩牌
+    bytes tailCards = 3;//尾墩牌
+    int32 headType = 4;//头墩类型
+    int32 midType = 5;//中墩类型
+    int32 tailType = 6;//尾墩类型
+}
+
+//结束比赛
+message S2CEndGame{
+    repeated S2CHitRob hitArr = 1;//打抢的所有玩家信息
+    int64 homeRunUid = 2;// 全垒打的玩家id，为0则表示没有全垒打
+    repeated S2CUserEndInfo userArr = 3;//所有玩家，包括牌型和打抢等
+    int32 homeRunChairId = 4;//全垒打玩家的chairId
+}
+//打抢
+message S2CHitRob{
+    int64 hitUid = 1;//赢得打枪的人
+    int64 beHitUid = 2;//被打枪的人
+    int64 hitScore = 3;//打枪的金额
+    int32 hitChairId = 4;//打枪的人chairId
+    int32 beHitChairId = 5;//被打枪的人chairId
+    int64 hitHeadScore = 6;//打枪头墩额外的钱
+    int64 hitMidScore = 7;//打枪中墩额外的钱
+    int64 hitTailScore = 8;//打枪尾墩额外的钱
+}
+//玩家结束的信息
+message S2CUserEndInfo{
+    int64 uid = 1;
+    bytes headCards = 2;//头墩
+    bytes midCards = 3;//中墩
+    bytes tailCards = 4;//尾墩
+    int32 headType = 5;//头墩牌型
+    int32 midType = 6;//中墩牌型
+    int32 tailType = 7;//尾墩牌型
+    int32 specialType = 8;//特殊牌型 0：没有特殊牌型
+    int64 totalWin = 11;//该玩家的总输赢
+
+    int64 headWin = 12;//头墩输赢
+    int64 midWin = 13;//中墩输赢
+    int64 tailWin = 14;//尾墩输赢
+    int64 headPlus = 15;//头墩额外输赢
+    int64 midPlus = 16;//中墩额外输赢
+    int64 tailPlus = 17;//尾墩额外输赢
+    int64 totalPlus = 18;//总的额外输赢   该字段为最终结果，包含了全垒打的值
+
+    int64 winScore = 19;//总共输赢的积分
+    int32 chairId = 20;//玩家chairId
+
+    int64 homeRunHeadPlus = 21;//全垒打头墩额外输赢
+    int64 homeRunMidPlus = 22;//全垒打中墩额外输赢
+    int64 homeRunTailPlus = 23;//全垒打尾墩额外输赢
+    int64 homeRunTotalPlus = 24;//全垒打总的额外输赢
+
+    int64 finalScore = 25;//玩家最终的金币
+}
+
+//用户基本信息
+message S2CUserInfo{
+    int64 uid = 1;
+    string name = 2;
+    string head = 3;
+    int64 amount = 4;//玩家余额
+    int32 chairId = 5;//座椅号
+    int32 status = 6;//玩家状态
+    bool isSettleCards = 7;//是否确定摆牌
+    int32 specialType = 8;//特殊牌型 0：没有特殊牌型
+    string ip = 9;//
+}
+
+//玩家金额
+message S2cUserScore {
+    int64 score = 1; //玩家余额
+}

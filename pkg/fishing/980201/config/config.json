@@ -1,0 +1,6 @@
+{
+  "ListenerPort": 8000,
+  "MaxConn": 5000,
+  "DBUri": "",
+  "LogPath": ""
+}

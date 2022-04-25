@@ -1,0 +1,1 @@
+window._CCSettings={platform:"web-desktop",groupList:["default"],collisionMatrix:[[true]],hasResourcesBundle:true,hasStartSceneBundle:false,remoteBundles:[],subpackages:[],launchScene:"db://assets/resources/WealthSlots/scence/WealthSlots.fire",orientation:"",jsList:["assets/scripts/general/support/device-uuid.js","assets/scripts/general/support/protobuf.js"]};

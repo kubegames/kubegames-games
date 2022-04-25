@@ -1,0 +1,634 @@
+{
+    "taketimes": {
+        // 开始动画
+        "startmove": 2000,
+        // 开始押注
+        "startbet": 20000,
+        // 结束下注动画
+        "endmove": 1000,
+        // 结算信息
+        "endpay": 15000,
+        // 大三元增加的时间
+        "endpayadd": 6500,
+        // 大四喜增加的时间
+        "endpayaddfour": 7000,
+        // 循环广播下注消息间隔
+        "loopBetGap":33
+      },
+
+    // 5次未下注被踢出房间
+    "unplacebetnum":5,
+
+    // 至少携带x金币才能下注
+    "betmin":0,
+
+      // 个人玩家单区域限红(分)
+    "singleusersinglespacelimit5times":{
+        "1":[0,0,0,0,0,0,0,0,0,0,0,0],
+        "2":[0,0,0,0,0,0,0,0,0,0,0,0],
+        "3":[0,0,0,0,0,0,0,0,0,0,0,0],
+        "4":[0,0,0,0,0,0,0,0,0,0,0,0]
+    },
+    // 个人玩家所有区域限红(分)
+    "singleuserallspacelimit5times":{
+        "1":[250000],
+        "2":[250000],
+        "3":[250000],
+        "4":[250000]
+    },
+    // 所有玩家区单区域限红(分)
+    "allusersinglespacelimit5times":{
+        "1":[0,0,0,0,0,0,0,0,0,0,0,0],
+        "2":[0,0,0,0,0,0,0,0,0,0,0,0],
+        "3":[0,0,0,0,0,0,0,0,0,0,0,0],
+        "4":[0,0,0,0,0,0,0,0,0,0,0,0]
+    },
+    // 所有区域总限红(分)
+    "allspacelimit5times":{
+        "1":[5000000],
+        "2":[5000000],
+        "3":[5000000],
+        "4":[5000000]
+    }
+
+
+    // 是否开启3000作弊率玩家必输配置
+    "isOpen3000Ctrl":true,
+
+    // 输赢控制流程
+    // ————1.roomProb：血池值/作弊率
+    // ————2.winProb：系统赢得概率（万分率）
+    //                #######若赢：走第4步；若输：走第3步；若第3步未中特殊奖项，走第4步。#######
+    // ————3.surprise：特殊奖项（大三元/大四喜）
+    //     ||
+    //      ————3-1.surprise.prob：特殊奖项摇中概率（万分率）
+    //      ————3-2.surprise.three：中特殊奖后，中大三元的概率（万分率）
+    //      ————3-3.surprise.threeCtrl：中大三元之后选车控制
+    //          ||
+    //          ————3-3-1.surprise.threeCtrl.elemType:车型（奔驰：，宝马：，雷克萨斯：，大众：）【禁止更改】【禁止更改】【禁止更改】
+    //          ————3-3-2.surprise.threeCtrl.shakeProb:该车型摇中概率（万分率）
+
+    //      ————3-4.surprise.four：中特殊奖项后，中大四喜的概率（万分率）
+    //      ————3-5.surprise.fourCtrl：中大四喜之后选颜色控制
+    //          ||
+    //          ————3-5-1.surprise.fourCtrl.color：颜色（黄金：，白银：，黄铜：）【禁止更改】【禁止更改】【禁止更改】
+    //          ————3-5-2.surprise.fourCtrl.shakeProb：该颜色摇中概率（万分率）
+    // ————4.openCommon：开大奖小奖公用配置
+    //      ||
+    //      ————4-1.openCommon.big：开大奖概率（万分率）
+    //      ————4-2.openCommon.small：开小奖概率（万分率）
+
+    "winCtrl":[
+        {
+            "roomProb":3000,
+            "surprise":{
+                "prob":200,
+                "three":7000,
+                "threeCtrl":[
+                {
+                    "elemType":16,
+                    "shakeProb":1000
+                },
+                {
+                    "elemType":32,
+                    "shakeProb":2000
+                },
+                {
+                    "elemType":64,
+                    "shakeProb":3000
+                },
+                {
+                    "elemType":128,
+                    "shakeProb":4000
+                }],
+                "four":3000,
+                "fourCtrl":[
+                {
+                    "color":1,
+                    "shakeProb":1500
+                },
+                {
+                    "color":2,
+                    "shakeProb":3500
+                },
+                {
+                    "color":4,
+                    "shakeProb":5000
+                }]
+            },
+            "back":[
+                {
+                    "min":0,
+                    "max":60,
+                    "prob":4000
+                },
+                {
+                    "min":60,
+                    "max":80,
+                    "prob":3000
+                },
+                {
+                    "min":80,
+                    "max":100,
+                    "prob":1500
+                },
+                {
+                    "min":100,
+                    "max":120,
+                    "prob":1000
+                },
+                {
+                    "min":120,
+                    "max":140,
+                    "prob":500
+                },
+                {
+                    "min":140,
+                    "max":160,
+                    "prob":0
+                },
+                {
+                    "min":160,
+                    "max":200,
+                    "prob":0
+                }
+            ]
+        },
+       
+        {
+            "roomProb":2000,
+            "surprise":{
+                "prob":300,
+                "three":6000,
+                "threeCtrl":[
+                {
+                    "elemType":16,
+                    "shakeProb":1000
+                },
+                {
+                    "elemType":32,
+                    "shakeProb":2000
+                },
+                {
+                    "elemType":64,
+                    "shakeProb":3000
+                },
+                {
+                    "elemType":128,
+                    "shakeProb":4000
+                }],
+                "four":4000,
+                "fourCtrl":[
+                {
+                    "color":1,
+                    "shakeProb":1500
+                },
+                {
+                    "color":2,
+                    "shakeProb":3500
+                },
+                {
+                    "color":4,
+                    "shakeProb":5000
+                }]
+            },
+            "back":[
+                {
+                    "min":0,
+                    "max":60,
+                    "prob":3000
+                },
+                {
+                    "min":60,
+                    "max":80,
+                    "prob":2500
+                },
+                {
+                    "min":80,
+                    "max":100,
+                    "prob":2500
+                },
+                {
+                    "min":100,
+                    "max":120,
+                    "prob":1500
+                },
+                {
+                    "min":120,
+                    "max":140,
+                    "prob":500
+                },
+                {
+                    "min":140,
+                    "max":160,
+                    "prob":0
+                },
+                {
+                    "min":160,
+                    "max":200,
+                    "prob":0
+                }
+            ]
+        },
+
+        {
+            "roomProb":1000,
+            "surprise":{
+                "prob":400,
+                "three":6000,
+                "threeCtrl":[
+                {
+                    "elemType":16,
+                    "shakeProb":1000
+                },
+                {
+                    "elemType":32,
+                    "shakeProb":2000
+                },
+                {
+                    "elemType":64,
+                    "shakeProb":3000
+                },
+                {
+                    "elemType":128,
+                    "shakeProb":4000
+                }],
+                "four":4000,
+                "fourCtrl":[
+                {
+                    "color":1,
+                    "shakeProb":1500
+                },
+                {
+                    "color":2,
+                    "shakeProb":3500
+                },
+                {
+                    "color":4,
+                    "shakeProb":5000
+                }]
+            },
+            "back":[
+                {
+                    "min":0,
+                    "max":60,
+                    "prob":2000
+                },
+                {
+                    "min":60,
+                    "max":80,
+                    "prob":2000
+                },
+                {
+                    "min":80,
+                    "max":100,
+                    "prob":2000
+                },
+                {
+                    "min":100,
+                    "max":120,
+                    "prob":2000
+                },
+                {
+                    "min":120,
+                    "max":140,
+                    "prob":1200
+                },
+                {
+                    "min":140,
+                    "max":160,
+                    "prob":800
+                },
+                {
+                    "min":160,
+                    "max":200,
+                    "prob":0
+                }
+            ]
+        },
+
+        {
+            "roomProb":-1000,
+            "surprise":{
+                "prob":400,
+                "three":6000,
+                "threeCtrl":[
+                {
+                    "elemType":16,
+                    "shakeProb":1000
+                },
+                {
+                    "elemType":32,
+                    "shakeProb":2000
+                },
+                {
+                    "elemType":64,
+                    "shakeProb":3000
+                },
+                {
+                    "elemType":128,
+                    "shakeProb":4000
+                }],
+                "four":4000,
+                "fourCtrl":[
+                {
+                    "color":1,
+                    "shakeProb":1500
+                },
+                {
+                    "color":2,
+                    "shakeProb":3500
+                },
+                {
+                    "color":4,
+                    "shakeProb":5000
+                }]
+            },
+            "back":[
+                {
+                    "min":0,
+                    "max":60,
+                    "prob":100
+                },
+                {
+                    "min":60,
+                    "max":80,
+                    "prob":900
+                },
+                {
+                    "min":80,
+                    "max":100,
+                    "prob":1500
+                },
+                {
+                    "min":100,
+                    "max":120,
+                    "prob":2500
+                },
+                {
+                    "min":120,
+                    "max":140,
+                    "prob":3000
+                },
+                {
+                    "min":140,
+                    "max":160,
+                    "prob":1500
+                },
+                {
+                    "min":160,
+                    "max":200,
+                    "prob":500
+                }
+            ]
+        },
+
+
+        {
+            "roomProb":-2000,
+            "surprise":{
+                "prob":500,
+                "three":6000,
+                "threeCtrl":[
+                {
+                    "elemType":16,
+                    "shakeProb":1000
+                },
+                {
+                    "elemType":32,
+                    "shakeProb":2000
+                },
+                {
+                    "elemType":64,
+                    "shakeProb":3000
+                },
+                {
+                    "elemType":128,
+                    "shakeProb":4000
+                }],
+                "four":4000,
+                "fourCtrl":[
+                {
+                    "color":1,
+                    "shakeProb":1500
+                },
+                {
+                    "color":2,
+                    "shakeProb":3500
+                },
+                {
+                    "color":4,
+                    "shakeProb":5000
+                }]
+            },
+            "back":[
+                {
+                    "min":0,
+                    "max":60,
+                    "prob":100
+                },
+                {
+                    "min":60,
+                    "max":80,
+                    "prob":400
+                },
+                {
+                    "min":80,
+                    "max":100,
+                    "prob":500
+                },
+                {
+                    "min":100,
+                    "max":120,
+                    "prob":1500
+                },
+                {
+                    "min":120,
+                    "max":140,
+                    "prob":3500
+                },
+                {
+                    "min":140,
+                    "max":160,
+                    "prob":2000
+                },
+                {
+                    "min":160,
+                    "max":200,
+                    "prob":2000
+                }
+            ]
+        },
+
+        {
+            "roomProb":-3000,
+            "surprise":{
+                "prob":700,
+                "three":6000,
+                "threeCtrl":[
+                {
+                    "elemType":16,
+                    "shakeProb":1000
+                },
+                {
+                    "elemType":32,
+                    "shakeProb":2000
+                },
+                {
+                    "elemType":64,
+                    "shakeProb":3000
+                },
+                {
+                    "elemType":128,
+                    "shakeProb":4000
+                }],
+                "four":4000,
+                "fourCtrl":[
+                {
+                    "color":1,
+                    "shakeProb":1500
+                },
+                {
+                    "color":2,
+                    "shakeProb":3500
+                },
+                {
+                    "color":4,
+                    "shakeProb":5000
+                }]
+            },
+            "back":[
+                {
+                    "min":0,
+                    "max":60,
+                    "prob":100
+                },
+                {
+                    "min":60,
+                    "max":80,
+                    "prob":200
+                },
+                {
+                    "min":80,
+                    "max":100,
+                    "prob":200
+                },
+                {
+                    "min":100,
+                    "max":120,
+                    "prob":500
+                },
+                {
+                    "min":120,
+                    "max":140,
+                    "prob":2000
+                },
+                {
+                    "min":140,
+                    "max":160,
+                    "prob":3500
+                },
+                {
+                    "min":160,
+                    "max":200,
+                    "prob":3500
+                }
+            ]
+        }
+    ],
+
+
+
+    // 车--------【排序禁止修改】【排序禁止修改】【排序禁止修改】
+    // elemType：车类型-------【禁止修改】【禁止修改】【禁止修改】
+    // shakeProb：摇中概率（万分率）
+    // odds: 赔率倍数
+    // betIndex: 下注索引（0-11）-------------【禁止修改】【禁止修改】【禁止修改】
+    // subIds：外圈子ID----------【禁止修改】【禁止修改】【禁止修改】
+    "cars":[
+        {
+            "elemType":132,
+            "shakeProb":2250,
+            "odds":4,
+            "betIndex":11,
+            "subIds":[6,17]
+        },
+        {
+            "elemType":130,
+            "shakeProb":1750,
+            "odds":5,
+            "betIndex":10,
+            "subIds":[5,18]
+        },
+        {
+            "elemType":129,
+            "shakeProb":1300,
+            "odds":6,
+            "betIndex":9,
+            "subIds":[4,19]
+        },
+        {
+            "elemType":68,
+            "shakeProb":1100,
+            "odds":7,
+            "betIndex":8,
+            "subIds":[9,20]
+        },
+        {
+            "elemType":66,
+            "shakeProb":750,
+            "odds":10,
+            "betIndex":7,
+            "subIds":[8,21]
+        },
+        {
+            "elemType":65,
+            "shakeProb":650,
+            "odds":12,
+            "betIndex":6,
+            "subIds":[7,22]
+        },
+        {
+            "elemType":36,
+            "shakeProb":600,
+            "odds":13,
+            "betIndex":5,
+            "subIds":[3,14]
+        },
+        {
+            "elemType":34,
+            "shakeProb":500,
+            "odds":15,
+            "betIndex":4,
+            "subIds":[2,15]
+        },
+        {
+            "elemType":33,
+            "shakeProb":350,
+            "odds":22,
+            "betIndex":3,
+            "subIds":[1,16]
+        },
+        {
+            "elemType":20,
+            "shakeProb":300,
+            "odds":26,
+            "betIndex":2,
+            "subIds":[12,23]
+        },
+        {
+            "elemType":18,
+            "shakeProb":250,
+            "odds":35,
+            "betIndex":1,
+            "subIds":[11,24]
+        },
+        {
+            "elemType":17,
+            "shakeProb":200,
+            "odds":45,
+            "betIndex":0,
+            "subIds":[10,25]
+        }
+    ]
+}

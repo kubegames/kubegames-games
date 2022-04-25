@@ -1,0 +1,41 @@
+
+yuanbao.png
+size: 444,444
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+neiquan
+  rotate: false
+  xy: 2, 2
+  size: 205, 205
+  orig: 205, 205
+  offset: 0, 0
+  index: -1
+waiquan
+  rotate: false
+  xy: 2, 209
+  size: 230, 230
+  orig: 230, 230
+  offset: 0, 0
+  index: -1
+yuanbao1
+  rotate: false
+  xy: 234, 185
+  size: 124, 99
+  orig: 124, 99
+  offset: 0, 0
+  index: -1
+yuanbao2
+  rotate: false
+  xy: 234, 286
+  size: 190, 153
+  orig: 190, 153
+  offset: 0, 0
+  index: -1
+yuanbao3
+  rotate: true
+  xy: 360, 181
+  size: 103, 77
+  orig: 103, 77
+  offset: 0, 0
+  index: -1

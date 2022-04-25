@@ -1,0 +1,146 @@
+
+spine_wlzb_free.png
+size: 968,968
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+huxu_xia
+  rotate: false
+  xy: 2, 4
+  size: 151, 94
+  orig: 151, 94
+  offset: 0, 0
+  index: -1
+huxu_you
+  rotate: true
+  xy: 372, 111
+  size: 158, 195
+  orig: 158, 195
+  offset: 0, 0
+  index: -1
+huxu_zuo
+  rotate: true
+  xy: 685, 160
+  size: 158, 195
+  orig: 158, 195
+  offset: 0, 0
+  index: -1
+longzhu_you
+  rotate: false
+  xy: 366, 2
+  size: 122, 107
+  orig: 122, 107
+  offset: 0, 0
+  index: -1
+longzhu_zuo
+  rotate: false
+  xy: 490, 10
+  size: 113, 99
+  orig: 113, 99
+  offset: 0, 0
+  index: -1
+shange
+  rotate: false
+  xy: 766, 710
+  size: 180, 256
+  orig: 180, 256
+  offset: 0, 0
+  index: -1
+shengti_01
+  rotate: false
+  xy: 2, 100
+  size: 202, 409
+  orig: 202, 409
+  offset: 0, 0
+  index: -1
+shengti_02
+  rotate: false
+  xy: 2, 511
+  size: 407, 455
+  orig: 407, 455
+  offset: 0, 0
+  index: -1
+shengti_03
+  rotate: false
+  xy: 411, 735
+  size: 353, 231
+  orig: 353, 231
+  offset: 0, 0
+  index: -1
+shengti_04
+  rotate: true
+  xy: 372, 271
+  size: 238, 164
+  orig: 238, 164
+  offset: 0, 0
+  index: -1
+shengtimao_01
+  rotate: false
+  xy: 206, 145
+  size: 164, 364
+  orig: 164, 364
+  offset: 0, 0
+  index: -1
+shengtimao_02
+  rotate: false
+  xy: 691, 503
+  size: 262, 205
+  orig: 262, 205
+  offset: 0, 0
+  index: -1
+shengtimao_03
+  rotate: false
+  xy: 411, 534
+  size: 278, 199
+  orig: 278, 199
+  offset: 0, 0
+  index: -1
+shengtimao_04
+  rotate: true
+  xy: 538, 328
+  size: 204, 146
+  orig: 204, 146
+  offset: 0, 0
+  index: -1
+shengtimao_05
+  rotate: false
+  xy: 686, 320
+  size: 196, 181
+  orig: 196, 181
+  offset: 0, 0
+  index: -1
+toufa_01
+  rotate: false
+  xy: 605, 26
+  size: 137, 132
+  orig: 137, 132
+  offset: 0, 0
+  index: -1
+toufa_02
+  rotate: false
+  xy: 569, 168
+  size: 114, 158
+  orig: 114, 158
+  offset: 0, 0
+  index: -1
+toufa_03
+  rotate: true
+  xy: 206, 42
+  size: 101, 158
+  orig: 101, 158
+  offset: 0, 0
+  index: -1
+toufa_04
+  rotate: false
+  xy: 744, 31
+  size: 89, 127
+  orig: 89, 127
+  offset: 0, 0
+  index: -1
+xiae
+  rotate: true
+  xy: 884, 371
+  size: 130, 78
+  orig: 130, 78
+  offset: 0, 0
+  index: -1

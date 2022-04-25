@@ -1,0 +1,177 @@
+syntax = "proto3";
+
+// 客户端到服务器发送消息的类型
+enum ReceiveMessageType {
+    StartID = 0;
+    BetID = 1; // 下注信息
+	GetUserListInfo = 2; //获取玩家列表
+	Test = 3 ;// 测试消息
+	BetReptID = 4;// 重复下注
+}
+
+// 服务器发送给客户端的消息类型
+enum SendToClientMessageType {
+    RestartID = 0;
+    BetRet = 1; // 下注消息
+    BetFailID = 2; // 下注失败
+	Status = 3;		//状态消息
+	Settle = 4;		//结算消息
+	UserListInfo = 5;//玩家列表
+	RoomSenceInfo = 6;	//场次场景信息
+	UserComeBack = 7;	//用户回来的结算消息
+	OddsInfo = 8; // 赔率消息
+	UserNum =9 ; // 用户数量消息
+	BroadEndBet = 10;// 结束下注时广播各个区域下注金币
+	BetReptRet = 11; //  重复下注
+	GoldNowNotice = 12;// 当前金额通知
+}
+
+//游戏阶段
+enum GameStatus{
+	StartStatus = 0;
+	RandOdds = 1;//随机倍数  
+	StartMovie = 2;//开始动画 
+	BetStatus = 3; //下注阶段
+	EndBetMovie = 4; //结束下注动画
+	SettleStatus = 5; //结算阶段
+}
+
+
+message StatusMessage{
+	int32 Status = 1;		//状态
+	int32 StatusTime = 2;	//状态的持续时间
+}
+
+message BetFailMsg{
+	string BetFailInfo = 1;	//下注失败原因
+	bool IsKickOut = 2;// 是否剔除玩家
+}
+
+// 下注客户端传服务端参数
+message UserBet{
+	int32 BetType = 1;	//下注类型
+	int32 BetIndex = 2;	//下注的索引(筹码区索引)
+}
+
+// 结束下注后各个区域的下注金额
+message BroadBetEnd{
+	repeated int64 BetGold = 1;
+}
+
+// 循环播放玩家下注消息
+message LoopBroadUserBet{
+	repeated BroadUserBet List = 1;
+}
+
+//广播玩家下注
+message BroadUserBet{
+	int64 BetsGold = 1;  // 下注金币 
+	int64 UserId = 2;   // 玩家ID
+	int64 BetonGold = 3; // 区域已下注总金币
+	int32 BetArea = 4 ;// 下注区域
+}
+
+
+//结算消息
+message SettleMsg{
+	UserSettleInfo Self = 1;// 自己输赢信息
+	repeated AwardSettleInfo Award = 2;// 中奖信息
+	repeated UserSettleInfo Head = 3;// 前3名信息
+	BirdAnimalType BAType = 4;
+	int64 GoldNow = 5 ; // 玩家当前的金币
+}
+
+// 飞禽或走兽
+enum BirdAnimalType{
+	Zero = 0;
+	Bird = 1;// 飞禽
+	Animal = 2;// 走兽
+}
+
+//玩家列表信息
+message UserInfo{
+	string NickName = 1;
+	int64 ID = 2; 
+	int64 Gold = 3; // 当前金币
+	int64 WinGold = 4 ;// 获胜总金币（近20局）// 以此排序
+	int64 BetGold = 5; // 下注总金币（近20局）
+	string Avatar = 6; // 玩家头像
+}
+
+
+// 摇中结果结算
+message AwardSettleInfo{
+	int32 AwardType = 1; // 中奖的类型（金鲨银鲨等等）
+	int32 Odds = 2;// 中奖类型的赔率
+	int32 AwardBase = 3; // 中奖的基本类型
+}
+
+// 玩家结算消息
+message UserSettleInfo{
+	string Avatar = 1 ;// 玩家头像
+	string NickName = 2 ; // 玩家昵称
+	int64 WinGold = 3 ; // 玩家赢的金币 // 以此排序
+}
+
+// 玩家列表请求参数
+message UserListReq{
+	int32 PageIndex = 1; // 当前页
+}
+
+// 玩家列表响应参数
+message UserListResp{
+	repeated UserInfo UserList = 1;
+}
+
+
+// 房间规则信息
+message RoomRoleInfo {
+	repeated int32 BetArr = 1;
+}
+
+
+// 区域下注
+message sceneAllBets {
+    int64 allGold = 1; // 区域总下注值
+    int64 userID = 2;// 
+    int64 userGold = 3;// 自己下注
+} 
+// 场次场景信息（1次/s）
+message RoomSceneInfo {
+	repeated int64 bets = 1;//筹码下注倍数值
+    int64 gold = 2; // 玩家金币
+    int32 onlineCount = 4; //玩家列表个数（总个数） 
+    repeated int32 Trend = 5; // 历史记录
+	repeated sceneAllBets SceneBets = 6; // 场景区域下注 12个区域
+	repeated RandomOdds RandOdds = 7; // 随机赔率
+}
+
+message RandomOdds{
+	int32 ID = 1;// id
+	int32 Odds = 2;// 赔率
+}
+
+
+message OddsMsg {
+	repeated RandomOdds RandOdds = 1; // 随机赔率
+}
+
+
+message UserNumMsg {
+	int32 Num = 1 ; // 玩家数量
+}
+
+
+message TestMsg {
+	int32 Result = 1 ;// 测试结果
+}
+
+// 重复下注
+message BetRept {
+	repeated int64 BetArea = 1;
+}
+
+message GoldNowNoticeMsg{
+	int64 UserID = 1;// 用户ID
+	int64 GoldNow = 2;// 当前金额
+}

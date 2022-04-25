@@ -1,0 +1,14 @@
+{
+    // 作弊率
+    "roomProb":2000,
+    // 设定局数
+    "times":100000,
+    // 初始金额
+    "beginGold":10000000,
+     // 税率
+    "tax":0,
+    // 下注底注
+    "bottom":1,
+    // 下注倍数是否随机,true：随机；false：默认第一个
+    "isBetRand":true
+}

@@ -1,0 +1,104 @@
+{
+	"name": "武士斩杀",
+	"gameID": "90013",
+	"namespace": "games",
+	"spec": {
+		"image": "kubegames/wszs:latest",
+		"limit": {
+      "cpu": 0,
+      "online": 1000,
+      "memory": 0
+    },
+		"config": {
+			"serverName": "武士斩杀",
+			"gameID": "90013",
+			"hall": "hall.hall:8433",
+			"maxPeople": 10000,
+			"redis": [],
+			"robot": [],
+			"runmode": "dev"
+		},
+		"rooms": [{
+				"roomID": "900131",
+				"config": {
+					"gameID": "90013",
+					"roomID": "900131",
+					"maxPeople": 1,
+					"minPeople": 1,
+					"entranceRestrictions": 0,
+					"roomRate": 0,
+					"adviceConfig": "{\"Bottom_Pouring\":1}",
+					"level": 1,
+					"isAllowClose": true,
+					"isOpenAiRobot": true,
+					"platformID": 1,
+					"isOpenCrossPlatformMatch": false,
+					"allowPlatformID": [],
+					"isAllowAutoCreateTable": true
+				}
+			},
+			{
+				"roomID": "900132",
+				"config": {
+					"gameID": "90013",
+					"roomID": "900132",
+					"maxPeople": 1,
+					"minPeople": 1,
+					"entranceRestrictions": 100,
+					"roomRate": 0,
+					"adviceConfig": "{\"Bottom_Pouring\":10}",
+					"level": 2,
+					"isAllowClose": true,
+					"isOpenAiRobot": true,
+					"platformID": 1,
+					"isOpenCrossPlatformMatch": false,
+					"allowPlatformID": [],
+					"isAllowAutoCreateTable": true
+				}
+			},
+			{
+				"roomID": "900133",
+				"config": {
+					"gameID": "90013",
+					"roomID": "900133",
+					"maxPeople": 1,
+					"minPeople": 1,
+					"entranceRestrictions": 1000,
+					"roomRate": 0,
+					"adviceConfig": "{\"Bottom_Pouring\":100}",
+					"level": 3,
+					"isAllowClose": true,
+					"isOpenAiRobot": true,
+					"platformID": 1,
+					"isOpenCrossPlatformMatch": false,
+					"allowPlatformID": [],
+					"isAllowAutoCreateTable": true
+				}
+			},
+			{
+				"roomID": "900134",
+				"config": {
+					"gameID": "90013",
+					"roomID": "900134",
+					"maxPeople": 1,
+					"minPeople": 1,
+					"entranceRestrictions": 10000,
+					"roomRate": 0,
+					"adviceConfig": "{\"Bottom_Pouring\":1000}",
+					"level": 4,
+					"isAllowClose": true,
+					"isOpenAiRobot": true,
+					"platformID": 1,
+					"isOpenCrossPlatformMatch": false,
+					"allowPlatformID": [],
+					"isAllowAutoCreateTable": true
+				}
+			}
+		],
+		"nodeSelector": {},
+		"port": 8433,
+		"commonds": [],
+		"schedulerPlugin": {},
+		"replicas": 1
+	}
+}

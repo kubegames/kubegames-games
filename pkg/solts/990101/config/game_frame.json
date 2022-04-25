@@ -1,0 +1,13 @@
+{
+	"game_id":990101,
+	"consul":"192.168.0.130:8500",
+	"server_name":"水果小玛丽",
+	"port" : "8080",
+    "runmode" : "info",
+    "game_type":4,
+    "table_num":15000,
+    "max":1,
+    "min":1,
+    "robot":[
+    ]
+}

@@ -1,0 +1,316 @@
+
+syntax = "proto3";
+package msg;
+
+enum MsgId {
+    ZERO = 0;
+    INTO_ROOM_Req        = 1;  //进入房间
+    INTO_ROOM_Res        = 2;
+    EXIST_ROOM_Req       = 3;  //退出房间
+    EXIST_ROOM_Res       = 4;
+    SHOOT_Req            = 5;  //射击
+    SHOOT_Res            = 6;
+    HIT_Req              = 7;  //击中
+    HIT_Res              = 8;
+
+
+    FISHTIDE_Req         = 9;  //鱼潮
+    FISHTIDEFORECAST_Req = 10;  //鱼潮预告
+
+    UPGRADE_Req          = 11;  //升级炮弹
+    UPGRADE_Res          = 12;
+
+    REFRESHFISH_Req      = 13; //刷新鱼
+
+    DEAD_Req             = 14;  //自然死亡
+    DEAD_Res             = 15;
+
+    CHANGEMODEL_Req      = 16;  //切换模式
+    CHANGEMODEL_Res      = 17;
+
+    CHANGELOCKFISH_Req   = 18;  //改变锁定的鱼
+    CHANGELOCKFISH_Res   = 19;
+
+    CHANGECALCULATEROBOT_Req     = 20;  //改变计算机器人的玩家
+
+    CHANGESCENE_Req              = 21;  //改变场景
+
+    SKILLHIT_Req         = 22;  //技能攻击
+    SKILLHIT_Res         = 23;
+
+    SOMEONEENTER_Req     = 24;  //有人进入
+
+    TEST_Req             = 25;
+
+    FISHTIDEEND_Req      = 26;
+
+    SKILL_Req            = 27;  //技能发射
+    SKILL_Res            = 28;
+
+    TURN_Req             = 29;  //转向
+
+    BOSSFORECAST_Req     = 30;  //boss预告
+
+    SKILLEND_Req            = 31;  //技能结束
+}
+
+enum ERROR {
+    ERROR_CODE_OK = 0; //没有错误消息，主要用于程序内部判断
+    ERROR_CODE_NOT_INTOROOM = 10000; //玩家还未进入房间或没连上线
+    ERROR_CODE_NOT_ENOUGH = 10001; //玩家资金不足
+    ERROR_CODE_LESS_MIN = 10002; //玩家下注金额小于当前最小金额
+}
+
+enum type {
+    ZREO = 0;
+    SMALL = 1;
+    MIDDLE = 2;
+    BIG = 3;
+    BOSS = 4;
+    PILE = 5;
+    KING = 6;
+    SPECIAL = 10;
+}
+
+//发送给客户端所有消息协议封包，buff是具体的结构体内容，需要端对照相应的协议解析
+message Msg{ //subCmd 0
+    int32 mainCmd = 1;  //主消息协议
+    int32 subCmd = 2;	//次消息协议
+    bytes buff = 3; 	//数据流
+}
+
+//牌桌信息
+message TableInfo{
+    int32 tableId = 1;
+    string tableName = 2;
+    repeated UserInfo userInfoArr = 3;//其他玩家的信息
+    repeated Fish fishes = 4;//鱼
+    int32 sceneId = 5;  //场景ID
+    bool fishTide = 6;  //是否鱼潮
+    int64 serverTime = 7;
+}
+
+//用户信息
+message UserInfo{
+    int64 userId = 1;
+    string userName = 2;
+    int32 sex = 3;//玩家性别
+    string head = 4;//玩家头像
+    int64 amount = 5;//玩家当前携带的金额
+    int32 chairId = 6;//椅子号
+    int32 bulletLv = 7;//炮弹等级
+    bool auto = 8;//攻击模式  1.自动 2.加速 3.锁定
+    bool speed = 9;//攻击模式  1.自动 2.加速 3.锁定
+    bool lock = 10;//攻击模式  1.自动 2.加速 3.锁定
+    int32 lockFishId = 11;  //锁定鱼Id
+    bool calculateRobot = 12;  //计算robot子弹
+    bool isRobot = 13;
+    repeated Skill skills = 14; //技能
+}
+
+message Fish {
+    int32 id  = 1;  //唯一ID
+    int64 bornTime  = 2;
+    Point bornPoint  = 3;
+    repeated Point line = 4;
+    type typeId = 5;
+    bool isDead = 6;
+    string fishId = 7;
+    repeated int32 speed = 8;
+    int32 num = 9;
+    int32 skillId = 10;
+    FormationInfo formationInfo = 11;
+    int32 bornIndex = 12;
+}
+
+message Point {
+    int32 x = 1;
+    int32 y = 2;
+}
+
+message EnterRoomReq {
+    int64 userId = 1;
+    string userName = 2;
+}
+
+message EnterRoomRes {
+    TableInfo tableInfo = 1;
+}
+
+message ExistRoomReq {
+    int64 userId = 1;
+}
+
+message ExistRoomRes {
+    int64 userId = 1;
+}
+
+message ShootReq {
+    int64 userId = 1;
+    Point point = 2;
+    int32 bulletType = 3;
+}
+
+message ShootRes {
+    int64 userId = 1;
+    Point point = 2;
+    int32 bulletType = 3;
+}
+
+message HitReq {
+    int64 userId = 1;
+    int32 fishId = 2;
+    int32 bulletLv = 3;
+    bool isPenetrate = 4;
+}
+
+message HitRes {
+    int64 userId = 1;
+    DeadFish fish = 2;
+    string key = 3;
+    int32 coinChange = 4;
+    int32 isEmpty = 5;
+}
+
+message FishTideForecastReq {
+
+}
+
+message FishTideReq {
+    int32 formation = 1;  //阵型
+    int32 line = 2;   //路线
+}
+
+message UpgradeReq {
+    bool isAdd = 1;
+}
+
+message UpgradeRes {
+    int64 userId = 1;
+    int32 lv = 2;
+}
+
+message RefreshFishReq {
+    repeated Fish fish = 1;
+    repeated Point offset = 2;
+    bool isSummon = 3;
+}
+
+message DeadReq {
+    int32 id = 1;
+}
+
+message DeadRes {
+    int32 id = 1;
+}
+
+message ChangemModelReq {
+    int64 userId = 1;
+    int32 modelId = 2;
+}
+
+message ChangemModelRes {
+    int64 userId = 1;
+    int32 modelId = 2;
+}
+
+message ChangemLockFishReq {
+    int64 userId = 1;
+    int32 fishId = 2;
+}
+
+message ChangemLockFishRes {
+    int64 userId = 1;
+    int32 fishId = 2;
+}
+
+message ChangeCalculateRobot_Req {
+    int64 userId = 1;
+}
+
+message ChangemSceneReq {
+    int32 sceneId = 1;
+}
+
+message SkillHitReq {
+    string fishId = 1;  //鱼ID
+    int32 skillId = 2;  //1.雷电 2.爆炸 3.冰冻
+    repeated int32 fishIds = 3;
+    Point point = 4;
+    int64 userId = 5;
+}
+
+message SkillHitRes {
+    repeated DeadFish fishIds = 1;
+    repeated int32 fishes = 2;  //受影响的鱼
+    int32 skillId = 3;  //1.雷电 2.爆炸 3.冰冻
+    int64 userId = 4;
+    Point point = 5;
+    int32 coinChange = 6;
+    string fishId = 7;
+}
+
+message DeadFish {
+    int32 fishId = 1;
+    double score = 2;
+}
+
+message SomeoneEnter_Req {
+    repeated UserInfo userInfoArr = 1;  //其他玩家的信息
+}
+
+message FormationInfo {
+    float radius = 1;
+    float overlying = 2;
+    float angle = 3;
+    Point point = 4;
+}
+
+message TestReq {
+    int32 func = 1;  //1.立即开始鱼潮
+    string fishId = 2; // 召唤特定的鱼
+}
+
+message FishtideEndReq {
+
+}
+
+message Skill {
+    int32 skillId = 1; //1.冰冻 2.穿透 3.召唤
+    int64 interval= 2; //冷却时间
+    int64 dur     = 3;  //持续时间
+    int32 chance  = 4; //命中概率
+    int32 limit   = 5; //范围
+    int64 lastTime=6;  //上次使用时间
+}
+
+message SkillReq {
+    int32 skillId = 1;
+    repeated int32 fishes = 2;
+}
+
+message SkillRes {
+    int32 skillId = 1;
+    repeated int32 fishes = 2;
+}
+
+message TurnReq {
+    bool isTurn = 1;  //是否改变方向
+    repeated TurnInfo turnInfo = 2;
+    int32 angle = 3; //角度
+}
+
+message TurnInfo {
+    int32 fishId = 1;
+    int32 location = 2; // 位置编号
+}
+
+message BossForecastReq {
+    string bossId = 1;
+}
+
+message SkillEndReq {
+    int32 skillId = 1;
+    int32 coinChange = 2;
+    int64 userId = 3;
+}

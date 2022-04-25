@@ -1,0 +1,104 @@
+{
+	"name": "水果777",
+	"gameID": "90008",
+	"namespace": "games",
+	"spec": {
+		"image": "kubegames/sg777:latest",
+		"limit": {
+      "cpu": 0,
+      "online": 1000,
+      "memory": 0
+    },
+		"config": {
+			"serverName": "水果777",
+			"gameID": "90008",
+			"hall": "hall.hall:8433",
+			"maxPeople": 10000,
+			"redis": [],
+			"robot": [],
+			"runmode": "dev"
+		},
+		"rooms": [{
+				"roomID": "900081",
+				"config": {
+					"gameID": "90008",
+					"roomID": "900081",
+					"maxPeople": 1,
+					"minPeople": 1,
+					"entranceRestrictions": 0,
+					"roomRate": 0,
+					"adviceConfig": "{\"Bottom_Pouring\":1}",
+					"level": 1,
+					"isAllowClose": true,
+					"isOpenAiRobot": true,
+					"platformID": 1,
+					"isOpenCrossPlatformMatch": false,
+					"allowPlatformID": [],
+					"isAllowAutoCreateTable": true
+				}
+			},
+			{
+				"roomID": "900082",
+				"config": {
+					"gameID": "90008",
+					"roomID": "900082",
+					"maxPeople": 1,
+					"minPeople": 1,
+					"entranceRestrictions": 100,
+					"roomRate": 0,
+					"adviceConfig": "{\"Bottom_Pouring\":10}",
+					"level": 2,
+					"isAllowClose": true,
+					"isOpenAiRobot": true,
+					"platformID": 1,
+					"isOpenCrossPlatformMatch": false,
+					"allowPlatformID": [],
+					"isAllowAutoCreateTable": true
+				}
+			},
+			{
+				"roomID": "900083",
+				"config": {
+					"gameID": "90008",
+					"roomID": "900083",
+					"maxPeople": 1,
+					"minPeople": 1,
+					"entranceRestrictions": 1000,
+					"roomRate": 0,
+					"adviceConfig": "{\"Bottom_Pouring\":100}",
+					"level": 3,
+					"isAllowClose": true,
+					"isOpenAiRobot": true,
+					"platformID": 1,
+					"isOpenCrossPlatformMatch": false,
+					"allowPlatformID": [],
+					"isAllowAutoCreateTable": true
+				}
+			},
+			{
+				"roomID": "900084",
+				"config": {
+					"gameID": "90008",
+					"roomID": "900084",
+					"maxPeople": 1,
+					"minPeople": 1,
+					"entranceRestrictions": 10000,
+					"roomRate": 0,
+					"adviceConfig": "{\"Bottom_Pouring\":1000}",
+					"level": 4,
+					"isAllowClose": true,
+					"isOpenAiRobot": true,
+					"platformID": 1,
+					"isOpenCrossPlatformMatch": false,
+					"allowPlatformID": [],
+					"isAllowAutoCreateTable": true
+				}
+			}
+		],
+		"nodeSelector": {},
+		"port": 8433,
+		"commonds": [],
+		"schedulerPlugin": {},
+		"replicas": 1
+	}
+}

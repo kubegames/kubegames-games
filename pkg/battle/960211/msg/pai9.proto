@@ -1,0 +1,220 @@
+syntax = "proto3";
+package paigow;
+
+// 客户端到服务器发送消息的类型
+enum ReceiveMessageType {
+    StartID = 0;
+    QiangZhuangReq = 1; // 抢庄倍数消息
+    BetMultiReq = 2;// 下注倍数消息
+    TestReq = 3;// 作弊消息
+}
+
+// 服务器发送给客户端的消息类型
+enum SendToClientMessageType {
+    RestartID = 0;
+    ZhuangResp  = 1;// 谁是庄
+    PokerInfoResp = 2;// 牌值，输赢，玩家id
+    SettleAllResp = 3;// 一轮结束的总结算
+    Status = 4;// 状态消息
+    SceneResp = 5;// 场景消息
+    UserListResp = 6;// 匹配之后的玩家列表
+    QiangZhuangResp = 7 ;// 抢庄响应广播
+    BetMultiResp = 8; // 下注响应广播
+    UserBetMulti = 9;// 玩家的下注倍数列表
+    DealPokerInfo = 10;// 发牌阶段信息（骰子值和第一个发牌玩家）
+}
+
+//游戏阶段
+enum GameStatus{
+	StartStatus = 0;
+    Shuffle = 7; // 洗牌阶段
+	QiangZhuang = 1;// 抢庄阶段
+    SendZhuang = 2; // 发送谁是庄的状态，给前端展示谁是庄动画
+    Bet = 3;// 下注倍数结算
+    DealPoker = 4 ;// 发牌阶段
+    ShowPoker = 5;// 展示牌阶段（结算）
+    SettleAll = 6; // 一轮结算阶段
+   
+}
+
+message StatusMessage{
+	int32 Status = 1;		//状态
+	int32 StatusTime = 2;	//状态的持续时间
+}
+
+// 抢庄倍数消息
+message QiangZhuangReqMsg{
+    int32 UserID = 1;// 座位ID
+    int32 Index = 2;// 抢庄下标索引
+}
+
+// 下注倍数消息
+message BetMultiReqMsg{
+    int32 UserID = 1;// 座位ID
+    int32 Index = 2;// 下注倍数下标索引
+}
+
+message ZhuangRespMsg{
+      int32 ChairID = 1;// 座位ID
+      repeated int32 ZhuangWait = 2;// 庄家的待选人（存放的是chairID）
+      int32 QiangMulti = 3;// 抢庄倍数
+}
+
+// 随机骰子值
+message DiceValRespMsg{
+    int32 First = 1; // 第一个骰子
+    int32 Second = 2;// 第二个骰子
+}
+
+
+message DealPokerMsg{
+    DiceValRespMsg DiceVal  = 1;// 骰子值
+    int32 DealFirstChairID = 3;// 第一个发牌的玩家椅子id
+}
+
+// 发牌信息
+message PokerInfoRespMsg{
+    repeated PokerInfoRespDetail Info = 2;// 玩家的牌值
+}
+
+message PokerInfoRespDetail {
+    int32 ChairID = 1;// 座位ID
+    repeated Poker Poker = 2; // 玩家的牌值
+    PokerType PokerVal =3; // poker的值
+    int64 GoldChange = 4;// 金币变动
+    int64 GoldNow = 5;// 金币变动后的值，当前金额
+}
+
+//  一轮结束的总结算
+message SettleAllRespMsg{
+    repeated SettleAllRespDetail Info = 1;
+}
+
+message SettleAllRespDetail {
+    string Name  = 1;// 昵称
+    int64 GoldBegin = 2;//初始携带
+    int32 PokerType = 3;// 牌型
+    int32 Bottom  = 4 ;// 底注
+    int32 QiangMulti = 5;// 抢庄倍数
+    int32 BetMulti = 6;// 下注倍数
+    int64 GoldChange = 7;// 金币变化
+    bool isZhuang = 8;// 是否是庄
+}
+
+
+// 场景消息
+message SenceMsg{
+    int32 Status = 1;// 游戏状态
+    int32 LeftTime  = 2 ;// 该状态剩余时间
+    repeated UserInfo UserInfo = 3;// 玩家信息
+    PokerInfoRespMsg Poker  = 4;// 牌信息 
+    repeated int32 QiangMulti  = 5; // 抢庄的倍数
+    repeated int32 BetMulti = 6;// 下注的倍数
+    int32 ZhuangChairID = 7;// 庄家的座位号
+    int32 ZhuangVal = 8 ;// 庄家的抢庄倍数
+    int32 SetNum = 9;// 当前局数；1：第一局；2：第二局
+    int64 Bottom = 10; // 底注
+    repeated int32 Nums = 11;// 当前轮剩余的牌；num表示牌数量：0：不剩余；1：剩余1张；2：剩余2张
+
+    repeated QiangZhuangRespMsg QiangInfo  = 12; // 当前已抢庄的信息
+    repeated BetMultiRespMsg BetInfo  = 13; // 当前已下注的信息
+    int32 DealFirstChairID = 14;// 第一个发牌的玩家椅子id
+    int64 RoomID = 15;// 房间ID
+    int32 IntervalTime  = 16 ;// 该状态剩余时间
+}
+
+// 玩家信息
+message UserInfo {
+    string Avatar = 1;// 头像
+    string Name = 2;// 昵称
+    int64 GoldNow = 3;// 当钱金额
+    int32 ChairID = 4;// 座位号
+    int64 UserID = 5;// 玩家ID
+    string IP = 6;// ip
+}
+
+// 匹配成功之后的4个玩家
+message UserListRespMsg{
+    repeated UserInfo List = 1; 
+}
+
+// 抢庄响应广播
+message QiangZhuangRespMsg{
+    int32 ChairID = 1;// 座位号
+    int32 Val = 2;// 抢庄值
+}
+
+// 下注响应广播
+message BetMultiRespMsg{
+    int32 ChairID = 1;// 座位号
+    int32 Val = 2;// 下注倍数
+}
+
+
+// 玩家下注倍数列表
+message UserBetMultiMsg{
+    repeated int32 List = 1;
+}
+
+// 作弊消息
+message TestReqMsg{
+    int32 Poker1 = 1;// 第一张牌
+    int32 Poker2 = 2;// 第二张牌
+}
+
+
+// 单牌定义
+message Poker {
+    int32 Sorted = 1; // 单牌排序
+    int32 Val = 2; // 单牌值
+}
+
+enum PokerType{
+    Zero = 0;
+    // 至尊
+    ZhiZun = 31;
+    // 双天
+    ShuangTian = 30;
+    // 双地
+    ShuangDi = 29 ;
+    // 双人
+    ShuangRen = 28;
+    // 双鹅
+    ShuangE = 27;
+    // 双梅
+    ShuangMei = 26;
+    // 双长三
+    ShuangChangSan = 25;
+    // 双板凳
+    ShuangBanDeng = 24;
+    // 双斧头
+    ShuangFuTou = 23;
+    // 双红头
+    ShuangHongTou = 22;
+    // 双高脚
+    ShuangGaoJiao = 21;
+    // 双零霖
+    ShuangLingLin = 20;
+    // 杂九
+    ZaJiu = 19;
+    // 杂八
+    ZaBa=18;
+    // 杂七
+    ZaQi=17;
+    // 杂五
+    ZaWu = 16;
+     // 天王
+    TianWang = 15;
+    // 地王
+    DiWang = 14;
+    // 天杠
+    TianGang = 13;
+    // 地杠
+    DiGang = 12;
+    // 天高九
+    TianGaoJiu = 11;
+    // 地高九
+    DiGaoJiu = 10;
+}
+
+

@@ -1,0 +1,317 @@
+
+syntax = "proto3";
+package msg;
+
+// 客户端到服务器发送消息的类型
+enum ReceiveMessageType {
+	C2SStartID   = 0;
+	C2SSitDown   = 1; // 用户坐下消息
+	C2SBet       = 2; // 请求下注 BetReq
+	C2SAskDo     = 3; // 操作请求 AskDoReq
+	C2SBuyInsure = 4; // 购买保险 BuyInsureReq
+	C2SBetOver   = 5; // 下注完毕 BetOverReq
+	C2SDoubleBet = 6; // 双倍押注数据结构 DoubleBetReq
+	C2SCardsType = 7; // 测试要牌类型 TestCardsTypeReq
+}
+
+// 服务器发送给客户端的消息类型
+enum SendToClientMessageType {
+	S2CRestartID           = 0;
+	S2CBetRet              = 1;  // 下注消息
+	S2CBetFail             = 2;  // 下注失败 BetFailRes
+	S2CBetSuccessMessageID = 3;  // 下注成功的消息id BetSuccessRes
+	S2CSceneMessage        = 4;  // 场景信息 SceneInfoRes
+	S2CAskDo               = 5;  // 询问操作 AskDoRes
+	S2CStatus              = 6;  // 状态消息 StatusMessageRes
+	S2CSettle              = 7;  // 结算消息 SettleMsgRes
+	S2CSitDownFail         = 8;  // 坐下失败 UserSitDownFailRes
+	S2CBuyInsure           = 9;  // 购买保险 BuyInsureRes
+	S2CFaPai               = 10; // 发牌 FaPaiRes
+	S2CFaPaiOne            = 11; // 发一张牌 FaPaiOneRes
+	S2CZhuangJiaAnPai      = 12; // 庄家暗牌信息 ZhuangJiaAnPaiRes
+	S2CCurrentSeat         = 13; // 当前操作的玩家 CurrentSeatRes
+	S2CUserSitDown         = 14; // 玩家坐下成功 UserSitDownRes
+	S2CUserLeaveRoom       = 15; // 玩家离开房间
+	S2CBetOverRes          = 16; // 服务器返回下注完毕信息 BetOverRes
+	S2CInsureResult        = 17; // 买保险的结果
+	S2CTestControl         = 18; // 控制测试 TestControlRes
+}
+
+//游戏阶段
+enum GameStatus{
+	StartStatus      = 0;
+	StartMove        = 1; // 开始阶段
+	BetStatus        = 2; // 下注阶段
+	EndBet           = 3; // 下注结束
+	FirstRoundFaPai  = 4; // 第一轮发牌
+	InsuranceStatus  = 5; // 买保险
+	EndInsurance     = 6; // 买保险结束
+	SecondRoundFaPai = 7; // 第二轮发牌
+	Result           = 8; // 结算阶段
+	GameOver         = 9; // 游戏结束
+}
+
+//玩家操作类型
+enum AskDoType{
+	NormalType  = 0;
+	GetPoker    = 1; // 要牌
+	DepartPoker = 2; // 分牌
+	DoubleBet   = 3; // 双倍
+	Stand       = 4; // 停牌
+	GiveUp      = 5; // 认输
+}
+
+//牌的类型
+enum CardsType{
+	Normal     = 0;
+	BlackJack  = 1; //黑杰克
+	FiveDragon = 2; //五小龙
+	Point21    = 3; //21点
+	Other      = 4; //普通牌
+	Bust       = 5; //爆牌
+}
+
+// 错误列表
+enum ErrorList{
+	NoError            = 0;
+	NotBetStatus       = 1; // 不在下注状态中
+	LackOfFunds        = 2; // 余额不足
+	ExcessMax          = 3; // 超过最大额度
+	NotInsuranceStatus = 4; // 不再买保险状态中
+	ActionFail         = 5; // 操作失败
+	KickedOut		   = 6; // 用户被踢
+}
+
+// 测试牌型
+enum TestCardsType{
+	TestNoType            = 0;
+	TestBlackJack         = 1; // 黑杰克
+	TestPairs             = 2; // 对子
+	TestThreeCards21Point = 3; // 三张21点
+	TestFourCards21Point  = 4; // 四张21点
+	TestFiveDragon        = 5; // 五小龙
+}
+
+// 用户停止操作原因
+enum StopAction{
+	NotStop         = 0; // 没有停止操作
+	ActionDoubleBet = 1; // 双倍
+	ActionStand     = 2; // 停牌
+	ActionGiveUp    = 3; // 认输
+}
+
+// 用户状态
+enum UserStatus{
+	UserInitStatus = 0;
+	UserSitDown    = 1; // 坐下
+	UserReady      = 2; // 玩家准备
+	UserBetSuccess = 3; // 玩家下注成功
+	UserWatch      = 4; // 玩家未下注观战中
+	UserBetOver    = 5; // 玩家下注完毕
+	UserStopAction = 6; // 玩家停止操作
+}
+
+//游戏状态消息/一局游戏结束等待时
+message StatusMessageRes{
+	int32 Status = 1;		//等待游戏开始状态
+	int32 StatusTime = 2;	//状态的持续时间
+}
+
+//当前操作的玩家座位
+message CurrentSeatRes{
+	int32 ChairId       = 1;
+	int32 BetCardsIndex = 2; // 操作手牌(手牌0或1)
+	bool  GetPoker      = 3; // 要牌
+	bool  DepartPoker   = 4; // 分牌
+	bool  DoubleBet     = 5; // 双倍
+	bool  Stand         = 6; // 停牌
+	bool  GiveUp        = 7; // 认输
+	int32 StatusTime    = 8; //状态的持续时间
+	int64 userId        = 9;
+}
+
+// 我押注失败发送的消息
+message BetFailRes {
+    int32 errNum = 1; // 错误编号
+}
+
+// 返回买保险信息
+message BuyInsureRes {
+	int32 ChairId = 1; // 座位号
+	int64 userId  = 2;
+	int32 Status  = 3; // 0失败  1 成功
+	int32 errNum  = 4; // 失败原因
+	bool  IsBuy   = 5; // false 不购买，true 购买
+}
+
+// 押注成功时发送的消息
+message BetSuccessRes {
+	int32 ChairId       = 1; // 座位号，场景中的座位号
+	int32 BetIndex      = 2; // 下注的下标
+	int32 BetCardsIndex = 3; // 分牌标识(手牌0或1)
+	int64 userId        = 4; // 用户ID
+	int64 BetNum        = 5; // 下注数量
+	bool  isReatBet     = 6;
+	bool  isDouble      = 7;
+	bool  isBuyInsure   = 8;
+	bool  isAll         = 9;
+	bool  isDepart      = 10;
+}
+
+//发牌
+message FaPaiRes{
+	repeated UserPaiInfoRes UserPaiInfoArr = 1; //闲家手牌
+	bytes Cards = 2; //庄家发的明牌,庄家暗牌翻牌后才显示点数
+}
+
+//发一张牌
+message FaPaiOneRes{
+	int32 ChairId = 1;//座位号，场景中的座位号
+	bytes Cards = 2;
+	int64 userId =3;
+	repeated int32 Cardspoint=4;//发牌后的点数[3,13] 3/13
+	int32 CardType = 5;//牌型
+	int32 BetCardsIndex = 6;
+}
+
+//玩家牌信息
+message UserPaiInfoRes{
+	int32 ChairId = 1;//座位号，场景中的座位号
+	int64 userId =2;
+	bytes CardArr = 3;//手牌(如果为空表示显示牌背)
+	repeated int32 Cardspoint=4;//发牌后牌的点数[3,13] 3/13
+	int32 CardType = 5;//牌型
+}
+
+//庄家暗牌信息
+message ZhuangJiaAnPaiRes{
+	bytes Cards = 1;
+	repeated int32 Cardspoint=2;//发牌后牌的点数[3,13] 3/13
+	int32 CardType = 3;//牌型
+}
+
+//手牌
+message HandCardsRes{
+	bytes Cards = 1;
+	repeated int32 Cardspoint=2;//发牌后牌的点数[3,13] 3/13
+	int64 CardsBet = 3;//手牌0的下注
+	int32 CardType = 4;//牌型
+	int32 StopAction = 5; // StopAction
+}
+
+//游戏中几个玩家的数据
+message SeatUserInfoRes {
+    string UserName = 1; // 用户昵称
+    string Head = 2; // 头像
+    int64 Coin = 3; // 分数
+	int32 ChairId=4;//在场景中的座位id
+	HandCardsRes Cards0 = 5;//手牌0
+	HandCardsRes Cards1 = 6;//手牌1(若未分牌，则此项为空)
+	bool IsBuyInsure = 7;//是否购买了保险
+	int32 Status=8; // 1：玩家坐下，2：玩家准备，3：玩家下注成功，4：玩家未下注观战中，5：玩家下注完毕，6：玩家停止操作
+	int64 userId = 9;//玩家id
+	int64 coinPool=10;//下注池子里下的总数
+	int64 lastGameBets=11;//上一次下注阶段下注的数量
+	int32 Sex = 12; // 性别
+	string address = 13; // 地理地址
+	int64 SettleResult = 14; // 输赢结果
+}
+
+// 当前桌面信息(用于断线重连)
+message SceneInfoRes{
+	repeated SeatUserInfoRes UserData = 1;
+	int32 GameStatus = 2;//游戏阶段
+	CurrentSeatRes CurrentAskSeat = 3;//当前询问的玩家座位
+	int64 StatusTimeLeft = 4;//当前状态剩余时间
+	int64 MaxBet=5;//最大下注额
+	repeated int64 BetIndexs=6;//四个下注筹码的数值信息
+	bool Reconnect=7; //是否重联
+	bytes HostCards=8; //庄家手牌
+	repeated int32 HostCardsPoint=9;//发牌后牌的点数[3,13] 3/13
+	int64 RoomID=10;//房间ID
+	int64 LimitJoin=11; // 限制进入门槛
+	int32 HostCardsType=12; //庄家手牌牌型
+}
+
+message UserSitDownRes{
+	SeatUserInfoRes UserData =1;
+}
+message UserLeaveRoomRes{
+	int32 ChairId = 1;//座位号
+	int64 userId = 2;//玩家id
+	int32 Msg = 3;//离开原因
+}
+
+message UserSitDownFailRes{
+	int32 FailNo = 1;//坐下失败，1表示座位上已经有人了
+}
+message userResultsRes {
+	int64 userId = 1;//用户ID
+	int64 UserWinLoss = 2;//闲家输赢
+	int32 Status= 3; // 1：玩家坐下，2：玩家准备，3：玩家下注成功，4：玩家未下注观战中，5：玩家下注完毕，6：玩家停止操作
+	int32 ChairId = 4;//座位号
+}
+//结算消息
+message SettleMsgRes{
+	repeated userResultsRes userInfos=1;
+}
+message AskDoRes {//操作返回
+    int32 ChairId=1;
+    int32 Status=2;//0失败 1成功
+	int32 Action=3;//操作了1要牌 2分牌 3双倍4停牌 5认输
+    int32 errNum =4;
+	int64 userId = 5;		// 用户ID
+	int32 BetCardsIndex = 6;
+	bool isAction=7;//当前玩家是否可以操作
+}
+message BetOverRes {//返回下注完成
+     int32 ChairId=1;//哪个
+	 int64 userId =2;
+}
+
+// 用户买保险结果
+message InsureResultRes {
+	int64 userId = 1;		// 用户ID
+	int32 ChairId = 2;		// 用户座位
+	int64 UserWinLoss = 3;	// 玩家购买保险结果
+}
+
+message InsureResultListRes {
+	repeated InsureResultRes InsureResult = 1; // InsureResultRes
+}
+
+// 测试控制
+message TestControlRes{
+	int64 RoomProb = 1; // 血池作弊率
+	int64 ExactControl = 2; // 点控作弊率
+	int64 ActionWeights = 3; // 当前操作权重
+}
+
+//----------------------------------------
+
+// 服务器收到的押注信息
+message BetReq {
+	int32 BetIndex = 1;//下注的下标0/1/2/3
+	bool all=2;
+	bool repeatBet=3;//重复下注
+}
+
+// 服务器收到的询问操作
+message AskDoReq {
+	int32 CmdType = 1; // 1 要牌,2 分牌,3 双倍,4 停牌,5 认输
+	int32 BetCardsIndex = 2;
+}
+
+// 服务器收到的购买保险
+message BuyInsureReq {
+    bool Buy = 1;//购买保险;不购买
+	//int32 NotBuy = 2;//不购买
+}
+message BetOverReq {
+    bool isOk =1;//确定下注好了，随便发。。
+}
+
+// 测试要求牌类型
+message TestCardsTypeReq {
+	int32 type = 1; // 测试牌类型 1：黑杰克；2：对子；3，三张21点；4：四张21点；5：五小龙
+}

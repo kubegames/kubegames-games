@@ -1,0 +1,9 @@
+{
+  "cheat": [-3000,-2000],
+  "round": 50001,
+  "startMoney": 1000000,
+  "tax": 0.05,
+  "baseBet": 10,
+  "testLogPath": "testLOG.txt",
+  "testRobotNumber": 50000
+}

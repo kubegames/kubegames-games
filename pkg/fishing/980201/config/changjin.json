@@ -1,0 +1,198 @@
+{
+  "1": {
+
+    "1": {
+      "Id": "1",
+      "mingzi": "普通1",
+      "xiaoyu": 5,
+      "zhongyu": 50,
+      "dayu": 45,
+      "zuidabeishu": 1250,
+	  "publ": 5,
+      "bossID": "33",
+      "bossxiaoyu": 5,
+      "bosszhongyu": 45,
+      "bossdayu": 50,
+      "bosszuidabeishu": 300,
+	  "bosspubl": 5,
+	  "bossyuzhuanxiangshijian":5000,
+	  "bosszhunxianggailv":50,
+	  "bosschushoupeizhi":[],
+	  "ycpeizhi": [
+	           "yuzhen",
+			   "yuzhen2"
+	  ]	  
+    },
+    "2": {
+      "Id": "2",
+      "mingzi": "普通2",
+      "xiaoyu": 5,
+      "zhongyu": 50,
+      "dayu": 45,
+      "zuidabeishu": 1250,
+	  "publ": 5,
+      "bossID": "34",
+      "bossxiaoyu": 5,
+      "bosszhongyu": 45,
+      "bossdayu": 50,
+      "bosszuidabeishu": 300,
+	  "bosspubl": 5,
+	  "bossyuzhuanxiangshijian":20000,
+	  "bosszhunxianggailv":100,
+	  "bosschushoupeizhi":[[0,1,4],[0,1,5],[-135,1,4 ],[-135,3,5],[90,4,5],[180,4,5],[180,1,5]],
+	  "ycpeizhi": [
+	           "yuzhen",
+			   "yuzhen2"
+	  ]	  
+    },	
+    "pool" : 10000
+  },
+  "2": {
+
+    "1": {
+      "Id": "1",
+      "mingzi": "普通1",
+      "xiaoyu": 5,
+      "zhongyu": 50,
+      "dayu": 45,
+      "zuidabeishu": 1250,
+	  "publ": 5,
+      "bossID": "33",
+      "bossxiaoyu": 5,
+      "bosszhongyu": 45,
+      "bossdayu": 50,
+      "bosszuidabeishu": 300,
+	  "bosspubl": 5,
+	  "bossyuzhuanxiangshijian":5000,
+	  "bosszhunxianggailv":50,
+	  "bosschushoupeizhi":[],
+	  "ycpeizhi": [
+	           "yuzhen",
+			   "yuzhen2"
+	  ]	  
+    },
+    "2": {
+      "Id": "2",
+      "mingzi": "普通2",
+      "xiaoyu": 5,
+      "zhongyu": 50,
+      "dayu": 45,
+      "zuidabeishu": 1250,
+	  "publ": 5,
+      "bossID": "34",
+      "bossxiaoyu": 5,
+      "bosszhongyu": 45,
+      "bossdayu": 50,
+      "bosszuidabeishu": 300,
+	  "bosspubl": 5,
+	  "bossyuzhuanxiangshijian":20000,
+	  "bosszhunxianggailv":100,
+	  "bosschushoupeizhi":[[0,1,4],[0,1,5],[-135,1,4 ],[-135,3,5],[90,4,5],[180,4,5],[180,1,5]],
+	  "ycpeizhi": [
+	           "yuzhen",
+			   "yuzhen2"
+	  ]	  
+    },	
+    "pool" : 10000
+  },
+  "3": {
+
+    "1": {
+      "Id": "1",
+      "mingzi": "普通1",
+      "xiaoyu": 5,
+      "zhongyu": 55,
+      "dayu": 40,
+      "zuidabeishu": 1250,
+	  "publ": 10,
+      "bossID": "33",
+      "bossxiaoyu": 5,
+      "bosszhongyu": 40,
+      "bossdayu": 55,
+      "bosszuidabeishu": 300,
+	  "bosspubl": 10,
+	  "bossyuzhuanxiangshijian":5000,
+	  "bosszhunxianggailv":50,
+	  "bosschushoupeizhi":[],
+	  "ycpeizhi": [
+	           "yuzhen",
+			   "yuzhen2"
+	  ]	  
+    },
+    "2": {
+      "Id": "2",
+      "mingzi": "普通2",
+      "xiaoyu": 5,
+      "zhongyu": 55,
+      "dayu": 40,
+      "zuidabeishu": 1250,
+	  "publ": 10,
+      "bossID": "34",
+      "bossxiaoyu": 5,
+      "bosszhongyu": 40,
+      "bossdayu": 55,
+      "bosszuidabeishu": 300,
+	  "bosspubl": 5,
+	  "bossyuzhuanxiangshijian":20000,
+	  "bosszhunxianggailv":100,
+	  "bosschushoupeizhi":[[0,1,4],[0,1,5],[-135,1,4 ],[-135,3,5],[90,4,5],[180,4,5],[180,1,5]],
+	  "ycpeizhi": [
+	           "yuzhen",
+			   "yuzhen2"
+	  ]	  
+    },	
+    "pool" : 10000
+  },
+  "4": {
+
+    "1": {
+      "Id": "1",
+      "mingzi": "普通1",
+      "xiaoyu": 5,
+      "zhongyu": 55,
+      "dayu": 40,
+      "zuidabeishu": 1250,
+	  "publ": 10,
+      "bossID": "33",
+      "bossxiaoyu": 5,
+      "bosszhongyu": 40,
+      "bossdayu": 55,
+      "bosszuidabeishu": 300,
+	  "bosspubl": 10,
+	  "bossyuzhuanxiangshijian":5000,
+	  "bosszhunxianggailv":50,
+	  "bosschushoupeizhi":[],
+	  "ycpeizhi": [
+	           "yuzhen",
+			   "yuzhen2"
+	  ]	  
+    },
+    "2": {
+      "Id": "2",
+      "mingzi": "普通2",
+      "xiaoyu": 5,
+      "zhongyu": 55,
+      "dayu": 40,
+      "zuidabeishu": 1250,
+	  "publ": 10,
+      "bossID": "34",
+      "bossxiaoyu": 5,
+      "bosszhongyu": 40,
+      "bossdayu": 55,
+      "bosszuidabeishu": 300,
+	  "bosspubl": 5,
+	  "bossyuzhuanxiangshijian":20000,
+	  "bosszhunxianggailv":100,
+	  "bosschushoupeizhi":[[0,1,4],[0,1,5],[-135,1,4 ],[-135,3,5],[90,4,5],[180,4,5],[180,1,5]],
+	  "ycpeizhi": [
+	           "yuzhen",
+			   "yuzhen2"
+	  ]	  
+    },
+    "pool" : 10000
+  },
+	"shotOffTime" : 300000,
+    "roundTime" : 60000,
+	"shuayusudu" : 300,
+  "saveScoreTime" : 5000
+}

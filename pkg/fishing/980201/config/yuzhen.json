@@ -1,0 +1,39 @@
+{
+    "1": {
+      "idxiaoyu": [
+	           "2",
+			   "4"
+	  ],
+	  "idzhongyu": [
+	            "36",
+	            "35"
+	  ],
+	  "iddayu": [
+	         "19",
+			 "17"
+	  ],
+      "sd": 100,
+      "pzluxian": [
+	           "quxian",
+               "zhixian(2)"
+    ],			   
+      "pzshijian": 60000
+  },
+  "2": {
+      "idxiaoyu": ["6"],
+      "idzhongyu": [
+                "14"
+      ],
+      "iddayu": [
+             "15",
+             "20"
+      ],
+      "sd": 100,
+      "pzluxian": [
+               "quxian",
+               "zhixian(2)"
+      ],
+      "pzshijian": 60000
+
+  }
+}

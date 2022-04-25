@@ -1,0 +1,20 @@
+
+gaoji.png
+size: 434,434
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+chujichang
+  rotate: false
+  xy: 141, 246
+  size: 113, 186
+  orig: 113, 186
+  offset: 0, 0
+  index: -1
+juanzhou1
+  rotate: false
+  xy: 2, 2
+  size: 137, 430
+  orig: 137, 430
+  offset: 0, 0
+  index: -1

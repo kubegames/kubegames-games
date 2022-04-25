@@ -1,0 +1,314 @@
+{
+  "3000":{
+    //最大限制倍数
+    "MaxTimes": 100,
+    //最大消除次数
+    "MaxDisCount":3,
+    //钻头出现概率
+    "KeyRate": 30, // 百分制
+    //进入彩金池概率
+    "IntoCaijin": 100,//百分制
+    //彩金额度
+    "Caijin1": 5000, //第一个彩金额度概率
+    "Caijin2": 2800, //第一个彩金额度概率
+    "Caijin3": 1300, //第一个彩金额度概率
+    "Caijin4": 600, //第一个彩金额度概率
+    "Caijin5": 300, //第一个彩金额度概率
+    //第一关
+    "BaiyuRateA" : 2000,
+    "BiyuRateA"  : 2000,
+    "MoyuRateA"  : 2000,
+    "ManaoRateA" : 2000,
+    "HupoRateA"  : 2000,
+    //第二关
+    "ZumulvRateA"     : 2000,
+    "MaoyanshiRateA"  : 2000,
+    "ZishuijingRateA" : 2000,
+    "FeicuishiRateA"  : 2000,
+    "BaizhenzhuRateA" : 2000,
+    //第三关
+    "HongbaoshiRateA"  : 2000,
+    "LvbaoshiRateA"    : 2000,
+    "HuangbaoshiRateA" : 2000,
+    "LanbaoshiRateA"   : 2000,
+    "BaizuanshiRateA"  : 2000,
+    //第一关
+    "BaiyuRateB" : 2000,
+    "BiyuRateB"  : 2000,
+    "MoyuRateB"  : 2000,
+    "ManaoRateB" : 2000,
+    "HupoRateB"  : 2000,
+    //第二关
+    "ZumulvRateB"     : 2000,
+    "MaoyanshiRateB"  : 2000,
+    "ZishuijingRateB" : 2000,
+    "FeicuishiRateB"  : 2000,
+    "BaizhenzhuRateB" : 2000,
+    //第三关
+    "HongbaoshiRateB"  : 2000,
+    "LvbaoshiRateB"    : 2000,
+    "HuangbaoshiRateB" : 2000,
+    "LanbaoshiRateB"   : 2000,
+    "BaizuanshiRateB"  : 2000
+  },
+  "2000":{
+    //最大限制倍数
+    "MaxTimes": 200,
+    //最大消除次数
+    "MaxDisCount":4,
+    //钻头出现概率
+    "KeyRate": 44, // 百分制
+    //进入彩金池概率
+    "IntoCaijin": 100,//百分制
+    //彩金额度
+    "Caijin1": 3900, //第一个彩金额度概率
+    "Caijin2": 2450, //第一个彩金额度概率
+    "Caijin3": 1450, //第一个彩金额度概率
+    "Caijin4": 1000, //第一个彩金额度概率
+    "Caijin5": 1200, //第一个彩金额度概率
+    //第一关
+    "BaiyuRateA" : 2000,
+    "BiyuRateA"  : 2030,
+    "MoyuRateA"  : 2090,
+    "ManaoRateA" : 2180,
+    "HupoRateA"  : 2300,
+    //第二关
+    "ZumulvRateA"     : 2000,
+    "MaoyanshiRateA"  : 2025,
+    "ZishuijingRateA" : 2075,
+    "FeicuishiRateA"  : 2150,
+    "BaizhenzhuRateA" : 2250,
+    //第三关
+    "HongbaoshiRateA"  : 2000,
+    "LvbaoshiRateA"    : 2020,
+    "HuangbaoshiRateA" : 2060,
+    "LanbaoshiRateA"   : 2120,
+    "BaizuanshiRateA"  : 2200,
+    //第一关
+    "BaiyuRateB" : 2000,
+    "BiyuRateB"  : 2010,
+    "MoyuRateB"  : 2030,
+    "ManaoRateB" : 2060,
+    "HupoRateB"  : 2100,
+    //第二关
+    "ZumulvRateB"     : 2000,
+    "MaoyanshiRateB"  : 2010,
+    "ZishuijingRateB" : 2020,
+    "FeicuishiRateB"  : 2040,
+    "BaizhenzhuRateB" : 2080,
+    //第三关
+    "HongbaoshiRateB"  : 2000,
+    "LvbaoshiRateB"    : 2000,
+    "HuangbaoshiRateB" : 2000,
+    "LanbaoshiRateB"   : 2000,
+    "BaizuanshiRateB"  : 2000
+  },
+  "1000":{
+    //最大限制倍数
+    "MaxTimes": 380,
+    //最大消除次数
+    "MaxDisCount":5,
+    //钻头出现概率
+    "KeyRate": 50, // 百分制
+    //进入彩金池概率
+    "IntoCaijin": 100,//百分制
+    //彩金额度
+    "Caijin1": 2800, //第一个彩金额度概率
+    "Caijin2": 2050, //第一个彩金额度概率
+    "Caijin3": 1600, //第一个彩金额度概率
+    "Caijin4": 1400, //第一个彩金额度概率
+    "Caijin5": 2150, //第一个彩金额度概率
+    //第一关
+    "BaiyuRateA" : 2000,
+    "BiyuRateA"  : 2100,
+    "MoyuRateA"  : 2200,
+    "ManaoRateA" : 2300,
+    "HupoRateA"  : 2500,
+    //第二关
+    "ZumulvRateA"     : 2000,
+    "MaoyanshiRateA"  : 2100,
+    "ZishuijingRateA" : 2200,
+    "FeicuishiRateA"  : 2300,
+    "BaizhenzhuRateA" : 2500,
+    //第三关
+    "HongbaoshiRateA"  : 2000,
+    "LvbaoshiRateA"    : 2100,
+    "HuangbaoshiRateA" : 2200,
+    "LanbaoshiRateA"   : 2300,
+    "BaizuanshiRateA"  : 2500,
+    //第一关
+    "BaiyuRateB" : 2000,
+    "BiyuRateB"  : 2100,
+    "MoyuRateB"  : 2200,
+    "ManaoRateB" : 2300,
+    "HupoRateB"  : 2500,
+    //第二关
+    "ZumulvRateB"     : 2000,
+    "MaoyanshiRateB"  : 2100,
+    "ZishuijingRateB" : 2200,
+    "FeicuishiRateB"  : 2300,
+    "BaizhenzhuRateB" : 2500,
+    //第三关
+    "HongbaoshiRateB"  : 2000,
+    "LvbaoshiRateB"    : 2100,
+    "HuangbaoshiRateB" : 2200,
+    "LanbaoshiRateB"   : 2300,
+    "BaizuanshiRateB"  : 2500
+  },
+  "-1000":{
+    //最大限制倍数
+    "MaxTimes": 500,
+    //最大消除次数
+    "MaxDisCount":6,
+    //钻头出现概率
+    "KeyRate": 50, // 百分制
+    //进入彩金池概率
+    "IntoCaijin": 100,//百分制
+    //彩金额度
+    "Caijin1": 2150, //第一个彩金额度概率
+    "Caijin2": 1400, //第一个彩金额度概率
+    "Caijin3": 1600, //第一个彩金额度概率
+    "Caijin4": 2050, //第一个彩金额度概率
+    "Caijin5": 2800, //第一个彩金额度概率
+    //第一关
+    "BaiyuRateA" : 2000,
+    "BiyuRateA"  : 2040,
+    "MoyuRateA"  : 2120,
+    "ManaoRateA" : 2240,
+    "HupoRateA"  : 2400,
+    //第二关
+    "ZumulvRateA"     : 2000,
+    "MaoyanshiRateA"  : 2050,
+    "ZishuijingRateA" : 2150,
+    "FeicuishiRateA"  : 2300,
+    "BaizhenzhuRateA" : 2500,
+    //第三关
+    "HongbaoshiRateA"  : 2000,
+    "LvbaoshiRateA"    : 2060,
+    "HuangbaoshiRateA" : 2180,
+    "LanbaoshiRateA"   : 2360,
+    "BaizuanshiRateA"  : 2600,
+    //第一关
+    "BaiyuRateB" : 2000,
+    "BiyuRateB"  : 2030,
+    "MoyuRateB"  : 2090,
+    "ManaoRateB" : 2180,
+    "HupoRateB"  : 2300,
+    //第二关
+    "ZumulvRateB"     : 2000,
+    "MaoyanshiRateB"  : 2040,
+    "ZishuijingRateB" : 2120,
+    "FeicuishiRateB"  : 2240,
+    "BaizhenzhuRateB" : 2400,
+    //第三关
+    "HongbaoshiRateB"  : 2000,
+    "LvbaoshiRateB"    : 2050,
+    "HuangbaoshiRateB" : 2150,
+    "LanbaoshiRateB"   : 2300,
+    "BaizuanshiRateB"  : 2500
+  },
+  "-2000":{
+    //最大限制倍数
+    "MaxTimes": 680,
+    //最大消除次数
+    "MaxDisCount":8,
+    //钻头出现概率
+    "KeyRate": 56, // 百分制
+    //进入彩金池概率
+    "IntoCaijin": 100,//百分制
+    //彩金额度
+    "Caijin1": 1200, //第一个彩金额度概率
+    "Caijin2": 1000, //第一个彩金额度概率
+    "Caijin3": 1450, //第一个彩金额度概率
+    "Caijin4": 2450, //第一个彩金额度概率
+    "Caijin5": 3900, //第一个彩金额度概率
+    //第一关
+    "BaiyuRateA" : 2000,
+    "BiyuRateA"  : 2040,
+    "MoyuRateA"  : 2120,
+    "ManaoRateA" : 2240,
+    "HupoRateA"  : 2400,
+    //第二关
+    "ZumulvRateA"     : 2000,
+    "MaoyanshiRateA"  : 2040,
+    "ZishuijingRateA" : 2120,
+    "FeicuishiRateA"  : 2240,
+    "BaizhenzhuRateA" : 2400,
+    //第三关
+    "HongbaoshiRateA"  : 2000,
+    "LvbaoshiRateA"    : 2050,
+    "HuangbaoshiRateA" : 2150,
+    "LanbaoshiRateA"   : 2300,
+    "BaizuanshiRateA"  : 2500,
+    //第一关
+    "BaiyuRateB" : 2000,
+    "BiyuRateB"  : 2030,
+    "MoyuRateB"  : 2090,
+    "ManaoRateB" : 2180,
+    "HupoRateB"  : 2300,
+    //第二关
+    "ZumulvRateB"     : 2000,
+    "MaoyanshiRateB"  : 2040,
+    "ZishuijingRateB" : 2120,
+    "FeicuishiRateB"  : 2240,
+    "BaizhenzhuRateB" : 2400,
+    //第三关
+    "HongbaoshiRateB"  : 2000,
+    "LvbaoshiRateB"    : 2040,
+    "HuangbaoshiRateB" : 2120,
+    "LanbaoshiRateB"   : 2240,
+    "BaizuanshiRateB"  : 2400
+  },
+  "-3000":{
+    //最大限制倍数
+    "MaxTimes": 800,
+    //最大消除次数
+    "MaxDisCount":10,
+    //钻头出现概率
+    "KeyRate": 70, // 百分制
+    //进入彩金池概率
+    "IntoCaijin": 100,//百分制
+    //彩金额度
+    "Caijin1": 300, //第一个彩金额度概率
+    "Caijin2": 600, //第一个彩金额度概率
+    "Caijin3": 1300, //第一个彩金额度概率
+    "Caijin4": 2800, //第一个彩金额度概率
+    "Caijin5": 5000, //第一个彩金额度概率
+    //第一关
+    "BaiyuRateA" : 2000,
+    "BiyuRateA"  : 2040,
+    "MoyuRateA"  : 2120,
+    "ManaoRateA" : 2240,
+    "HupoRateA"  : 2400,
+    //第二关
+    "ZumulvRateA"     : 2000,
+    "MaoyanshiRateA"  : 2040,
+    "ZishuijingRateA" : 2120,
+    "FeicuishiRateA"  : 2240,
+    "BaizhenzhuRateA" : 2400,
+    //第三关
+    "HongbaoshiRateA"  : 2000,
+    "LvbaoshiRateA"    : 2050,
+    "HuangbaoshiRateA" : 2150,
+    "LanbaoshiRateA"   : 2300,
+    "BaizuanshiRateA"  : 2500,
+    //第一关
+    "BaiyuRateB" : 2000,
+    "BiyuRateB"  : 2030,
+    "MoyuRateB"  : 2090,
+    "ManaoRateB" : 2180,
+    "HupoRateB"  : 2300,
+    //第二关
+    "ZumulvRateB"     : 2000,
+    "MaoyanshiRateB"  : 2040,
+    "ZishuijingRateB" : 2120,
+    "FeicuishiRateB"  : 2240,
+    "BaizhenzhuRateB" : 2400,
+    //第三关
+    "HongbaoshiRateB"  : 2000,
+    "LvbaoshiRateB"    : 2050,
+    "HuangbaoshiRateB" : 2150,
+    "LanbaoshiRateB"   : 2300,
+    "BaizuanshiRateB"  : 2500
+  }
+}

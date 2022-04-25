@@ -1,0 +1,241 @@
+{
+  "1": {
+
+    "1": {
+      "Id": "1",
+
+      "mingzi": "场景1",
+
+      "xiaoyu": 160,
+
+      "zhongyu": 150,
+
+      "dayu": 250,
+
+      "teshuyu": 0,
+	
+	  "ydxz": 0,
+	
+	  "ywxz": 0
+	  
+    },
+    "2": {
+      "Id": "2",
+
+      "mingzi": "场景2",
+
+      "xiaoyu": 160,
+
+      "zhongyu": 150,
+
+      "dayu": 250,
+
+      "teshuyu": 0,
+	
+	  "ydxz": 0,
+	
+	  "ywxz": 0
+	  
+    },
+    "3": {
+      "Id": "3",
+
+      "mingzi": "场景3",
+
+      "xiaoyu": 160,
+
+      "zhongyu": 150,
+
+      "dayu": 250,
+
+      "teshuyu": 0,
+	
+	  "ydxz": 0,
+	
+	  "ywxz": 0
+	  
+    },
+    "pool" : 10000
+  },
+  "2": {
+
+    "1": {
+      "Id": "1",
+
+      "mingzi": "场景1",
+
+      "xiaoyu": 160,
+
+      "zhongyu": 150,
+
+      "dayu": 250,
+
+      "teshuyu": 0,
+	
+	  "ydxz": 0,
+	
+	  "ywxz": 0
+	  
+    },
+    "2": {
+      "Id": "2",
+
+      "mingzi": "场景2",
+
+      "xiaoyu": 160,
+
+      "zhongyu": 150,
+
+      "dayu": 250,
+
+      "teshuyu": 0,
+	
+	  "ydxz": 0,
+	
+	  "ywxz": 0
+	  
+    },
+    "3": {
+      "Id": "3",
+
+      "mingzi": "场景3",
+
+      "xiaoyu": 160,
+
+      "zhongyu": 150,
+
+      "dayu": 250,
+
+      "teshuyu": 0,
+	
+	  "ydxz": 0,
+	
+	  "ywxz": 0
+	  
+    },
+    "pool" : 10000
+  },
+  "3": {
+
+    "1": {
+      "Id": "1",
+
+      "mingzi": "场景1",
+
+      "xiaoyu": 160,
+
+      "zhongyu": 150,
+
+      "dayu": 250,
+
+      "teshuyu": 0,
+	
+	  "ydxz": 0,
+	
+	  "ywxz": 0
+	  
+    },
+    "2": {
+      "Id": "2",
+
+      "mingzi": "场景2",
+
+      "xiaoyu": 160,
+
+      "zhongyu": 150,
+
+      "dayu": 250,
+
+      "teshuyu": 0,
+	
+	  "ydxz": 0,
+	
+	  "ywxz": 0
+	  
+    },
+    "3": {
+      "Id": "3",
+
+      "mingzi": "场景3",
+
+      "xiaoyu": 160,
+
+      "zhongyu": 150,
+
+      "dayu": 250,
+
+      "teshuyu": 0,
+	
+	  "ydxz": 0,
+	
+	  "ywxz": 0
+	  
+    },
+    "pool" : 10000
+  },
+  "4": {
+
+    "1": {
+      "Id": "1",
+
+      "mingzi": "场景1",
+
+      "xiaoyu": 160,
+
+      "zhongyu": 150,
+
+      "dayu": 250,
+
+      "teshuyu": 0,
+	
+	  "ydxz": 0,
+	
+	  "ywxz": 0
+	  
+    },
+    "2": {
+      "Id": "2",
+
+      "mingzi": "场景2",
+
+      "xiaoyu": 160,
+
+      "zhongyu": 150,
+
+      "dayu": 250,
+
+      "teshuyu": 0,
+	
+	  "ydxz": 0,
+	
+	  "ywxz": 0
+	  
+    },
+    "3": {
+      "Id": "3",
+
+      "mingzi": "场景3",
+
+      "xiaoyu": 160,
+
+      "zhongyu": 150,
+
+      "dayu": 250,
+
+      "teshuyu": 0,
+	
+	  "ydxz": 0,
+	
+	  "ywxz": 0
+	  
+    },
+    "pool" : 10000
+  },
+	"shotOffTime" : 300000,
+  
+	"shuayusudu" : 500,
+
+  "roundTime" : 60000,
+
+  "saveScoreTime" : 5000
+}

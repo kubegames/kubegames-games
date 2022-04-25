@@ -1,0 +1,199 @@
+
+syntax = "proto3";
+package msg;
+
+// 客户端到服务器发送消息的类型
+enum ReceiveMessageType {
+	C2SStartID = 0;
+	C2SBetChips = 1; // 投注请求 BetChipsReq
+	C2SShowCards = 2; // 摊派请求 ShowCardsReq
+	C2SDemandCards = 3; // 要牌请求 DemandCardsReq
+}
+
+// 服务器发送给客户端的消息类型
+enum SendToClientMessageType {
+	S2CStartID = 0;
+	S2CGameStatus = 1; // 游戏状态消息 StatusMessageRes
+	S2CSceneMessage = 2; // 游戏场景消息
+	S2CDeal = 3; // 发牌信息 DealRes
+	S2CShowCards = 4; // 摊派信息 ShowCardsRes
+	S2CBetChipsInfo = 7; // 投注信息 BetChipsInfoRes
+	S2CSettleResult = 8; // 结算结果 SettleResultRes
+	S2CUserExit = 9; // 用户离开信息 UserExitRes
+	S2CErrRes = 10; // 错误信息响应 ErrRes
+	S2CUserSitDown = 11; // 用户坐下 UserSitDownRes
+	S2CBetMultiple = 12; // 投注倍率 BetMultipleRes
+}
+
+// 游戏阶段
+enum GameStatus{
+	GameInitStatus = 0;
+	ReadyStatus    = 1; // 准备（匹配）状态
+	StartMove      = 2; // 开始倒计时
+	DealCards      = 3; // 发牌阶段
+	BetChips       = 4; // 投注
+	EndBet         = 5; // 投注结束
+	ShowCards      = 6; // 摊派
+	EndShow        = 7; // 摊派结束
+	SettleStatus   = 8; // 结算状态
+	GameOver       = 9; // 游戏结束
+}
+
+// 用户状态
+enum UserStatus{
+	UserInitStatus = 0;
+	SitDown = 1; // 坐下
+	Ready = 2; // 准备
+	BetAction = 3; // 已投注
+	ShowedCards = 4; // 已摊派
+}
+
+//玩家操作类型
+enum AskDoType{
+	NormalType = 0;
+}
+
+//牌的类型
+enum CardsType{
+	Normal   = 0;
+	NotNiu   = 1;  // 无牛
+	NiuOne   = 2;  // 牛1
+	NiuTwo   = 3;  // 牛2
+	NiuThree = 4;  // 牛3
+	NiuFour  = 5;  // 牛4
+	NiuFive  = 6;  // 牛5
+	NiuSix   = 7;  // 牛6
+	NiuSeven = 8;  // 牛7
+	NiuEight = 9;  // 牛8
+	NiuNine  = 10; // 牛9
+	NiuNiu   = 11; // 牛牛
+	FourBomb = 12; // 四炸
+	FiveColourfulNiu = 13; // 五花牛
+	FiveSmallerNiu = 14; // 五小牛
+}
+
+// 错误列表
+enum ErrorList{
+	NoError = 0;
+	ActionTimeOut = 1; 	// 操作时间过了
+	LackOfFunds = 2; 	// 余额不足
+	HangUpTip = 3; // 挂机踢人提示
+	LackOfFundsTip = 4; 	// 余额不足踢人提示
+
+}
+
+// 游戏状态消息
+message StatusMessageRes{
+	int32 Status = 1;		// 游戏状态 GameStatus
+	int32 StatusTime = 2;	// 状态的持续时间 秒
+}
+
+//游戏中玩家的数据
+message SeatUserInfoRes {
+	string UserName = 1; // 用户昵称
+	string Head = 2; // 头像
+	int64 Coin = 3; // 分数
+	int32 ChairId = 4; // 在场景中的座位id
+	bytes Cards = 5; // 手牌
+	int32 CardsType = 6; // 牌型 CardsType
+	int32 Status = 7; //
+	int64 userId = 8; // 玩家id
+	int64 BetMultiple = 9; // 闲家投注倍数
+	string address = 10; // 地理地址
+	repeated int32 CardsIndexs = 11; // 特殊处理卡牌下标
+	int32 Sex = 12; // 性别
+}
+
+// 场景消息
+message SceneMessageRes{
+	repeated SeatUserInfoRes UserData = 1; // 玩家数据
+	int32 GameStatus = 2; // 游戏阶段
+	int64 StatusTimeLeft = 3;// 当前状态剩余时间
+	int64 RoomCost = 4; // 底注
+	int64 MinLimit = 5; // 最低入场筹码限制
+	bool Reconnect=6; //是否重联
+	int64 RoomID=7; // 房间id
+	BetMultipleRes BetMultiple=8; // 断线重联后发送可投注选项
+}
+
+// 给单个用户的发牌信息
+message DealRes{
+	bytes Cards = 1; // 卡牌
+	int64 userId = 2; // 用户ID
+	int32 ChairId = 3; // 座位ID
+}
+
+// 广播摊派信息发牌信息
+message ShowCardsRes{
+	bytes Cards = 1; // 卡牌
+	int64 userId = 2; // 用户ID
+	int32 ChairId = 3; // 座位ID
+	int32 CardsType = 4; // 牌型 CardsType
+	repeated int32 CardsIndexs = 5; // 特殊处理卡牌下标
+}
+
+// 广播用户投注信息
+message BetChipsInfoRes {
+	int64 BetMultiple = 1; // 投注倍数
+	int64 userId = 2; // 用户ID
+	int32 ChairId = 3; // 座位ID
+}
+
+// 结算结果
+message SettleResult {
+	int64 userId = 1; // 用户ID
+	int32 ChairId = 2; // 座位ID
+	int64 Result = 3; // 输赢结果，正数（赢），负数（输）
+}
+
+// 广播结算结果列表
+message SettleResultRes {
+	repeated SettleResult ResultList = 1; // 结算结果 SettleResult
+}
+
+// 广播用户退出信息
+message UserExitRes {
+	int64 userId = 1;		// 用户ID
+	int32 ChairId = 2;		// 用户座位
+	int32 MsgNum = 3; // 离开原因编号
+}
+
+// 错误信息响应
+message ErrRes {
+	int32 errNum = 1; // ErrorList
+}
+
+// 广播用户坐下信息
+message UserSitDownRes {
+	int64 userId = 1;		// 用户ID
+	int32 ChairId = 2;		// 用户座位
+	string UserName = 3; // 用户昵称
+	string Head = 4; // 头像
+	int64 Coin = 5; // 金币
+	string address= 6; // 地理地址
+	int32 Sex = 7; // 性别
+}
+
+// 投注倍率
+message BetMultipleRes {
+	int64 userId = 1;		// 用户ID
+	int32 ChairId = 2;		// 用户座位
+	int64 highestMultiple = 3; // 最高可投注倍数
+}
+
+///////////////////  客户端请求
+
+// 投注请求
+message BetChipsReq {
+	int64 BetMultiple = 1; // 投注倍数
+}
+
+// 摊派请求
+message ShowCardsReq {
+	bool ok = 1; // 随便发
+}
+
+// 要牌请求
+message DemandCardsReq{
+	bytes Cards = 1; // 卡牌
+}

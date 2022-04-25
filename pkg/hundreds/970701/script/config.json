@@ -1,0 +1,4 @@
+{
+    //dokcer 镜像地址
+    "docker":"ccr.ccs.tencentyun.com/tangjiegame"
+}

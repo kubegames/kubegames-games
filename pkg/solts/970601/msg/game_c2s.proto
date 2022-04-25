@@ -1,0 +1,31 @@
+
+syntax = "proto3";
+package msg;
+
+enum C2SMsgType {
+    ROOM_INFO = 0 ; //房间信息
+    START_GAME = 1 ; // 开始游戏    C2SStartGame
+    CHOOSE_CAIJIN = 2;//选择彩金的宝珠
+    NORMAL_QUIT = 3;//玩家正常退出游戏 C2SChooseCaijin
+    TEST_TOOL = 4;//测试工具
+}
+
+message C2STestTool {
+    int32 icon = 1;//宝珠图标
+    int32 count = 2;//数量
+}
+
+message C2SRoomInfo {
+
+}
+
+//开始游戏
+message C2SStartGame {
+    int64 bottom = 1;//底注 单注金额
+    int64 count = 2;//注数
+}
+
+//选择彩金宝珠
+message C2SChooseCaijin {
+    int32 index = 1;// 从 0 开始
+}

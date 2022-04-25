@@ -1,0 +1,35 @@
+
+syntax = "proto3";
+package msg;
+
+enum C2SMsgType {
+    ROOM_INFO = 0 ; //房间信息
+    START_MATCH = 1;//开始匹配 C2SStartMatch
+    SET_CARDS = 2;//确定摆牌 C2SSetCards
+    USER_SELECT_CARDS = 3;//玩家自己手动选择需要哪些牌 C2SUserSelectCards
+}
+
+//获取房间信息
+message C2SRoomInfo{
+    int64 uid = 1;
+}
+
+//开始匹配
+message C2SStartMatch {
+    int64 uid = 1;
+}
+
+//手动摆牌
+message C2SSetCards {
+    bytes headCards = 1; // 头墩的牌
+    bytes midCards = 2; //中墩
+    bytes tailCards = 3; //尾墩
+    bool isAuto = 4;// true:自动摆牌 false:手动摆牌
+    bool isSpecial = 5;//true：用户选择的是特殊牌型
+}
+
+//
+message C2SUserSelectCards {
+    bytes cards = 1;
+}
+

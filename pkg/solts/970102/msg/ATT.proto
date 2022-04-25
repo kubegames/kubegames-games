@@ -1,0 +1,104 @@
+syntax = "proto3";
+
+package msg;
+
+// 牌型
+enum PokerType {
+    ZERO = 0;
+    DUIZI = 1; // 对子
+    LIANGDUI = 2; //两队
+    SANTIAO = 3; // 三条
+    SHUNZI = 4; // 顺子
+    TONGHUA = 5; // 同花
+    HULU = 6; // 葫芦
+    SIMEI = 7; // 四梅
+    TONGHUASHUN = 8; // 同花顺
+    TONGHUADASHUN = 9; // 同花大顺
+    LUCKY5 = 10; // lucky5
+}
+
+enum MsgId {
+    ZERO_O = 0;
+    ENTER_ROOM_Res = 1;
+    BET_Req = 2;
+    BET_Res = 3;
+    DEALCARD_Req = 4;
+    DEALCARD_Res = 5;
+    CHANGECARD_Req = 6;
+    CHANGECARD_Res = 7;
+    COUNT_Req = 8;
+    COUNT_Res = 9;
+    TEST_Req = 10;
+}
+
+//游戏阶段
+enum GameStatus {
+    game_End = 0;
+    game_Start = 1;
+    dealcard = 2; //发牌
+}
+
+
+message EnterRoomRes {
+    TableInfo tableInfo = 1; //桌子信息
+}
+
+//牌桌信息
+message TableInfo{
+    int32 tableId = 1;
+    string tableName = 2;
+    repeated UserInfo userInfoArr = 3;//玩家的信息
+    repeated int32 poker = 4; //牌
+    GameStatus gameStatus =  5;
+    repeated int32 bets = 6;
+}
+
+// 玩家信息
+message UserInfo {
+    int64 userID = 1; // 玩家ID
+    string head = 2; // 玩家头像
+    string nickName = 3; // 玩家昵称
+    int64 gold = 4; // 玩家的金币
+    int32 sex = 5; //性别
+    int32 bet = 6;//下注金额
+}
+
+message BetReq {
+    int32 bet = 1;
+}
+
+message BetRes {
+    repeated int32 poker = 1;
+    PokerType pokerType = 2;
+}
+
+message DealcardReq {
+
+}
+
+message DealcardRes {
+    repeated int32 poker = 1;
+}
+
+message ChangeCardReq {
+    repeated int32 indexs = 1;
+}
+
+message ChangeCardRes {
+    repeated int32 poker = 1;
+}
+
+message GameEndRes {
+    PokerType pokerType = 1;
+    int64 gold = 2;   // 赢的金币
+    int64 score = 3;  //玩家当前金币
+    int32 payKey = 4;
+}
+
+message GameEndReq {
+}
+
+message TestReq {
+    PokerType pokerType = 1;
+    bool isOpen = 2;
+}

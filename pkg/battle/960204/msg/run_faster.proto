@@ -1,0 +1,220 @@
+
+syntax = "proto3";
+package msg;
+
+// 客户端到服务器发送消息的类型
+enum ReceiveMessageType {
+    C2SStartID = 0;
+    C2STips = 1;
+    C2SPutCards = 2;
+    C2SCancelHangUp = 3;
+    C2SDemandCards = 4;
+}
+
+// 服务器发送给客户端的消息类型
+enum SendToClientMessageType {
+    S2CStartID = 0;
+    S2CGameStatus = 1; // 游戏状态消息 StatusMessageRes
+    S2CSceneMessage = 2; // 游戏场景消息 SceneMessageRes
+    S2CDeal = 3; // 发牌信息 DealRes
+    S2CCurrentPlayer = 4; // 当前操作玩家 CurrentPlayerRes
+    S2CTips = 5; // 提示出牌信息 TipsRes
+    S2CPutInfo = 6; // 广播出牌请求结果 PutInfoRes
+    S2CSettleInfo = 7; // 结算信息 SettleInfoRes
+    S2CShowCards = 8; // 摊牌信息 ShowCardsRes
+    S2CUserExit = 9; // 用户离开信息 UserExitRes
+    S2CUserStatus = 10; // 用户状态信息 UserStatusRes
+    S2CUserSitDown = 11; // 用户坐下 UserSitDownRes
+}
+
+// 用户状态
+enum UserStatus{
+    UserInitStatus = 0;
+    UserNormal = 1;
+    UserHangUp = 2;
+}
+
+// 错误列表
+enum ErrList{
+    InitErr = 0;
+    TimeOut = 1;
+    WrongfulType = 2; // 错误牌型
+    NotGreater = 3; // 管不上
+}
+
+// 游戏阶段
+enum GameStatus{
+    GameInitStatus = 0;
+    ReadyStatus = 1; // 准备（匹配）状态
+    DealStatus = 2; // 发牌状态
+    PutCardStatus = 3; // 出牌阶段
+    SettleStatus = 4; // 结算状态
+    GameOver = 5; // 游戏结束
+}
+
+//牌的类型
+enum CardsType{
+    Normal   = 0;
+    SingleCard = 1; // 单张
+    Pair = 2; // 对子
+    SerialPair = 3; // 连对
+    Sequence = 4; // 顺子
+    Triplet = 5; // 三同张
+    TripletWithSingle = 6; // 三带一
+    TripletWithTwo = 7; // 三带二
+    SerialTriplet = 8; // 三顺
+    IncompleteSerialTripletWithTwo = 9; // 不合法的飞机带翅膀
+    SerialTripletWithTwo = 10; // 飞机带翅膀
+    QuartetWithThree = 11; // 四带三
+    Bomb = 12; // 炸弹
+}
+
+// 打牌操作类型
+enum UserActionType{
+    NoPermission = 0;   // 没有操作权限
+    PutCard = 1;        // 出牌
+    TakeOverCard = 2;   // 接牌
+}
+
+// 游戏状态消息
+message StatusMessageRes{
+    int32 Status = 1;		// 游戏状态 GameStatus
+    int32 StatusTime = 2;	// 状态的持续时间 秒
+}
+
+// 发牌消息
+message DealRes {
+    bytes Cards = 1;
+    int32 FirstActionChairId = 2;
+    int64 FirstActionUserId = 3;
+    int64 UserId = 4;
+    int32 ChairId = 5;
+}
+
+// 广播当前操作玩家
+message CurrentPlayerRes {
+    int64 UserId = 1;
+    int32 ChairId = 2;
+    int32 ActionTime = 3;
+    bool Permission = 4;
+    int32 ActionType = 5;
+    bool IsFinalEnd = 6;
+}
+
+// 通知提示信息
+message TipsRes {
+    repeated bytes Cards = 1; // 提示要出的牌
+}
+
+// 广播出牌请求结果
+message PutInfoRes {
+    int32 ErrNum = 1;
+    bool IsSuccess = 2;
+    bytes Cards = 3; // 成功时有手牌，失败为空
+    int32 CardType = 4;
+    int64 UserId = 5;
+    int32 ChairId = 6;
+}
+
+// 广播结算信息
+message SettleInfoRes {
+    repeated SettleResult ResultList = 1; // 结算结果 SettleResult
+    int32 SettleType = 2; // 结算类型 1：炸弹实时结算；2：最终结算
+}
+
+// 结算结果
+message SettleResult {
+    int64 UserId = 1; // 用户ID
+    int32 ChairId = 2; // 座位ID
+    int64 Result = 3; // 输赢结果，正数（赢），负数（输）
+    int32 CardCount = 4; // 输赢牌个数
+    int64 BoomSettle = 5; // 炸弹结算
+    bool takeSingleRisk = 6; // 是否承担放走包赔风险
+}
+
+// 广播摊牌信息
+message ShowCardsRes {
+    repeated SeatUserInfoRes ShowList = 1;
+}
+
+// 场景消息
+message SceneMessageRes{
+    repeated SeatUserInfoRes UserData = 1; // 玩家数据
+    int32 GameStatus = 2; // 游戏阶段
+    int64 StatusTimeLeft = 3;// 当前状态剩余时间
+    int64 RoomCost = 4; // 底注
+    int64 MinLimit = 5; // 最低入场筹码限制
+    bool Reconnect = 6; //是否重联
+    int64 RoomID = 7; // 房间id
+    repeated LeftCards LeftCards = 8; // 记牌器剩余牌
+    int32 RoomLevel = 9; // 房间等级
+    bytes StandardNullCard = 10; // 标准控牌（用来对比空牌）
+    CurrentPlayerRes CurrentPlayer = 11; // 当前操作玩家
+}
+
+//游戏中玩家的数据
+message SeatUserInfoRes {
+    string UserName = 1; // 用户昵称
+    string Head = 2; // 头像
+    int64 Coin = 3; // 分数
+    int32 ChairId = 4; // 在场景中的座位id
+    bytes Cards = 5; // 手牌
+    int32 Status = 6; // 玩家状态
+    int64 UserId = 7; // 玩家id
+    string Address = 8; // 地理地址
+    bytes LastCards = 9; // 上一次玩家出的手牌
+    int32 CardsLen = 10; // 手牌长度
+    int32 Sex = 11; // 性别
+}
+
+// 记牌器剩余牌
+message LeftCards {
+    int32 Count = 1;
+    bytes CardValue = 2;
+}
+
+// 广播用户退出信息
+message UserExitRes {
+    int64 UserId = 1;		// 用户ID
+    int32 ChairId = 2;		// 用户座位
+}
+
+// 玩家状态信息
+message UserStatusRes{
+    int64 UserId = 1;		// 用户ID
+    int32 ChairId = 2;		// 用户座位
+    bool IsHangUp = 3;      // 是否托管状态
+}
+
+// 广播用户坐下信息
+message UserSitDownRes {
+    int64 userId = 1;		// 用户ID
+    int32 ChairId = 2;		// 用户座位
+    string UserName = 3; // 用户昵称
+    string Head = 4; // 头像
+    int64 Coin = 5; // 金币
+    string address= 6; // 地理地址
+    int32 Sex = 7; // 性别
+}
+
+///////////////////  客户端请求
+
+// 提示请求
+message TipsReq {
+    int64 UserId = 1;
+}
+
+// 出牌请求
+message PutCardsReq {
+    bytes Cards = 1;
+}
+
+// 取消托管请求请求
+message CancelHangUpReq {
+    int64 UserId = 1;
+}
+
+// 要牌请求
+message DemandCardsReq{
+    bytes Cards = 1; // 卡牌
+}

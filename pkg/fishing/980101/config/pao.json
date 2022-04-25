@@ -1,0 +1,575 @@
+{
+  "1": {
+
+    "1": {
+      "Id": "1",
+
+      "Name": "1级捕鱼炮",
+
+      "Look": "1",
+
+      "BulletId": "1",
+
+      "Rate": 5,
+
+      "SpeedyRate": 10
+
+    },
+    "2": {
+      "Id": "2",
+
+      "Name": "2级捕鱼炮",
+
+      "Look": "2",
+
+      "BulletId": "2",
+
+      "Rate": 5,
+
+      "SpeedyRate": 10
+
+    },
+    "3": {
+      "Id": "3",
+
+      "Name": "3级捕鱼炮",
+
+      "Look": "3",
+
+      "BulletId": "3",
+
+      "Rate": 5,
+
+      "SpeedyRate": 10
+
+    },
+    "4": {
+      "Id": "4",
+
+      "Name": "4级捕鱼炮",
+
+      "Look": "4",
+
+      "BulletId": "4",
+
+      "Rate": 5,
+
+      "SpeedyRate": 10
+
+    },
+    "5": {
+      "Id": "5",
+
+      "Name": "5级捕鱼炮",
+
+      "Look": "5",
+
+      "BulletId": "5",
+
+      "Rate": 5,
+
+      "SpeedyRate": 10
+
+    },
+    "6": {
+      "Id": "6",
+
+      "Name": "6级捕鱼炮",
+
+      "Look": "6",
+
+      "BulletId": "6",
+
+      "Rate": 5,
+
+      "SpeedyRate": 10
+
+    },
+    "7": {
+      "Id": "7",
+
+      "Name": "7级捕鱼炮",
+
+      "Look": "7",
+
+      "BulletId": "7",
+
+      "Rate": 5,
+
+      "SpeedyRate": 10
+
+    },
+    "8": {
+      "Id": "8",
+
+      "Name": "8级捕鱼炮",
+
+      "Look": "8",
+
+      "BulletId": "8",
+
+      "Rate": 5,
+
+      "SpeedyRate": 10
+
+    },
+    "9": {
+      "Id": "9",
+
+      "Name": "9级捕鱼炮",
+
+      "Look": "9",
+
+      "BulletId": "9",
+
+      "Rate": 5,
+
+      "SpeedyRate": 10
+
+    },
+    "10": {
+      "Id": "10",
+
+      "Name": "10级捕鱼炮",
+
+      "Look": "10",
+
+      "BulletId": "10",
+
+      "Rate": 5,
+
+      "SpeedyRate": 10
+
+    }
+  },
+  "2": {
+
+    "1": {
+      "Id": "1",
+
+      "Name": "1级捕鱼炮",
+
+      "Look": "1",
+
+      "BulletId": "1",
+
+      "Rate": 5,
+
+      "SpeedyRate": 10
+
+    },
+    "2": {
+      "Id": "2",
+
+      "Name": "2级捕鱼炮",
+
+      "Look": "2",
+
+      "BulletId": "2",
+
+      "Rate": 5,
+
+      "SpeedyRate": 10
+
+    },
+    "3": {
+      "Id": "3",
+
+      "Name": "3级捕鱼炮",
+
+      "Look": "3",
+
+      "BulletId": "3",
+
+      "Rate": 5,
+
+      "SpeedyRate": 10
+
+    },
+    "4": {
+      "Id": "4",
+
+      "Name": "4级捕鱼炮",
+
+      "Look": "4",
+
+      "BulletId": "4",
+
+      "Rate": 5,
+
+      "SpeedyRate": 10
+
+    },
+    "5": {
+      "Id": "5",
+
+      "Name": "5级捕鱼炮",
+
+      "Look": "5",
+
+      "BulletId": "5",
+
+      "Rate": 5,
+
+      "SpeedyRate": 10
+
+    },
+    "6": {
+      "Id": "6",
+
+      "Name": "6级捕鱼炮",
+
+      "Look": "6",
+
+      "BulletId": "6",
+
+      "Rate": 5,
+
+      "SpeedyRate": 10
+
+    },
+    "7": {
+      "Id": "7",
+
+      "Name": "7级捕鱼炮",
+
+      "Look": "7",
+
+      "BulletId": "7",
+
+      "Rate": 5,
+
+      "SpeedyRate": 10
+
+    },
+    "8": {
+      "Id": "8",
+
+      "Name": "8级捕鱼炮",
+
+      "Look": "8",
+
+      "BulletId": "8",
+
+      "Rate": 5,
+
+      "SpeedyRate": 10
+
+    },
+    "9": {
+      "Id": "9",
+
+      "Name": "9级捕鱼炮",
+
+      "Look": "9",
+
+      "BulletId": "9",
+
+      "Rate": 5,
+
+      "SpeedyRate": 10
+
+    },
+    "10": {
+      "Id": "10",
+
+      "Name": "10级捕鱼炮",
+
+      "Look": "10",
+
+      "BulletId": "10",
+
+      "Rate": 5,
+
+      "SpeedyRate": 10
+
+    }
+  },
+  "3": {
+
+    "1": {
+      "Id": "1",
+
+      "Name": "1级捕鱼炮",
+
+      "Look": "1",
+
+      "BulletId": "1",
+
+      "Rate": 5,
+
+      "SpeedyRate": 10
+
+    },
+    "2": {
+      "Id": "2",
+
+      "Name": "2级捕鱼炮",
+
+      "Look": "2",
+
+      "BulletId": "2",
+
+      "Rate": 5,
+
+      "SpeedyRate": 10
+
+    },
+    "3": {
+      "Id": "3",
+
+      "Name": "3级捕鱼炮",
+
+      "Look": "3",
+
+      "BulletId": "3",
+
+      "Rate": 5,
+
+      "SpeedyRate": 10
+
+    },
+    "4": {
+      "Id": "4",
+
+      "Name": "4级捕鱼炮",
+
+      "Look": "4",
+
+      "BulletId": "4",
+
+      "Rate": 5,
+
+      "SpeedyRate": 10
+
+    },
+    "5": {
+      "Id": "5",
+
+      "Name": "5级捕鱼炮",
+
+      "Look": "5",
+
+      "BulletId": "5",
+
+      "Rate": 5,
+
+      "SpeedyRate": 10
+
+    },
+    "6": {
+      "Id": "6",
+
+      "Name": "6级捕鱼炮",
+
+      "Look": "6",
+
+      "BulletId": "6",
+
+      "Rate": 5,
+
+      "SpeedyRate": 10
+
+    },
+    "7": {
+      "Id": "7",
+
+      "Name": "7级捕鱼炮",
+
+      "Look": "7",
+
+      "BulletId": "7",
+
+      "Rate": 5,
+
+      "SpeedyRate": 10
+
+    },
+    "8": {
+      "Id": "8",
+
+      "Name": "8级捕鱼炮",
+
+      "Look": "8",
+
+      "BulletId": "8",
+
+      "Rate": 5,
+
+      "SpeedyRate": 10
+
+    },
+    "9": {
+      "Id": "9",
+
+      "Name": "9级捕鱼炮",
+
+      "Look": "9",
+
+      "BulletId": "9",
+
+      "Rate": 5,
+
+      "SpeedyRate": 10
+
+    },
+    "10": {
+      "Id": "10",
+
+      "Name": "10级捕鱼炮",
+
+      "Look": "10",
+
+      "BulletId": "10",
+
+      "Rate": 5,
+
+      "SpeedyRate": 10
+
+    }
+  },
+  "4": {
+
+    "1": {
+      "Id": "1",
+
+      "Name": "1级捕鱼炮",
+
+      "Look": "1",
+
+      "BulletId": "1",
+
+      "Rate": 5,
+
+      "SpeedyRate": 10
+
+    },
+    "2": {
+      "Id": "2",
+
+      "Name": "2级捕鱼炮",
+
+      "Look": "2",
+
+      "BulletId": "2",
+
+      "Rate": 5,
+
+      "SpeedyRate": 10
+
+    },
+    "3": {
+      "Id": "3",
+
+      "Name": "3级捕鱼炮",
+
+      "Look": "3",
+
+      "BulletId": "3",
+
+      "Rate": 5,
+
+      "SpeedyRate": 10
+
+    },
+    "4": {
+      "Id": "4",
+
+      "Name": "4级捕鱼炮",
+
+      "Look": "4",
+
+      "BulletId": "4",
+
+      "Rate": 5,
+
+      "SpeedyRate": 10
+
+    },
+    "5": {
+      "Id": "5",
+
+      "Name": "5级捕鱼炮",
+
+      "Look": "5",
+
+      "BulletId": "5",
+
+      "Rate": 5,
+
+      "SpeedyRate": 10
+
+    },
+    "6": {
+      "Id": "6",
+
+      "Name": "6级捕鱼炮",
+
+      "Look": "6",
+
+      "BulletId": "6",
+
+      "Rate": 5,
+
+      "SpeedyRate": 10
+
+    },
+    "7": {
+      "Id": "7",
+
+      "Name": "7级捕鱼炮",
+
+      "Look": "7",
+
+      "BulletId": "7",
+
+      "Rate": 5,
+
+      "SpeedyRate": 10
+
+    },
+    "8": {
+      "Id": "8",
+
+      "Name": "8级捕鱼炮",
+
+      "Look": "8",
+
+      "BulletId": "8",
+
+      "Rate": 5,
+
+      "SpeedyRate": 10
+
+    },
+    "9": {
+      "Id": "9",
+
+      "Name": "9级捕鱼炮",
+
+      "Look": "9",
+
+      "BulletId": "9",
+
+      "Rate": 5,
+
+      "SpeedyRate": 10
+
+    },
+    "10": {
+      "Id": "10",
+
+      "Name": "10级捕鱼炮",
+
+      "Look": "10",
+
+      "BulletId": "10",
+
+      "Rate": 5,
+
+      "SpeedyRate": 10
+
+    }
+  }
+}
+

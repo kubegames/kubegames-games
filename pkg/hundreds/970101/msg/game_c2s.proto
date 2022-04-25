@@ -1,0 +1,80 @@
+
+syntax = "proto3";
+package msg;
+/* 客户端发送给服务器的所有协议及参数结构
+	C2S_SEND_RED         = 1 //发红包              C2SSendRed
+	C2S_ROB_RED          = 2 //抢红包              C2SRobRed
+	C2S_GET_SENT_RED     = 3 //获取发送过的红包列表   C2SGetSentRed
+	C2S_GET_ROBBED_INFO  = 4 //获取抢过的红包信息列表 C2SGetRobbedInfo
+	C2S_GET_USER_LIST    = 5 //获取房间内用户列表    C2SGetUserList
+	C2S_CANCEL_SEND      = 6 //取消发送红包           C2SCancelSend
+	C2S_GET_CUR_RED_LIST = 7 //获取当前红包列表     C2SGetCurRedList
+*/
+
+message C2SGetRoomList{
+    int64 userId = 1;
+}
+
+//进入游戏
+message C2SIntoGame{    //subCmd 0
+    int64 userId = 1;
+    string userName = 2;    //暂时先随便传
+    string level = 3;//房间级别， 初级、中级、高级
+}
+
+//发送红包
+message C2SSendRed{
+    int64 mineNum = 1;//雷号
+    int64 amount = 2;//红包金额 1 2 3 4
+    int64 userId = 3;
+}
+
+//锁定红包
+message C2SLockRed{
+    int64 redId = 1;//红包id
+    int64 userId = 2;
+}
+
+//抢红包
+message C2SRobRed{
+    int64 redId  = 1;//红包id
+    int64 userId = 2;
+}
+
+//离开房间
+message C2SLeaveRoom{
+    int64 userId = 1;
+}
+
+//获取发送过的红包列表
+message C2SGetSentRed{
+    int64 userId = 1;
+    int64 pageIndex = 2;//页码
+    int64 pageSize  = 3;//一页显示多少条
+}
+
+//获取抢过的红包信息列表
+message C2SGetRobbedInfo{
+    int64 userId = 1;
+    int64 pageIndex = 2;//页码
+    int64 pageSize  = 3;//一页显示多少条
+}
+
+//获取房间内用户列表
+message C2SGetUserList{
+    int64 userId = 1;
+    int64 pageIndex = 2;//页码
+    int64 pageSize  = 3;//一页显示多少条
+}
+
+
+//取消发送红包
+message C2SCancelSend {
+    int64 redId = 1;
+}
+
+//获取当前发送红包列表
+message C2SGetCurRedList{
+    int64 pageIndex = 1;//页码
+    int64 pageSize  = 2;//一页显示多少条
+}

@@ -1,0 +1,12 @@
+{
+    "game_id":970102,
+    "server_name":"ATT",
+    "runmode" : "info",
+    "game_type":4,
+    "consul":"192.168.0.130:8500",
+    "table_num":10000,
+    "max":1,
+    "min":1,
+    "robot":[
+    ]
+}

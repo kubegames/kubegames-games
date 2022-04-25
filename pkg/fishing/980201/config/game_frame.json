@@ -1,0 +1,13 @@
+{
+    "game_id":980201,
+    "game_type":6,
+	"port" : "6006",
+    "runmode" : "info",
+    "services":"test_service",
+    "consul":"192.168.0.130:8500",
+    "table_num":12,
+    "max":4,
+    "min":1,
+    "robot":[],
+    "server_name" : "海王捕鱼"
+}

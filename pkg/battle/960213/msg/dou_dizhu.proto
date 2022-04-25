@@ -1,0 +1,272 @@
+
+syntax = "proto3";
+package msg;
+
+// 客户端到服务器发送消息的类型
+enum ReceiveMessageType {
+    C2SStartID     = 0;
+    C2SRob         = 1; // 抢地主请求 RobReq
+    C2SRedouble    = 2; // 加倍请求 RedoubleReq
+    C2STips        = 3; // 提示请求 TipsReq
+    C2SPutCards    = 4; // 出牌请求 PutCardsReq
+    C2SHangUp      = 5; // 托管请求 HangUpReq
+    C2SDemandCards = 6; // 配牌请求 DemandCardsReq
+    C2SClean       = 7; // 清桌请求 CleanReq
+}
+
+// 服务器发送给客户端的消息类型
+enum SendToClientMessageType {
+    S2CStartID        = 0;
+    S2CGameStatus     = 1;  // 游戏状态消息 StatusMessageRes
+    S2CSceneMessage   = 2;  // 游戏场景消息 SceneMessageRes
+    S2CDeal           = 3;  // 发牌信息 DealRes
+    S2CCurrentRobber  = 4;  // 当前抢地主玩家 CurrentRobberRes
+    S2CRobResult      = 5;  // 广播抢地主请求响应 RobResultRes
+    S2CConfirmDizhu   = 6;  // 广播确认地主消息 ConfirmDizhuRes
+    S2CRedoubleResult = 7;  // 广播加倍结果 RedoubleResultRes
+    S2CCurrentPlayer  = 8;  // 当前操作玩家 CurrentPlayerRes
+    S2CTips           = 9;  // 提示出牌信息 TipsRes
+    S2CHangUpInfo     = 10; // 玩家托管操作 HangUpInfoRes
+    S2CPutInfo        = 11; // 广播出牌请求结果 PutInfoRes
+    S2CSettleInfo     = 12; // 结算信息 SettleInfoRes
+}
+
+// 用户状态
+enum UserStatus{
+    UserInitStatus = 0;
+    UserNormal     = 1; // 正常状态
+    UserHangUp     = 2; // 托管状态
+}
+
+// 错误列表
+enum ErrList{
+    InitErr      = 0;
+    TimeOut      = 1; // 超时
+    WrongfulType = 2; // 错误牌型
+    NotGreater   = 3; // 管不上
+}
+
+// 游戏阶段
+enum GameStatus{
+    GameInitStatus     = 0;
+    ReadyStatus        = 1; // 准备（匹配）状态
+    DealStatus         = 2; // 发牌状态
+    RobStatus          = 3; // 抢地主状态
+    confirmDizhuStatus = 4; // 确认地主状态
+    RedoubleStatus     = 5; // 加倍状态
+    PutCardStatus      = 6; // 出牌阶段
+    SettleStatus       = 7; // 结算状态
+    GameOver           = 8; // 游戏结束
+}
+
+//牌的类型
+enum CardsType {
+    Normal                = 0;
+    SingleCard            = 1;  // 单张
+    Pair                  = 2;  // 对子
+    Triplet               = 3;  // 三条
+    TripletWithSingle     = 4;  // 三带一
+    TripletWithPair       = 5;  // 三带一对
+    Sequence              = 6;  // 顺子
+    SerialPair            = 7;  // 连对
+    SerialTriplet         = 8;  // 飞机不带牌
+    SerialTripletWithOne  = 9;	// 飞机带一个单牌
+    SerialTripletWithWing = 10; // 飞机带对
+    QuartetWithTwo        = 11; // 四带二单
+    QuartetWithTwoPair    = 12; // 四带两队
+    Bomb                  = 13; // 炸弹
+    Rocket                = 14; // 火箭
+}
+
+// 打牌操作类型
+enum UserActionType{
+    NoPermission = 0;   // 没有操作权限
+    PutCard = 1;        // 出牌
+    TakeOverCard = 2;   // 接牌
+}
+
+// 游戏状态消息
+message StatusMessageRes{
+    int32 Status = 1;		// 游戏状态 GameStatus
+    int32 StatusTime = 2;	// 状态的持续时间 秒
+}
+
+// 发牌消息
+message DealRes {
+    bytes Cards   = 1;
+    int64 UserId  = 2;
+    int32 ChairId = 3;
+}
+
+// 广播当前抢地主玩家
+message CurrentRobberRes {
+    int64 UserId     = 1;
+    int32 ChairId    = 2;
+    int32 ActionTime = 3; // 操作时间
+    int64 CurrentNum = 4; // 当前被抢分数 0, 1, 2, 3 表示 不抢/1分/2分/3分
+}
+
+// 广播抢地主请求响应
+message RobResultRes {
+    int64 UserId  = 1;
+    int32 ChairId = 2;
+    int64 RobNum  = 3; // 抢分数 0, 1, 2, 3 表示 不抢/1分/2分/3分
+}
+
+// 广播确认地主消息
+message ConfirmDizhuRes {
+    int64 UserId      = 1;
+    int32 ChairId     = 2;
+    bytes BottomCards = 3; // 地主底牌
+    int64 RobNum      = 4; // 叫地主倍数结果
+}
+
+// 广播加倍结果
+message RedoubleResultRes {
+    int64 UserId  = 1;
+    int32 ChairId = 2;
+    int64 AddNum  = 3; // 1, 2, 4 表示 不加倍/加倍x2/超级加倍x4
+}
+
+// 广播当前操作玩家
+message CurrentPlayerRes {
+    int64 UserId     = 1;
+    int32 ChairId    = 2;
+    int32 ActionTime = 3;
+    bool  Permission = 4; // 是否能够出牌
+    int32 ActionType = 5; // 0, 1 表示 出牌/接牌
+}
+
+// 通知提示信息
+message TipsRes {
+    repeated bytes Cards = 1; // 提示要出的牌
+}
+
+// 广播玩家托管操作信息
+message HangUpInfoRes {
+    int64 UserId   = 1;
+    int32 ChairId  = 2;
+    bool  IsHangUp = 3; // 是/否 表示 托管/取消托管
+}
+
+// 广播出牌请求结果
+message PutInfoRes {
+    int32      ErrNum       = 1;
+    bool       IsSuccess    = 2;
+    int64      UserId       = 3;
+    int32      ChairId      = 4;
+    bytes      Cards        = 5; // 为空表示不出
+    int32      CardType     = 6; // 出牌为空是 为 0
+    PlayerInfo BoomToPlayer = 7; //炸弹炸的哪个玩家
+}
+
+// 用户信息
+message PlayerInfo {
+    int64 UserId  = 1;
+    int32 ChairId = 2;
+}
+
+// 广播结算信息
+message SettleInfoRes {
+    int64 RobMultiple      = 1; // 叫分倍数
+    int64 AllOffMultiple   = 2; // 春天倍数
+    int64 BeAllOffMultiple = 3; // 反春倍数
+    int64 BottomMultiple   = 4; // 底牌倍数
+    int64 BoomMultiple     = 5; // 炸弹倍数
+    int64 RocketMultiple   = 6; // 王炸倍数
+    int64 CommonMultiple   = 7; // 公共倍数
+    int64 DizhuMultiple    = 8; // 地主倍数
+    repeated SettleResult ResultList = 9; // 结算结果 SettleResult
+}
+
+// 结算结果
+message SettleResult {
+    int64  UserId           = 1; // 用户ID
+    int32  ChairId          = 2; // 座位ID
+    bool   IsDizhu          = 3; // 是否是地主
+    int64  Result           = 4; // 输赢结果，正数（赢），负数（输）
+    int64  PeasantsMultiple = 5; // 农民倍数
+    int64  TotalMultiple    = 6; // 总倍数
+    bytes  LeftCards        = 7; // 剩余牌
+    string UserName         = 8; // 用户昵称
+}
+
+// 场景消息
+message SceneMessageRes{
+    int32            GameStatus       = 1;  // 游戏阶段
+    int64            StatusTimeLeft   = 2;  // 当前状态剩余时间
+    int64            RoomCost         = 3;  // 底注
+    int64            MinLimit         = 4;  // 最低入场筹码限制
+    bool             Reconnect        = 5;  // 是否重联
+    int64            RoomID           = 6;  // 房间id
+    int32            RoomLevel        = 7;  // 房间等级
+    bytes            BottomCards      = 8;  // 底牌
+    int64            CommonMultiple   = 9;  // 公共倍数
+    CurrentRobberRes CurrentRobber    = 10; // 当前抢地主玩家
+    CurrentPlayerRes CurrentPlayer    = 11; // 当前操作玩家
+    repeated SeatUserInfoRes UserData = 12; // 玩家数据
+    repeated LeftCards LeftCards      = 13; // 记牌器剩余牌
+}
+
+//游戏中玩家的数据
+message SeatUserInfoRes {
+    string UserName   = 1;  // 用户昵称
+    string Head       = 2;  // 头像
+    int64  Coin       = 3;  // 分数
+    int32  ChairId    = 4;  // 在场景中的座位id
+    bytes  Cards      = 5;  // 手牌
+    int32  Status     = 6;  // 玩家状态
+    int64  UserId     = 7;  // 玩家id
+    string Address    = 8;  // 地理地址
+    bytes  LastCards  = 9;  // 上一次玩家出的手牌
+    int32  Sex        = 10; // 性别
+    bool   IsDizhu    = 11; // 是不是地主
+    int64  RobNum     = 12; // 抢地主分数
+    int64  AddNum     = 13; // 加倍倍数
+    int64  CardsLen   = 14; // 玩家剩余牌数
+    bool   IsActioned = 15; // 是否行动过
+}
+
+// 记牌器剩余牌
+message LeftCards {
+    int32 Count = 1;
+    bytes CardValue = 2;
+}
+
+///////////////////  客户端请求
+
+// 抢地主请求
+message RobReq {
+    int64 RobNum = 1; // 0, 1, 2, 3 表示 不抢/1分/2分/3分
+}
+
+// 加倍请求
+message RedoubleReq {
+    int64 AddNum = 1; // 1, 2, 4 表示 不加倍/加倍x2/超级加倍x4
+}
+
+// 提示请求
+message TipsReq {
+    int64 UserId = 1;
+}
+
+// 出牌请求
+message PutCardsReq {
+    bytes Cards = 1;
+}
+
+// 取消托管请求请求
+message HangUpReq {
+    bool  IsHangUp = 2; // 是否托管状态
+}
+
+// 要牌请求
+message DemandCardsReq{
+    bytes Cards = 1; // 卡牌
+}
+
+// 清桌请求
+message CleanReq{
+    bool isClean = 1;
+}
+

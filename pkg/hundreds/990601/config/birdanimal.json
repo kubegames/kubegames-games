@@ -1,0 +1,635 @@
+{
+    "taketimes": {
+        // 开始随机(毫秒)
+        "startrandodds":3000,
+        // 开始动画
+        "startmove": 2000,
+        // 开始押注
+        "startbet": 20000,
+        // 结束下注动画
+        "endmove": 2000,
+        // 结算信息
+        "endpay":18000,
+        // 多摇一次增加时间
+        "endpayadd": 9000,
+        // 发送下注反馈间隔
+        "betGapBroadcast":30
+      },
+
+    // 5次未下注被踢出房间
+    "unplacebetnum":5,
+    // 金额低于此值时，不能下注
+    "betBottomLine":0,
+
+    // 是否开启3000作弊率玩家必输配置
+    "isOpen3000Ctrl":true,
+
+
+    // 个人玩家单区域限红(分)
+    "singleusersinglespacelimit5times":{
+    "1":[0,0,0,0,0,0,0,0,0,0,0,0],
+    "2":[0,0,0,0,0,0,0,0,0,0,0,0],
+    "3":[0,0,0,0,0,0,0,0,0,0,0,0],
+    "4":[0,0,0,0,0,0,0,0,0,0,0,0]
+    },
+    // 个人玩家所有区域限红(分)
+    "singleuserallspacelimit5times":{
+        "1":[500000],
+        "2":[500000],
+        "3":[500000],
+        "4":[500000]
+    },
+    // 所有玩家区单区域限红(分)
+    "allusersinglespacelimit5times":{
+        "1":[0,0,0,0,0,0,0,0,0,0,0,0],
+        "2":[0,0,0,0,0,0,0,0,0,0,0,0],
+        "3":[0,0,0,0,0,0,0,0,0,0,0,0],
+        "4":[0,0,0,0,0,0,0,0,0,0,0,0]
+    },
+    // 所有区域总限红(分)
+    "allspacelimit5times":{
+        "1":[5000000],
+        "2":[5000000],
+        "3":[5000000],
+        "4":[5000000]
+    }
+    // 开奖策略树
+    // 1.roomProb: 血池值/作弊率
+    // 2.all: 通赔通杀的概率配置
+    // 2-1.allPay: 通赔概率
+    // 2-2.allKill: 通杀概率
+    // 2-4.none: 都不是的概率
+    // 3.free: 免费游戏配置（鲨鱼概率）
+    // 3-1.open: 开出免费游戏概率
+    // 3-2.goldShark: 金鲨概率
+    // 3-3.silverShark: 银鲨概率
+    // 4.back: 返奖率配置
+    // 4.min: 返奖率下线
+    // 4.max: 返奖率上线
+    "policyTree":[
+        {
+            "roomProb":3000,
+            "all":{
+                "allPay":0,
+                "allKill":600,
+                "none":9400
+            },
+            "free":{
+                "open":100,
+                "goldShark":2000,
+                "silverShark":8000
+            },
+            "back":[
+                {
+                    "min":0,
+                    "max":60,
+                    "prob":5000
+                },
+                {
+                    "min":60,
+                    "max":80,
+                    "prob":2500
+                },
+                {
+                    "min":80,
+                    "max":100,
+                    "prob":1500
+                },
+                {
+                    "min":100,
+                    "max":120,
+                    "prob":1000
+                },
+                {
+                    "min":120,
+                    "max":140,
+                    "prob":500
+                },
+                {
+                    "min":140,
+                    "max":160,
+                    "prob":0
+                },
+                {
+                    "min":160,
+                    "max":200,
+                    "prob":0
+                }
+            ]
+        },
+        {
+            "roomProb":2000,
+            "all":{
+                "allPay":100,
+                "allKill":500,
+                "none":9400
+            },
+            "free":{
+                "open":110,
+                "goldShark":3000,
+                "silverShark":7000
+            },
+            "back":[
+                {
+                    "min":0,
+                    "max":60,
+                    "prob":4000
+                },
+                {
+                    "min":60,
+                    "max":80,
+                    "prob":2000
+                },
+                {
+                    "min":80,
+                    "max":100,
+                    "prob":2000
+                },
+                {
+                    "min":100,
+                    "max":120,
+                    "prob":1500
+                },
+                {
+                    "min":120,
+                    "max":140,
+                    "prob":500
+                },
+                {
+                    "min":140,
+                    "max":160,
+                    "prob":0
+                },
+                {
+                    "min":160,
+                    "max":200,
+                    "prob":0
+                }
+            ]
+        },
+        {
+            "roomProb":1000,
+            "all":{
+                "allPay":200,
+                "allKill":400,
+                "none":9400
+            },
+            "free":{
+                "open":140,
+                "goldShark":3500,
+                "silverShark":6500
+            },
+            "back":[
+                {
+                    "min":0,
+                    "max":60,
+                    "prob":2500
+                },
+                {
+                    "min":60,
+                    "max":80,
+                    "prob":1500
+                },
+                {
+                    "min":80,
+                    "max":100,
+                    "prob":2000
+                },
+                {
+                    "min":100,
+                    "max":120,
+                    "prob":2000
+                },
+                {
+                    "min":120,
+                    "max":140,
+                    "prob":1500
+                },
+                {
+                    "min":140,
+                    "max":160,
+                    "prob":500
+                },
+                {
+                    "min":160,
+                    "max":200,
+                    "prob":0
+                }
+            ]
+        },
+        {
+            "roomProb":-1000,
+            "all":{
+                "allPay":300,
+                "allKill":300,
+                "none":9400
+            },
+            "free":{
+                "open":170,
+                "goldShark":3500,
+                "silverShark":6500
+            },
+            "back":[
+                {
+                    "min":0,
+                    "max":60,
+                    "prob":100
+                },
+                {
+                    "min":60,
+                    "max":80,
+                    "prob":900
+                },
+                {
+                    "min":80,
+                    "max":100,
+                    "prob":1500
+                },
+                {
+                    "min":100,
+                    "max":120,
+                    "prob":2500
+                },
+                {
+                    "min":120,
+                    "max":140,
+                    "prob":3000
+                },
+                {
+                    "min":140,
+                    "max":160,
+                    "prob":1500
+                },
+                {
+                    "min":160,
+                    "max":200,
+                    "prob":500
+                }
+            ]
+        },
+        {
+            "roomProb":-2000,
+            "all":{
+                "allPay":400,
+                "allKill":200,
+                "none":9400
+            },
+            "free":{
+                "open":190,
+                "goldShark":4000,
+                "silverShark":6000
+            },
+            "back":[
+                {
+                    "min":0,
+                    "max":60,
+                    "prob":100
+                },
+                {
+                    "min":60,
+                    "max":80,
+                    "prob":400
+                },
+                {
+                    "min":80,
+                    "max":100,
+                    "prob":500
+                },
+                {
+                    "min":100,
+                    "max":120,
+                    "prob":2000
+                },
+                {
+                    "min":120,
+                    "max":140,
+                    "prob":3500
+                },
+                {
+                    "min":140,
+                    "max":160,
+                    "prob":2500
+                },
+                {
+                    "min":160,
+                    "max":200,
+                    "prob":1000
+                }
+            ]
+        },
+        {
+            "roomProb":-3000,
+            "all":{
+                "allPay":500,
+                "allKill":100,
+                "none":9400
+            },
+            "free":{
+                "open":230,
+                "goldShark":3500,
+                "silverShark":6500
+            },
+            "back":[
+                {
+                    "min":0,
+                    "max":60,
+                    "prob":0
+                },
+                {
+                    "min":60,
+                    "max":80,
+                    "prob":0
+                },
+                {
+                    "min":80,
+                    "max":100,
+                    "prob":500
+                },
+                {
+                    "min":100,
+                    "max":120,
+                    "prob":1000
+                },
+                {
+                    "min":120,
+                    "max":140,
+                    "prob":2500
+                },
+                {
+                    "min":140,
+                    "max":160,
+                    "prob":3000
+                },
+                {
+                    "min":160,
+                    "max":200,
+                    "prob":3000
+                }
+            ]
+        }
+    ]
+
+
+    
+
+    // id：以下各项ID为唯一标识。      *************************************************************************************************【请勿更改】【请勿更改】【请勿更改】
+    // probMax: 最大摇中概率，正数整型
+    // probMin: 最小摇中概率，正数整型。备注：在这两个值之间随机，两个值可相等，建议采用万分率来配置（如：金鲨该两个值均为0，则被摇中的概率为0）
+    // etype: 该元素所属类型：1：飞禽；2：走兽；3：金鲨；4：银鲨；5：通杀；6：通赔 *********************************************************【请勿更改】【请勿更改】【请勿更改】
+    // baseID: 参与摇选的元素ID（0-11），***********************************************************************************************【请勿更改】【请勿更改】【请勿更改】
+    // subIds: 数组类型，外层待摇区域所属于某一个baseID,*********************************************************************************【请勿更改】【请勿更改】【请勿更改】（此处更改需要与前端保持一致）
+    // oddsList:赔率列表
+    // oddsList.oddsMax:最大赔率，正数整型
+    // oddsList.oddsMin:最小赔率，正数整型。备注：在这两个值之间随机，两个值可相等，建议采用万分率来配置
+    // oddsList.weight: 正数整型，该选项权重（为0则被随机中的概率为0）
+    
+    // 附随机赔率的算法：根据权重选中某个选项，然后从oddsMax,oddsMin中随机一个值当做赔率。
+    
+    "birdanimals":[
+        // 燕子
+        {
+        "id":0, 
+        "probMax":2600, 
+        "probMin":2600,
+        "etype":1,
+        "subIds":[10,19],
+        "baseID":0,
+        "oddsList":[{
+            "oddsMax":3,
+            "oddsMin":3,
+            "weight":6000
+        },
+        {
+            "oddsMax":4,
+            "oddsMin":4,
+            "weight":3000
+        },
+        {
+            "oddsMax":6,
+            "oddsMin":6,
+            "weight":1000
+        }]},
+         // 鸽子
+         {
+            "id":1,
+            "probMax":1300,
+            "probMin":1300,
+            "etype":1,
+            "subIds":[7,17],
+            "baseID":1,
+            "oddsList":[{
+                "oddsMax":6,
+                "oddsMin":6,
+                "weight":6000
+            },
+            {
+                "oddsMax":8,
+                "oddsMin":8,
+                "weight":3000
+            },
+            {
+                "oddsMax":12,
+                "oddsMin":12,
+                "weight":1000
+            }]},
+          // 金鲨
+          {
+            "id":2,
+            "probMax":100,
+            "probMin":100,
+            "etype":3,
+            "subIds":[3],
+            "baseID":2,
+            "oddsList":[{
+                "oddsMax":100,
+                "oddsMin":100,
+                "weight":1
+            }]},
+         // 银鲨
+         {
+            "id":3,
+            "probMax":100,
+            "probMin":100,
+            "etype":4,
+            "subIds":[15],
+            "baseID":3,
+            "oddsList":[{
+                "oddsMax":50,
+                "oddsMin":50,
+                "weight":1
+            }]},
+          // 兔子
+          {
+            "id":4,
+            "probMax":2600,
+            "probMin":2600,
+            "etype":2,
+            "subIds":[2,12],
+            "baseID":4,
+            "oddsList":[{
+                "oddsMax":3,
+                "oddsMin":3,
+                "weight":6000
+            },
+            {
+                "oddsMax":4,
+                "oddsMin":4,
+                "weight":3000
+            },
+            {
+                "oddsMax":6,
+                "oddsMin":6,
+                "weight":1000
+            }]},
+          // 猴子
+          {
+            "id":5,
+            "probMax":1300,
+            "probMin":1300,
+            "etype":2,
+            "subIds":[5,14],
+            "baseID":5,
+            "oddsList":[{
+                "oddsMax":6,
+                "oddsMin":6,
+                "weight":6000
+            },
+            {
+                "oddsMax":8,
+                "oddsMin":8,
+                "weight":3000
+            },
+            {
+                "oddsMax":12,
+                "oddsMin":12,
+                "weight":1000
+            }]},
+        // 孔雀
+        {
+            "id":6,
+            "probMax":700,
+            "probMin":700,
+            "etype":1,
+            "subIds":[0,8,18],
+            "baseID":6,
+            "oddsList":[{
+                "oddsMax":8,
+                "oddsMin":8,
+                "weight":6000
+            },
+            {
+                "oddsMax":12,
+                "oddsMin":12,
+                "weight":3000
+            },
+            {
+                "oddsMax":24,
+                "oddsMin":24,
+                "weight":1000
+            }]},
+       
+        // 老鹰
+        {
+            "id":7,
+            "probMax":400,
+            "probMin":400,
+            "etype":1,
+            "subIds":[6,16,23],
+            "baseID":7,
+            "oddsList":[{
+                "oddsMax":12,
+                "oddsMin":12,
+                "weight":7000
+            },
+            {
+                "oddsMax":24,
+                "oddsMin":24,
+                "weight":3000
+            }]},
+         // 飞禽
+         {
+            "id":8,
+            "probMax":0,
+            "probMin":0,
+            "oddsList":[{
+                "oddsMax":2,
+                "oddsMin":2,
+                "weight":1
+            }]},
+        // 走兽
+        {
+            "id":9,
+            "probMax":0,
+            "probMin":0,
+            "oddsList":[{
+                "oddsMax":2,
+                "oddsMin":2,
+                "weight":1
+            }]},
+      
+        // 熊猫
+        {
+            "id":10,
+            "probMax":700,
+            "probMin":700,
+            "etype":2,
+            "subIds":[1,11,20],
+            "baseID":8,
+            "oddsList":[{
+                "oddsMax":8,
+                "oddsMin":8,
+                "weight":6000
+            },
+            {
+                "oddsMax":12,
+                "oddsMin":12,
+                "weight":3000
+            },
+            {
+                "oddsMax":24,
+                "oddsMin":24,
+                "weight":1000
+            }]},
+      
+         // 狮子
+         {
+            "id":11,
+            "probMax":400,
+            "probMin":400,
+            "etype":2,
+            "subIds":[4,13,22],
+            "baseID":9,
+            "oddsList":[{
+                "oddsMax":12,
+                "oddsMin":12,
+                "weight":7000
+            },
+            {
+                "oddsMax":24,
+                "oddsMin":24,
+                "weight":3000
+            }]},
+      
+       
+        // 通杀
+        // id 固定
+        {
+            "id":12,
+            "probMax":500,
+            "probMin":500,
+            "etype":5,
+            "subIds":[9],
+            "baseID":10
+        },
+        // 通赔
+        // id 固定
+        {
+            "id":13,
+            "probMax":400,
+            "probMin":400,
+            "etype":6,
+            "subIds":[21],
+            "baseID":11
+        }
+    ]
+}

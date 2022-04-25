@@ -1,0 +1,139 @@
+
+daiji_tianlanlong.png
+size: 512,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+huxu
+  rotate: false
+  xy: 2, 2
+  size: 139, 24
+  orig: 139, 24
+  offset: 0, 0
+  index: -1
+maofa1
+  rotate: false
+  xy: 403, 268
+  size: 46, 144
+  orig: 46, 144
+  offset: 0, 0
+  index: -1
+maofa_1
+  rotate: true
+  xy: 430, 54
+  size: 65, 72
+  orig: 65, 72
+  offset: 0, 0
+  index: -1
+maofa_2
+  rotate: true
+  xy: 314, 137
+  size: 117, 86
+  orig: 117, 86
+  offset: 0, 0
+  index: -1
+maofa_3
+  rotate: true
+  xy: 322, 5
+  size: 114, 106
+  orig: 114, 106
+  offset: 0, 0
+  index: -1
+meimao
+  rotate: true
+  xy: 473, 389
+  size: 56, 30
+  orig: 56, 30
+  offset: 0, 0
+  index: -1
+qianzhua
+  rotate: true
+  xy: 233, 131
+  size: 40, 63
+  orig: 40, 63
+  offset: 0, 0
+  index: -1
+shange
+  rotate: false
+  xy: 171, 300
+  size: 133, 74
+  orig: 133, 74
+  offset: 0, 0
+  index: -1
+shen1
+  rotate: true
+  xy: 171, 38
+  size: 81, 149
+  orig: 81, 149
+  offset: 0, 0
+  index: -1
+shen2
+  rotate: false
+  xy: 316, 256
+  size: 85, 156
+  orig: 85, 156
+  offset: 0, 0
+  index: -1
+shen3
+  rotate: true
+  xy: 171, 173
+  size: 81, 141
+  orig: 81, 141
+  offset: 0, 0
+  index: -1
+shenmao2
+  rotate: false
+  xy: 403, 121
+  size: 84, 145
+  orig: 84, 145
+  offset: 0, 0
+  index: -1
+shenmao3
+  rotate: false
+  xy: 451, 296
+  size: 56, 91
+  orig: 56, 91
+  offset: 0, 0
+  index: -1
+shenmao4
+  rotate: false
+  xy: 473, 447
+  size: 34, 63
+  orig: 34, 63
+  offset: 0, 0
+  index: -1
+shenwei
+  rotate: false
+  xy: 171, 376
+  size: 143, 134
+  orig: 143, 134
+  offset: 0, 0
+  index: -1
+shenweimao
+  rotate: false
+  xy: 316, 414
+  size: 155, 96
+  orig: 155, 96
+  offset: 0, 0
+  index: -1
+xiae
+  rotate: false
+  xy: 430, 10
+  size: 63, 42
+  orig: 63, 42
+  offset: 0, 0
+  index: -1
+zhua
+  rotate: true
+  xy: 171, 128
+  size: 43, 60
+  orig: 43, 60
+  offset: 0, 0
+  index: -1
+zhuzi
+  rotate: false
+  xy: 2, 28
+  size: 167, 482
+  orig: 167, 482
+  offset: 0, 0
+  index: -1

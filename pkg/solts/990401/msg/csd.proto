@@ -1,0 +1,60 @@
+
+syntax = "proto3";
+
+//枚举消息类型
+enum MsgIDC2S{
+    STARTID = 0;
+	AskSence = 1;
+	Bet = 2;	//下注消息
+    Test = 3 ; // 测试消息
+}
+
+//枚举消息类型
+enum ReMsgIDS2C{
+    RESTARTID = 0;
+	SenceID = 1;//场景消息
+	BetRet = 2;	//下注消息
+	BetFailID = 3;//下注失败
+}
+
+message UserBet{
+	int32 BetMoney = 1;//单线押注金币
+}
+
+message BetFail{
+	int32 FailID=1;//失败的ID
+	string Reson = 2;//下注失败的原因
+}
+
+message LineInfo{
+	int32 Index=1;//线编号下标
+	int32 Count=2;//中奖图的个数
+	int64 Gold=3;//奖励的钱
+}
+
+message BetRes{
+	int64 UserGold=1;
+	repeated int32 IconArr = 2;//图片结果
+	int32 Odds=3;//玩家赢得的总倍数
+	int64 Gold=4;//奖励的钱
+	repeated LineInfo Line=5;//压线数组
+	bool bEnterFree=6;//是否进入免费游戏
+	int32 FreeGames=7;//免费游戏次数
+	int32 Cheat = 10;//作弊值
+	int64 BloodPool = 11;//血池值
+}
+
+//场景消息
+message Sence{
+	int64 Gold = 1;//用户的钱
+	repeated int32  BetValue = 2;//用户下注的筹码
+	int64 JackpotGold =3;//奖金池的钱
+	int32 FreeGameTimes = 4;//免费游戏次数
+	int64 FreeGameGold = 5;//免费游戏金币
+	int32 LastBetIndex = 8;	//最近下注的值
+}
+
+
+message TestMsg {
+    int32 Result = 1;// 结果    0:中奖  1：免费游戏
+}

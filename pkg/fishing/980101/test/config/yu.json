@@ -1,0 +1,3929 @@
+{
+  "1": {
+
+    "1": {
+      "Id": "1",
+
+      "yuming": "灯笼鱼",
+
+      "waiguan": "monster_1",
+
+      "leixing": 1,
+
+      "fenzhi": 3,
+
+      "diaoluo": "2",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "0",
+
+      "wangzhagongji": 0,
+
+      "texiaoID": "0",
+
+      "yugaoID": "0",
+
+      "jishaID": "0",
+
+      "tiji": [76,59],
+
+      "sudu": 100,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": "1",
+
+      "xittonggailv": 100,
+
+      "luxianID": ["0"],
+
+      "peizhiluxiangailv": 0,
+
+      "gailv": 3333,
+	  
+      "jiqigailv": 4000,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":0,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":0,
+
+	  "yqpy":[]
+    },
+    "2": {
+      "Id": "2",
+
+      "yuming": "红斗鱼",
+
+      "waiguan": "monster_2",
+
+      "leixing": 1,
+
+      "fenzhi": 4,
+
+      "diaoluo": "2",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "0",
+
+      "wangzhagongji": 0,
+
+      "texiaoID": "0",
+
+      "yugaoID": "0",
+
+      "jishaID": "0",
+
+      "tiji": [118,38],
+
+      "sudu": 100,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": "1",
+
+      "xittonggailv": 100,
+
+      "luxianID": ["0"],
+
+      "peizhiluxiangailv": 0,
+
+      "gailv": 2500,
+	  
+      "jiqigailv": 3000,
+	  	
+      "youdongID":0,
+	  
+	  "swdhID":0,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":0,
+	  
+	  "yqpy":[]
+    },
+    "3": {
+      "Id": "3",
+
+      "yuming": "神仙鱼",
+
+      "waiguan": "monster_3",
+
+      "leixing": 1,
+
+      "fenzhi": 5,
+
+      "diaoluo": "2",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "0",
+
+      "wangzhagongji": 0,
+
+      "texiaoID": "0",
+
+      "yugaoID": "0",
+
+      "jishaID": "0",
+
+      "tiji": [64,59],
+
+      "sudu": 100,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": "1",
+
+      "xittonggailv": 100,
+
+      "luxianID": ["0"],
+
+      "peizhiluxiangailv": 0,
+
+      "gailv": 2000,
+	  
+      "jiqigailv": 2400,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":0,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":0,
+
+	  "yqpy":[]
+    },
+    "4": {
+      "Id": "4",
+
+      "yuming": "河豚",
+
+      "waiguan": "monster_4",
+
+      "leixing": 1,
+
+      "fenzhi": 6,
+
+      "diaoluo": "2",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "0",
+
+      "wangzhagongji": 0,
+
+      "texiaoID": "0",
+
+      "yugaoID": "0",
+
+      "jishaID": "0",
+
+      "tiji":[65,57],
+
+      "sudu": 100,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": "1",
+
+      "xittonggailv": 100,
+
+      "luxianID": ["0"],
+
+      "peizhiluxiangailv": 0,
+
+      "gailv": 1677,
+	  
+      "jiqigailv": 2012,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":0,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":0,
+
+	  "yqpy":[]
+    },
+    "5": {
+      "Id": "5",
+
+      "yuming": "小乌贼",
+	  
+	  "waiguan": "monster_5",
+
+      "leixing": 7,
+
+      "fenzhi": 5,
+
+      "diaoluo": "2",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "0",
+
+      "wangzhagongji": 0,
+
+      "texiaoID": "0",
+
+      "yugaoID": "0",
+
+      "jishaID": "0",
+
+      "tiji": [37,86],
+
+      "sudu": 110,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": "1",
+
+      "xittonggailv": 100,
+
+      "luxianID": ["0"],
+
+      "peizhiluxiangailv": 0,
+
+      "gailv": 1000,
+	  
+      "jiqigailv": 1200,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":0,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":0,
+
+	  "yqpy":[]
+    },
+    "6": {
+      "Id": "6",
+
+      "yuming": "海龟",
+
+      "waiguan": "monster_6",
+
+      "leixing": 2,
+
+      "fenzhi": 10,
+
+      "diaoluo": "3",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "0",
+
+      "wangzhagongji": 0,
+
+      "texiaoID": "0",
+
+      "yugaoID": "0",
+
+      "jishaID": "0",
+
+      "tiji": [138,91],
+
+      "sudu": 85,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": "0",
+
+      "xittonggailv": 0,
+
+      "luxianID": ["zy1"],
+
+      "peizhiluxiangailv": 100,
+
+      "gailv": 1000,
+	  
+      "jiqigailv": 1200,
+	  
+      "youdongID":0,
+ 	  
+	  "swdhID":0,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":0,
+
+	  "yqpy":[]
+    },
+    "7": {
+      "Id": "7",
+
+      "yuming": "龙鱼",
+
+      "waiguan": "monster_7",
+
+      "leixing": 7,
+
+      "fenzhi": 15,
+
+      "diaoluo": "3",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "0",
+
+      "wangzhagongji": 0,
+
+      "texiaoID": "0",
+
+      "yugaoID": "0",
+
+      "jishaID": "0",
+
+      "tiji": [169,61],
+
+      "sudu": 90,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": "0",
+
+      "xittonggailv": 0,
+
+      "luxianID": ["zy1"],
+
+      "peizhiluxiangailv": 100,
+
+      "gailv": 667,
+	  
+      "jiqigailv": 800,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":0,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":0,
+
+	  "yqpy":[]
+    },
+    "8": {
+      "Id": "8",
+
+      "yuming": "魔鬼鱼",
+
+      "waiguan": "monster_8",
+
+      "leixing": 2,
+
+      "fenzhi": 15,
+
+      "diaoluo": "3",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "0",
+
+      "wangzhagongji": 0,
+
+      "texiaoID": "0",
+
+      "yugaoID": "0",
+
+      "jishaID": "0",
+
+      "tiji":[214,81],
+
+      "sudu": 85,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": "0",
+
+      "xittonggailv": 0,
+
+      "luxianID": ["zy1"],
+
+      "peizhiluxiangailv": 100,
+
+      "gailv": 667,
+	  
+      "jiqigailv": 800,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":0,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":0,
+
+	  "yqpy":[]
+    },
+    "9": {
+      "Id": "9",
+
+      "yuming": "水母",
+
+      "waiguan": "monster_9",
+
+      "leixing": 7,
+
+      "fenzhi": 25,
+
+      "diaoluo": "4",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "0",
+
+      "wangzhagongji": 0,
+
+      "texiaoID": "0",
+
+      "yugaoID": "0",
+
+      "jishaID": "0",
+
+      "tiji": [73,111],
+
+      "sudu": 80,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": "0",
+
+      "xittonggailv": 0,
+
+      "luxianID": ["zy1"],
+
+      "peizhiluxiangailv": 100,
+
+      "gailv": 400,
+	  
+      "jiqigailv": 500,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":0,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":0,
+
+	  "yqpy":[]
+    },
+    "10": {
+      "Id": "10",
+
+      "yuming": "鲨鱼",
+
+      "waiguan": "monster_10",
+
+      "leixing": 3,
+
+      "fenzhi": 30,
+
+      "diaoluo": "4",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "0",
+
+      "wangzhagongji": 0,
+
+      "texiaoID": "0",
+
+      "yugaoID": "0",
+
+      "jishaID": "0",
+
+      "tiji":[268,110],
+
+      "sudu": 60,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": 0,
+
+      "xittonggailv": 0,
+
+      "luxianID": ["dy1"],
+
+      "peizhiluxiangailv": 100,
+
+      "gailv": 333,
+	  
+      "jiqigailv": 400,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":0,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":1,
+
+	  "yqpy":[]
+    },
+    "11": {
+      "Id": "11",
+
+      "yuming": "旗鱼",
+
+      "waiguan": "monster_11",
+
+      "leixing": 3,
+
+      "fenzhi": 20,
+
+      "diaoluo": "4",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "0",
+
+      "wangzhagongji": 0,
+
+      "texiaoID": "0",
+
+      "yugaoID": "0",
+
+      "jishaID": "0",
+
+      "tiji":[208,102],
+
+      "sudu": 60,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": 0,
+
+      "xittonggailv": 0,
+
+      "luxianID": ["dy1"],
+
+      "peizhiluxiangailv": 100,
+
+      "gailv": 500,
+	  
+      "jiqigailv": 600,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":0,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":0,
+
+	  "yqpy":[]
+    },
+    "12": {
+      "Id": "12",
+
+      "yuming": "鲸鱼",
+
+      "waiguan": "monster_12",
+
+      "leixing": 3,
+
+      "fenzhi": 40,
+
+      "diaoluo": "4",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "0",
+
+      "wangzhagongji": 0,
+
+      "texiaoID": "0",
+
+      "yugaoID": "0",
+
+      "jishaID": "0",
+
+      "tiji":[316,178],
+
+      "sudu": 60,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": 0,
+
+      "xittonggailv": 0,
+
+      "luxianID": ["dy1"],
+
+      "peizhiluxiangailv": 100,
+
+      "gailv": 250,
+	  
+      "jiqigailv": 300,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":0,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":1,
+
+	  "yqpy":[]
+    },
+    "13": {
+      "Id": "13",
+
+      "yuming": "美人鱼王",
+
+      "waiguan": "monster_13",
+
+      "leixing": 4,
+
+      "fenzhi": 200,
+
+      "diaoluo": "14",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "0",
+
+      "wangzhagongji": 0,
+
+      "texiaoID": "0",
+
+      "yugaoID": 99,
+
+      "jishaID": 0,
+
+      "tiji": [195,238],
+
+      "sudu": 60,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": 0,
+
+      "xittonggailv": 0,
+
+      "luxianID": ["0"],
+
+      "peizhiluxiangailv": 0,
+
+      "gailv": 50,
+	  
+      "jiqigailv": 80,
+	  
+      "youdongID":0,
+ 	  
+	  "swdhID":1,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":2,
+
+	  "yqpy":[]
+    },
+    "14": {
+      "Id": "14",
+
+      "yuming": "大三元",
+
+      "waiguan": "monster_14",
+
+      "leixing": 5,
+
+      "fenzhi": 60,
+
+      "diaoluo": "5",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "1,2,3",
+
+      "wangzhaleixing": "0",
+
+      "wangzhagongji": 0,
+
+      "texiaoID": "0",
+
+      "yugaoID": 14,
+
+      "jishaID": 14,
+
+      "tiji": [220,220],
+
+      "sudu": 60,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": 0,
+
+      "xittonggailv": 0,
+
+      "luxianID": ["10"],
+
+      "peizhiluxiangailv": 100,
+
+      "gailv": 167,
+	  
+      "jiqigailv": 200,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":1,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":1,
+
+	  "yqpy":[]
+    },
+    "15": {
+      "Id": "15",
+
+      "yuming": "大四喜",
+
+      "waiguan": "monster_15",
+
+      "leixing": 5,
+
+      "fenzhi": 80,
+
+      "diaoluo": "5",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "1,2,3,4",
+
+      "wangzhaleixing": "0",
+
+      "wangzhagongji": 0,
+
+      "texiaoID": "0",
+
+      "yugaoID": 15,
+
+      "jishaID": 15,
+
+      "tiji": [200,200],
+
+      "sudu": 60,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": 0,
+
+      "xittonggailv": 0,
+
+      "luxianID": ["10"],
+
+      "peizhiluxiangailv": 100,
+
+      "gailv": 125,
+	  
+      "jiqigailv": 150,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":1,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":1,
+
+	  "yqpy":[]
+    },
+    "16": {
+      "Id": "16",
+
+      "yuming": "灯笼鱼王",
+
+      "waiguan": "monster_16",
+
+      "leixing": 6,
+
+      "fenzhi": 4,
+
+      "diaoluo": "4",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "1",
+
+      "wangzhagongji": 20,
+
+      "texiaoID": "1",
+
+      "yugaoID": 98,
+
+      "jishaID": 16,
+
+      "tiji": [76,59],
+
+      "sudu": 65,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": 1,
+
+      "xittonggailv": 0,
+
+      "luxianID": ["24"],
+
+      "peizhiluxiangailv": 100,
+
+      "gailv": 2500,
+	  
+      "jiqigailv": 3000,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":0,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":1,
+
+	  "yqpy":[]
+    },
+    "17": {
+      "Id": "17",
+
+      "yuming": "红斗鱼王",
+
+      "waiguan": "monster_17",
+
+      "leixing": 6,
+
+      "fenzhi": 6,
+
+      "diaoluo": "4",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "2",
+
+      "wangzhagongji": 20,
+
+      "texiaoID": "1",
+
+      "yugaoID": 98,
+
+      "jishaID": 17,
+
+      "tiji": [118,38],
+
+      "sudu": 65,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": 0,
+
+      "xittonggailv": 0,
+
+      "luxianID": ["24"],
+
+      "peizhiluxiangailv": 100,
+
+      "gailv": 1667,
+	  
+      "jiqigailv": 2000,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":0,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":1,
+
+	  "yqpy":[]
+
+    },
+    "18": {
+      "Id": "18",
+
+      "yuming": "神仙鱼王",
+
+      "waiguan": "monster_18",
+
+      "leixing": 6,
+
+      "fenzhi": 8,
+
+      "diaoluo": "4",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "3",
+
+      "wangzhagongji": 20,
+
+      "texiaoID": "1",
+
+      "yugaoID": "0",
+
+      "jishaID": "0",
+
+      "tiji": [64,59],
+
+      "sudu": 60,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": 0,
+
+      "xittonggailv": 0,
+
+      "luxianID": ["24"],
+
+      "peizhiluxiangailv": 100,
+
+      "gailv": 1250,
+	  
+      "jiqigailv": 1500,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":0,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":1,
+
+	  "yqpy":[]
+    },
+    "19": {
+      "Id": "19",
+
+      "yuming": "河豚王",
+
+      "waiguan": "monster_19",
+
+      "leixing": 6,
+
+      "fenzhi": 10,
+
+      "diaoluo": "4",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "4",
+
+      "wangzhagongji": 20,
+
+      "texiaoID": "1",
+
+      "yugaoID": "98",
+
+      "jishaID": "19",
+
+      "tiji":[65,57],
+
+      "sudu": 55,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": 0,
+
+      "xittonggailv": 0,
+
+      "luxianID": ["24"],
+
+      "peizhiluxiangailv": 100,
+
+      "gailv": 1000,
+	  
+      "jiqigailv": 1200,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":0,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":1,
+
+	  "yqpy":[]
+    },
+    "20": {
+      "Id": "20",
+
+      "yuming": "小乌贼王",
+
+      "waiguan": "monster_20",
+
+      "leixing": 6,
+
+      "fenzhi": 12,
+
+      "diaoluo": "4",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "5",
+
+      "wangzhagongji": 20,
+
+      "texiaoID": "1",
+
+      "yugaoID": 98,
+
+      "jishaID": 20,
+
+      "tiji": [37,86],
+
+      "sudu": 60,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": 0,
+
+      "xittonggailv": 0,
+
+      "luxianID": ["24"],
+
+      "peizhiluxiangailv": 100,
+
+      "gailv": 91,
+	  
+      "jiqigailv": 110,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":0,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":1,
+
+	  "yqpy":[]
+    },
+    "21": {
+      "Id": "21",
+
+      "yuming": "炸弹鱼",
+
+      "waiguan": "monster_21",
+
+      "leixing": 7,
+
+      "fenzhi": 30,
+
+      "diaoluo": "5",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "0",
+
+      "wangzhagongji": 0,
+
+      "texiaoID": "0",
+
+      "yugaoID": 21,
+
+      "jishaID": 0,
+
+      "tiji":[124,124],
+
+      "sudu": 65,
+
+      "baozhafanwei": "260",
+
+      "baozhagongji": 20,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": 1,
+
+      "xittonggailv": 100,
+
+      "luxianID": ["0","0"],
+
+      "peizhiluxiangailv": 0,
+
+      "gailv": 67,
+	  
+      "jiqigailv": 80,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":0,
+	  
+	  "bzsl":8,
+	  
+	  "ldsl":0,
+	
+	  "djzp":1,
+
+	  "yqpy":[]
+    },
+    "22": {
+      "Id": "22",
+
+      "yuming": "电鳗",
+
+      "waiguan": "monster_22",
+
+      "leixing": 7,
+
+      "fenzhi": 25,
+
+      "diaoluo": "5",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "0",
+
+      "wangzhagongji": 0,
+
+      "texiaoID": "0",
+
+      "yugaoID": 22,
+
+      "jishaID": 0,
+
+      "tiji":[195,67],
+
+      "sudu": 55,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "500",
+
+      "leidiangongji": 20,
+
+      "xitongluxian": 1,
+
+      "xittonggailv": 100,
+
+      "luxianID": ["0","0"],
+
+      "peizhiluxiangailv": 0,
+
+      "gailv": 67,
+	  
+      "jiqigailv": 80,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":0,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":8,
+	
+	  "djzp":1,
+
+	  "yqpy":[]
+    },
+    "23": {
+      "Id": "23",
+
+      "yuming": "寒冰蚌精",
+
+      "waiguan": "monster_23",
+
+      "leixing": 7,
+
+      "fenzhi": 20,
+
+      "diaoluo": "3",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "0",
+
+      "wangzhagongji": 0,
+
+      "texiaoID": "0",
+
+      "yugaoID": 23,
+
+      "jishaID": 0,
+
+      "tiji": [101,115],
+
+      "sudu": 55,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "300",
+
+      "bingdongshijian": 10,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": 1,
+
+      "xittonggailv": 100,
+
+      "luxianID": ["0","0"],
+
+      "peizhiluxiangailv": 0,
+
+      "gailv": 500,
+	  
+      "jiqigailv": 600,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":0,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":1,
+
+	  "yqpy":[]	  
+    },
+    "24": {
+      "Id": "24",
+
+      "yuming": "金龟",
+
+      "waiguan": "monster_24",
+
+      "leixing": 4,
+
+      "fenzhi": 60,
+
+      "diaoluo": "6",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "0",
+
+      "wangzhagongji": 0,
+
+      "texiaoID": "0",
+
+      "yugaoID": 24,
+
+      "jishaID": 24,
+
+      "tiji": [220,150],
+
+      "sudu": 45,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": 0,
+
+      "xittonggailv": 0,
+
+      "luxianID": ["hjwg1"],
+
+      "peizhiluxiangailv": 100,
+
+      "gailv": 167,
+	  
+      "jiqigailv": 200,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":1,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":1,
+
+	  "yqpy":[]	  
+    },
+    "25": {
+      "Id": "25",
+
+      "yuming": "金龙鱼",
+
+      "waiguan": "monster_25",
+
+      "leixing": 4,
+
+      "fenzhi": 75,
+
+      "diaoluo": "6",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "0",
+
+      "wangzhagongji": 0,
+
+      "texiaoID": "0",
+
+      "yugaoID": 25,
+
+      "jishaID": 25,
+
+      "tiji": [280,100],
+
+      "sudu": 60,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": 0,
+
+      "xittonggailv": 0,
+
+      "luxianID": ["34"],
+
+      "peizhiluxiangailv": 100,
+
+      "gailv": 133,
+	  
+      "jiqigailv": 160,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":1,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":1,
+
+	  "yqpy":[]	  
+    },
+    "26": {
+      "Id": "26",
+
+      "yuming": "黄金鲨鱼",
+
+      "waiguan": "monster_26",
+
+      "leixing": 4,
+
+      "fenzhi": 80,
+
+      "diaoluo": "7",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "0",
+
+      "wangzhagongji": 0,
+
+      "texiaoID": "0",
+
+      "yugaoID": 26,
+
+      "jishaID": 26,
+
+      "tiji": [339,220],
+
+      "sudu": 45,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": 0,
+
+      "xittonggailv": 0,
+
+      "luxianID": ["HJSY1"],
+
+      "peizhiluxiangailv": 100,
+
+      "gailv": 125,
+	  
+      "jiqigailv": 150,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":1,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":1,
+
+	  "yqpy":[]	  
+    },
+    "27": {
+      "Id": "27",
+
+      "yuming": "螃蟹将军",
+
+      "waiguan": "monster_27",
+
+      "leixing": 4,
+
+      "fenzhi": 90,
+
+      "diaoluo": "10",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "0",
+
+      "wangzhagongji": 0,
+
+      "texiaoID": "0",
+
+      "yugaoID": 27,
+
+      "jishaID": 0,
+
+      "tiji": [293,189],
+
+      "sudu": 65,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": 0,
+
+      "xittonggailv": 0,
+
+      "luxianID": ["12"],
+
+      "peizhiluxiangailv": 100,
+
+      "gailv": 111,
+	  
+      "jiqigailv": 150,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":1,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":2,
+
+	  "yqpy":[]	  
+    },
+    "28": {
+      "Id": "28",
+
+      "yuming": "海盗宝船",
+
+      "waiguan": "monster_28",
+
+      "leixing": 4,
+
+      "fenzhi": 120,
+
+      "diaoluo": "8",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "0",
+
+      "wangzhagongji": 0,
+
+      "texiaoID": "0",
+
+      "yugaoID": 28,
+
+      "jishaID": 0,
+
+      "tiji": [346,357],
+
+      "sudu": 35,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": 0,
+
+      "xittonggailv": 0,
+
+      "luxianID": ["hdc1"],
+
+      "peizhiluxiangailv": 100,
+
+      "gailv": 83,
+	  
+      "jiqigailv": 100,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":1,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":2,
+
+	  "yqpy":[]	  
+    },
+    "29": {
+      "Id": "29",
+
+      "yuming": "金甲蟹将",
+
+      "waiguan": "monster_29",
+
+      "leixing": 4,
+
+      "fenzhi": 100,
+
+      "diaoluo": "8",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "0",
+
+      "wangzhagongji": 0,
+
+      "texiaoID": "0",
+
+      "yugaoID": 29,
+
+      "jishaID": 0,
+
+      "tiji": [337,221],
+
+      "sudu": 35,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": 0,
+
+      "xittonggailv": 0,
+
+      "luxianID": ["12"],
+
+      "peizhiluxiangailv": 100,
+
+      "gailv": 100,
+	  
+      "jiqigailv": 120,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":1,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":2,
+	
+	  "yqpy":[]	
+    },
+    "30": {
+      "Id": "30",
+
+      "yuming": "神秘人鱼王",
+
+      "waiguan": "monster_30",
+
+      "leixing": 4,
+
+      "fenzhi": 200,
+
+      "diaoluo": "10",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "0",
+
+      "wangzhagongji": 0,
+
+      "texiaoID": "0",
+
+      "yugaoID": 99,
+
+      "jishaID": 0,
+
+      "tiji": [270,328],
+
+      "sudu": 30,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": 0,
+
+      "xittonggailv": 0,
+
+      "luxianID": ["xy1"],
+
+      "peizhiluxiangailv": 100,
+
+      "gailv": 50,
+	  
+      "jiqigailv": 60,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":1,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":2,
+
+	  "yqpy":[]  
+    },
+    "31": {
+       "Id": "31",
+
+      "yuming": "小金鱼群",
+
+      "waiguan": "monster_31",
+
+      "leixing": 7,
+
+      "fenzhi": 2,
+
+      "diaoluo": "1",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 6,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "0",
+
+      "wangzhagongji": 0,
+
+      "texiaoID": "0",
+
+      "yugaoID": "0",
+
+      "jishaID": "0",
+
+      "tiji": [40,31],
+
+      "sudu": 120,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": "1",
+
+      "xittonggailv": 100,
+
+      "luxianID": ["0"],
+
+      "peizhiluxiangailv": 0,
+
+      "gailv": 5000,
+	  
+      "jiqigailv": 6000,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":0,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":0,
+
+	  "yqpy":[[0,-5],[-49,35],[-49,-5],[-49,-40],[-96,-14],[-96,-24]]
+    },
+    "32": {
+	"Id": "32",
+
+      "yuming": "小紫鱼群",
+
+      "waiguan": "monster_32",
+
+      "leixing": 7,
+
+      "fenzhi": 2,
+
+      "diaoluo": "1",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 7,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "0",
+
+      "wangzhagongji": 0,
+
+      "texiaoID": "0",
+
+      "yugaoID": "0",
+
+      "jishaID": "0",
+
+      "tiji": [62,20],
+
+      "sudu": 120,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": "1",
+
+      "xittonggailv": 100,
+
+      "luxianID": ["0"],
+
+      "peizhiluxiangailv": 0,
+
+      "gailv": 5000,
+	  
+      "jiqigailv": 6000,
+	  	
+      "youdongID":0,
+	  
+	  "swdhID":0,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":0,
+	  
+	  "yqpy":[[82,10],[20,41],[20,-30],[-60,72],[-47,-7],[-151,89],[-141,30]]
+},
+    "33": {
+      "Id": "33",
+
+      "yuming": "神仙鱼群1",
+
+     "waiguan": "monster_33",
+
+      "leixing": 8,
+
+      "fenzhi": 2,
+
+      "diaoluo": "1",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 12,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "0",
+
+      "wangzhagongji": 0,
+
+      "texiaoID": "0",
+
+      "yugaoID": "0",
+
+      "jishaID": "0",
+
+      "tiji": [32,29],
+
+      "sudu": 110,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": "0",
+
+      "xittonggailv": 0,
+
+      "luxianID": ["yq1"],
+
+      "peizhiluxiangailv": 100,
+
+      "gailv": 5000,
+	  
+      "jiqigailv": 6000,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":0,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":0,
+
+	  "yqpy":[[-18,41],[-346,-86],[-237,-50],[-80,34],[54,33],[80,77],[107,-22],[-105,-47],[-179,34],[-134,-7],[-263,12],[-11,-19]]
+    },
+    "34": {
+      "Id": "34",
+
+      "yuming": "河豚鱼群2",
+
+      "waiguan": "monster_34",
+
+      "leixing": 8,
+
+      "fenzhi": 2,
+
+      "diaoluo": "1",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 11,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "0",
+
+      "wangzhagongji": 0,
+
+      "texiaoID": "0",
+
+      "yugaoID": "0",
+
+      "jishaID": "0",
+
+      "tiji":[32,28],
+
+      "sudu": 110,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": "1",
+
+      "xittonggailv": 0,
+
+      "luxianID": ["yq1"],
+
+      "peizhiluxiangailv": 100,
+
+      "gailv": 5000,
+	  
+      "jiqigailv": 6000,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":0,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":0,
+
+	  "yqpy":[[171,13],[-6,-20],[-187,23],[-493,13],[-89,13],[-294,60],[-359,11],[113,-4],[60,48],[-108,59],[-254,-34]]
+ },
+    "35": {
+      "Id": "35",
+
+      "yuming": "小乌贼鱼群",
+
+ 	  "waiguan": "monster_5",
+
+      "leixing": 8,
+
+      "fenzhi": 2,
+
+      "diaoluo": "1",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 4,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "0",
+
+      "wangzhagongji": 0,
+
+      "texiaoID": "0",
+
+      "yugaoID": "0",
+
+      "jishaID": "0",
+
+      "tiji": [37,86],
+
+      "sudu": 100,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": "1",
+
+      "xittonggailv": 100,
+
+      "luxianID": ["0"],
+
+      "peizhiluxiangailv": 0,
+
+      "gailv": 5000,
+	  
+      "jiqigailv": 6000,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":0,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":0,
+	  
+	  "yqpy":[]	  
+	},
+	"36": {
+      "Id": "36",
+
+      "yuming": "金龟无预告",
+
+      "waiguan": "monster_24",
+
+      "leixing": 4,
+
+      "fenzhi": 60,
+
+      "diaoluo": "7",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "0",
+
+      "wangzhagongji": 0,
+
+      "texiaoID": "0",
+
+      "yugaoID": 0,
+
+      "jishaID": 24,
+
+      "tiji": [220,150],
+
+      "sudu": 45,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": 0,
+
+      "xittonggailv": 0,
+
+      "luxianID": ["hjwg2"],
+
+      "peizhiluxiangailv": 100,
+
+      "gailv": 167,
+	  
+      "jiqigailv": 200,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":1,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":1,
+
+	  "yqpy":[]	  
+    },
+	"37": {
+      "Id": "37",
+
+      "yuming": "金甲蟹将无预告",
+
+      "waiguan": "monster_29",
+
+      "leixing": 4,
+
+      "fenzhi": 100,
+
+      "diaoluo": "8",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "0",
+
+      "wangzhagongji": 0,
+
+      "texiaoID": "0",
+
+      "yugaoID": 0,
+
+      "jishaID": 0,
+
+      "tiji": [337,221],
+
+      "sudu": 35,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": 0,
+
+      "xittonggailv": 0,
+
+      "luxianID": ["13"],
+
+      "peizhiluxiangailv": 100,
+
+      "gailv": 100,
+	  
+      "jiqigailv": 120,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":1,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":2,
+	
+	  "yqpy":[]	
+    },
+    "38": {
+	
+      "Id": "38",
+
+      "yuming": "炸弹鱼无预告",
+
+       "waiguan": "monster_21",
+
+      "leixing": 7,
+
+      "fenzhi": 30,
+
+      "diaoluo": "5",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "0",
+
+      "wangzhagongji": 0,
+
+      "texiaoID": "0",
+
+      "yugaoID": 0,
+
+      "jishaID": 0,
+
+      "tiji":[124,124],
+
+      "sudu": 70,
+
+      "baozhafanwei": "260",
+
+      "baozhagongji": 20,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": 0,
+
+      "xittonggailv": 100,
+
+      "luxianID": ["0"],
+
+      "peizhiluxiangailv": 0,
+
+      "gailv": 67,
+	  
+      "jiqigailv": 80,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":0,
+	  
+	  "bzsl":8,
+	  
+	  "ldsl":0,
+	
+	  "djzp":1,
+
+	  "yqpy":[]
+    },
+    "39": {
+	
+      "Id": "39",
+
+      "yuming": "灯笼鱼王无预告",
+
+       "waiguan": "monster_16",
+
+      "leixing": 6,
+
+      "fenzhi": 6,
+
+      "diaoluo": "4",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "1",
+
+      "wangzhagongji": 20,
+
+      "texiaoID": "1",
+
+      "yugaoID": 0,
+
+      "jishaID": 16,
+
+      "tiji": [76,59],
+
+      "sudu": 85,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": 0,
+
+      "xittonggailv": 0,
+
+      "luxianID": ["24"],
+
+      "peizhiluxiangailv": 100,
+
+      "gailv": 2500,
+	  
+      "jiqigailv": 3000,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":0,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":1,
+
+	  "yqpy":[]
+    },
+    "40": {
+	
+      "Id": "40",
+
+      "yuming": "红斗鱼王无预告",
+
+      "waiguan": "monster_17",
+
+      "leixing": 6,
+
+      "fenzhi": 8,
+
+      "diaoluo": "4",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "2",
+
+      "wangzhagongji": 20,
+
+      "texiaoID": "1",
+
+      "yugaoID": 0,
+
+      "jishaID": 0,
+
+      "tiji": [118,38],
+
+      "sudu": 90,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": 0,
+
+      "xittonggailv": 0,
+
+      "luxianID": ["24"],
+
+      "peizhiluxiangailv": 100,
+
+      "gailv": 1667,
+	  
+      "jiqigailv": 2000,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":0,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":1,
+
+	  "yqpy":[]
+    },
+    "41": {
+	
+      "Id": "41",
+
+      "yuming": "神仙鱼王无预告",
+
+      "waiguan": "monster_18",
+
+      "leixing": 6,
+
+      "fenzhi": 10,
+
+      "diaoluo": "4",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "3",
+
+      "wangzhagongji": 20,
+
+      "texiaoID": "1",
+
+      "yugaoID": "0",
+
+      "jishaID": "18",
+
+      "tiji": [64,59],
+
+      "sudu": 85,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": 0,
+
+      "xittonggailv": 0,
+
+      "luxianID": ["24"],
+
+      "peizhiluxiangailv": 100,
+
+      "gailv": 1250,
+	  
+      "jiqigailv": 1500,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":0,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":1,
+
+	  "yqpy":[]
+    },
+    "42": {
+	
+      "Id": "42",
+
+      "yuming": "河豚王无预告",
+
+      "waiguan": "monster_19",
+
+      "leixing": 6,
+
+      "fenzhi": 12,
+
+      "diaoluo": "4",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "4",
+
+      "wangzhagongji": 20,
+
+      "texiaoID": "1",
+
+      "yugaoID": "0",
+
+      "jishaID": "19",
+
+      "tiji":[65,57],
+
+      "sudu": 85,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": 0,
+
+      "xittonggailv": 0,
+
+      "luxianID": ["24"],
+
+      "peizhiluxiangailv": 100,
+
+      "gailv": 1000,
+	  
+      "jiqigailv": 1200,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":0,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":1,
+
+	  "yqpy":[]
+    },
+    "43": {
+	
+      "Id": "43",
+
+      "yuming": "小乌贼王无预告",
+
+      "waiguan": "monster_20",
+
+      "leixing": 6,
+
+      "fenzhi": 12,
+
+      "diaoluo": "4",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "5",
+
+      "wangzhagongji": 20,
+
+      "texiaoID": "1",
+
+      "yugaoID": 0,
+
+      "jishaID": 20,
+
+      "tiji": [37,86],
+
+      "sudu": 90,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": 0,
+
+      "xittonggailv": 0,
+
+      "luxianID": ["24"],
+
+      "peizhiluxiangailv": 100,
+
+      "gailv": 91,
+	  
+      "jiqigailv": 110,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":0,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":1,
+
+	  "yqpy":[]
+    },
+    "44": {
+      "Id": "44",
+
+      "yuming": "电鳗无预告",
+
+      "waiguan": "monster_22",
+
+      "leixing": 7,
+
+      "fenzhi": 25,
+
+      "diaoluo": "5",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "0",
+
+      "wangzhagongji": 0,
+
+      "texiaoID": "0",
+
+      "yugaoID": 0,
+
+      "jishaID": 0,
+
+      "tiji":[195,67],
+
+      "sudu": 70,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "500",
+
+      "leidiangongji": "20",
+
+      "xitongluxian": 0,
+
+      "xittonggailv": 100,
+
+      "luxianID": ["0","0"],
+
+      "peizhiluxiangailv": 0,
+
+      "gailv": 67,
+	  
+      "jiqigailv": 80,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":0,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":8,
+	
+	  "djzp":1,
+
+	  "yqpy":[]
+    },
+    "45": {
+	
+      "Id": "45",
+
+      "yuming": "寒冰蚌精无预告",
+
+      "waiguan": "monster_23",
+
+      "leixing": 7,
+
+      "fenzhi": 20,
+
+      "diaoluo": "3",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "0",
+
+      "wangzhagongji": 0,
+
+      "texiaoID": "0",
+
+      "yugaoID": 0,
+
+      "jishaID": 0,
+
+      "tiji": [101,115],
+
+      "sudu": 70,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "300",
+
+      "bingdongshijian": 10,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": 0,
+
+      "xittonggailv": 100,
+
+      "luxianID": ["0","0"],
+
+      "peizhiluxiangailv": 0,
+
+      "gailv": 500,
+	  
+      "jiqigailv": 600,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":0,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":1,
+
+	  "yqpy":[]	  
+    },
+    "46": {
+	
+      "Id": "46",
+
+      "yuming": "金龙鱼无预告",
+
+      "waiguan": "monster_25",
+
+      "leixing": 4,
+
+      "fenzhi": 75,
+
+      "diaoluo": "6",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "0",
+
+      "wangzhagongji": 0,
+
+      "texiaoID": "0",
+
+      "yugaoID": 0,
+
+      "jishaID": 25,
+
+      "tiji": [280,100],
+
+      "sudu": 65,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": 0,
+
+      "xittonggailv": 0,
+
+      "luxianID": ["BOSS1"],
+
+      "peizhiluxiangailv": 100,
+
+      "gailv": 133,
+	  
+      "jiqigailv": 160,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":1,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":1,
+
+	  "yqpy":[]	  
+    },
+    "47": {
+	
+      "Id": "47",
+
+      "yuming": "金龟有预告2",
+
+      "waiguan": "monster_24",
+
+      "leixing": 4,
+
+      "fenzhi": 60,
+
+      "diaoluo": "6",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "0",
+
+      "wangzhagongji": 0,
+
+      "texiaoID": "0",
+
+      "yugaoID": 24,
+
+      "jishaID": 24,
+
+      "tiji": [220,150],
+
+      "sudu": 45,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": 0,
+
+      "xittonggailv": 0,
+
+      "luxianID": ["hjwg1"],
+
+      "peizhiluxiangailv": 100,
+
+      "gailv": 167,
+	  
+      "jiqigailv": 200,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":1,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":1,
+
+	  "yqpy":[]	  
+    },
+    "48": {
+	
+      "Id": "48",
+
+      "yuming": "金龟无预告2",
+
+      "waiguan": "monster_24",
+
+      "leixing": 4,
+
+      "fenzhi": 60,
+
+      "diaoluo": "6",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "0",
+
+      "wangzhagongji": 0,
+
+      "texiaoID": "0",
+
+      "yugaoID": 0,
+
+      "jishaID": 24,
+
+      "tiji": [220,150],
+
+      "sudu": 45,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": 0,
+
+      "xittonggailv": 0,
+
+      "luxianID": ["hjwg2"],
+
+      "peizhiluxiangailv": 100,
+
+      "gailv": 167,
+	  
+      "jiqigailv": 200,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":1,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":1,
+
+	  "yqpy":[]	   
+    },
+    "49": {
+	
+      "Id": "49",
+
+      "yuming": "金龟无预告3",
+
+      "waiguan": "monster_24",
+
+      "leixing": 4,
+
+      "fenzhi": 60,
+
+      "diaoluo": "6",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "0",
+
+      "wangzhagongji": 0,
+
+      "texiaoID": "0",
+
+      "yugaoID": 0,
+
+      "jishaID": 24,
+
+      "tiji": [220,150],
+
+      "sudu": 45,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": 0,
+
+      "xittonggailv": 0,
+
+      "luxianID": ["hjwg3"],
+
+      "peizhiluxiangailv": 100,
+
+      "gailv": 167,
+	  
+      "jiqigailv": 200,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":1,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":1,
+
+	  "yqpy":[]	  
+    },
+    "50": {
+	
+      "Id": "50",
+
+      "yuming": "金龙鱼有预告2",
+
+      "waiguan": "monster_25",
+
+      "leixing": 4,
+
+      "fenzhi": 75,
+
+      "diaoluo": "6",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "0",
+
+      "wangzhagongji": 0,
+
+      "texiaoID": "0",
+
+      "yugaoID": 25,
+
+      "jishaID": 25,
+
+      "tiji": [280,100],
+
+      "sudu": 60,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": 0,
+
+      "xittonggailv": 0,
+
+      "luxianID": ["jly3"],
+
+      "peizhiluxiangailv": 100,
+
+      "gailv": 133,
+	  
+      "jiqigailv": 160,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":1,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":1,
+
+	  "yqpy":[]	  
+    },
+    "51": {
+	
+      "Id": "51",
+
+      "yuming": "金龙鱼无预告2",
+
+      "waiguan": "monster_25",
+
+      "leixing": 4,
+
+      "fenzhi": 75,
+
+      "diaoluo": "6",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "0",
+
+      "wangzhagongji": 0,
+
+      "texiaoID": "0",
+
+      "yugaoID": 0,
+
+      "jishaID": 25,
+
+      "tiji": [280,100],
+
+      "sudu": 60,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": 0,
+
+      "xittonggailv": 0,
+
+      "luxianID": ["jly2"],
+
+      "peizhiluxiangailv": 100,
+
+      "gailv": 133,
+	  
+      "jiqigailv": 160,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":1,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":1,
+
+	  "yqpy":[]	  
+    },
+	"52": {
+	
+      "Id": "52",
+
+      "yuming": "金龙鱼无预告3",
+
+      "waiguan": "monster_25",
+
+      "leixing": 4,
+
+      "fenzhi": 75,
+
+      "diaoluo": "6",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "0",
+
+      "wangzhagongji": 0,
+
+      "texiaoID": "0",
+
+      "yugaoID": 0,
+
+      "jishaID": 25,
+
+      "tiji": [280,100],
+
+      "sudu": 60,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": 0,
+
+      "xittonggailv": 0,
+
+      "luxianID": ["jly4"],
+
+      "peizhiluxiangailv": 100,
+
+      "gailv": 133,
+	  
+      "jiqigailv": 160,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":1,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":1,
+
+	  "yqpy":[]	  
+    },
+    "53": {
+      "Id": "53",
+
+      "yuming": "神仙鱼群3",
+
+     "waiguan": "monster_33",
+
+      "leixing": 7,
+
+      "fenzhi": 2,
+
+      "diaoluo": "1",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 10,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "0",
+
+      "wangzhagongji": 0,
+
+      "texiaoID": "0",
+
+      "yugaoID": "0",
+
+      "jishaID": "0",
+
+      "tiji": [32,29],
+
+      "sudu": 110,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": "0",
+
+      "xittonggailv": 0,
+
+      "luxianID": ["yq1"],
+
+      "peizhiluxiangailv": 100,
+
+      "gailv": 5000,
+	  
+      "jiqigailv": 6000,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":0,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":0,
+
+	  "yqpy":[[70,41],[57,-22],[19,80],[0,-43],[-21,48],[-50,119],[-60,-2],[-103,72],[-128,-4],[-161,100],[-192,39]]
+    },
+    "54": {
+      "Id": "54",
+
+      "yuming": "河豚鱼群",
+
+      "waiguan": "monster_34",
+
+      "leixing": 7,
+
+      "fenzhi": 2,
+
+      "diaoluo": "1",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 5,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "0",
+
+      "wangzhagongji": 0,
+
+      "texiaoID": "0",
+
+      "yugaoID": "0",
+
+      "jishaID": "0",
+
+      "tiji":[32,28],
+
+      "sudu": 110,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": "0",
+
+      "xittonggailv": 0,
+
+      "luxianID": ["yq1"],
+
+      "peizhiluxiangailv": 100,
+
+      "gailv": 5000,
+	  
+      "jiqigailv": 6000,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":0,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":0,
+
+	  "yqpy":[[-15,0],[-52,59],[-58,-56],[-109,4],[-162,58]]
+    },
+    "55": {
+      "Id": "55",
+
+      "yuming": "黄金鲨鱼无预告",
+
+      "waiguan": "monster_26",
+
+      "leixing": 4,
+
+      "fenzhi": 80,
+
+      "diaoluo": "7",
+
+      "diaoluoID1": "1",
+
+      "diaoluoID2": "2",
+
+      "yuqun": 1,
+
+      "yudui": "0",
+
+      "wangzhaleixing": "0",
+
+      "wangzhagongji": 0,
+
+      "texiaoID": "0",
+
+      "yugaoID": 0,
+
+      "jishaID": 26,
+
+      "tiji": [339,220],
+
+      "sudu": 65,
+
+      "baozhafanwei": "0",
+
+      "baozhagongji": 0,
+
+      "bingdongfanwei": "0",
+
+      "bingdongshijian": 0,
+
+      "leidianfanwei": "0",
+
+      "leidiangongji": 0,
+
+      "xitongluxian": 0,
+
+      "xittonggailv": 0,
+
+      "luxianID": ["25"],
+
+      "peizhiluxiangailv": 100,
+
+      "gailv": 125,
+	  
+      "jiqigailv": 150,
+	  
+      "youdongID":0,
+	  
+	  "swdhID":1,
+	  
+	  "bzsl":0,
+	  
+	  "ldsl":0,
+	
+	  "djzp":1,
+
+	  "yqpy":[]	  
+}
+  },
+  "maxLength" : 300,
+  "fishTideTime" : 6000,
+  "fishTideForecastTime" : 370000,
+  "yuchaochixushijian" : {"1":80000,"2":44000,"3":59000,"4":48000,"5":68000}
+}

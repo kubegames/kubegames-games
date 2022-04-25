@@ -1,0 +1,230 @@
+
+effects_csd_icon_ruyi.png
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+effects_csd_icon_ruyi_002/effects_csd_icon_ruyi_02_00000
+  rotate: false
+  xy: 495, 197
+  size: 36, 22
+  orig: 140, 140
+  offset: 13, 109
+  index: -1
+effects_csd_icon_ruyi_002/effects_csd_icon_ruyi_02_00001
+  rotate: false
+  xy: 962, 353
+  size: 59, 35
+  orig: 140, 140
+  offset: 11, 96
+  index: -1
+effects_csd_icon_ruyi_002/effects_csd_icon_ruyi_02_00002
+  rotate: false
+  xy: 361, 109
+  size: 68, 45
+  orig: 140, 140
+  offset: 9, 86
+  index: -1
+effects_csd_icon_ruyi_002/effects_csd_icon_ruyi_02_00003
+  rotate: false
+  xy: 145, 19
+  size: 72, 55
+  orig: 140, 140
+  offset: 10, 76
+  index: -1
+effects_csd_icon_ruyi_002/effects_csd_icon_ruyi_02_00004
+  rotate: false
+  xy: 2, 2
+  size: 71, 59
+  orig: 140, 140
+  offset: 12, 69
+  index: -1
+effects_csd_icon_ruyi_002/effects_csd_icon_ruyi_02_00005
+  rotate: false
+  xy: 75, 5
+  size: 68, 56
+  orig: 140, 140
+  offset: 16, 62
+  index: -1
+effects_csd_icon_ruyi_002/effects_csd_icon_ruyi_02_00006
+  rotate: false
+  xy: 361, 156
+  size: 67, 53
+  orig: 140, 140
+  offset: 23, 55
+  index: -1
+effects_csd_icon_ruyi_002/effects_csd_icon_ruyi_02_00007
+  rotate: false
+  xy: 430, 175
+  size: 63, 44
+  orig: 140, 140
+  offset: 35, 49
+  index: -1
+effects_csd_icon_ruyi_002/effects_csd_icon_ruyi_02_00008
+  rotate: false
+  xy: 361, 68
+  size: 57, 39
+  orig: 140, 140
+  offset: 47, 38
+  index: -1
+effects_csd_icon_ruyi_002/effects_csd_icon_ruyi_02_00009
+  rotate: false
+  xy: 962, 440
+  size: 58, 47
+  orig: 140, 140
+  offset: 60, 26
+  index: -1
+effects_csd_icon_ruyi_002/effects_csd_icon_ruyi_02_00010
+  rotate: false
+  xy: 962, 390
+  size: 56, 48
+  orig: 140, 140
+  offset: 70, 16
+  index: -1
+effects_csd_icon_ruyi_002/effects_csd_icon_ruyi_02_00011
+  rotate: false
+  xy: 957, 304
+  size: 54, 47
+  orig: 140, 140
+  offset: 75, 7
+  index: -1
+effects_csd_icon_ruyi_002/effects_csd_icon_ruyi_02_00012
+  rotate: false
+  xy: 957, 256
+  size: 53, 46
+  orig: 140, 140
+  offset: 77, 3
+  index: -1
+effects_csd_icon_ruyi_002/effects_csd_icon_ruyi_02_00013
+  rotate: false
+  xy: 957, 215
+  size: 49, 39
+  orig: 140, 140
+  offset: 82, 1
+  index: -1
+effects_csd_icon_ruyi_002/effects_csd_icon_ruyi_02_00014
+  rotate: false
+  xy: 776, 321
+  size: 38, 27
+  orig: 140, 140
+  offset: 91, 0
+  index: -1
+effects_csd_icon_ruyi_01
+  rotate: false
+  xy: 402, 221
+  size: 129, 130
+  orig: 131, 132
+  offset: 1, 1
+  index: -1
+effects_csd_icon_ruyi_02
+  rotate: false
+  xy: 533, 220
+  size: 122, 131
+  orig: 124, 133
+  offset: 1, 1
+  index: -1
+effects_csd_icon_ty_01/effects_csd_icon_ty_01_01
+  rotate: false
+  xy: 251, 82
+  size: 108, 125
+  orig: 150, 150
+  offset: 24, 16
+  index: -1
+effects_csd_icon_ty_01/effects_csd_icon_ty_01_02
+  rotate: false
+  xy: 825, 231
+  size: 130, 125
+  orig: 150, 150
+  offset: 13, 16
+  index: -1
+effects_csd_icon_ty_01/effects_csd_icon_ty_01_03
+  rotate: false
+  xy: 825, 358
+  size: 135, 129
+  orig: 150, 150
+  offset: 10, 16
+  index: -1
+effects_csd_icon_ty_01/effects_csd_icon_ty_01_04
+  rotate: false
+  xy: 552, 355
+  size: 136, 132
+  orig: 150, 150
+  offset: 10, 15
+  index: -1
+effects_csd_icon_ty_01/effects_csd_icon_ty_01_05
+  rotate: false
+  xy: 274, 353
+  size: 137, 134
+  orig: 150, 150
+  offset: 9, 15
+  index: -1
+effects_csd_icon_ty_01/effects_csd_icon_ty_01_06
+  rotate: false
+  xy: 413, 353
+  size: 137, 134
+  orig: 150, 150
+  offset: 9, 15
+  index: -1
+effects_csd_icon_ty_01/effects_csd_icon_ty_01_07
+  rotate: false
+  xy: 2, 348
+  size: 135, 139
+  orig: 150, 150
+  offset: 10, 10
+  index: -1
+effects_csd_icon_ty_01/effects_csd_icon_ty_01_08
+  rotate: false
+  xy: 2, 63
+  size: 131, 140
+  orig: 150, 150
+  offset: 11, 8
+  index: -1
+effects_csd_icon_ty_01/effects_csd_icon_ty_01_09
+  rotate: false
+  xy: 2, 205
+  size: 132, 141
+  orig: 150, 150
+  offset: 9, 6
+  index: -1
+effects_csd_icon_ty_01/effects_csd_icon_ty_01_10
+  rotate: false
+  xy: 139, 348
+  size: 133, 139
+  orig: 150, 150
+  offset: 7, 5
+  index: -1
+effects_csd_icon_ty_01/effects_csd_icon_ty_01_11
+  rotate: false
+  xy: 136, 209
+  size: 134, 137
+  orig: 150, 150
+  offset: 6, 5
+  index: -1
+effects_csd_icon_ty_01/effects_csd_icon_ty_01_12
+  rotate: false
+  xy: 690, 350
+  size: 133, 137
+  orig: 150, 150
+  offset: 5, 5
+  index: -1
+effects_csd_icon_ty_01/effects_csd_icon_ty_01_13
+  rotate: false
+  xy: 272, 211
+  size: 128, 135
+  orig: 150, 150
+  offset: 5, 7
+  index: -1
+effects_csd_icon_ty_01/effects_csd_icon_ty_01_14
+  rotate: false
+  xy: 657, 215
+  size: 117, 133
+  orig: 150, 150
+  offset: 6, 9
+  index: -1
+effects_csd_icon_ty_01/effects_csd_icon_ty_01_15
+  rotate: false
+  xy: 135, 76
+  size: 114, 127
+  orig: 150, 150
+  offset: 8, 15
+  index: -1

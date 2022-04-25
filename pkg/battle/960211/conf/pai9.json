@@ -1,0 +1,155 @@
+{
+  // 花费时间，从开始到发牌,单位毫秒
+  "taketimes": {
+    // 洗牌
+    "shuffle":4000,
+    // 抢庄
+    "qiangzhuang": 7000,
+    // 发送谁是庄
+    "sendZhuang":2000,
+    // 下注
+    "bet": 5000,
+    // 发牌阶段
+    "dealpoker":8000,
+    // 第一句结束展示牌
+    "showpoker1": 9000,
+    // 第二句结束展示牌
+    "showpoker2": 7000
+  },
+  // qiangMulti：抢庄倍数
+  // lowestGold: 玩家进入房间的最低金额
+  // 从房间等级1，2，3，4排序
+  "levelConfig":[
+    {
+      "qiangMulti":[0,1,2,3,4]
+    },
+    {
+      "qiangMulti":[0,1,2,3,4]
+    },
+    {
+      "qiangMulti":[0,1,2,3,4]
+    },
+    {
+      "qiangMulti":[0,1,2,3,4]
+    }
+  ],
+
+  // 作弊概率配置
+  "-3000":1500,
+  "-2000":1200,
+  "-1000":1000,
+  "1000":700,
+  "2000":500, 
+  "3000":200,
+
+  // 牌型定义
+  "cards":[
+    {
+      "Sorted":21,
+      "Val":12,
+      "Name":"天牌"
+    },
+    {
+      "Sorted":20,
+      "Val":2,
+      "Name":"地牌"
+    },
+    {
+      "Sorted":19,
+      "Val":8,
+      "Name":"人牌"
+    },
+    {
+      "Sorted":18,
+      "Val":4,
+      "Name":"鹅牌"
+    },
+    {
+      "Sorted":17,
+      "Val":10,
+      "Name":"梅牌"
+    },
+    {
+      "Sorted":16,
+      "Val":6,
+      "Name":"长三"
+    },
+    {
+      "Sorted":15,
+      "Val":4,
+      "Name":"板凳"
+    },
+    {
+      "Sorted":14,
+      "Val":11,
+      "Name":"斧头"
+    },
+    {
+      "Sorted":13,
+      "Val":10,
+      "Name":"红头十"
+    },
+    {
+      "Sorted":12,
+      "Val":7,
+      "Name":"高脚七"
+    },
+    {
+      "Sorted":11,
+      "Val":6,
+      "Name":"零霖六"
+    },
+    {
+      "Sorted":10,
+      "Val":9,
+      "Name":"杂九"
+    },
+    {
+      "Sorted":9,
+      "Val":9,
+      "Name":"杂九"
+    },
+    {
+      "Sorted":8,
+      "Val":8,
+      "Name":"杂八"
+    },
+    {
+      "Sorted":7,
+      "Val":8,
+      "Name":"杂八"
+    },
+    {
+      "Sorted":6,
+      "Val":7,
+      "Name":"杂七"
+    },
+    {
+      "Sorted":5,
+      "Val":7,
+      "Name":"杂七"
+    },
+    {
+      "Sorted":4,
+      "Val":5,
+      "Name":"杂五"
+    },
+    {
+      "Sorted":3,
+      "Val":5,
+      "Name":"杂五"
+    },
+    {
+      "Sorted":2,
+      "Val":6,
+      "Name":"二四"
+    },
+    {
+      "Sorted":1,
+      "Val":3,
+      "Name":"丁三"
+    }
+  ]
+
+
+}

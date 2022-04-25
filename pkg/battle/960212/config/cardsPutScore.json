@@ -1,0 +1,118 @@
+// 牌型-- 单张: 1, 对子: 2, 三张: 3, 顺子: 6, 连对: 7, 飞机: 8, 炸弹: 11
+// 牌值-- 1: 3, 2: 4, 3: 5, 4: 6, 5: 7, 6: 8, 7: 9, 8: 10, 9: J, 10: Q, 11: K, 12: A, 13: 2, 14: 小王, 15: 大王,
+{
+   "put_score_form": [
+      // 3
+      {"cards_type": 1, "first_value": 1, "put_score": 1},
+      {"cards_type": 2, "first_value": 1, "put_score": 1},
+      {"cards_type": 3, "first_value": 1, "put_score": 1},
+      {"cards_type": 6, "first_value": 1, "put_score": 1},
+      {"cards_type": 7, "first_value": 1, "put_score": 1},
+      {"cards_type": 8, "first_value": 1, "put_score": 1},
+      {"cards_type": 11, "first_value": 1, "put_score": 10},
+
+      // 4
+      {"cards_type": 1, "first_value": 2, "put_score": 1},
+      {"cards_type": 2, "first_value": 2, "put_score": 1},
+      {"cards_type": 3, "first_value": 2, "put_score": 1},
+      {"cards_type": 6, "first_value": 2, "put_score": 1},
+      {"cards_type": 7, "first_value": 2, "put_score": 1},
+      {"cards_type": 8, "first_value": 2, "put_score": 1},
+      {"cards_type": 11, "first_value": 2, "put_score": 10},
+
+      // 5
+      {"cards_type": 1, "first_value": 3, "put_score": 1},
+      {"cards_type": 2, "first_value": 3, "put_score": 1},
+      {"cards_type": 3, "first_value": 3, "put_score": 1},
+      {"cards_type": 6, "first_value": 3, "put_score": 1},
+      {"cards_type": 7, "first_value": 3, "put_score": 1},
+      {"cards_type": 8, "first_value": 3, "put_score": 1},
+      {"cards_type": 11, "first_value": 3, "put_score": 10},
+
+      // 6
+      {"cards_type": 1, "first_value": 4, "put_score": 1},
+      {"cards_type": 2, "first_value": 4, "put_score": 1},
+      {"cards_type": 3, "first_value": 4, "put_score": 1},
+      {"cards_type": 6, "first_value": 4, "put_score": 2},
+      {"cards_type": 7, "first_value": 4, "put_score": 2},
+      {"cards_type": 8, "first_value": 4, "put_score": 1},
+      {"cards_type": 11, "first_value": 4, "put_score": 11},
+
+      // 7
+      {"cards_type": 1, "first_value": 5, "put_score": 2},
+      {"cards_type": 2, "first_value": 5, "put_score": 2},
+      {"cards_type": 3, "first_value": 5, "put_score": 2},
+      {"cards_type": 6, "first_value": 5, "put_score": 3},
+      {"cards_type": 7, "first_value": 5, "put_score": 2},
+      {"cards_type": 8, "first_value": 5, "put_score": 2},
+      {"cards_type": 11, "first_value": 5, "put_score": 11},
+
+      // 8
+      {"cards_type": 1, "first_value": 6, "put_score": 2},
+      {"cards_type": 2, "first_value": 6, "put_score": 2},
+      {"cards_type": 3, "first_value": 6, "put_score": 3},
+      {"cards_type": 6, "first_value": 6, "put_score": 4},
+      {"cards_type": 7, "first_value": 6, "put_score": 3},
+      {"cards_type": 8, "first_value": 6, "put_score": 3},
+      {"cards_type": 11, "first_value": 6, "put_score": 11},
+
+      // 9
+      {"cards_type": 1, "first_value": 7, "put_score": 2},
+      {"cards_type": 2, "first_value": 7, "put_score": 2},
+      {"cards_type": 3, "first_value": 7, "put_score": 3},
+      {"cards_type": 6, "first_value": 7, "put_score": 5},
+      {"cards_type": 7, "first_value": 7, "put_score": 4},
+      {"cards_type": 8, "first_value": 7, "put_score": 3},
+      {"cards_type": 11, "first_value": 7, "put_score": 11},
+
+      // 10
+      {"cards_type": 1, "first_value": 8, "put_score": 3},
+      {"cards_type": 2, "first_value": 8, "put_score": 4},
+      {"cards_type": 3, "first_value": 8, "put_score": 4},
+      {"cards_type": 6, "first_value": 8, "put_score": 5},
+      {"cards_type": 7, "first_value": 8, "put_score": 5},
+      {"cards_type": 8, "first_value": 8, "put_score": 4},
+      {"cards_type": 11, "first_value": 8, "put_score": 11},
+
+      // J
+      {"cards_type": 1, "first_value": 9, "put_score": 3},
+      {"cards_type": 2, "first_value": 9, "put_score": 4},
+      {"cards_type": 3, "first_value": 9, "put_score": 5},
+      {"cards_type": 7, "first_value": 9, "put_score": 6},
+      {"cards_type": 8, "first_value": 9, "put_score": 6},
+      {"cards_type": 11, "first_value": 9, "put_score": 12},
+
+      // Q
+      {"cards_type": 1, "first_value": 10, "put_score": 4},
+      {"cards_type": 2, "first_value": 10, "put_score": 5},
+      {"cards_type": 3, "first_value": 10, "put_score": 6},
+      {"cards_type": 7, "first_value": 10, "put_score": 7},
+      {"cards_type": 8, "first_value": 10, "put_score": 7},
+      {"cards_type": 11, "first_value": 10, "put_score": 12},
+
+      // K
+      {"cards_type": 1, "first_value": 11, "put_score": 5},
+      {"cards_type": 2, "first_value": 11, "put_score": 6},
+      {"cards_type": 3, "first_value": 11, "put_score": 7},
+      {"cards_type": 8, "first_value": 11, "put_score": 8},
+      {"cards_type": 11, "first_value": 11, "put_score": 12},
+
+      // A
+      {"cards_type": 1, "first_value": 12, "put_score": 6},
+      {"cards_type": 2, "first_value": 12, "put_score": 7},
+      {"cards_type": 3, "first_value": 12, "put_score": 8},
+      {"cards_type": 11, "first_value": 12, "put_score": 12},
+
+      // 2
+      {"cards_type": 1, "first_value": 13, "put_score": 8},
+      {"cards_type": 2, "first_value": 13, "put_score": 9},
+      {"cards_type": 3, "first_value": 13, "put_score": 9},
+      {"cards_type": 11, "first_value": 13, "put_score": 15},
+
+      // 小王  大王  王炸
+      {"cards_type": 1, "first_value": 14, "put_score": 9},
+      {"cards_type": 1, "first_value": 15, "put_score": 10},
+      {"cards_type": 12, "first_value": 14, "put_score": 15}
+
+   ]
+}

@@ -1,0 +1,238 @@
+
+syntax = "proto3";
+package msg;
+
+// 客户端到服务器发送消息的类型
+enum ReceiveMessageType {
+	C2SStartID     = 0;
+	C2SRobBanker   = 1; // 抢庄请求 RobBankerReq
+	C2SBetChips    = 2; // 投注请求 BetChipsReq
+	C2SShowCards   = 3; // 摊派请求 ShowCardsReq
+	C2SDemandCards = 4; // 要牌请求 DemandCardsReq
+	C2SPullRecords = 5; // 拉去日志请求 PullRecordsReq
+}
+
+// 服务器发送给客户端的消息类型
+enum SendToClientMessageType {
+	S2CStartID         = 0;
+	S2CUserSitDown     = 1;  // 发送用户坐下 UserSitDownRes
+	S2CGameStatus      = 2;  // 发送游戏状态 StatusMessageRes
+	S2CSceneMessage    = 3;  // 发送场景消息 SceneMessageRes
+	S2CDealCards       = 4;  // 发送发牌消息 DealRes
+	S2CRobBankerInfo   = 5;  // 发送抢庄信息 RobInfoRes
+	S2CRobBankerResult = 6;  // 发送抢庄结果 RobResultRes
+	S2CBetMultiple     = 7;  // 投注倍率信息 BetMultipleRes
+	S2CBetChipsInfo    = 8;  // 发送投注信息 BetInfoRes
+	S2CShowCards       = 9;  // 发送摊牌信息 ShowCardsRes
+	S2CSettleResult    = 10; // 发送结算信息 SettleResultRes
+	S2CRecords    	   = 11; // 发送战绩信息 RecordsRes
+}
+
+//游戏阶段
+enum GameStatus{
+	GameInit     = 0;
+	GameReady    = 1;  // 游戏准备开始
+	CountDown    = 2;  // 倒计时
+	StartGame    = 3;  // 开始游戏
+	RobBanker    = 4;  // 开始抢庄
+	EndRob       = 5;  // 抢庄结束
+	BetChips     = 6;  // 开始投注
+	EndBet       = 7;  // 投注结束
+	ShowCards    = 8;  // 开始开牌
+	EndShow      = 9;  // 开牌结束
+	SettleStatus = 10; // 结算状态
+	GameOver     = 11; // 游戏结束
+}
+
+// 用户状态
+enum UserStatus{
+	UserInit    = 0;
+	SitDown     = 1; // 坐下
+	Ready       = 2; // 准备
+	RobAction   = 3; // 已抢庄
+	BetAction   = 4; // 已投注
+	ShowedCards = 5; // 已摊派
+}
+
+//牌的类型
+enum CardsType{
+	Unknown       = 0;  // 未知
+	ZeroPoint     = 1;  // 0点
+	OnePoint      = 2;  // 1点
+	TwoPoint      = 3;  // 2点
+	ThreePoint    = 4;  // 3点
+	FourPoint     = 5;  // 4点
+	FivePoint     = 6;  // 5点
+	SixPoint      = 7;  // 6点
+	SevenPoint    = 8;  // 7点
+	EightPoint    = 9;  // 8点
+	NinePoint     = 10; // 9点
+	ThreeDoll     = 11; // 三公
+	Boom          = 12; // 炸弹
+	ExplosionNine = 13; // 爆玖
+}
+
+//配牌类型
+enum DemandType{
+	NoDemand           = 0; // 没有需求
+	MustWin            = 1; // 必赢
+	MustLose           = 2; // 必输
+	ExplosionNineCards = 3; // 爆玖手牌
+	BoomCards          = 4; // 炸弹手牌
+	ThreeDollCards     = 5; // 三公手牌
+	WinAll             = 6; // 通杀
+	LoseAll            = 7; // 通赔
+	MustRob            = 8; // 必定抢庄成功
+	PutIn              = 9; // 输入手牌
+}
+
+//----------------------------------------
+// 服务端发送给客户端消息体
+//----------------------------------------
+
+// 发送用户坐下信息
+message UserSitDownRes {
+	int64  userId   = 1; // 用户ID
+	int32  ChairId  = 2; // 用户座位
+	string UserName = 3; // 用户昵称
+	string Head     = 4; // 头像
+	int64  Coin     = 5; // 金币
+	string address  = 6; // 地理地址
+	int32  Sex      = 7; // 性别
+}
+
+// 发送游戏状态
+message StatusMessageRes{
+	int32 Status     = 1; // 游戏状态 GameStatus
+	int32 StatusTime = 2; // 状态的持续时间,单位秒
+}
+
+// 场景消息
+message SceneMessageRes{
+	int32 GameStatus     = 1; // 游戏阶段
+	int64 StatusTimeLeft = 2; // 当前状态剩余时间
+	int64 RoomCost       = 3; // 底注
+	int64 MinLimit       = 4; // 最低入场筹码限制
+	int64 RoomID         = 5; // 房间id
+	bool  Reconnect      = 6; // 是否重联
+	repeated UserInfo UserData = 7; // 玩家数据
+}
+
+// 玩家数据
+message UserInfo {
+	string UserName    = 1;  // 用户昵称
+	string Head        = 2;  // 头像
+	int64  Coin        = 3;  // 分数
+	int32  ChairId     = 4;  // 在场景中的座位id
+	bytes  Cards       = 5;  // 手牌
+	int32  CardsType   = 6;  // 牌型 CardsType
+	int32  Status      = 8;  // 玩家状态
+	int64  userId      = 9;  // 玩家id
+	int64  BetMultiple = 10; // 闲家投注倍数
+	bool   IsRob       = 11; // 玩家抢庄下标
+	bool   IsBanker    = 12; // 是否是庄家
+	string address     = 13; // 地理地址
+	int32  Sex         = 14; // 性别
+	repeated int64 Multiples = 15; // 可投注倍率列表
+}
+
+// 发牌信息
+message DealRes{
+	bytes Cards   = 1; // 卡牌
+	int64 userId  = 2; // 用户ID
+	int32 ChairId = 3; // 座位ID
+}
+
+// 用户抢庄信息
+message RobInfoRes {
+	int64 userId  = 1; // 用户ID
+	int32 ChairId = 2; // 座位ID
+	bool  IsRob   = 3; // 是否抢庄
+}
+
+// 抢庄结果信息
+message RobResultRes {
+	int64 bankerUserId  = 1; // 用户ID
+	int32 bankerChairId = 2; // 座位ID
+	repeated int32 Candidates = 3; // 候选人列表（用户座位ID列表）
+}
+
+// 投注倍率信息
+message BetMultipleRes {
+	int64 userId  = 1; // 用户ID
+	int32 ChairId = 2; // 用户座位
+	repeated int64 Multiples = 3; // 可投注倍率列表
+}
+
+// 用户投注信息
+message BetInfoRes {
+	int64 BetMultiple = 1; // 投注倍数
+	int64 userId      = 2; // 用户ID
+	int32 ChairId     = 3; // 座位ID
+}
+
+// 摊派信息
+message ShowCardsRes{
+	bytes Cards     = 1; // 卡牌
+	int64 userId    = 2; // 用户ID
+	int32 ChairId   = 3; // 座位ID
+	int32 CardsType = 4; // 牌型
+}
+
+// 结算结果信息
+message SettleResultRes {
+	repeated SettleResult ResultList = 1; // 结算结果 SettleResult
+}
+
+// 结算结果
+message SettleResult {
+	int64 userId   = 1; // 用户ID
+	int32 ChairId  = 2; // 座位ID
+	int64 Result   = 3; // 输赢结果，正数（赢），负数（输）
+	bool  IsBanker = 4; // 是否是庄家
+}
+
+// 战绩列表信息
+message GameRecordsRes{
+  	repeated Record Records = 1; // 战绩
+}
+
+// 战绩
+message Record{
+	int32  Time      = 1; // 时间
+	string GameNum   = 2; // 牌局编号
+	int32  RoomLevel = 3; // 房间类型
+	int64  Result 	 = 4; // 盈利结果
+	int32  Status 	 = 5; // 状态 1 已结算 2 结算中
+}
+
+//----------------------------------------
+// 客户端发送给服务端消息体
+//----------------------------------------
+
+// 抢庄请求
+message RobBankerReq{
+	int64 userId = 1; // 用户ID
+	bool  IsRob  = 3; // 是否抢庄
+}
+
+// 投注请求
+message BetChipsReq{
+	int64 BetMultiple = 1; // 投注倍数
+}
+
+// 摊牌请求
+message ShowCardsReq{
+	int64 userId = 1; // 用户ID
+}
+
+// 要牌请求
+message DemandCardsReq{
+	int32 DemandType = 1; // 要牌类型
+	bytes Cards 	 = 2; // 手牌（要牌类型为输入）
+}
+
+// 拉去日志请求
+message PullRecordsReq{
+	int64 userId   = 1; // 用户ID
+}

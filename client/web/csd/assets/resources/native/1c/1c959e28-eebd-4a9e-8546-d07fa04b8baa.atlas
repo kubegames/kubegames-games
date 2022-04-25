@@ -1,0 +1,209 @@
+
+effects_csd_icon_hama.png
+size: 1024,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+effects_csd_icon_hama_00
+  rotate: false
+  xy: 2, 369
+  size: 141, 141
+  orig: 143, 143
+  offset: 1, 1
+  index: -1
+effects_csd_icon_hama_01
+  rotate: false
+  xy: 495, 258
+  size: 29, 20
+  orig: 31, 22
+  offset: 1, 1
+  index: -1
+effects_csd_icon_hama_02
+  rotate: false
+  xy: 247, 2
+  size: 99, 80
+  orig: 99, 82
+  offset: 0, 2
+  index: -1
+effects_csd_icon_hama_03
+  rotate: false
+  xy: 958, 421
+  size: 36, 34
+  orig: 38, 36
+  offset: 1, 1
+  index: -1
+effects_csd_icon_hama_04
+  rotate: false
+  xy: 685, 374
+  size: 22, 21
+  orig: 24, 23
+  offset: 1, 1
+  index: -1
+effects_csd_icon_hama_05
+  rotate: false
+  xy: 126, 2
+  size: 116, 63
+  orig: 118, 65
+  offset: 1, 1
+  index: -1
+effects_csd_icon_hama_06
+  rotate: false
+  xy: 51, 38
+  size: 24, 22
+  orig: 26, 24
+  offset: 1, 1
+  index: -1
+effects_csd_icon_hama_07
+  rotate: false
+  xy: 958, 457
+  size: 56, 53
+  orig: 56, 53
+  offset: 0, 0
+  index: -1
+effects_csd_icon_hama_08
+  rotate: false
+  xy: 389, 238
+  size: 35, 13
+  orig: 35, 13
+  offset: 0, 0
+  index: -1
+effects_csd_icon_hama_09
+  rotate: false
+  xy: 641, 309
+  size: 20, 13
+  orig: 22, 15
+  offset: 1, 1
+  index: -1
+effects_csd_icon_hama_10
+  rotate: false
+  xy: 996, 434
+  size: 26, 21
+  orig: 28, 23
+  offset: 1, 1
+  index: -1
+effects_csd_icon_hama_11
+  rotate: false
+  xy: 136, 221
+  size: 7, 7
+  orig: 9, 9
+  offset: 1, 1
+  index: -1
+effects_csd_icon_hama_12
+  rotate: false
+  xy: 594, 286
+  size: 45, 36
+  orig: 47, 38
+  offset: 1, 1
+  index: -1
+effects_csd_icon_hama_13
+  rotate: false
+  xy: 2, 5
+  size: 47, 55
+  orig: 49, 57
+  offset: 1, 1
+  index: -1
+effects_csd_icon_ty_02/effects_csd_icon_ty_02_01
+  rotate: false
+  xy: 594, 324
+  size: 89, 71
+  orig: 180, 180
+  offset: 80, 81
+  index: -1
+effects_csd_icon_ty_02/effects_csd_icon_ty_02_02
+  rotate: false
+  xy: 495, 280
+  size: 97, 102
+  orig: 180, 180
+  offset: 75, 66
+  index: -1
+effects_csd_icon_ty_02/effects_csd_icon_ty_02_03
+  rotate: false
+  xy: 389, 253
+  size: 104, 121
+  orig: 180, 180
+  offset: 69, 53
+  index: -1
+effects_csd_icon_ty_02/effects_csd_icon_ty_02_04
+  rotate: false
+  xy: 279, 233
+  size: 108, 134
+  orig: 180, 180
+  offset: 64, 43
+  index: -1
+effects_csd_icon_ty_02/effects_csd_icon_ty_02_05
+  rotate: false
+  xy: 247, 84
+  size: 115, 144
+  orig: 180, 180
+  offset: 54, 34
+  index: -1
+effects_csd_icon_ty_02/effects_csd_icon_ty_02_06
+  rotate: false
+  xy: 126, 67
+  size: 119, 150
+  orig: 180, 180
+  offset: 45, 27
+  index: -1
+effects_csd_icon_ty_02/effects_csd_icon_ty_02_07
+  rotate: false
+  xy: 710, 356
+  size: 122, 154
+  orig: 180, 180
+  offset: 36, 21
+  index: -1
+effects_csd_icon_ty_02/effects_csd_icon_ty_02_08
+  rotate: false
+  xy: 2, 62
+  size: 122, 155
+  orig: 180, 180
+  offset: 28, 16
+  index: -1
+effects_csd_icon_ty_02/effects_csd_icon_ty_02_09
+  rotate: false
+  xy: 834, 358
+  size: 122, 152
+  orig: 180, 180
+  offset: 20, 12
+  index: -1
+effects_csd_icon_ty_02/effects_csd_icon_ty_02_10
+  rotate: false
+  xy: 2, 219
+  size: 132, 148
+  orig: 180, 180
+  offset: 13, 10
+  index: -1
+effects_csd_icon_ty_02/effects_csd_icon_ty_02_11
+  rotate: false
+  xy: 145, 369
+  size: 139, 141
+  orig: 180, 180
+  offset: 8, 10
+  index: -1
+effects_csd_icon_ty_02/effects_csd_icon_ty_02_12
+  rotate: false
+  xy: 136, 230
+  size: 141, 137
+  orig: 180, 180
+  offset: 6, 12
+  index: -1
+effects_csd_icon_ty_02/effects_csd_icon_ty_02_13
+  rotate: false
+  xy: 286, 376
+  size: 142, 134
+  orig: 180, 180
+  offset: 5, 15
+  index: -1
+effects_csd_icon_ty_02/effects_csd_icon_ty_02_14
+  rotate: false
+  xy: 430, 384
+  size: 140, 126
+  orig: 180, 180
+  offset: 7, 23
+  index: -1
+effects_csd_icon_ty_02/effects_csd_icon_ty_02_15
+  rotate: false
+  xy: 572, 397
+  size: 136, 113
+  orig: 180, 180
+  offset: 10, 36
+  index: -1

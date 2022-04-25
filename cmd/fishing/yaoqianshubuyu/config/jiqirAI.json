@@ -1,0 +1,63 @@
+{
+  "1": {
+  
+    "1": {
+		"csdj":500,
+		
+		"ptqh1":50,	
+		
+		"qhz1":[100,200],
+		
+		"ptqh2":30,
+		
+		"qhz2":[300,400],
+		
+		"gdgd":30,
+		
+		"ptjd1":2000,
+		
+		"ptjd2":500,
+		
+		"cxjd":300,
+		
+		"jgjd":[300000,500000],
+		
+		"xxsj":[10000,20000],
+		
+		"tsgl":50,
+		
+		"jdyID1": ["29","30", "31", "32"],
+		
+		"jdjg":30000,
+		
+		"tcsj":300000,
+		
+		"ydbl":500,
+
+		"limit" : 100,
+
+		"shootLimit" : 300,
+
+		"bossAddTime" : 60000,
+
+		"skillAddTime" : 30000,
+
+		"skillFrozenCheckTime" : 10000,
+
+		"skillFrozenChance" : 1000,
+
+		"skillSummonCheckTime" : 3000,
+
+		"skillSummonChance" : 1500,
+
+		"lockModelChance" : 4000,
+
+		"penetrationModelChance" : 3000,
+
+		"modelCheckTime" : 10000,
+
+		"LockCheckTime" : 20000
+    }
+  }
+}
+

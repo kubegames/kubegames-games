@@ -1,0 +1,1048 @@
+[
+  //正常型机器人
+  {
+    //6月28日新增 但是暂时没使用，不管
+    "EatUserMaxSeeCardsBase":10,      //吃分、玩家最大牌 看牌基本概率
+    "EatUserMaxNotSeeBaseFollow":0,   //吃分、玩家最大牌 未看牌跟注的基础概率
+    "EatUserMaxNotSeeBaseRaise":0,    //吃分、玩家最大牌 未看牌加注的基础概率
+    "EatUserMaxNotSeeBaseCompare":0,  //吃分、玩家最大牌 未看牌比牌的基础概率
+    "EatUserMaxSawBaseFollow":0,      //吃分、玩家最大牌 看了牌的跟注的基础概率
+    "EatUserMaxSawBaseRaise":0,       //吃分、玩家最大牌 看了牌的加注的基础概率
+    "EatUserMaxSawBaseCompare":0,     //吃分、玩家最大牌 看了牌的比牌的基础概率
+    "EatUserMaxSawBaseGiveUp":0,      //吃分、玩家最大牌 看了牌的弃牌的基础概率
+    "Invest5ChangeCards":10,          //任何情况下，机器人投入高于玩家5倍时，如果玩家是最大牌且没看牌情况，要换牌的概率
+    //未看牌决定是否要看牌
+    "SeeCardsBase":13,     //看牌基本概率
+    "SeeCardsCount1":35,   //看牌用户人数为1
+    "SeeCardsCount2":45,   //看牌用户人数为2
+    "SeeCardsCount3":60,   //看牌用户人数为3
+    "SeeCardsCount4":80,   //看牌用户人数为4
+    "SeeCardsRaise1":60,   //看牌后加注人数为1
+    "SeeCardsRaise2":80,   //看牌后加注人数为2
+    "SeeCardsRaise3":100,   //看牌后加注人数为3
+    "SeeCardsRaise4":100,   //看牌后加注人数为4
+    "SeeCardsRound3":23,   //游戏轮数 < 3轮
+    "SeeCardsRound5":33,   //游戏轮数 < 5轮
+    "SeeCardsRound10":40,  //游戏轮数 < 10轮
+    "SeeCardsRound15":70,  //游戏轮数 < 15轮
+    "SeeCardsAllIn":100,    //全押之后看牌概率
+    "SeeCardsCardsIndex1": 20,//新增-自己的牌在牌局中第1大（最大）
+    "SeeCardsCardsIndex2": 0,//新增-自己的牌在牌局中第2大
+    "SeeCardsCardsIndex3": 0,//新增-自己的牌在牌局中第3大
+    "SeeCardsCardsIndex4": 40,//新增-自己的牌在牌局中第4大
+    "SeeCardsCardsIndex5": 40,//新增-自己的牌在牌局中第5大
+
+    ////未看牌的操作
+    //新增-自己的牌在牌局中第几大，对应不看牌的操作
+    "NotSeeFollowCardsIndex1": 2700, //新增-未看牌自己的牌第1大，跟注
+    "NotSeeFollowCardsIndex2": 2000, //新增-未看牌自己的牌第2大，跟注
+    "NotSeeFollowCardsIndex3": 1000, //新增-未看牌自己的牌第3大，跟注
+    "NotSeeFollowCardsIndex4": -500, //新增-未看牌自己的牌第4大，跟注
+    "NotSeeFollowCardsIndex5": -2200, //新增-未看牌自己的牌第5大，跟注
+    "NotSeeRaiseCardsIndex1": 0, //新增-未看牌自己的牌第1大，加注
+    "NotSeeRaiseCardsIndex2": 0, //新增-未看牌自己的牌第2大，加注
+    "NotSeeRaiseCardsIndex3": -50, //新增-未看牌自己的牌第3大，加注
+    "NotSeeRaiseCardsIndex4": -150, //新增-未看牌自己的牌第4大，加注
+    "NotSeeRaiseCardsIndex5": -300, //新增-未看牌自己的牌第5大，加注
+    "NotSeeCompareCardsIndex1": -5000, //新增-未看牌自己的牌第1大，比牌
+    "NotSeeCompareCardsIndex2": 3500, //新增-未看牌自己的牌第2大，比牌
+    "NotSeeCompareCardsIndex3": 5000, //新增-未看牌自己的牌第3大，比牌
+    "NotSeeCompareCardsIndex4": 12000, //新增-未看牌自己的牌第4大，比牌
+    "NotSeeCompareCardsIndex5": 18000, //新增-未看牌自己的牌第5大，比牌
+    //看牌用户数
+    "NotSeeBaseFollow":0,   //未看牌跟注的基础概率
+    "NotSeeBaseRaise":0,    //未看牌跟注的基础概率
+    "NotSeeBaseCompare":0,  //未看牌跟注的基础概率
+    "NotSeeFollowSaw1":1000,   //未看牌情况下，已经看了牌的人数为1，跟注
+    "NotSeeFollowSaw2":600,   //未看牌情况下，已经看了牌的人数为2，跟注
+    "NotSeeFollowSaw3":200,   //未看牌情况下，已经看了牌的人数为3，跟注
+    "NotSeeFollowSaw4":-200,   //未看牌情况下，已经看了牌的人数为4，跟注
+    "NotSeeRaiseSaw1":0,    //未看牌情况下，已经看了牌的人数为1，加注
+    "NotSeeRaiseSaw2":0,    //未看牌情况下，已经看了牌的人数为2，加注
+    "NotSeeRaiseSaw3":0,    //未看牌情况下，已经看了牌的人数为3，加注
+    "NotSeeRaiseSaw4":-200,    //未看牌情况下，已经看了牌的人数为4，加注
+    "NotSeeCompareSaw1":0,  //未看牌情况下，已经看了牌的人数为1，比牌
+    "NotSeeCompareSaw2":300,  //未看牌情况下，已经看了牌的人数为2，比牌
+    "NotSeeCompareSaw3":600,  //未看牌情况下，已经看了牌的人数为3，比牌
+    "NotSeeCompareSaw4":1000,  //未看牌情况下，已经看了牌的人数为4，比牌
+    //剩余人数
+    "NotSeeFollowRemain2":1300,   //未看牌情况下，剩余人数2，选择跟注
+    "NotSeeFollowRemain3":2000,   //未看牌情况下，剩余人数3，选择跟注
+    "NotSeeFollowRemain4":2700,   //未看牌情况下，剩余人数4，选择跟注
+    "NotSeeFollowRemain5":3300,   //未看牌情况下，剩余人数5，选择跟注
+    "NotSeeRaiseRemain2":0,    //未看牌情况下，剩余人数2，选择加注
+    "NotSeeRaiseRemain3":0,    //未看牌情况下，剩余人数3，选择加注
+    "NotSeeRaiseRemain4":0,    //未看牌情况下，剩余人数4，选择加注
+    "NotSeeRaiseRemain5":0,    //未看牌情况下，剩余人数5，选择加注
+    "NotSeeCompareRemain2":3600,  //未看牌情况下，剩余人数2，选择比牌
+    "NotSeeCompareRemain3":2700,  //未看牌情况下，剩余人数3，选择比牌
+    "NotSeeCompareRemain4":2000,  //未看牌情况下，剩余人数4，选择比牌
+    "NotSeeCompareRemain5":2000,  //未看牌情况下，剩余人数5，选择比牌
+    //其他用户比牌胜利次数
+    "NotSeeOtherCompare1Follow":0,   //未看牌情况下，其他用户比牌胜利次数1，跟注
+    "NotSeeOtherCompare2Follow":-500,   //未看牌情况下，其他用户比牌胜利次数2，跟注
+    "NotSeeOtherCompare3Follow":-1000,   //未看牌情况下，其他用户比牌胜利次数3，跟注
+    "NotSeeOtherCompare1Raise":0,    //未看牌情况下，其他用户比牌胜利次数1，加注
+    "NotSeeOtherCompare2Raise":-800,    //未看牌情况下，其他用户比牌胜利次数2，加注
+    "NotSeeOtherCompare3Raise":-1500,    //未看牌情况下，其他用户比牌胜利次数3，加注
+    "NotSeeOtherCompare1Compare":500,  //未看牌情况下，其他用户比牌胜利次数1，比牌
+    "NotSeeOtherCompare2Compare":1000,  //未看牌情况下，其他用户比牌胜利次数2，比牌
+    "NotSeeOtherCompare3Compare":1500,  //未看牌情况下，其他用户比牌胜利次数3，比牌
+    //自己比牌胜利次数
+    "NotSeeSelfCompare1Follow":500,   //未看牌情况下，自己比牌胜利次数1，跟注
+    "NotSeeSelfCompare2Follow":1000,   //未看牌情况下，自己比牌胜利次数2，跟注
+    "NotSeeSelfCompare3Follow":1500,  //未看牌情况下，自己比牌胜利次数3，跟注
+    "NotSeeSelfCompare1Raise":1000,    //未看牌情况下，自己比牌胜利次数1，加注
+    "NotSeeSelfCompare2Raise":1500,    //未看牌情况下，自己比牌胜利次数2，加注
+    "NotSeeSelfCompare3Raise":2500,    //未看牌情况下，自己比牌胜利次数3，加注
+    "NotSeeSelfCompare1Compare":-500,  //未看牌情况下，自己比牌胜利次数1，比牌
+    "NotSeeSelfCompare2Compare":-1300,  //未看牌情况下，自己比牌胜利次数2，比牌
+    "NotSeeSelfCompare3Compare":-2500, //未看牌情况下，自己比牌胜利次数3，比牌
+    //当前加注档位
+    "NotSeeRaiseAmount1Follow":0,   //未看牌情况下，加注档位1，跟注
+    "NotSeeRaiseAmount2Follow":-800,   //未看牌情况下，加注档位2，跟注
+    "NotSeeRaiseAmount3Follow":-2400,   //未看牌情况下，加注档位3，跟注
+    "NotSeeRaiseAmount1Raise":-400,    //未看牌情况下，加注档位1，加注
+    "NotSeeRaiseAmount2Raise":-1200,    //未看牌情况下，加注档位2，加注
+    "NotSeeRaiseAmount3Raise":-1800,       //未看牌情况下，加注档位3，加注
+    "NotSeeRaiseAmount1Compare":900,  //未看牌情况下，加注档位1，比牌
+    "NotSeeRaiseAmount2Compare":2400,  //未看牌情况下，加注档位2，比牌
+    "NotSeeRaiseAmount3Compare":4500,  //未看牌情况下，加注档位3，比牌
+    //当前轮数
+    "NotSeeRound2Follow":2000,    //当前轮数 <=2 ，跟注
+    "NotSeeRound5Follow":1300,    //当前轮数 <=5 ，跟注
+    "NotSeeRound10Follow":700,   //当前轮数 <=10 ，跟注
+    "NotSeeRound20Follow":-1300,   //当前轮数 <=20 ，跟注
+    "NotSeeRound2Raise":300,     //当前轮数 <=2 ，加注
+    "NotSeeRound5Raise":0,     //当前轮数 <=5 ，加注
+    "NotSeeRound10Raise":-700,    //当前轮数 <=10 ，加注
+    "NotSeeRound20Raise":-2000,       //当前轮数 <=20 ，加注
+    "NotSeeRound2Compare":0,      //当前轮数 <=2 ，比牌
+    "NotSeeRound5Compare":3000,   //当前轮数 <=5 ，比牌
+    "NotSeeRound10Compare":4000,  //当前轮数 <=10 ，比牌
+    "NotSeeRound20Compare":5000,  //当前轮数 <=20 ，比牌
+
+    ////看了牌的操作
+    //新增-自己的牌在牌局中第几大，对应不看牌的操作
+    "SawFollowCardsIndex1": 1800, //新增-未看牌自己的牌第1大，跟注
+    "SawFollowCardsIndex2": 800, //新增-未看牌自己的牌第2大，跟注
+    "SawFollowCardsIndex3": -2000, //新增-未看牌自己的牌第3大，跟注
+    "SawFollowCardsIndex4": -3200, //新增-未看牌自己的牌第4大，跟注
+    "SawFollowCardsIndex5": -4200, //新增-未看牌自己的牌第5大，跟注
+    "SawRaiseCardsIndex1": 1500, //新增-未看牌自己的牌第1大，加注
+    "SawRaiseCardsIndex2": 700, //新增-未看牌自己的牌第2大，加注
+    "SawRaiseCardsIndex3": -800, //新增-未看牌自己的牌第3大，加注
+    "SawRaiseCardsIndex4": -3600, //新增-未看牌自己的牌第4大，加注
+    "SawRaiseCardsIndex5": -10000, //新增-未看牌自己的牌第5大，加注
+    "SawCompareCardsIndex1": -4800, //新增-未看牌自己的牌第1大，比牌
+    "SawCompareCardsIndex2": 2100, //新增-未看牌自己的牌第2大，比牌
+    "SawCompareCardsIndex3": -2400, //新增-未看牌自己的牌第3大，比牌
+    "SawCompareCardsIndex4": -3600, //新增-未看牌自己的牌第4大，比牌
+    "SawCompareCardsIndex5": -6400, //新增-未看牌自己的牌第5大，比牌
+    "SawGiveUpCardsIndex1": -15000, //新增-未看牌自己的牌第1大，弃牌
+    "SawGiveUpCardsIndex2": 1000, //新增-未看牌自己的牌第2大，弃牌
+    "SawGiveUpCardsIndex3": 3600, //新增-未看牌自己的牌第3大，弃牌
+    "SawGiveUpCardsIndex4": 8000, //新增-未看牌自己的牌第4大，弃牌
+    "SawGiveUpCardsIndex5": 10000, //新增-未看牌自己的牌第5大，弃牌
+    //看牌用户数
+    "SawBaseFollow":0,   //看了牌的跟注的基础概率
+    "SawBaseRaise":0,    //看了牌的加注的基础概率
+    "SawBaseCompare":0,  //看了牌的比牌的基础概率
+    "SawBaseGiveUp":0,   //看了牌的弃牌的基础概率
+    "SawFollowSaw1":1000,   //看了牌的情况下，已经看了牌的人数为1，跟注
+    "SawFollowSaw2":600,   //看了牌的情况下，已经看了牌的人数为2，跟注
+    "SawFollowSaw3":300,   //看了牌的情况下，已经看了牌的人数为3，跟注
+    "SawFollowSaw4":0,   //看了牌的情况下，已经看了牌的人数为4，跟注
+    "SawRaiseSaw1":0,    //看了牌的情况下，已经看了牌的人数为1，加注
+    "SawRaiseSaw2":0,    //看了牌的情况下，已经看了牌的人数为2，加注
+    "SawRaiseSaw3":0,    //看了牌的情况下，已经看了牌的人数为3，加注
+    "SawRaiseSaw4":0,    //看了牌的情况下，已经看了牌的人数为4，加注
+    "SawCompareSaw1":0,  //看了牌的情况下，已经看了牌的人数为1，比牌
+    "SawCompareSaw2":500,  //看了牌的情况下，已经看了牌的人数为2，比牌
+    "SawCompareSaw3":1000,  //看了牌的情况下，已经看了牌的人数为3，比牌
+    "SawCompareSaw4":2000,  //看了牌的情况下，已经看了牌的人数为4，比牌
+    "SawGiveUpSaw1":1600,   //看了牌的情况下，已经看了牌的人数为1，弃牌
+    "SawGiveUpSaw2":3200,   //看了牌的情况下，已经看了牌的人数为2，弃牌
+    "SawGiveUpSaw3":4800,   //看了牌的情况下，已经看了牌的人数为3，弃牌
+    "SawGiveUpSaw4":6000,   //看了牌的情况下，已经看了牌的人数为4，弃牌
+    //剩余人数
+    "SawFollowRemain2":2000,   //看了牌的情况下，剩余人数2，选择跟注
+    "SawFollowRemain3":2000,   //看了牌的情况下，剩余人数3，选择跟注
+    "SawFollowRemain4":3000,   //看了牌的情况下，剩余人数4，选择跟注
+    "SawFollowRemain5":3500,   //看了牌的情况下，剩余人数5，选择跟注
+    "SawRaiseRemain2":0,    //看了牌的情况下，剩余人数2，选择加注
+    "SawRaiseRemain3":0,    //看了牌的情况下，剩余人数3，选择加注
+    "SawRaiseRemain4":0,    //看了牌的情况下，剩余人数4，选择加注
+    "SawRaiseRemain5":0,    //看了牌的情况下，剩余人数5，选择加注
+    "SawCompareRemain2":5000,  //看了牌的情况下，剩余人数2，选择比牌
+    "SawCompareRemain3":3500,  //看了牌的情况下，剩余人数3，选择比牌
+    "SawCompareRemain4":2000,  //看了牌的情况下，剩余人数4，选择比牌
+    "SawCompareRemain5":1500,  //看了牌的情况下，剩余人数5，选择比牌
+    "SawGiveUpRemain2":-7500,   //看了牌的情况下，剩余人数2，弃牌
+    "SawGiveUpRemain3":-500,   //看了牌的情况下，剩余人数3，弃牌
+    "SawGiveUpRemain4":1500,   //看了牌的情况下，剩余人数4，弃牌
+    "SawGiveUpRemain5":3000,   //看了牌的情况下，剩余人数5，弃牌
+    //其他用户比牌胜利次数
+    "SawOtherCompare1Follow":-1200,        //看了牌的情况下，其他用户比牌胜利次数1，跟注
+    "SawOtherCompare2Follow":-2400,   //看了牌的情况下，其他用户比牌胜利次数2，跟注
+    "SawOtherCompare3Follow":-4800,   //看了牌的情况下，其他用户比牌胜利次数3，跟注
+    "SawOtherCompare1Raise":-1200,        //看了牌的情况下，其他用户比牌胜利次数1，加注
+    "SawOtherCompare2Raise":-2400,        //看了牌的情况下，其他用户比牌胜利次数2，加注
+    "SawOtherCompare3Raise":-4800,        //看了牌的情况下，其他用户比牌胜利次数3，加注
+    "SawOtherCompare1Compare":-500,   //看了牌的情况下，其他用户比牌胜利次数1，比牌
+    "SawOtherCompare2Compare":-2000,      //看了牌的情况下，其他用户比牌胜利次数2，比牌
+    "SawOtherCompare3Compare":-4500, //看了牌的情况下，其他用户比牌胜利次数3，比牌
+    "SawOtherCompare1GiveUp":2500,   //看了牌的情况下，其他用户比牌胜利次数1，弃牌
+    "SawOtherCompare2GiveUp":5000,   //看了牌的情况下，其他用户比牌胜利次数2，弃牌
+    "SawOtherCompare3GiveUp":10000,   //看了牌的情况下，其他用户比牌胜利次数3，弃牌
+    //自己比牌胜利次数
+    "SawSelfCompare1Follow":500,      //看了牌的情况下，自己比牌胜利次数1，跟注
+    "SawSelfCompare2Follow":1000,      //看了牌的情况下，自己比牌胜利次数2，跟注
+    "SawSelfCompare3Follow":1500,      //看了牌的情况下，自己比牌胜利次数3，跟注
+    "SawSelfCompare1Raise":1000,    //看了牌的情况下，自己比牌胜利次数1，加注
+    "SawSelfCompare2Raise":1500,    //看了牌的情况下，自己比牌胜利次数2，加注
+    "SawSelfCompare3Raise":2500,    //看了牌的情况下，自己比牌胜利次数3，加注
+    "SawSelfCompare1Compare":-500,      //看了牌的情况下，自己比牌胜利次数1，比牌
+    "SawSelfCompare2Compare":-1000,  //看了牌的情况下，自己比牌胜利次数2，比牌
+    "SawSelfCompare3Compare":-2000,  //看了牌的情况下，自己比牌胜利次数3，比牌
+    "SawSelfCompare1GiveUp":-900,   //看了牌的情况下，自己比牌胜利次数1，弃牌
+    "SawSelfCompare2GiveUp":-1800,   //看了牌的情况下，自己比牌胜利次数2，弃牌
+    "SawSelfCompare3GiveUp":-3600,   //看了牌的情况下，自己比牌胜利次数3，弃牌
+    //当前加注档位
+    "SawRaiseAmount1Follow":0,   //看了牌情况下，加注档位1，跟注
+    "SawRaiseAmount2Follow":-1200,   //看了牌情况下，加注档位2，跟注
+    "SawRaiseAmount3Follow":-3200,   //看了牌情况下，加注档位3，跟注
+    "SawRaiseAmount1Raise":-400,    //看了牌情况下，加注档位1，加注
+    "SawRaiseAmount2Raise":-1200,    //看了牌情况下，加注档位2，加注
+    "SawRaiseAmount3Raise":-1800,    //看了牌情况下，加注档位3，加注
+    "SawRaiseAmount1Compare":-5000,  //看了牌情况下，加注档位1，比牌
+    "SawRaiseAmount2Compare":-7500,  //看了牌情况下，加注档位2，比牌
+    "SawRaiseAmount3Compare":-10000,  //看了牌情况下，加注档位3，比牌
+    "SawRaiseAmount1GiveUp":7500,   //看了牌情况下，加注档位1，弃牌
+    "SawRaiseAmount2GiveUp":10000,   //看了牌情况下，加注档位2，弃牌
+    "SawRaiseAmount3GiveUp":14000,   //看了牌情况下，加注档位3，弃牌
+    //当前轮数
+    "SawRound2Follow":3000,    //当前轮数 <=2 ，跟注
+    "SawRound5Follow":2000,    //当前轮数 <=5 ，跟注
+    "SawRound10Follow":1000,   //当前轮数 <=10 ，跟注
+    "SawRound20Follow":-1000,   //当前轮数 <=20 ，跟注
+    "SawRound2Raise":1600,     //当前轮数 <=2 ，加注
+    "SawRound5Raise":1000,     //当前轮数 <=5 ，加注
+    "SawRound10Raise":-1000,   //当前轮数 <=10 ，加注
+    "SawRound20Raise":0,       //当前轮数 <=20 ，加注
+    "SawRound2Compare":0,      //当前轮数 <=2 ，比牌
+    "SawRound5Compare":3200,   //当前轮数 <=5 ，比牌
+    "SawRound10Compare":6500,  //当前轮数 <=10 ，比牌
+    "SawRound20Compare":9000,  //当前轮数 <=20 ，比牌
+    "SawRound2GiveUp":600,       //当前轮数 <=2 ，弃牌
+    "SawRound5GiveUp":-500,    //当前轮数 <=5 ，弃牌
+    "SawRound10GiveUp":-1000,  //当前轮数 <=10 ，弃牌
+    "SawRound20GiveUp":-3000,  //当前轮数 <=20 ，弃牌
+    //看了牌之后牌型
+    "SawCardTypeSingleFollowOverA": -1200,//单牌A以上 ,跟注
+    "SawCardTypeSingleFollowBelowA": -5000,//单牌A以下，跟注
+    "SawCardTypeDzFollow":3800,      //对子，跟注
+    "SawCardTypeSzFollow":3500,      //顺子，跟注
+    "SawCardTypeJhFollow":3000,      //金花，跟注
+    "SawCardTypeSjFollow":2000,      //顺金，跟注
+    "SawCardTypeBzFollow":-1000,      //豹子，跟注
+    "SawCardTypeSingleRaiseOverA":-5000,  //单牌A以上 ,加注
+    "SawCardTypeSingleRaiseBelowA":-8000,  //单牌A以下，加注
+    "SawCardTypeDzRaise":0,      //对子，加注
+    "SawCardTypeSzRaise":6000,      //顺子，加注
+    "SawCardTypeJhRaise":15000,      //金花，加注
+    "SawCardTypeSjRaise":25000,      //顺金，加注
+    "SawCardTypeBzRaise":30000,      //豹子，加注
+    "SawCardTypeSingleCompareOverA":-3000,  //单牌A以上，比牌
+    "SawCardTypeSingleCompareBelowA":-8000,  //单牌A以下，比牌
+    "SawCardTypeDzCompare":5600,      //对子，比牌
+    "SawCardTypeSzCompare":-1800,      //顺子，比牌
+    "SawCardTypeJhCompare":-6000,      //金花，比牌
+    "SawCardTypeSjCompare":-9600,      //顺金，比牌
+    "SawCardTypeBzCompare":-20000,      //豹子，比牌
+    "SawCardTypeSingleGiveUpOverA":5200,  //单牌A以上，弃牌
+    "SawCardTypeSingleGiveUpBelowA":10000,  //单牌A以下，弃牌
+    "SawCardTypeDzGiveUp":-3700,      //对子，弃牌
+    "SawCardTypeSzGiveUp":-10000,      //顺子，弃牌
+    "SawCardTypeJhGiveUp":-13000,      //金花，弃牌
+    "SawCardTypeSjGiveUp":-16000,      //顺金，弃牌
+    "SawCardTypeBzGiveUp":-20000      //豹子，弃牌
+  },
+  //激进型机器人
+  {
+    //未看牌决定是否要看牌
+    "SeeCardsBase":13,     //看牌基本概率
+    "SeeCardsCount1":35,   //看牌用户人数为1
+    "SeeCardsCount2":45,   //看牌用户人数为2
+    "SeeCardsCount3":60,   //看牌用户人数为3
+    "SeeCardsCount4":80,   //看牌用户人数为4
+    "SeeCardsRaise1":60,   //看牌后加注人数为1
+    "SeeCardsRaise2":80,   //看牌后加注人数为2
+    "SeeCardsRaise3":100,   //看牌后加注人数为3
+    "SeeCardsRaise4":100,   //看牌后加注人数为4
+    "SeeCardsRound3":23,   //游戏轮数 < 3轮
+    "SeeCardsRound5":33,   //游戏轮数 < 5轮
+    "SeeCardsRound10":40,  //游戏轮数 < 10轮
+    "SeeCardsRound15":70,  //游戏轮数 < 15轮
+    "SeeCardsAllIn":100,    //全押之后看牌概率
+    "SeeCardsCardsIndex1": 20,//新增-自己的牌在牌局中第1大（最大）
+    "SeeCardsCardsIndex2": 0,//新增-自己的牌在牌局中第2大
+    "SeeCardsCardsIndex3": 0,//新增-自己的牌在牌局中第3大
+    "SeeCardsCardsIndex4": 40,//新增-自己的牌在牌局中第4大
+    "SeeCardsCardsIndex5": 40,//新增-自己的牌在牌局中第5大
+
+    ////未看牌的操作
+    //新增-自己的牌在牌局中第几大，对应不看牌的操作
+    "NotSeeFollowCardsIndex1": 2700, //新增-未看牌自己的牌第1大，跟注
+    "NotSeeFollowCardsIndex2": 2000, //新增-未看牌自己的牌第2大，跟注
+    "NotSeeFollowCardsIndex3": 1000, //新增-未看牌自己的牌第3大，跟注
+    "NotSeeFollowCardsIndex4": -500, //新增-未看牌自己的牌第4大，跟注
+    "NotSeeFollowCardsIndex5": -2200, //新增-未看牌自己的牌第5大，跟注
+    "NotSeeRaiseCardsIndex1": 0, //新增-未看牌自己的牌第1大，加注
+    "NotSeeRaiseCardsIndex2": 0, //新增-未看牌自己的牌第2大，加注
+    "NotSeeRaiseCardsIndex3": -50, //新增-未看牌自己的牌第3大，加注
+    "NotSeeRaiseCardsIndex4": -150, //新增-未看牌自己的牌第4大，加注
+    "NotSeeRaiseCardsIndex5": -300, //新增-未看牌自己的牌第5大，加注
+    "NotSeeCompareCardsIndex1": -5000, //新增-未看牌自己的牌第1大，比牌
+    "NotSeeCompareCardsIndex2": 3500, //新增-未看牌自己的牌第2大，比牌
+    "NotSeeCompareCardsIndex3": 5000, //新增-未看牌自己的牌第3大，比牌
+    "NotSeeCompareCardsIndex4": 12000, //新增-未看牌自己的牌第4大，比牌
+    "NotSeeCompareCardsIndex5": 18000, //新增-未看牌自己的牌第5大，比牌
+    //看牌用户数
+    "NotSeeBaseFollow":0,   //未看牌跟注的基础概率
+    "NotSeeBaseRaise":0,    //未看牌跟注的基础概率
+    "NotSeeBaseCompare":0,  //未看牌跟注的基础概率
+    "NotSeeFollowSaw1":1000,   //未看牌情况下，已经看了牌的人数为1，跟注
+    "NotSeeFollowSaw2":600,   //未看牌情况下，已经看了牌的人数为2，跟注
+    "NotSeeFollowSaw3":200,   //未看牌情况下，已经看了牌的人数为3，跟注
+    "NotSeeFollowSaw4":-200,   //未看牌情况下，已经看了牌的人数为4，跟注
+    "NotSeeRaiseSaw1":0,    //未看牌情况下，已经看了牌的人数为1，加注
+    "NotSeeRaiseSaw2":0,    //未看牌情况下，已经看了牌的人数为2，加注
+    "NotSeeRaiseSaw3":0,    //未看牌情况下，已经看了牌的人数为3，加注
+    "NotSeeRaiseSaw4":-200,    //未看牌情况下，已经看了牌的人数为4，加注
+    "NotSeeCompareSaw1":0,  //未看牌情况下，已经看了牌的人数为1，比牌
+    "NotSeeCompareSaw2":300,  //未看牌情况下，已经看了牌的人数为2，比牌
+    "NotSeeCompareSaw3":600,  //未看牌情况下，已经看了牌的人数为3，比牌
+    "NotSeeCompareSaw4":1000,  //未看牌情况下，已经看了牌的人数为4，比牌
+    //剩余人数
+    "NotSeeFollowRemain2":1300,   //未看牌情况下，剩余人数2，选择跟注
+    "NotSeeFollowRemain3":2000,   //未看牌情况下，剩余人数3，选择跟注
+    "NotSeeFollowRemain4":2700,   //未看牌情况下，剩余人数4，选择跟注
+    "NotSeeFollowRemain5":3300,   //未看牌情况下，剩余人数5，选择跟注
+    "NotSeeRaiseRemain2":0,    //未看牌情况下，剩余人数2，选择加注
+    "NotSeeRaiseRemain3":0,    //未看牌情况下，剩余人数3，选择加注
+    "NotSeeRaiseRemain4":0,    //未看牌情况下，剩余人数4，选择加注
+    "NotSeeRaiseRemain5":0,    //未看牌情况下，剩余人数5，选择加注
+    "NotSeeCompareRemain2":3600,  //未看牌情况下，剩余人数2，选择比牌
+    "NotSeeCompareRemain3":2700,  //未看牌情况下，剩余人数3，选择比牌
+    "NotSeeCompareRemain4":2000,  //未看牌情况下，剩余人数4，选择比牌
+    "NotSeeCompareRemain5":2000,  //未看牌情况下，剩余人数5，选择比牌
+    //其他用户比牌胜利次数
+    "NotSeeOtherCompare1Follow":0,   //未看牌情况下，其他用户比牌胜利次数1，跟注
+    "NotSeeOtherCompare2Follow":-500,   //未看牌情况下，其他用户比牌胜利次数2，跟注
+    "NotSeeOtherCompare3Follow":-1000,   //未看牌情况下，其他用户比牌胜利次数3，跟注
+    "NotSeeOtherCompare1Raise":0,    //未看牌情况下，其他用户比牌胜利次数1，加注
+    "NotSeeOtherCompare2Raise":-800,    //未看牌情况下，其他用户比牌胜利次数2，加注
+    "NotSeeOtherCompare3Raise":-1500,    //未看牌情况下，其他用户比牌胜利次数3，加注
+    "NotSeeOtherCompare1Compare":500,  //未看牌情况下，其他用户比牌胜利次数1，比牌
+    "NotSeeOtherCompare2Compare":1000,  //未看牌情况下，其他用户比牌胜利次数2，比牌
+    "NotSeeOtherCompare3Compare":1500,  //未看牌情况下，其他用户比牌胜利次数3，比牌
+    //自己比牌胜利次数
+    "NotSeeSelfCompare1Follow":500,   //未看牌情况下，自己比牌胜利次数1，跟注
+    "NotSeeSelfCompare2Follow":1000,   //未看牌情况下，自己比牌胜利次数2，跟注
+    "NotSeeSelfCompare3Follow":1500,  //未看牌情况下，自己比牌胜利次数3，跟注
+    "NotSeeSelfCompare1Raise":1000,    //未看牌情况下，自己比牌胜利次数1，加注
+    "NotSeeSelfCompare2Raise":1500,    //未看牌情况下，自己比牌胜利次数2，加注
+    "NotSeeSelfCompare3Raise":2500,    //未看牌情况下，自己比牌胜利次数3，加注
+    "NotSeeSelfCompare1Compare":-500,  //未看牌情况下，自己比牌胜利次数1，比牌
+    "NotSeeSelfCompare2Compare":-1300,  //未看牌情况下，自己比牌胜利次数2，比牌
+    "NotSeeSelfCompare3Compare":-2500, //未看牌情况下，自己比牌胜利次数3，比牌
+    //当前加注档位
+    "NotSeeRaiseAmount1Follow":0,   //未看牌情况下，加注档位1，跟注
+    "NotSeeRaiseAmount2Follow":-800,   //未看牌情况下，加注档位2，跟注
+    "NotSeeRaiseAmount3Follow":-2400,   //未看牌情况下，加注档位3，跟注
+    "NotSeeRaiseAmount1Raise":-400,    //未看牌情况下，加注档位1，加注
+    "NotSeeRaiseAmount2Raise":-1200,    //未看牌情况下，加注档位2，加注
+    "NotSeeRaiseAmount3Raise":-1800,       //未看牌情况下，加注档位3，加注
+    "NotSeeRaiseAmount1Compare":900,  //未看牌情况下，加注档位1，比牌
+    "NotSeeRaiseAmount2Compare":2400,  //未看牌情况下，加注档位2，比牌
+    "NotSeeRaiseAmount3Compare":4500,  //未看牌情况下，加注档位3，比牌
+    //当前轮数
+    "NotSeeRound2Follow":2000,    //当前轮数 <=2 ，跟注
+    "NotSeeRound5Follow":1300,    //当前轮数 <=5 ，跟注
+    "NotSeeRound10Follow":700,   //当前轮数 <=10 ，跟注
+    "NotSeeRound20Follow":-1300,   //当前轮数 <=20 ，跟注
+    "NotSeeRound2Raise":300,     //当前轮数 <=2 ，加注
+    "NotSeeRound5Raise":0,     //当前轮数 <=5 ，加注
+    "NotSeeRound10Raise":-700,    //当前轮数 <=10 ，加注
+    "NotSeeRound20Raise":-2000,       //当前轮数 <=20 ，加注
+    "NotSeeRound2Compare":0,      //当前轮数 <=2 ，比牌
+    "NotSeeRound5Compare":3000,   //当前轮数 <=5 ，比牌
+    "NotSeeRound10Compare":4000,  //当前轮数 <=10 ，比牌
+    "NotSeeRound20Compare":5000,  //当前轮数 <=20 ，比牌
+
+    ////看了牌的操作
+    //新增-自己的牌在牌局中第几大，对应不看牌的操作
+    "SawFollowCardsIndex1": 1800, //新增-未看牌自己的牌第1大，跟注
+    "SawFollowCardsIndex2": 800, //新增-未看牌自己的牌第2大，跟注
+    "SawFollowCardsIndex3": -2000, //新增-未看牌自己的牌第3大，跟注
+    "SawFollowCardsIndex4": -3200, //新增-未看牌自己的牌第4大，跟注
+    "SawFollowCardsIndex5": -4200, //新增-未看牌自己的牌第5大，跟注
+    "SawRaiseCardsIndex1": 1500, //新增-未看牌自己的牌第1大，加注
+    "SawRaiseCardsIndex2": 700, //新增-未看牌自己的牌第2大，加注
+    "SawRaiseCardsIndex3": -800, //新增-未看牌自己的牌第3大，加注
+    "SawRaiseCardsIndex4": -3600, //新增-未看牌自己的牌第4大，加注
+    "SawRaiseCardsIndex5": -10000, //新增-未看牌自己的牌第5大，加注
+    "SawCompareCardsIndex1": -4800, //新增-未看牌自己的牌第1大，比牌
+    "SawCompareCardsIndex2": 2100, //新增-未看牌自己的牌第2大，比牌
+    "SawCompareCardsIndex3": -2400, //新增-未看牌自己的牌第3大，比牌
+    "SawCompareCardsIndex4": -3600, //新增-未看牌自己的牌第4大，比牌
+    "SawCompareCardsIndex5": -6400, //新增-未看牌自己的牌第5大，比牌
+    "SawGiveUpCardsIndex1": -15000, //新增-未看牌自己的牌第1大，弃牌
+    "SawGiveUpCardsIndex2": 1000, //新增-未看牌自己的牌第2大，弃牌
+    "SawGiveUpCardsIndex3": 3600, //新增-未看牌自己的牌第3大，弃牌
+    "SawGiveUpCardsIndex4": 8000, //新增-未看牌自己的牌第4大，弃牌
+    "SawGiveUpCardsIndex5": 10000, //新增-未看牌自己的牌第5大，弃牌
+    //看牌用户数
+    "SawBaseFollow":0,   //看了牌的跟注的基础概率
+    "SawBaseRaise":0,    //看了牌的加注的基础概率
+    "SawBaseCompare":0,  //看了牌的比牌的基础概率
+    "SawBaseGiveUp":0,   //看了牌的弃牌的基础概率
+    "SawFollowSaw1":1000,   //看了牌的情况下，已经看了牌的人数为1，跟注
+    "SawFollowSaw2":600,   //看了牌的情况下，已经看了牌的人数为2，跟注
+    "SawFollowSaw3":300,   //看了牌的情况下，已经看了牌的人数为3，跟注
+    "SawFollowSaw4":0,   //看了牌的情况下，已经看了牌的人数为4，跟注
+    "SawRaiseSaw1":0,    //看了牌的情况下，已经看了牌的人数为1，加注
+    "SawRaiseSaw2":0,    //看了牌的情况下，已经看了牌的人数为2，加注
+    "SawRaiseSaw3":0,    //看了牌的情况下，已经看了牌的人数为3，加注
+    "SawRaiseSaw4":0,    //看了牌的情况下，已经看了牌的人数为4，加注
+    "SawCompareSaw1":0,  //看了牌的情况下，已经看了牌的人数为1，比牌
+    "SawCompareSaw2":500,  //看了牌的情况下，已经看了牌的人数为2，比牌
+    "SawCompareSaw3":1000,  //看了牌的情况下，已经看了牌的人数为3，比牌
+    "SawCompareSaw4":2000,  //看了牌的情况下，已经看了牌的人数为4，比牌
+    "SawGiveUpSaw1":1600,   //看了牌的情况下，已经看了牌的人数为1，弃牌
+    "SawGiveUpSaw2":3200,   //看了牌的情况下，已经看了牌的人数为2，弃牌
+    "SawGiveUpSaw3":4800,   //看了牌的情况下，已经看了牌的人数为3，弃牌
+    "SawGiveUpSaw4":6000,   //看了牌的情况下，已经看了牌的人数为4，弃牌
+    //剩余人数
+    "SawFollowRemain2":2000,   //看了牌的情况下，剩余人数2，选择跟注
+    "SawFollowRemain3":2000,   //看了牌的情况下，剩余人数3，选择跟注
+    "SawFollowRemain4":3000,   //看了牌的情况下，剩余人数4，选择跟注
+    "SawFollowRemain5":3500,   //看了牌的情况下，剩余人数5，选择跟注
+    "SawRaiseRemain2":0,    //看了牌的情况下，剩余人数2，选择加注
+    "SawRaiseRemain3":0,    //看了牌的情况下，剩余人数3，选择加注
+    "SawRaiseRemain4":0,    //看了牌的情况下，剩余人数4，选择加注
+    "SawRaiseRemain5":0,    //看了牌的情况下，剩余人数5，选择加注
+    "SawCompareRemain2":5000,  //看了牌的情况下，剩余人数2，选择比牌
+    "SawCompareRemain3":3500,  //看了牌的情况下，剩余人数3，选择比牌
+    "SawCompareRemain4":2000,  //看了牌的情况下，剩余人数4，选择比牌
+    "SawCompareRemain5":1500,  //看了牌的情况下，剩余人数5，选择比牌
+    "SawGiveUpRemain2":-7500,   //看了牌的情况下，剩余人数2，弃牌
+    "SawGiveUpRemain3":-500,   //看了牌的情况下，剩余人数3，弃牌
+    "SawGiveUpRemain4":1500,   //看了牌的情况下，剩余人数4，弃牌
+    "SawGiveUpRemain5":3000,   //看了牌的情况下，剩余人数5，弃牌
+    //其他用户比牌胜利次数
+    "SawOtherCompare1Follow":-1200,        //看了牌的情况下，其他用户比牌胜利次数1，跟注
+    "SawOtherCompare2Follow":-2400,   //看了牌的情况下，其他用户比牌胜利次数2，跟注
+    "SawOtherCompare3Follow":-4800,   //看了牌的情况下，其他用户比牌胜利次数3，跟注
+    "SawOtherCompare1Raise":-1200,        //看了牌的情况下，其他用户比牌胜利次数1，加注
+    "SawOtherCompare2Raise":-2400,        //看了牌的情况下，其他用户比牌胜利次数2，加注
+    "SawOtherCompare3Raise":-4800,        //看了牌的情况下，其他用户比牌胜利次数3，加注
+    "SawOtherCompare1Compare":-500,   //看了牌的情况下，其他用户比牌胜利次数1，比牌
+    "SawOtherCompare2Compare":-2000,      //看了牌的情况下，其他用户比牌胜利次数2，比牌
+    "SawOtherCompare3Compare":-4500, //看了牌的情况下，其他用户比牌胜利次数3，比牌
+    "SawOtherCompare1GiveUp":2500,   //看了牌的情况下，其他用户比牌胜利次数1，弃牌
+    "SawOtherCompare2GiveUp":5000,   //看了牌的情况下，其他用户比牌胜利次数2，弃牌
+    "SawOtherCompare3GiveUp":10000,   //看了牌的情况下，其他用户比牌胜利次数3，弃牌
+    //自己比牌胜利次数
+    "SawSelfCompare1Follow":500,      //看了牌的情况下，自己比牌胜利次数1，跟注
+    "SawSelfCompare2Follow":1000,      //看了牌的情况下，自己比牌胜利次数2，跟注
+    "SawSelfCompare3Follow":1500,      //看了牌的情况下，自己比牌胜利次数3，跟注
+    "SawSelfCompare1Raise":1000,    //看了牌的情况下，自己比牌胜利次数1，加注
+    "SawSelfCompare2Raise":1500,    //看了牌的情况下，自己比牌胜利次数2，加注
+    "SawSelfCompare3Raise":2500,    //看了牌的情况下，自己比牌胜利次数3，加注
+    "SawSelfCompare1Compare":-500,      //看了牌的情况下，自己比牌胜利次数1，比牌
+    "SawSelfCompare2Compare":-1000,  //看了牌的情况下，自己比牌胜利次数2，比牌
+    "SawSelfCompare3Compare":-2000,  //看了牌的情况下，自己比牌胜利次数3，比牌
+    "SawSelfCompare1GiveUp":-900,   //看了牌的情况下，自己比牌胜利次数1，弃牌
+    "SawSelfCompare2GiveUp":-1800,   //看了牌的情况下，自己比牌胜利次数2，弃牌
+    "SawSelfCompare3GiveUp":-3600,   //看了牌的情况下，自己比牌胜利次数3，弃牌
+    //当前加注档位
+    "SawRaiseAmount1Follow":0,   //看了牌情况下，加注档位1，跟注
+    "SawRaiseAmount2Follow":-1200,   //看了牌情况下，加注档位2，跟注
+    "SawRaiseAmount3Follow":-3200,   //看了牌情况下，加注档位3，跟注
+    "SawRaiseAmount1Raise":-400,    //看了牌情况下，加注档位1，加注
+    "SawRaiseAmount2Raise":-1200,    //看了牌情况下，加注档位2，加注
+    "SawRaiseAmount3Raise":-1800,    //看了牌情况下，加注档位3，加注
+    "SawRaiseAmount1Compare":-5000,  //看了牌情况下，加注档位1，比牌
+    "SawRaiseAmount2Compare":-7500,  //看了牌情况下，加注档位2，比牌
+    "SawRaiseAmount3Compare":-10000,  //看了牌情况下，加注档位3，比牌
+    "SawRaiseAmount1GiveUp":7500,   //看了牌情况下，加注档位1，弃牌
+    "SawRaiseAmount2GiveUp":10000,   //看了牌情况下，加注档位2，弃牌
+    "SawRaiseAmount3GiveUp":14000,   //看了牌情况下，加注档位3，弃牌
+    //当前轮数
+    "SawRound2Follow":3000,    //当前轮数 <=2 ，跟注
+    "SawRound5Follow":2000,    //当前轮数 <=5 ，跟注
+    "SawRound10Follow":1000,   //当前轮数 <=10 ，跟注
+    "SawRound20Follow":-1000,   //当前轮数 <=20 ，跟注
+    "SawRound2Raise":1600,     //当前轮数 <=2 ，加注
+    "SawRound5Raise":1000,     //当前轮数 <=5 ，加注
+    "SawRound10Raise":-1000,   //当前轮数 <=10 ，加注
+    "SawRound20Raise":0,       //当前轮数 <=20 ，加注
+    "SawRound2Compare":0,      //当前轮数 <=2 ，比牌
+    "SawRound5Compare":3200,   //当前轮数 <=5 ，比牌
+    "SawRound10Compare":6500,  //当前轮数 <=10 ，比牌
+    "SawRound20Compare":9000,  //当前轮数 <=20 ，比牌
+    "SawRound2GiveUp":600,       //当前轮数 <=2 ，弃牌
+    "SawRound5GiveUp":-500,    //当前轮数 <=5 ，弃牌
+    "SawRound10GiveUp":-1000,  //当前轮数 <=10 ，弃牌
+    "SawRound20GiveUp":-3000,  //当前轮数 <=20 ，弃牌
+    //看了牌之后牌型
+    "SawCardTypeSingleFollowOverA": -1200,//单牌A以上 ,跟注
+    "SawCardTypeSingleFollowBelowA": -5000,//单牌A以下，跟注
+    "SawCardTypeDzFollow":3800,      //对子，跟注
+    "SawCardTypeSzFollow":3500,      //顺子，跟注
+    "SawCardTypeJhFollow":3000,      //金花，跟注
+    "SawCardTypeSjFollow":2000,      //顺金，跟注
+    "SawCardTypeBzFollow":-1000,      //豹子，跟注
+    "SawCardTypeSingleRaiseOverA":-5000,  //单牌A以上 ,加注
+    "SawCardTypeSingleRaiseBelowA":-8000,  //单牌A以下，加注
+    "SawCardTypeDzRaise":0,      //对子，加注
+    "SawCardTypeSzRaise":6000,      //顺子，加注
+    "SawCardTypeJhRaise":15000,      //金花，加注
+    "SawCardTypeSjRaise":25000,      //顺金，加注
+    "SawCardTypeBzRaise":30000,      //豹子，加注
+    "SawCardTypeSingleCompareOverA":-3000,  //单牌A以上，比牌
+    "SawCardTypeSingleCompareBelowA":-8000,  //单牌A以下，比牌
+    "SawCardTypeDzCompare":5600,      //对子，比牌
+    "SawCardTypeSzCompare":-1800,      //顺子，比牌
+    "SawCardTypeJhCompare":-6000,      //金花，比牌
+    "SawCardTypeSjCompare":-9600,      //顺金，比牌
+    "SawCardTypeBzCompare":-20000,      //豹子，比牌
+    "SawCardTypeSingleGiveUpOverA":5200,  //单牌A以上，弃牌
+    "SawCardTypeSingleGiveUpBelowA":10000,  //单牌A以下，弃牌
+    "SawCardTypeDzGiveUp":-3700,      //对子，弃牌
+    "SawCardTypeSzGiveUp":-10000,      //顺子，弃牌
+    "SawCardTypeJhGiveUp":-13000,      //金花，弃牌
+    "SawCardTypeSjGiveUp":-16000,      //顺金，弃牌
+    "SawCardTypeBzGiveUp":-20000      //豹子，弃牌
+  },
+  //稳重型机器人
+  {
+    //未看牌决定是否要看牌
+    "SeeCardsBase":13,     //看牌基本概率
+    "SeeCardsCount1":35,   //看牌用户人数为1
+    "SeeCardsCount2":45,   //看牌用户人数为2
+    "SeeCardsCount3":60,   //看牌用户人数为3
+    "SeeCardsCount4":80,   //看牌用户人数为4
+    "SeeCardsRaise1":60,   //看牌后加注人数为1
+    "SeeCardsRaise2":80,   //看牌后加注人数为2
+    "SeeCardsRaise3":100,   //看牌后加注人数为3
+    "SeeCardsRaise4":100,   //看牌后加注人数为4
+    "SeeCardsRound3":23,   //游戏轮数 < 3轮
+    "SeeCardsRound5":33,   //游戏轮数 < 5轮
+    "SeeCardsRound10":40,  //游戏轮数 < 10轮
+    "SeeCardsRound15":70,  //游戏轮数 < 15轮
+    "SeeCardsAllIn":100,    //全押之后看牌概率
+    "SeeCardsCardsIndex1": 20,//新增-自己的牌在牌局中第1大（最大）
+    "SeeCardsCardsIndex2": 0,//新增-自己的牌在牌局中第2大
+    "SeeCardsCardsIndex3": 0,//新增-自己的牌在牌局中第3大
+    "SeeCardsCardsIndex4": 40,//新增-自己的牌在牌局中第4大
+    "SeeCardsCardsIndex5": 40,//新增-自己的牌在牌局中第5大
+
+    ////未看牌的操作
+    //新增-自己的牌在牌局中第几大，对应不看牌的操作
+    "NotSeeFollowCardsIndex1": 2700, //新增-未看牌自己的牌第1大，跟注
+    "NotSeeFollowCardsIndex2": 2000, //新增-未看牌自己的牌第2大，跟注
+    "NotSeeFollowCardsIndex3": 1000, //新增-未看牌自己的牌第3大，跟注
+    "NotSeeFollowCardsIndex4": -500, //新增-未看牌自己的牌第4大，跟注
+    "NotSeeFollowCardsIndex5": -2200, //新增-未看牌自己的牌第5大，跟注
+    "NotSeeRaiseCardsIndex1": 0, //新增-未看牌自己的牌第1大，加注
+    "NotSeeRaiseCardsIndex2": 0, //新增-未看牌自己的牌第2大，加注
+    "NotSeeRaiseCardsIndex3": -50, //新增-未看牌自己的牌第3大，加注
+    "NotSeeRaiseCardsIndex4": -150, //新增-未看牌自己的牌第4大，加注
+    "NotSeeRaiseCardsIndex5": -300, //新增-未看牌自己的牌第5大，加注
+    "NotSeeCompareCardsIndex1": -5000, //新增-未看牌自己的牌第1大，比牌
+    "NotSeeCompareCardsIndex2": 3500, //新增-未看牌自己的牌第2大，比牌
+    "NotSeeCompareCardsIndex3": 5000, //新增-未看牌自己的牌第3大，比牌
+    "NotSeeCompareCardsIndex4": 12000, //新增-未看牌自己的牌第4大，比牌
+    "NotSeeCompareCardsIndex5": 18000, //新增-未看牌自己的牌第5大，比牌
+    //看牌用户数
+    "NotSeeBaseFollow":0,   //未看牌跟注的基础概率
+    "NotSeeBaseRaise":0,    //未看牌跟注的基础概率
+    "NotSeeBaseCompare":0,  //未看牌跟注的基础概率
+    "NotSeeFollowSaw1":1000,   //未看牌情况下，已经看了牌的人数为1，跟注
+    "NotSeeFollowSaw2":600,   //未看牌情况下，已经看了牌的人数为2，跟注
+    "NotSeeFollowSaw3":200,   //未看牌情况下，已经看了牌的人数为3，跟注
+    "NotSeeFollowSaw4":-200,   //未看牌情况下，已经看了牌的人数为4，跟注
+    "NotSeeRaiseSaw1":0,    //未看牌情况下，已经看了牌的人数为1，加注
+    "NotSeeRaiseSaw2":0,    //未看牌情况下，已经看了牌的人数为2，加注
+    "NotSeeRaiseSaw3":0,    //未看牌情况下，已经看了牌的人数为3，加注
+    "NotSeeRaiseSaw4":-200,    //未看牌情况下，已经看了牌的人数为4，加注
+    "NotSeeCompareSaw1":0,  //未看牌情况下，已经看了牌的人数为1，比牌
+    "NotSeeCompareSaw2":300,  //未看牌情况下，已经看了牌的人数为2，比牌
+    "NotSeeCompareSaw3":600,  //未看牌情况下，已经看了牌的人数为3，比牌
+    "NotSeeCompareSaw4":1000,  //未看牌情况下，已经看了牌的人数为4，比牌
+    //剩余人数
+    "NotSeeFollowRemain2":1300,   //未看牌情况下，剩余人数2，选择跟注
+    "NotSeeFollowRemain3":2000,   //未看牌情况下，剩余人数3，选择跟注
+    "NotSeeFollowRemain4":2700,   //未看牌情况下，剩余人数4，选择跟注
+    "NotSeeFollowRemain5":3300,   //未看牌情况下，剩余人数5，选择跟注
+    "NotSeeRaiseRemain2":0,    //未看牌情况下，剩余人数2，选择加注
+    "NotSeeRaiseRemain3":0,    //未看牌情况下，剩余人数3，选择加注
+    "NotSeeRaiseRemain4":0,    //未看牌情况下，剩余人数4，选择加注
+    "NotSeeRaiseRemain5":0,    //未看牌情况下，剩余人数5，选择加注
+    "NotSeeCompareRemain2":3600,  //未看牌情况下，剩余人数2，选择比牌
+    "NotSeeCompareRemain3":2700,  //未看牌情况下，剩余人数3，选择比牌
+    "NotSeeCompareRemain4":2000,  //未看牌情况下，剩余人数4，选择比牌
+    "NotSeeCompareRemain5":2000,  //未看牌情况下，剩余人数5，选择比牌
+    //其他用户比牌胜利次数
+    "NotSeeOtherCompare1Follow":0,   //未看牌情况下，其他用户比牌胜利次数1，跟注
+    "NotSeeOtherCompare2Follow":-500,   //未看牌情况下，其他用户比牌胜利次数2，跟注
+    "NotSeeOtherCompare3Follow":-1000,   //未看牌情况下，其他用户比牌胜利次数3，跟注
+    "NotSeeOtherCompare1Raise":0,    //未看牌情况下，其他用户比牌胜利次数1，加注
+    "NotSeeOtherCompare2Raise":-800,    //未看牌情况下，其他用户比牌胜利次数2，加注
+    "NotSeeOtherCompare3Raise":-1500,    //未看牌情况下，其他用户比牌胜利次数3，加注
+    "NotSeeOtherCompare1Compare":500,  //未看牌情况下，其他用户比牌胜利次数1，比牌
+    "NotSeeOtherCompare2Compare":1000,  //未看牌情况下，其他用户比牌胜利次数2，比牌
+    "NotSeeOtherCompare3Compare":1500,  //未看牌情况下，其他用户比牌胜利次数3，比牌
+    //自己比牌胜利次数
+    "NotSeeSelfCompare1Follow":500,   //未看牌情况下，自己比牌胜利次数1，跟注
+    "NotSeeSelfCompare2Follow":1000,   //未看牌情况下，自己比牌胜利次数2，跟注
+    "NotSeeSelfCompare3Follow":1500,  //未看牌情况下，自己比牌胜利次数3，跟注
+    "NotSeeSelfCompare1Raise":1000,    //未看牌情况下，自己比牌胜利次数1，加注
+    "NotSeeSelfCompare2Raise":1500,    //未看牌情况下，自己比牌胜利次数2，加注
+    "NotSeeSelfCompare3Raise":2500,    //未看牌情况下，自己比牌胜利次数3，加注
+    "NotSeeSelfCompare1Compare":-500,  //未看牌情况下，自己比牌胜利次数1，比牌
+    "NotSeeSelfCompare2Compare":-1300,  //未看牌情况下，自己比牌胜利次数2，比牌
+    "NotSeeSelfCompare3Compare":-2500, //未看牌情况下，自己比牌胜利次数3，比牌
+    //当前加注档位
+    "NotSeeRaiseAmount1Follow":0,   //未看牌情况下，加注档位1，跟注
+    "NotSeeRaiseAmount2Follow":-800,   //未看牌情况下，加注档位2，跟注
+    "NotSeeRaiseAmount3Follow":-2400,   //未看牌情况下，加注档位3，跟注
+    "NotSeeRaiseAmount1Raise":-400,    //未看牌情况下，加注档位1，加注
+    "NotSeeRaiseAmount2Raise":-1200,    //未看牌情况下，加注档位2，加注
+    "NotSeeRaiseAmount3Raise":-1800,       //未看牌情况下，加注档位3，加注
+    "NotSeeRaiseAmount1Compare":900,  //未看牌情况下，加注档位1，比牌
+    "NotSeeRaiseAmount2Compare":2400,  //未看牌情况下，加注档位2，比牌
+    "NotSeeRaiseAmount3Compare":4500,  //未看牌情况下，加注档位3，比牌
+    //当前轮数
+    "NotSeeRound2Follow":2000,    //当前轮数 <=2 ，跟注
+    "NotSeeRound5Follow":1300,    //当前轮数 <=5 ，跟注
+    "NotSeeRound10Follow":700,   //当前轮数 <=10 ，跟注
+    "NotSeeRound20Follow":-1300,   //当前轮数 <=20 ，跟注
+    "NotSeeRound2Raise":300,     //当前轮数 <=2 ，加注
+    "NotSeeRound5Raise":0,     //当前轮数 <=5 ，加注
+    "NotSeeRound10Raise":-700,    //当前轮数 <=10 ，加注
+    "NotSeeRound20Raise":-2000,       //当前轮数 <=20 ，加注
+    "NotSeeRound2Compare":0,      //当前轮数 <=2 ，比牌
+    "NotSeeRound5Compare":3000,   //当前轮数 <=5 ，比牌
+    "NotSeeRound10Compare":4000,  //当前轮数 <=10 ，比牌
+    "NotSeeRound20Compare":5000,  //当前轮数 <=20 ，比牌
+
+    ////看了牌的操作
+    //新增-自己的牌在牌局中第几大，对应不看牌的操作
+    "SawFollowCardsIndex1": 1800, //新增-未看牌自己的牌第1大，跟注
+    "SawFollowCardsIndex2": 800, //新增-未看牌自己的牌第2大，跟注
+    "SawFollowCardsIndex3": -2000, //新增-未看牌自己的牌第3大，跟注
+    "SawFollowCardsIndex4": -3200, //新增-未看牌自己的牌第4大，跟注
+    "SawFollowCardsIndex5": -4200, //新增-未看牌自己的牌第5大，跟注
+    "SawRaiseCardsIndex1": 1500, //新增-未看牌自己的牌第1大，加注
+    "SawRaiseCardsIndex2": 700, //新增-未看牌自己的牌第2大，加注
+    "SawRaiseCardsIndex3": -800, //新增-未看牌自己的牌第3大，加注
+    "SawRaiseCardsIndex4": -3600, //新增-未看牌自己的牌第4大，加注
+    "SawRaiseCardsIndex5": -10000, //新增-未看牌自己的牌第5大，加注
+    "SawCompareCardsIndex1": -4800, //新增-未看牌自己的牌第1大，比牌
+    "SawCompareCardsIndex2": 2100, //新增-未看牌自己的牌第2大，比牌
+    "SawCompareCardsIndex3": -2400, //新增-未看牌自己的牌第3大，比牌
+    "SawCompareCardsIndex4": -3600, //新增-未看牌自己的牌第4大，比牌
+    "SawCompareCardsIndex5": -6400, //新增-未看牌自己的牌第5大，比牌
+    "SawGiveUpCardsIndex1": -15000, //新增-未看牌自己的牌第1大，弃牌
+    "SawGiveUpCardsIndex2": 1000, //新增-未看牌自己的牌第2大，弃牌
+    "SawGiveUpCardsIndex3": 3600, //新增-未看牌自己的牌第3大，弃牌
+    "SawGiveUpCardsIndex4": 8000, //新增-未看牌自己的牌第4大，弃牌
+    "SawGiveUpCardsIndex5": 10000, //新增-未看牌自己的牌第5大，弃牌
+    //看牌用户数
+    "SawBaseFollow":0,   //看了牌的跟注的基础概率
+    "SawBaseRaise":0,    //看了牌的加注的基础概率
+    "SawBaseCompare":0,  //看了牌的比牌的基础概率
+    "SawBaseGiveUp":0,   //看了牌的弃牌的基础概率
+    "SawFollowSaw1":1000,   //看了牌的情况下，已经看了牌的人数为1，跟注
+    "SawFollowSaw2":600,   //看了牌的情况下，已经看了牌的人数为2，跟注
+    "SawFollowSaw3":300,   //看了牌的情况下，已经看了牌的人数为3，跟注
+    "SawFollowSaw4":0,   //看了牌的情况下，已经看了牌的人数为4，跟注
+    "SawRaiseSaw1":0,    //看了牌的情况下，已经看了牌的人数为1，加注
+    "SawRaiseSaw2":0,    //看了牌的情况下，已经看了牌的人数为2，加注
+    "SawRaiseSaw3":0,    //看了牌的情况下，已经看了牌的人数为3，加注
+    "SawRaiseSaw4":0,    //看了牌的情况下，已经看了牌的人数为4，加注
+    "SawCompareSaw1":0,  //看了牌的情况下，已经看了牌的人数为1，比牌
+    "SawCompareSaw2":500,  //看了牌的情况下，已经看了牌的人数为2，比牌
+    "SawCompareSaw3":1000,  //看了牌的情况下，已经看了牌的人数为3，比牌
+    "SawCompareSaw4":2000,  //看了牌的情况下，已经看了牌的人数为4，比牌
+    "SawGiveUpSaw1":1600,   //看了牌的情况下，已经看了牌的人数为1，弃牌
+    "SawGiveUpSaw2":3200,   //看了牌的情况下，已经看了牌的人数为2，弃牌
+    "SawGiveUpSaw3":4800,   //看了牌的情况下，已经看了牌的人数为3，弃牌
+    "SawGiveUpSaw4":6000,   //看了牌的情况下，已经看了牌的人数为4，弃牌
+    //剩余人数
+    "SawFollowRemain2":2000,   //看了牌的情况下，剩余人数2，选择跟注
+    "SawFollowRemain3":2000,   //看了牌的情况下，剩余人数3，选择跟注
+    "SawFollowRemain4":3000,   //看了牌的情况下，剩余人数4，选择跟注
+    "SawFollowRemain5":3500,   //看了牌的情况下，剩余人数5，选择跟注
+    "SawRaiseRemain2":0,    //看了牌的情况下，剩余人数2，选择加注
+    "SawRaiseRemain3":0,    //看了牌的情况下，剩余人数3，选择加注
+    "SawRaiseRemain4":0,    //看了牌的情况下，剩余人数4，选择加注
+    "SawRaiseRemain5":0,    //看了牌的情况下，剩余人数5，选择加注
+    "SawCompareRemain2":5000,  //看了牌的情况下，剩余人数2，选择比牌
+    "SawCompareRemain3":3500,  //看了牌的情况下，剩余人数3，选择比牌
+    "SawCompareRemain4":2000,  //看了牌的情况下，剩余人数4，选择比牌
+    "SawCompareRemain5":1500,  //看了牌的情况下，剩余人数5，选择比牌
+    "SawGiveUpRemain2":-7500,   //看了牌的情况下，剩余人数2，弃牌
+    "SawGiveUpRemain3":-500,   //看了牌的情况下，剩余人数3，弃牌
+    "SawGiveUpRemain4":1500,   //看了牌的情况下，剩余人数4，弃牌
+    "SawGiveUpRemain5":3000,   //看了牌的情况下，剩余人数5，弃牌
+    //其他用户比牌胜利次数
+    "SawOtherCompare1Follow":-1200,        //看了牌的情况下，其他用户比牌胜利次数1，跟注
+    "SawOtherCompare2Follow":-2400,   //看了牌的情况下，其他用户比牌胜利次数2，跟注
+    "SawOtherCompare3Follow":-4800,   //看了牌的情况下，其他用户比牌胜利次数3，跟注
+    "SawOtherCompare1Raise":-1200,        //看了牌的情况下，其他用户比牌胜利次数1，加注
+    "SawOtherCompare2Raise":-2400,        //看了牌的情况下，其他用户比牌胜利次数2，加注
+    "SawOtherCompare3Raise":-4800,        //看了牌的情况下，其他用户比牌胜利次数3，加注
+    "SawOtherCompare1Compare":-500,   //看了牌的情况下，其他用户比牌胜利次数1，比牌
+    "SawOtherCompare2Compare":-2000,      //看了牌的情况下，其他用户比牌胜利次数2，比牌
+    "SawOtherCompare3Compare":-4500, //看了牌的情况下，其他用户比牌胜利次数3，比牌
+    "SawOtherCompare1GiveUp":2500,   //看了牌的情况下，其他用户比牌胜利次数1，弃牌
+    "SawOtherCompare2GiveUp":5000,   //看了牌的情况下，其他用户比牌胜利次数2，弃牌
+    "SawOtherCompare3GiveUp":10000,   //看了牌的情况下，其他用户比牌胜利次数3，弃牌
+    //自己比牌胜利次数
+    "SawSelfCompare1Follow":500,      //看了牌的情况下，自己比牌胜利次数1，跟注
+    "SawSelfCompare2Follow":1000,      //看了牌的情况下，自己比牌胜利次数2，跟注
+    "SawSelfCompare3Follow":1500,      //看了牌的情况下，自己比牌胜利次数3，跟注
+    "SawSelfCompare1Raise":1000,    //看了牌的情况下，自己比牌胜利次数1，加注
+    "SawSelfCompare2Raise":1500,    //看了牌的情况下，自己比牌胜利次数2，加注
+    "SawSelfCompare3Raise":2500,    //看了牌的情况下，自己比牌胜利次数3，加注
+    "SawSelfCompare1Compare":-500,      //看了牌的情况下，自己比牌胜利次数1，比牌
+    "SawSelfCompare2Compare":-1000,  //看了牌的情况下，自己比牌胜利次数2，比牌
+    "SawSelfCompare3Compare":-2000,  //看了牌的情况下，自己比牌胜利次数3，比牌
+    "SawSelfCompare1GiveUp":-900,   //看了牌的情况下，自己比牌胜利次数1，弃牌
+    "SawSelfCompare2GiveUp":-1800,   //看了牌的情况下，自己比牌胜利次数2，弃牌
+    "SawSelfCompare3GiveUp":-3600,   //看了牌的情况下，自己比牌胜利次数3，弃牌
+    //当前加注档位
+    "SawRaiseAmount1Follow":0,   //看了牌情况下，加注档位1，跟注
+    "SawRaiseAmount2Follow":-1200,   //看了牌情况下，加注档位2，跟注
+    "SawRaiseAmount3Follow":-3200,   //看了牌情况下，加注档位3，跟注
+    "SawRaiseAmount1Raise":-400,    //看了牌情况下，加注档位1，加注
+    "SawRaiseAmount2Raise":-1200,    //看了牌情况下，加注档位2，加注
+    "SawRaiseAmount3Raise":-1800,    //看了牌情况下，加注档位3，加注
+    "SawRaiseAmount1Compare":-5000,  //看了牌情况下，加注档位1，比牌
+    "SawRaiseAmount2Compare":-7500,  //看了牌情况下，加注档位2，比牌
+    "SawRaiseAmount3Compare":-10000,  //看了牌情况下，加注档位3，比牌
+    "SawRaiseAmount1GiveUp":7500,   //看了牌情况下，加注档位1，弃牌
+    "SawRaiseAmount2GiveUp":10000,   //看了牌情况下，加注档位2，弃牌
+    "SawRaiseAmount3GiveUp":14000,   //看了牌情况下，加注档位3，弃牌
+    //当前轮数
+    "SawRound2Follow":3000,    //当前轮数 <=2 ，跟注
+    "SawRound5Follow":2000,    //当前轮数 <=5 ，跟注
+    "SawRound10Follow":1000,   //当前轮数 <=10 ，跟注
+    "SawRound20Follow":-1000,   //当前轮数 <=20 ，跟注
+    "SawRound2Raise":1600,     //当前轮数 <=2 ，加注
+    "SawRound5Raise":1000,     //当前轮数 <=5 ，加注
+    "SawRound10Raise":-1000,   //当前轮数 <=10 ，加注
+    "SawRound20Raise":0,       //当前轮数 <=20 ，加注
+    "SawRound2Compare":0,      //当前轮数 <=2 ，比牌
+    "SawRound5Compare":3200,   //当前轮数 <=5 ，比牌
+    "SawRound10Compare":6500,  //当前轮数 <=10 ，比牌
+    "SawRound20Compare":9000,  //当前轮数 <=20 ，比牌
+    "SawRound2GiveUp":600,       //当前轮数 <=2 ，弃牌
+    "SawRound5GiveUp":-500,    //当前轮数 <=5 ，弃牌
+    "SawRound10GiveUp":-1000,  //当前轮数 <=10 ，弃牌
+    "SawRound20GiveUp":-3000,  //当前轮数 <=20 ，弃牌
+    //看了牌之后牌型
+    "SawCardTypeSingleFollowOverA": -1200,//单牌A以上 ,跟注
+    "SawCardTypeSingleFollowBelowA": -5000,//单牌A以下，跟注
+    "SawCardTypeDzFollow":3800,      //对子，跟注
+    "SawCardTypeSzFollow":3500,      //顺子，跟注
+    "SawCardTypeJhFollow":3000,      //金花，跟注
+    "SawCardTypeSjFollow":2000,      //顺金，跟注
+    "SawCardTypeBzFollow":-1000,      //豹子，跟注
+    "SawCardTypeSingleRaiseOverA":-5000,  //单牌A以上 ,加注
+    "SawCardTypeSingleRaiseBelowA":-8000,  //单牌A以下，加注
+    "SawCardTypeDzRaise":0,      //对子，加注
+    "SawCardTypeSzRaise":6000,      //顺子，加注
+    "SawCardTypeJhRaise":15000,      //金花，加注
+    "SawCardTypeSjRaise":25000,      //顺金，加注
+    "SawCardTypeBzRaise":30000,      //豹子，加注
+    "SawCardTypeSingleCompareOverA":-3000,  //单牌A以上，比牌
+    "SawCardTypeSingleCompareBelowA":-8000,  //单牌A以下，比牌
+    "SawCardTypeDzCompare":5600,      //对子，比牌
+    "SawCardTypeSzCompare":-1800,      //顺子，比牌
+    "SawCardTypeJhCompare":-6000,      //金花，比牌
+    "SawCardTypeSjCompare":-9600,      //顺金，比牌
+    "SawCardTypeBzCompare":-20000,      //豹子，比牌
+    "SawCardTypeSingleGiveUpOverA":5200,  //单牌A以上，弃牌
+    "SawCardTypeSingleGiveUpBelowA":10000,  //单牌A以下，弃牌
+    "SawCardTypeDzGiveUp":-3700,      //对子，弃牌
+    "SawCardTypeSzGiveUp":-10000,      //顺子，弃牌
+    "SawCardTypeJhGiveUp":-13000,      //金花，弃牌
+    "SawCardTypeSjGiveUp":-16000,      //顺金，弃牌
+    "SawCardTypeBzGiveUp":-20000      //豹子，弃牌
+  },
+  //投机型机器人
+  {
+    //未看牌决定是否要看牌
+    "SeeCardsBase":13,     //看牌基本概率
+    "SeeCardsCount1":35,   //看牌用户人数为1
+    "SeeCardsCount2":45,   //看牌用户人数为2
+    "SeeCardsCount3":60,   //看牌用户人数为3
+    "SeeCardsCount4":80,   //看牌用户人数为4
+    "SeeCardsRaise1":60,   //看牌后加注人数为1
+    "SeeCardsRaise2":80,   //看牌后加注人数为2
+    "SeeCardsRaise3":100,   //看牌后加注人数为3
+    "SeeCardsRaise4":100,   //看牌后加注人数为4
+    "SeeCardsRound3":23,   //游戏轮数 < 3轮
+    "SeeCardsRound5":33,   //游戏轮数 < 5轮
+    "SeeCardsRound10":40,  //游戏轮数 < 10轮
+    "SeeCardsRound15":70,  //游戏轮数 < 15轮
+    "SeeCardsAllIn":100,    //全押之后看牌概率
+    "SeeCardsCardsIndex1": 20,//新增-自己的牌在牌局中第1大（最大）
+    "SeeCardsCardsIndex2": 0,//新增-自己的牌在牌局中第2大
+    "SeeCardsCardsIndex3": 0,//新增-自己的牌在牌局中第3大
+    "SeeCardsCardsIndex4": 40,//新增-自己的牌在牌局中第4大
+    "SeeCardsCardsIndex5": 40,//新增-自己的牌在牌局中第5大
+
+    ////未看牌的操作
+    //新增-自己的牌在牌局中第几大，对应不看牌的操作
+    "NotSeeFollowCardsIndex1": 2700, //新增-未看牌自己的牌第1大，跟注
+    "NotSeeFollowCardsIndex2": 2000, //新增-未看牌自己的牌第2大，跟注
+    "NotSeeFollowCardsIndex3": 1000, //新增-未看牌自己的牌第3大，跟注
+    "NotSeeFollowCardsIndex4": -500, //新增-未看牌自己的牌第4大，跟注
+    "NotSeeFollowCardsIndex5": -2200, //新增-未看牌自己的牌第5大，跟注
+    "NotSeeRaiseCardsIndex1": 0, //新增-未看牌自己的牌第1大，加注
+    "NotSeeRaiseCardsIndex2": 0, //新增-未看牌自己的牌第2大，加注
+    "NotSeeRaiseCardsIndex3": -50, //新增-未看牌自己的牌第3大，加注
+    "NotSeeRaiseCardsIndex4": -150, //新增-未看牌自己的牌第4大，加注
+    "NotSeeRaiseCardsIndex5": -300, //新增-未看牌自己的牌第5大，加注
+    "NotSeeCompareCardsIndex1": -5000, //新增-未看牌自己的牌第1大，比牌
+    "NotSeeCompareCardsIndex2": 3500, //新增-未看牌自己的牌第2大，比牌
+    "NotSeeCompareCardsIndex3": 5000, //新增-未看牌自己的牌第3大，比牌
+    "NotSeeCompareCardsIndex4": 12000, //新增-未看牌自己的牌第4大，比牌
+    "NotSeeCompareCardsIndex5": 18000, //新增-未看牌自己的牌第5大，比牌
+    //看牌用户数
+    "NotSeeBaseFollow":0,   //未看牌跟注的基础概率
+    "NotSeeBaseRaise":0,    //未看牌跟注的基础概率
+    "NotSeeBaseCompare":0,  //未看牌跟注的基础概率
+    "NotSeeFollowSaw1":1000,   //未看牌情况下，已经看了牌的人数为1，跟注
+    "NotSeeFollowSaw2":600,   //未看牌情况下，已经看了牌的人数为2，跟注
+    "NotSeeFollowSaw3":200,   //未看牌情况下，已经看了牌的人数为3，跟注
+    "NotSeeFollowSaw4":-200,   //未看牌情况下，已经看了牌的人数为4，跟注
+    "NotSeeRaiseSaw1":0,    //未看牌情况下，已经看了牌的人数为1，加注
+    "NotSeeRaiseSaw2":0,    //未看牌情况下，已经看了牌的人数为2，加注
+    "NotSeeRaiseSaw3":0,    //未看牌情况下，已经看了牌的人数为3，加注
+    "NotSeeRaiseSaw4":-200,    //未看牌情况下，已经看了牌的人数为4，加注
+    "NotSeeCompareSaw1":0,  //未看牌情况下，已经看了牌的人数为1，比牌
+    "NotSeeCompareSaw2":300,  //未看牌情况下，已经看了牌的人数为2，比牌
+    "NotSeeCompareSaw3":600,  //未看牌情况下，已经看了牌的人数为3，比牌
+    "NotSeeCompareSaw4":1000,  //未看牌情况下，已经看了牌的人数为4，比牌
+    //剩余人数
+    "NotSeeFollowRemain2":1300,   //未看牌情况下，剩余人数2，选择跟注
+    "NotSeeFollowRemain3":2000,   //未看牌情况下，剩余人数3，选择跟注
+    "NotSeeFollowRemain4":2700,   //未看牌情况下，剩余人数4，选择跟注
+    "NotSeeFollowRemain5":3300,   //未看牌情况下，剩余人数5，选择跟注
+    "NotSeeRaiseRemain2":0,    //未看牌情况下，剩余人数2，选择加注
+    "NotSeeRaiseRemain3":0,    //未看牌情况下，剩余人数3，选择加注
+    "NotSeeRaiseRemain4":0,    //未看牌情况下，剩余人数4，选择加注
+    "NotSeeRaiseRemain5":0,    //未看牌情况下，剩余人数5，选择加注
+    "NotSeeCompareRemain2":3600,  //未看牌情况下，剩余人数2，选择比牌
+    "NotSeeCompareRemain3":2700,  //未看牌情况下，剩余人数3，选择比牌
+    "NotSeeCompareRemain4":2000,  //未看牌情况下，剩余人数4，选择比牌
+    "NotSeeCompareRemain5":2000,  //未看牌情况下，剩余人数5，选择比牌
+    //其他用户比牌胜利次数
+    "NotSeeOtherCompare1Follow":0,   //未看牌情况下，其他用户比牌胜利次数1，跟注
+    "NotSeeOtherCompare2Follow":-500,   //未看牌情况下，其他用户比牌胜利次数2，跟注
+    "NotSeeOtherCompare3Follow":-1000,   //未看牌情况下，其他用户比牌胜利次数3，跟注
+    "NotSeeOtherCompare1Raise":0,    //未看牌情况下，其他用户比牌胜利次数1，加注
+    "NotSeeOtherCompare2Raise":-800,    //未看牌情况下，其他用户比牌胜利次数2，加注
+    "NotSeeOtherCompare3Raise":-1500,    //未看牌情况下，其他用户比牌胜利次数3，加注
+    "NotSeeOtherCompare1Compare":500,  //未看牌情况下，其他用户比牌胜利次数1，比牌
+    "NotSeeOtherCompare2Compare":1000,  //未看牌情况下，其他用户比牌胜利次数2，比牌
+    "NotSeeOtherCompare3Compare":1500,  //未看牌情况下，其他用户比牌胜利次数3，比牌
+    //自己比牌胜利次数
+    "NotSeeSelfCompare1Follow":500,   //未看牌情况下，自己比牌胜利次数1，跟注
+    "NotSeeSelfCompare2Follow":1000,   //未看牌情况下，自己比牌胜利次数2，跟注
+    "NotSeeSelfCompare3Follow":1500,  //未看牌情况下，自己比牌胜利次数3，跟注
+    "NotSeeSelfCompare1Raise":1000,    //未看牌情况下，自己比牌胜利次数1，加注
+    "NotSeeSelfCompare2Raise":1500,    //未看牌情况下，自己比牌胜利次数2，加注
+    "NotSeeSelfCompare3Raise":2500,    //未看牌情况下，自己比牌胜利次数3，加注
+    "NotSeeSelfCompare1Compare":-500,  //未看牌情况下，自己比牌胜利次数1，比牌
+    "NotSeeSelfCompare2Compare":-1300,  //未看牌情况下，自己比牌胜利次数2，比牌
+    "NotSeeSelfCompare3Compare":-2500, //未看牌情况下，自己比牌胜利次数3，比牌
+    //当前加注档位
+    "NotSeeRaiseAmount1Follow":0,   //未看牌情况下，加注档位1，跟注
+    "NotSeeRaiseAmount2Follow":-800,   //未看牌情况下，加注档位2，跟注
+    "NotSeeRaiseAmount3Follow":-2400,   //未看牌情况下，加注档位3，跟注
+    "NotSeeRaiseAmount1Raise":-400,    //未看牌情况下，加注档位1，加注
+    "NotSeeRaiseAmount2Raise":-1200,    //未看牌情况下，加注档位2，加注
+    "NotSeeRaiseAmount3Raise":-1800,       //未看牌情况下，加注档位3，加注
+    "NotSeeRaiseAmount1Compare":900,  //未看牌情况下，加注档位1，比牌
+    "NotSeeRaiseAmount2Compare":2400,  //未看牌情况下，加注档位2，比牌
+    "NotSeeRaiseAmount3Compare":4500,  //未看牌情况下，加注档位3，比牌
+    //当前轮数
+    "NotSeeRound2Follow":2000,    //当前轮数 <=2 ，跟注
+    "NotSeeRound5Follow":1300,    //当前轮数 <=5 ，跟注
+    "NotSeeRound10Follow":700,   //当前轮数 <=10 ，跟注
+    "NotSeeRound20Follow":-1300,   //当前轮数 <=20 ，跟注
+    "NotSeeRound2Raise":300,     //当前轮数 <=2 ，加注
+    "NotSeeRound5Raise":0,     //当前轮数 <=5 ，加注
+    "NotSeeRound10Raise":-700,    //当前轮数 <=10 ，加注
+    "NotSeeRound20Raise":-2000,       //当前轮数 <=20 ，加注
+    "NotSeeRound2Compare":0,      //当前轮数 <=2 ，比牌
+    "NotSeeRound5Compare":3000,   //当前轮数 <=5 ，比牌
+    "NotSeeRound10Compare":4000,  //当前轮数 <=10 ，比牌
+    "NotSeeRound20Compare":5000,  //当前轮数 <=20 ，比牌
+
+    ////看了牌的操作
+    //新增-自己的牌在牌局中第几大，对应不看牌的操作
+    "SawFollowCardsIndex1": 1800, //新增-未看牌自己的牌第1大，跟注
+    "SawFollowCardsIndex2": 800, //新增-未看牌自己的牌第2大，跟注
+    "SawFollowCardsIndex3": -2000, //新增-未看牌自己的牌第3大，跟注
+    "SawFollowCardsIndex4": -3200, //新增-未看牌自己的牌第4大，跟注
+    "SawFollowCardsIndex5": -4200, //新增-未看牌自己的牌第5大，跟注
+    "SawRaiseCardsIndex1": 1500, //新增-未看牌自己的牌第1大，加注
+    "SawRaiseCardsIndex2": 700, //新增-未看牌自己的牌第2大，加注
+    "SawRaiseCardsIndex3": -800, //新增-未看牌自己的牌第3大，加注
+    "SawRaiseCardsIndex4": -3600, //新增-未看牌自己的牌第4大，加注
+    "SawRaiseCardsIndex5": -10000, //新增-未看牌自己的牌第5大，加注
+    "SawCompareCardsIndex1": -4800, //新增-未看牌自己的牌第1大，比牌
+    "SawCompareCardsIndex2": 2100, //新增-未看牌自己的牌第2大，比牌
+    "SawCompareCardsIndex3": -2400, //新增-未看牌自己的牌第3大，比牌
+    "SawCompareCardsIndex4": -3600, //新增-未看牌自己的牌第4大，比牌
+    "SawCompareCardsIndex5": -6400, //新增-未看牌自己的牌第5大，比牌
+    "SawGiveUpCardsIndex1": -15000, //新增-未看牌自己的牌第1大，弃牌
+    "SawGiveUpCardsIndex2": 1000, //新增-未看牌自己的牌第2大，弃牌
+    "SawGiveUpCardsIndex3": 3600, //新增-未看牌自己的牌第3大，弃牌
+    "SawGiveUpCardsIndex4": 8000, //新增-未看牌自己的牌第4大，弃牌
+    "SawGiveUpCardsIndex5": 10000, //新增-未看牌自己的牌第5大，弃牌
+    //看牌用户数
+    "SawBaseFollow":0,   //看了牌的跟注的基础概率
+    "SawBaseRaise":0,    //看了牌的加注的基础概率
+    "SawBaseCompare":0,  //看了牌的比牌的基础概率
+    "SawBaseGiveUp":0,   //看了牌的弃牌的基础概率
+    "SawFollowSaw1":1000,   //看了牌的情况下，已经看了牌的人数为1，跟注
+    "SawFollowSaw2":600,   //看了牌的情况下，已经看了牌的人数为2，跟注
+    "SawFollowSaw3":300,   //看了牌的情况下，已经看了牌的人数为3，跟注
+    "SawFollowSaw4":0,   //看了牌的情况下，已经看了牌的人数为4，跟注
+    "SawRaiseSaw1":0,    //看了牌的情况下，已经看了牌的人数为1，加注
+    "SawRaiseSaw2":0,    //看了牌的情况下，已经看了牌的人数为2，加注
+    "SawRaiseSaw3":0,    //看了牌的情况下，已经看了牌的人数为3，加注
+    "SawRaiseSaw4":0,    //看了牌的情况下，已经看了牌的人数为4，加注
+    "SawCompareSaw1":0,  //看了牌的情况下，已经看了牌的人数为1，比牌
+    "SawCompareSaw2":500,  //看了牌的情况下，已经看了牌的人数为2，比牌
+    "SawCompareSaw3":1000,  //看了牌的情况下，已经看了牌的人数为3，比牌
+    "SawCompareSaw4":2000,  //看了牌的情况下，已经看了牌的人数为4，比牌
+    "SawGiveUpSaw1":1600,   //看了牌的情况下，已经看了牌的人数为1，弃牌
+    "SawGiveUpSaw2":3200,   //看了牌的情况下，已经看了牌的人数为2，弃牌
+    "SawGiveUpSaw3":4800,   //看了牌的情况下，已经看了牌的人数为3，弃牌
+    "SawGiveUpSaw4":6000,   //看了牌的情况下，已经看了牌的人数为4，弃牌
+    //剩余人数
+    "SawFollowRemain2":2000,   //看了牌的情况下，剩余人数2，选择跟注
+    "SawFollowRemain3":2000,   //看了牌的情况下，剩余人数3，选择跟注
+    "SawFollowRemain4":3000,   //看了牌的情况下，剩余人数4，选择跟注
+    "SawFollowRemain5":3500,   //看了牌的情况下，剩余人数5，选择跟注
+    "SawRaiseRemain2":0,    //看了牌的情况下，剩余人数2，选择加注
+    "SawRaiseRemain3":0,    //看了牌的情况下，剩余人数3，选择加注
+    "SawRaiseRemain4":0,    //看了牌的情况下，剩余人数4，选择加注
+    "SawRaiseRemain5":0,    //看了牌的情况下，剩余人数5，选择加注
+    "SawCompareRemain2":5000,  //看了牌的情况下，剩余人数2，选择比牌
+    "SawCompareRemain3":3500,  //看了牌的情况下，剩余人数3，选择比牌
+    "SawCompareRemain4":2000,  //看了牌的情况下，剩余人数4，选择比牌
+    "SawCompareRemain5":1500,  //看了牌的情况下，剩余人数5，选择比牌
+    "SawGiveUpRemain2":-7500,   //看了牌的情况下，剩余人数2，弃牌
+    "SawGiveUpRemain3":-500,   //看了牌的情况下，剩余人数3，弃牌
+    "SawGiveUpRemain4":1500,   //看了牌的情况下，剩余人数4，弃牌
+    "SawGiveUpRemain5":3000,   //看了牌的情况下，剩余人数5，弃牌
+    //其他用户比牌胜利次数
+    "SawOtherCompare1Follow":-1200,        //看了牌的情况下，其他用户比牌胜利次数1，跟注
+    "SawOtherCompare2Follow":-2400,   //看了牌的情况下，其他用户比牌胜利次数2，跟注
+    "SawOtherCompare3Follow":-4800,   //看了牌的情况下，其他用户比牌胜利次数3，跟注
+    "SawOtherCompare1Raise":-1200,        //看了牌的情况下，其他用户比牌胜利次数1，加注
+    "SawOtherCompare2Raise":-2400,        //看了牌的情况下，其他用户比牌胜利次数2，加注
+    "SawOtherCompare3Raise":-4800,        //看了牌的情况下，其他用户比牌胜利次数3，加注
+    "SawOtherCompare1Compare":-500,   //看了牌的情况下，其他用户比牌胜利次数1，比牌
+    "SawOtherCompare2Compare":-2000,      //看了牌的情况下，其他用户比牌胜利次数2，比牌
+    "SawOtherCompare3Compare":-4500, //看了牌的情况下，其他用户比牌胜利次数3，比牌
+    "SawOtherCompare1GiveUp":2500,   //看了牌的情况下，其他用户比牌胜利次数1，弃牌
+    "SawOtherCompare2GiveUp":5000,   //看了牌的情况下，其他用户比牌胜利次数2，弃牌
+    "SawOtherCompare3GiveUp":10000,   //看了牌的情况下，其他用户比牌胜利次数3，弃牌
+    //自己比牌胜利次数
+    "SawSelfCompare1Follow":500,      //看了牌的情况下，自己比牌胜利次数1，跟注
+    "SawSelfCompare2Follow":1000,      //看了牌的情况下，自己比牌胜利次数2，跟注
+    "SawSelfCompare3Follow":1500,      //看了牌的情况下，自己比牌胜利次数3，跟注
+    "SawSelfCompare1Raise":1000,    //看了牌的情况下，自己比牌胜利次数1，加注
+    "SawSelfCompare2Raise":1500,    //看了牌的情况下，自己比牌胜利次数2，加注
+    "SawSelfCompare3Raise":2500,    //看了牌的情况下，自己比牌胜利次数3，加注
+    "SawSelfCompare1Compare":-500,      //看了牌的情况下，自己比牌胜利次数1，比牌
+    "SawSelfCompare2Compare":-1000,  //看了牌的情况下，自己比牌胜利次数2，比牌
+    "SawSelfCompare3Compare":-2000,  //看了牌的情况下，自己比牌胜利次数3，比牌
+    "SawSelfCompare1GiveUp":-900,   //看了牌的情况下，自己比牌胜利次数1，弃牌
+    "SawSelfCompare2GiveUp":-1800,   //看了牌的情况下，自己比牌胜利次数2，弃牌
+    "SawSelfCompare3GiveUp":-3600,   //看了牌的情况下，自己比牌胜利次数3，弃牌
+    //当前加注档位
+    "SawRaiseAmount1Follow":0,   //看了牌情况下，加注档位1，跟注
+    "SawRaiseAmount2Follow":-1200,   //看了牌情况下，加注档位2，跟注
+    "SawRaiseAmount3Follow":-3200,   //看了牌情况下，加注档位3，跟注
+    "SawRaiseAmount1Raise":-400,    //看了牌情况下，加注档位1，加注
+    "SawRaiseAmount2Raise":-1200,    //看了牌情况下，加注档位2，加注
+    "SawRaiseAmount3Raise":-1800,    //看了牌情况下，加注档位3，加注
+    "SawRaiseAmount1Compare":-5000,  //看了牌情况下，加注档位1，比牌
+    "SawRaiseAmount2Compare":-7500,  //看了牌情况下，加注档位2，比牌
+    "SawRaiseAmount3Compare":-10000,  //看了牌情况下，加注档位3，比牌
+    "SawRaiseAmount1GiveUp":7500,   //看了牌情况下，加注档位1，弃牌
+    "SawRaiseAmount2GiveUp":10000,   //看了牌情况下，加注档位2，弃牌
+    "SawRaiseAmount3GiveUp":14000,   //看了牌情况下，加注档位3，弃牌
+    //当前轮数
+    "SawRound2Follow":3000,    //当前轮数 <=2 ，跟注
+    "SawRound5Follow":2000,    //当前轮数 <=5 ，跟注
+    "SawRound10Follow":1000,   //当前轮数 <=10 ，跟注
+    "SawRound20Follow":-1000,   //当前轮数 <=20 ，跟注
+    "SawRound2Raise":1600,     //当前轮数 <=2 ，加注
+    "SawRound5Raise":1000,     //当前轮数 <=5 ，加注
+    "SawRound10Raise":-1000,   //当前轮数 <=10 ，加注
+    "SawRound20Raise":0,       //当前轮数 <=20 ，加注
+    "SawRound2Compare":0,      //当前轮数 <=2 ，比牌
+    "SawRound5Compare":3200,   //当前轮数 <=5 ，比牌
+    "SawRound10Compare":6500,  //当前轮数 <=10 ，比牌
+    "SawRound20Compare":9000,  //当前轮数 <=20 ，比牌
+    "SawRound2GiveUp":600,       //当前轮数 <=2 ，弃牌
+    "SawRound5GiveUp":-500,    //当前轮数 <=5 ，弃牌
+    "SawRound10GiveUp":-1000,  //当前轮数 <=10 ，弃牌
+    "SawRound20GiveUp":-3000,  //当前轮数 <=20 ，弃牌
+    //看了牌之后牌型
+    "SawCardTypeSingleFollowOverA": -1200,//单牌A以上 ,跟注
+    "SawCardTypeSingleFollowBelowA": -5000,//单牌A以下，跟注
+    "SawCardTypeDzFollow":3800,      //对子，跟注
+    "SawCardTypeSzFollow":3500,      //顺子，跟注
+    "SawCardTypeJhFollow":3000,      //金花，跟注
+    "SawCardTypeSjFollow":2000,      //顺金，跟注
+    "SawCardTypeBzFollow":-1000,      //豹子，跟注
+    "SawCardTypeSingleRaiseOverA":-5000,  //单牌A以上 ,加注
+    "SawCardTypeSingleRaiseBelowA":-8000,  //单牌A以下，加注
+    "SawCardTypeDzRaise":0,      //对子，加注
+    "SawCardTypeSzRaise":6000,      //顺子，加注
+    "SawCardTypeJhRaise":15000,      //金花，加注
+    "SawCardTypeSjRaise":25000,      //顺金，加注
+    "SawCardTypeBzRaise":30000,      //豹子，加注
+    "SawCardTypeSingleCompareOverA":-3000,  //单牌A以上，比牌
+    "SawCardTypeSingleCompareBelowA":-8000,  //单牌A以下，比牌
+    "SawCardTypeDzCompare":5600,      //对子，比牌
+    "SawCardTypeSzCompare":-1800,      //顺子，比牌
+    "SawCardTypeJhCompare":-6000,      //金花，比牌
+    "SawCardTypeSjCompare":-9600,      //顺金，比牌
+    "SawCardTypeBzCompare":-20000,      //豹子，比牌
+    "SawCardTypeSingleGiveUpOverA":5200,  //单牌A以上，弃牌
+    "SawCardTypeSingleGiveUpBelowA":10000,  //单牌A以下，弃牌
+    "SawCardTypeDzGiveUp":-3700,      //对子，弃牌
+    "SawCardTypeSzGiveUp":-10000,      //顺子，弃牌
+    "SawCardTypeJhGiveUp":-13000,      //金花，弃牌
+    "SawCardTypeSjGiveUp":-16000,      //顺金，弃牌
+    "SawCardTypeBzGiveUp":-20000      //豹子，弃牌
+  }
+]

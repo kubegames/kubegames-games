@@ -1,0 +1,12 @@
+{
+	"game_id":990301,
+	"consul":"192.168.0.130:8500",
+	"server_name":"五龙争霸",
+    "runmode" : "dev",
+    "game_type":4,
+    "table_num":200,
+    "max":1,
+    "min":1,
+    "robot":[
+    ]
+}

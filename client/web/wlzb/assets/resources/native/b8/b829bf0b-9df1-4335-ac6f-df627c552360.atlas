@@ -1,0 +1,139 @@
+
+daiji_honglong.png
+size: 512,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+huxu
+  rotate: false
+  xy: 2, 8
+  size: 139, 24
+  orig: 139, 24
+  offset: 0, 0
+  index: -1
+maofa1
+  rotate: true
+  xy: 214, 5
+  size: 61, 72
+  orig: 61, 72
+  offset: 0, 0
+  index: -1
+maofa2
+  rotate: true
+  xy: 367, 57
+  size: 121, 86
+  orig: 121, 86
+  offset: 0, 0
+  index: -1
+maofa3
+  rotate: false
+  xy: 254, 72
+  size: 111, 106
+  orig: 111, 106
+  offset: 0, 0
+  index: -1
+meimao
+  rotate: true
+  xy: 333, 14
+  size: 56, 30
+  orig: 56, 30
+  offset: 0, 0
+  index: -1
+qianzhua
+  rotate: false
+  xy: 413, 276
+  size: 44, 61
+  orig: 44, 61
+  offset: 0, 0
+  index: -1
+shange
+  rotate: false
+  xy: 270, 180
+  size: 133, 74
+  orig: 133, 74
+  offset: 0, 0
+  index: -1
+shen1
+  rotate: false
+  xy: 171, 68
+  size: 81, 149
+  orig: 81, 149
+  offset: 0, 0
+  index: -1
+shen2
+  rotate: true
+  xy: 316, 425
+  size: 85, 156
+  orig: 85, 156
+  offset: 0, 0
+  index: -1
+shen3
+  rotate: true
+  xy: 270, 256
+  size: 81, 141
+  orig: 81, 141
+  offset: 0, 0
+  index: -1
+shenmao1
+  rotate: false
+  xy: 463, 281
+  size: 47, 142
+  orig: 47, 142
+  offset: 0, 0
+  index: -1
+shenmao2
+  rotate: true
+  xy: 316, 339
+  size: 84, 145
+  orig: 84, 145
+  offset: 0, 0
+  index: -1
+shenmao3
+  rotate: true
+  xy: 405, 198
+  size: 56, 91
+  orig: 56, 91
+  offset: 0, 0
+  index: -1
+shenmao4
+  rotate: false
+  xy: 474, 447
+  size: 34, 63
+  orig: 34, 63
+  offset: 0, 0
+  index: -1
+shenwei
+  rotate: false
+  xy: 171, 376
+  size: 143, 134
+  orig: 143, 134
+  offset: 0, 0
+  index: -1
+weifamao
+  rotate: true
+  xy: 171, 219
+  size: 155, 97
+  orig: 155, 97
+  offset: 0, 0
+  index: -1
+xiae
+  rotate: true
+  xy: 171, 2
+  size: 64, 41
+  orig: 64, 41
+  offset: 0, 0
+  index: -1
+zhua
+  rotate: false
+  xy: 288, 10
+  size: 43, 60
+  orig: 43, 60
+  offset: 0, 0
+  index: -1
+zhuzi
+  rotate: false
+  xy: 2, 34
+  size: 167, 476
+  orig: 167, 476
+  offset: 0, 0
+  index: -1

@@ -1,0 +1,56 @@
+{
+    "1": {
+      "idxiaoyu": [
+	           "2"
+	  ],
+	  "idzhongyu": [
+	            "9"
+	  ],
+	  "iddayu": [
+	         "17",
+			 "18"
+	  ],
+      "sd": 100,
+      "pzluxian": [
+	           "quxian",
+               "zhixian(2)"
+    ],			   
+      "pzshijian": 60000
+  },
+  "2": {
+      "idxiaoyu": ["6"],
+      "idzhongyu": [
+                "9"
+      ],
+      "iddayu": [
+             "14",
+             "15"
+      ],
+      "sd": 100,
+      "pzluxian": [
+               "quxian",
+               "zhixian(2)"
+      ],
+      "pzshijian": 60000
+  },
+  "3": {
+      "idxiaoyu": [
+	           "4",
+			   "2"
+	  ],
+      "idzhongyu": [
+                "10",
+				"11"
+      ],
+      "iddayu": [
+             "30",
+             "31"
+      ],
+      "sd": 100,
+      "pzluxian": [
+               "quxian",
+               "zhixian(2)"
+      ],
+      "pzshijian": 60000
+  }
+}

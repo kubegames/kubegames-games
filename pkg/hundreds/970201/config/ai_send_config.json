@@ -1,0 +1,60 @@
+{
+  //机器人配置文件
+  "AiCountMin": 15,//机器人最少数量
+  "AiCountMax": 40,//机器人最多数量
+  "MinLeftRedCount": 10, //当前场次中红包数量不够7个时，机器人就要发包
+
+  "SendCount1": 1,//发送红包数量档位1
+  "SendCount2": 2,//发送红包数量档位2
+  "SendCount3": 2,//发送红包数量档位3
+  "SendAmount": [500,1000,1500,2000],
+  "SendAmountMax": 5000,//发送红包最大金额    分
+
+  "S2Send":3000, //第2s发红包的概率
+  "S2SendCount1": 5000,//第2s发红包数量1的概率
+  "S2SendCount2": 3000,//第2s发红包数量2的概率
+  "S2SendCount3": 2000,//第2s发红包数量3的概率
+  "S2SendAmount1": 5000,//第2s发红包金额1的概率
+  "S2SendAmount2": 2000,//第2s发红包金额2的概率
+  "S2SendAmount3": 2000,//第2s发红包金额3的概率
+
+  "S3Send":4000,//第3s发红包的概率
+  "S3SendCount1": 5000,//第3s发红包数量1的概率
+  "S3SendCount2": 3000,//第3s发红包数量2的概率
+  "S3SendCount3": 2000,//第3s发红包数量3的概率
+  "S3SendAmount1": 5000,//第3s发红包金额1的概率
+  "S3SendAmount2": 2000,//第3s发红包金额2的概率
+  "S3SendAmount3": 2000,//第3s发红包金额3的概率
+
+  "S4Send":4000,//第4s发红包的概率
+  "S4SendCount1": 5000,//第4s发红包数量1的概率
+  "S4SendCount2": 3000,//第4s发红包数量2的概率
+  "S4SendCount3": 2000,//第4s发红包数量3的概率
+  "S4SendAmount1": 5000,//第4s发红包金额1的概率
+  "S4SendAmount2": 2000,//第4s发红包金额2的概率
+  "S4SendAmount3": 2000,//第4s发红包金额3的概率
+
+  "S5Send":5000,//第5s发红包的概率
+  "S5SendCount1": 5000,//第5s发红包数量1的概率
+  "S5SendCount2": 3000,//第5s发红包数量2的概率
+  "S5SendCount3": 2000,//第5s发红包数量3的概率
+  "S5SendAmount1": 5000,//第5s发红包金额1的概率
+  "S5SendAmount2": 2000,//第5s发红包金额2的概率
+  "S5SendAmount3": 2000,//第5s发红包金额3的概率
+
+  "S6Send":7000,//第6s发红包的概率
+  "S6SendCount1": 5000,//第6s发红包数量1的概率
+  "S6SendCount2": 3000,//第6s发红包数量2的概率
+  "S6SendCount3": 2000,//第6s发红包数量3的概率
+  "S6SendAmount1": 5000,//第6s发红包金额1的概率
+  "S6SendAmount2": 2000,//第6s发红包金额2的概率
+  "S6SendAmount3": 2000,//第6s发红包金额3的概率
+
+  "S7Send":10000,//第7s发红包的概率
+  "S7SendCount1": 5000,//第7s发红包数量1的概率
+  "S7SendCount2": 3000,//第7s发红包数量2的概率
+  "S7SendCount3": 2000,//第7s发红包数量3的概率
+  "S7SendAmount1": 5000,//第7s发红包金额1的概率
+  "S7SendAmount2": 2000,//第7s发红包金额2的概率
+  "S7SendAmount3": 2000 //第7s发红包金额3的概率
+}

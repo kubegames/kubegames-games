@@ -1,0 +1,80 @@
+{
+    // 游戏配置
+	"game_config" : {
+
+        // 抢庄分数
+        "rob_score": [0, 1, 2, 3],
+
+        // 加倍倍数
+        "add_multiple": [1, 2, 4],
+
+        // 满桌时间概率分布
+        "full_table_time_rate": [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+
+        // 控制配置信息
+        "control": {
+
+            // 作弊率等级
+            "control_rate": [3000, 2000, 1000, -1000, -2000, -3000],
+
+            // 最大牌概率分布
+            "biggest_cards_rate": [250, 600, 1000, 1500, 1900, 2500]
+        }
+    },
+
+    // 时间配置
+    "time_config" : {
+
+        // 发牌动画时间
+        "deal_animation": 3000,
+
+        // 单次抢地主时间
+        "rob_time": 5000,
+
+        // 确认地主时间
+        "confirm_dizhu_time": 3000,
+
+        // 加倍时间
+        "redouble_time": 5000,
+
+        // 执行时间
+        "operation_time": 15000,
+
+        // 过渡时间
+        "excessive_time": 5000,
+
+        // 过渡时间
+        "space_time": 6000,
+
+        // 托管时间
+        "hang_up_time": 1000,
+
+        // 结算时间
+        "settle_time": 3000,
+
+        // 轮询检测添加机器人时间
+        "robot_sit_check": 500,
+
+        // 轮询检测添加机器人时间
+        "one_second": 1500,
+
+        // 火箭动画时间
+        "rocket_time": 2000,
+
+        // 炸弹动画时间
+        "bomb_time": 2000,
+
+        // 连对动画时间
+        "serial_pair_time": 2000,
+
+        // 顺子动画时间
+        "sequence_time": 2000,
+
+        // 飞机动画时间
+        "plane_time": 2000,
+
+        // 普通牌型动画时间
+        "default_time": 1000
+
+    }
+}

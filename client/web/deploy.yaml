@@ -1,0 +1,39 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: hall
+  name: game-web
+  annotations:
+    proxy: eyJQcm94eVBhdHRlcm4iOiJTZXJ2aWNlIiwiSXRlbXMiOlt7Ik1ldGhvZCI6IkFueSIsIkFnZW50VXJsIjoiL3dlYiIsIlByb3h5VXJsIjoiIiwiUG9ydCI6ODB9XX0=
+spec:
+  type: ClusterIP
+  selector:
+    app: game-web
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: hall
+  name: game-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: game-web
+  template:
+    metadata:
+      labels:
+        app: game-web
+    spec:
+      containers:
+      - name: game-web
+        image: kubegames/web:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80

@@ -1,0 +1,86 @@
+{
+    // 下注间隔小（单位：ms）
+    "betGapMin":1000,
+    // 下注间隔大（单位：ms）
+    "betGapMax":4000,
+    // 每局下注上线（达到该值该局将不会再下注）
+    "betNumUpline":8,
+
+    // 机器人不在这个范围，将被驱逐，1，2，3，4表示房间等级
+    "robotgold1":[10000,2000000],
+    "robotgold2":[10000,2000000],
+    "robotgold3":[10000,2000000],
+    "robotgold4":[10000,2000000],
+
+    // betAreaProb: 下注区域配置
+    // 总共有3个元素：
+    // 第1个表示 普通下注区域
+    // 第2个表示 飞禽/走兽下注区
+    // 第3个表示 鲨鱼下注区 （鲨鱼区没有平衡线）
+    // prob:表示下注区被机器人随机到的概率
+    // line：平衡线配置
+    // line.norm: 平衡线的值
+    // line.greaterThanNorm：大于平衡线值得操作
+    // line.lessThanNorm： 小于平衡线值得操作
+    "betAreaProb":[{
+        "prob":60,
+        "line":{
+            "norm":200,
+            "greaterThanNorm":{
+                "lessProb":70,
+                "moreProb":30
+            },
+            "lessThanNorm":{
+                "lessProb":60,
+                "moreProb":40
+            }
+        }
+    },
+    {
+        "prob":34,
+        "line":{
+            "norm":1000,
+            "greaterThanNorm":{
+                "lessProb":70,
+                "moreProb":30
+            },
+            "lessThanNorm":{
+                "lessProb":60,
+                "moreProb":40
+            }
+        }
+    },
+    {
+        "prob":6
+    }],
+
+
+    // betModChoose：下注选择配置，固定长度5个元素
+    // min,max:倍数大小（携带金额/底注）
+    // betArea：下注筹码区被选中的权重
+    "betModChoose":[{
+        "min":1,
+        "max":100,
+        "betArea":[85,15,0,0,0]
+    },
+    {
+        "min":100,
+        "max":1000,
+        "betArea":[65,25,7,3,0]
+    },
+    {
+        "min":1000,
+        "max":5000,
+        "betArea":[50,30,10,7,3]
+    },
+    {
+        "min":5000,
+        "max":10000,
+        "betArea":[20,20,30,20,10]
+    },
+    {
+        "min":10000,
+        "max":0,
+        "betArea":[15,15,30,25,15]
+    }]
+}

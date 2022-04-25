@@ -1,0 +1,171 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kubegames-api
+  namespace: default
+data:
+  api.ini: |
+    [MongoConfig]
+    Address=mongodb:27017
+    Database=my_db  
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: default
+  name: kubegames-api
+spec:
+  type: ClusterIP
+  selector:
+    app: kubegames-api
+  ports:
+  - protocol: TCP
+    port: 8433
+    targetPort: 8433
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: default
+  name: kubegames-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kubegames-api
+  template:
+    metadata:
+      labels:
+        app: kubegames-api
+    spec:
+      containers:
+      - name: kubegames-api
+        image: kubegames/kubegames-api:latest
+        imagePullPolicy: IfNotPresent
+        command:
+        - "bin/sh"
+        - "-c"
+        - "./kubegames-api -p=8433"
+        volumeMounts:
+        - mountPath: /config
+          name: kubegames-api
+        - mountPath: /home/kube.config
+          name: k8s-client-config
+          subPath: kube.config
+        ports:
+        - containerPort: 8433
+      volumes:
+        - configMap:
+            name: kubegames-api
+          name: kubegames-api
+        - configMap:
+            defaultMode: 420
+            name: k8s-client-config
+          name: k8s-client-config
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: default
+  name: kubegames-proxy
+spec:
+  selector:
+    app: kubegames-proxy
+  ports:
+    - port: 80
+      targetPort: 80
+  type: LoadBalancer
+
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  namespace: default
+  name: kubegames-proxy
+spec:
+  selector:
+    matchLabels:
+      app: kubegames-proxy
+  template:
+    metadata:
+      labels:
+        app: kubegames-proxy
+    spec:
+      containers:
+      - name: kubegames-proxy
+        image: kubegames/kubegames-proxy:latest
+        imagePullPolicy: IfNotPresent
+        command:
+        - "bin/sh"
+        - "-c"
+        - "./kubegames-proxy -p=80 -k=/home/kube.config"
+        volumeMounts:
+        - mountPath: /home/kube.config
+          name: k8s-client-config
+          subPath: kube.config
+        ports:
+        - containerPort: 80
+          hostPort: 80
+      volumes:
+        - configMap:
+            defaultMode: 420
+            name: k8s-client-config
+          name: k8s-client-config
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kubegames-scheduler
+  namespace: default
+data:
+  api.ini: |
+    [MongoConfig]
+    Address=mongodb:27017
+    Database=my_db  
+
+    [Threadiness]
+    Threadiness=4
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: default
+  name: kubegames-scheduler
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kubegames-scheduler
+  template:
+    metadata:
+      labels:
+        app: kubegames-scheduler
+    spec:
+      containers:
+      - name: kubegames-scheduler
+        image: kubegames/kubegames-scheduler:latest
+        imagePullPolicy: IfNotPresent
+        command:
+        - "bin/sh"
+        - "-c"
+        - "./kubegames-scheduler -p=8433 -k=/home/kube.config"
+        volumeMounts:
+        - mountPath: /config
+          name: kubegames-scheduler
+        - mountPath: /home/kube.config
+          name: k8s-client-config
+          subPath: kube.config
+      volumes:
+        - configMap:
+            name: kubegames-scheduler
+          name: kubegames-scheduler
+        - configMap:
+            defaultMode: 420
+            name: k8s-client-config
+          name: k8s-client-config

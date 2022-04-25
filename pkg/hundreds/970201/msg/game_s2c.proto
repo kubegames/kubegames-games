@@ -1,0 +1,281 @@
+
+syntax = "proto3";
+package msg;
+
+
+//subCmd列表
+/*
+	S2C_INTO_ROOM       = 0 //进入房间 S2CRoomBaseInfo
+	S2C_OTHER_INTO_ROOM = 1 //其他人进入房间 S2CUserInfo
+	S2C_SEND_RED        = 2 //有人发送红包 S2CRedInfo
+	S2C_LOCK_RED        = 3 //锁定红包 S2CRedInfo
+	S2C_CANCEL_LOCK_RED = 4 //取消锁定红包 S2CRedInfo
+	S2C_ROB_RED         = 5 //抢红包 S2CRobRed
+	S2C_LEAVE_TABLE     = 6 //离开房间 S2CUserInfo
+	S2C_GET_SENT_RED    = 7 //狩猎记录-发送记录 S2CSendRedRecordArr
+	S2C_GET_ROBBED_INFO = 8 //狩猎记录-抢包记录 S2CRobbedRedInfoArr
+	S2C_GET_USER_LIST   = 9 //获取房间内用户列表 S2CUserInfoArr
+	S2C_GET_MINE_RECORD = 10 //狩猎记录-中雷记录 S2CMinRecordArr
+	S2C_RED_INFO        = 11 //红包信息   S2CRedFlood
+	S2C_RED_DISAPPEAR   = 12 //红包消失
+	S2C_RED_ROBBED_COUNT= 13 //红包当前已被抢个数 S2CRobbedCount
+	S2C_GET_HALL_RECORD  = 14 //获取大厅战绩 S2CHallRecord
+	S2C_RED_WAIT_SEND    = 15 //红包等待发送出去 S2cRedWaitSend
+	S2C_SEND_RED_SUCCESS = 16 //红包发送成功
+	S2C_USER_SCORE       = 17 //玩家金额    S2cUserScore
+    S2C_CHECK_OVERDUE_RED = 18 //定期检查屏幕上存在已久的红包
+	S2C_USER_COUNT = 19//返回玩家人数 S2CUserCount
+*/
+
+
+//错误code列表
+/*
+    ERROR_CODE_OK              = 20000 //没有错误消息，主要用于程序内部判断
+	ERROR_CODE_NOT_INTOROOM    = 10000 //玩家还未进入房间或没连上线
+	ERROR_CODE_NOT_ENOUGH      = 10001 //玩家资金不足
+	ERROR_CODE_RED_OVER        = 10002 //红包已被抢完
+	ERROR_CODE_RED_MINENUM     = 10003 //红包雷号不能大于9
+	ERROR_CODE_CANT_LEAVE   = 10008 //不能离开，用户还有红包在场上
+*/
+
+//发送给客户端所有消息协议封包，buff是具体的结构体内容，需要端对照相应的协议解析
+message S2CMsg{ //subCmd 0
+    int32 mainCmd = 1;  //主消息协议
+    int32 subCmd = 2;	//次消息协议
+    bytes buff = 3; 	//数据流
+}
+
+//房间基本信息，大厅显示
+message S2CRoomBaseInfo{
+    int64 id = 1;//房间主键id
+    string name = 2;//房间名称
+    int64 limitAmount = 3;//准入金额，低于该值就不能进入
+    int64 maxRed = 4;//最大红包
+    repeated S2CRedInfo redArr = 5;//房间中的红包列表，最多15个
+    repeated S2CUserInfo userArr = 6;//房间中的玩家列表
+    int64 userCount = 7;//用户人数
+    S2CUserInfo selfInfo = 8;//自己的信息
+    S2CRedConfigInfo redConfig = 9;//红包配置信息
+    int32 waitSendCount = 10;//当前等待发送的红包个数
+}
+
+//红包配置（点击发送红包之后红包的页面数据）
+message S2CRedConfigInfo{
+    int32 odds = 1;//赔率
+    int32 count  = 2;//发送的红包数量
+    repeated int64 amount = 3;//红包金额档位
+    int64 spaceAmount = 4;//发送红包时，加减钱的间隔数
+}
+
+
+//用户信息数组
+message S2CUserInfoArr {
+    int32 current = 1; // 当前页
+    int32 size = 2;   // 每页数
+    int64 total = 3;  // 总条数
+    int32 pages = 4;   // 总页数
+    repeated S2CUserInfo userArr = 5;
+}
+
+//用户基本信息
+message S2CUserInfo{
+    int64 uid = 1;
+    string name = 2;
+    string head = 3;
+    int64 amount = 4;//玩家余额
+    int32 chairId = 5;
+    int32 status = 6;//玩家状态
+    int64 robbedAmount = 7;//抢到的金额
+}
+
+//红包基本信息
+message S2CRedInfo{
+    int64 redId = 1;
+    int64 amount = 2; //红包的金额
+    int64 count = 3; //红包的数量
+    int32 status = 4; //红包的状态
+    int64 mineNum = 5; //红包的雷号
+    int32 route = 6; //红包路线
+    int64 robbedCount =7;      //红包抢过的数量
+    int64 senderId = 8;//红包发送者id
+    bool isAi = 9; // true=>机器人发的红包   false=>玩家发的红包
+    int64 time = 10;//红包产生时间
+    int32 level = 11;//红包等级，1、2、3
+    repeated int32 speed = 12;//红包速度，有 初始、中间、末尾等速度，已经乘以100
+    string senderName = 13;//红包发送者昵称
+    int64 redFlood = 14;//红包总血量
+}
+
+//抢红包的信息
+message S2CRobRed{
+    int64 redId = 1;
+    bool isMine = 2;//true 中雷   false 未中雷
+    int64 robbedAmount = 3;//抢到的金额
+    int64 notRobbedCount =4;      //红包剩余血量
+    int64 amount = 5;//红包的金额
+    string senderName = 6;//发送红包人的名字
+    int64 mineNum = 7; //雷号
+    int32 level = 8;//红包等级，1、2、3
+    int64 score = 9;//玩家积分（金币）
+}
+
+//红包列表
+message S2CRedArr{
+    repeated S2CRedInfo redArr = 1;
+}
+
+//狩猎记录-发送记录
+message S2CSendRedRecordArr{
+    int64 totalAmount = 1;//发送金额
+    int64 totalCount = 2;//发送次数
+    repeated S2CSendRedRecord redArr = 3;
+    int32 current = 4; // 当前页
+    int32 size = 5;   // 每页数
+    int64 total = 6;  // 总条数
+    int32 pages = 7;   // 总页数
+}
+message S2CSendRedRecord{
+    int64 time =1;//抢包时间
+    string level = 2;//场次级别（菜鸟狩猎场）
+    int64 redAmount = 3;//红包金额
+    int32 status = 4;//红包状态 1:正在抢   2:已抢完
+    int64 mineNum = 5;//雷号
+    int64 totalMineAmount = 6;//中雷总金额
+    int64 redId = 7;//红包id
+}
+
+//狩猎记录-抢包记录
+message S2CRobbedRedInfoArr {
+    int64 totalAmount = 1;//抢包金额
+    int64 totalCount = 2;//点击次数
+    repeated S2CRobbedRedInfo robbedArr = 3;
+    int32 current = 4; // 当前页
+    int32 size = 5;   // 每页数
+    int64 total = 6;  // 总条数
+    int32 pages = 7;   // 总页数
+}
+message S2CRobbedRedInfo{
+    int64 time =1;//抢包时间
+    string level = 2;//场次级别（菜鸟狩猎场）
+    string senderName = 3;//发送者名字
+    int64 robbedAmount = 4;//抢到的金额
+    int64 redAmount = 5;//红包金额
+    bool isMine = 6;//是否中雷
+    int64 mineNum = 7;//雷号
+    int64 redId = 8;//红包id
+}
+
+//踢人
+message S2CKickOutUser {
+    int64 uid = 1;
+    int32 reason = 2;// 踢出原因  1:余额不足  2:时间超过3分钟没抢没发
+}
+
+//房间数组
+message S2CRoomInfoArr {
+    repeated S2CRoomInfo roomArr = 1;
+}
+//房间信息
+message S2CRoomInfo{
+    string level = 1;//房间级别， 初级、中级、高级
+    int64 limitAmount = 2;//准入金额，低于该值就不能进入
+    int64 maxRed = 3;//最大红包
+    int64 tax = 4;//税率
+    int64 maxAllIn = 5;//全押限制
+    int32 id = 6;
+    int64 userCount = 7;//用户人数
+}
+
+//狩猎记录-中雷记录
+message S2CMinRecordArr{
+    int64 totalAmount = 1;//中雷金额
+    int64 totalCount = 2;//中雷次数
+    repeated S2CMinRecord mineArr = 3;
+    int32 current = 4; // 当前页
+    int32 size = 5;   // 每页数
+    int64 total = 6;  // 总条数
+    int32 pages = 7;   // 总页数
+
+}
+message S2CMinRecord{
+    int64 time =1;//中雷时间
+    string level = 2;//场次级别（菜鸟狩猎场）
+    string senderName = 3;//发送者名字
+    int64 robbedAmount = 4;//抢到的金额
+    int64 mineAmount = 5;//中雷赔付的金额
+    int64 mineNum = 6;//雷号
+}
+
+//每秒更新红包血量
+message S2CRedFlood{
+    int64 redId = 1;
+    int64 robbedCount =2;      //红包当前血量
+    int64 redFlood = 3;//红包总血量
+    int32 level = 4;//红包等级
+}
+
+//坐标轴
+message S2CAxis {
+    int32 XAxis = 1;//横坐标
+    int32 YAxis = 2;//纵坐标
+}
+
+//红包消失
+message S2CRedDisappear {
+    int64 redId = 1;//红包id
+    int32 level = 2;//红包等级
+    bool isRobbed = 3;//是否抢过该红包
+    bool isOtherRobbed = 4;//其他人是否强国该红包
+}
+
+//大厅抢包记录
+message S2CHallRecordArr {
+    int32 current = 1; // 当前页
+    int32 size = 2;   // 每页数
+    int64 total = 3;  // 总条数
+    int32 pages = 4;   // 总页数
+    repeated S2CHallRecord recordArr = 5;
+}
+message S2CHallRecord {
+    int64 userId = 1;
+    string userName = 2;
+    int64 robbedAmount = 3;//抢包金额
+    int64 time = 4;//抢包时间
+    bool isMine = 5;//是否中雷
+    int64 mineAmount = 6;//中雷金额
+    int64 senderId = 7;//发送者id
+    string senderName = 8;//发送者昵称
+    int64 redAmount = 9;//红包金额
+    int64 mineNum = 10;//雷号
+}
+
+//红包当前已被抢个数
+message S2CRobbedCount{
+    int64 robbedCount = 1;//被抢个数
+    int64 redId = 2;//红包id
+    int32 level = 3;//红包等级
+}
+
+//红包等待发送
+message S2cRedWaitSend{
+    int32 count = 1;//前面还有多少个红包在等待
+}
+
+//玩家金额
+message S2cUserScore {
+    int64 score = 1; //玩家余额
+}
+
+message S2CRedId {
+    int64 redId = 1;
+}
+
+//玩家人数
+message S2CUserCount{
+    int32 userCount = 1;//玩家人数
+}
+
+//错误消息
+message S2CString {
+    string msg = 1;//字符串消息
+}
