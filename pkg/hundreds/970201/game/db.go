@@ -9,7 +9,7 @@ package game
 //	}
 //	orm.GetDb().AutoMigrate(&TableRed{})
 //	orm.GetDb().AutoMigrate(&TableRedRob{})
-//	fmt.Println("数据库连接成功")
+//	log.Traceln("数据库连接成功")
 //}
 //
 //func GetTableRedById(redId int64) (tableRed *TableRed) {
@@ -21,7 +21,7 @@ package game
 //func SaveTableRed(instance *TableRed) (err error) {
 //	err = orm.GetDb().Save(instance).Error
 //	if err != nil {
-//		fmt.Println("SaveTableRed err : ", err)
+//		log.Traceln("SaveTableRed err : ", err)
 //		return
 //	}
 //	return

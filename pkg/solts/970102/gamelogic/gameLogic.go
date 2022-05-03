@@ -7,11 +7,12 @@ import (
 	"go-game-sdk/inter"
 	"go-game-sdk/lib/clock"
 	"go-game-sdk/sdk/global"
-	frameMsg "go-game-sdk/sdk/msg"
 	"math/rand"
 	"sort"
 	"strconv"
 	"sync"
+
+	frameMsg "github.com/kubegames/kubegames-sdk/app/message"
 
 	"github.com/kubegames/kubegames-games/internal/pkg/score"
 
@@ -356,8 +357,8 @@ func (game *Game) transformCardForMsg(cards []byte) []int32 {
 		huaSe = append(huaSe, se)
 		tem = append(tem, int32(v))
 	}
-	//fmt.Println("card value =", values)
-	//fmt.Println("card huaSe =", huaSe)
+	//log.Traceln("card value =", values)
+	//log.Traceln("card huaSe =", huaSe)
 	log.Tracef("cards =", cards)
 	log.Tracef("card value =", values)
 	log.Tracef("card huaSe =", huaSe)
@@ -446,7 +447,7 @@ B:
 	if pokerType == msg.PokerType_LUCKY5 {
 		cards = game.getLuck5Cards()
 	}
-	//fmt.Println("pokerType = ", pokerType, cards, len(game.Poker.Cards))
+	//log.Traceln("pokerType = ", pokerType, cards, len(game.Poker.Cards))
 	log.Tracef("pokerType = ", pokerType, cards)
 A:
 	if len(game.Poker.Cards) == 0 {

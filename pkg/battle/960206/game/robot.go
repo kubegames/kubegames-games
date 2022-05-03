@@ -4,12 +4,10 @@ import (
 	"sync"
 
 	"github.com/kubegames/kubegames-games/internal/pkg/rand"
-
-	"github.com/kubegames/kubegames-sdk/pkg/log"
-
 	"github.com/kubegames/kubegames-games/pkg/battle/960206/config"
 	"github.com/kubegames/kubegames-games/pkg/battle/960206/data"
 	"github.com/kubegames/kubegames-games/pkg/battle/960206/msg"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 	"github.com/kubegames/kubegames-sdk/pkg/player"
 )
 

@@ -10,6 +10,7 @@ import (
 	"go-game-sdk/inter"
 	"time"
 
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 	"github.com/kubegames/kubegames-sdk/pkg/player"
 )
 
@@ -20,7 +21,7 @@ func (g *Game) BindRobot(ai inter.AIUserInter) player.RobotHandler {
 
 //UserReady 用户准备
 func (game *Game) UserReady(user player.PlayerInterface) bool {
-	//fmt.Println("frame >>>>>>> UserReady")
+	//log.Traceln("frame >>>>>>> UserReady")
 
 	return true
 }
@@ -32,19 +33,19 @@ func (game *Game) OnActionUserSitDown(userInter player.PlayerInterface, chairID 
 		return define.SIT_DOWN_ERROR_NORMAL
 	}
 	if game.user != nil && game.user.User.GetID() == userInter.GetID() {
-		fmt.Println("玩家在彩金游戏断线重连")
+		log.Traceln("玩家在彩金游戏断线重连")
 		return define.SIT_DOWN_OK
 	}
 	userStr := userInter.GetTableData()
 	var user *data.User
 	if userStr != "" {
-		fmt.Println("userStr : ", userStr)
+		log.Traceln("userStr : ", userStr)
 		if err := json.Unmarshal([]byte(userStr), &user); err != nil {
-			fmt.Println("json.Unmarshal([]byte(use err : ", err)
+			log.Traceln("json.Unmarshal([]byte(use err : ", err)
 			user = data.NewUser(game.Table)
 		} else {
 			if time.Now().Sub(user.LastTime) > 5*time.Minute {
-				fmt.Println("user : ", userInter.GetID(), " 超过了 24 小时 ", user.LastTime)
+				log.Traceln("user : ", userInter.GetID(), " 超过了 24 小时 ", user.LastTime)
 				user = data.NewUser(game.Table)
 			}
 		}
@@ -67,7 +68,7 @@ func (game *Game) OnActionUserSitDown(userInter player.PlayerInterface, chairID 
 	game.SetUserList(user)
 	game.HoseLampArr = game.Table.GetMarqueeConfig()
 	//game.CurBoxNum = global.TOTAL_BOX_COUNT
-	fmt.Println("用户坐下，当前转头：", game.CurBoxNum, game.Table.GetMarqueeConfig())
+	log.Traceln("用户坐下，当前转头：", game.CurBoxNum, game.Table.GetMarqueeConfig())
 	return define.SIT_DOWN_OK
 }
 
@@ -75,7 +76,7 @@ func (game *Game) OnActionUserSitDown(userInter player.PlayerInterface, chairID 
 func (game *Game) UserExit(userInter player.PlayerInterface) bool {
 	user := game.GetUserList()
 	if user == nil {
-		fmt.Println("UserExit 用户没在桌子上 ")
+		log.Traceln("UserExit 用户没在桌子上 ")
 		return true
 	}
 
@@ -83,9 +84,9 @@ func (game *Game) UserExit(userInter player.PlayerInterface) bool {
 		return false
 	}
 	if game.user.TotalWin != 0 {
-		fmt.Println("玩家离开游戏，收益率：", fmt.Sprintf(`%.4f`, float64(game.user.TotalInvestForCount)/float64(game.user.TotalWin)), " id: ", userInter.GetID())
+		log.Traceln("玩家离开游戏，收益率：", fmt.Sprintf(`%.4f`, float64(game.user.TotalInvestForCount)/float64(game.user.TotalWin)), " id: ", userInter.GetID())
 	} else {
-		fmt.Println("玩家离开游戏，收益率：", 0)
+		log.Traceln("玩家离开游戏，收益率：", 0)
 	}
 	game.user.TotalInvestForCount = 0
 	user.LastTime = time.Now()
@@ -108,36 +109,36 @@ func (game *Game) UserExit(userInter player.PlayerInterface) bool {
 
 //OnGameMessage 游戏消息
 func (game *Game) OnGameMessage(subCmd int32, buffer []byte, userInter player.PlayerInterface) {
-	//fmt.Println("frame >>>>>>> OnGameMessage")
+	//log.Traceln("frame >>>>>>> OnGameMessage")
 	user := game.GetUserList()
 	if user == nil {
-		fmt.Println("OnGameMessage user nil ")
+		log.Traceln("OnGameMessage user nil ")
 		return
 	}
 	switch subCmd {
 	case int32(msg.C2SMsgType_ROOM_INFO):
-		fmt.Println(">>>>>>>>>获取房间信息+++")
+		log.Traceln(">>>>>>>>>获取房间信息+++")
 		game.ProcGetRoomInfo(buffer, user)
 	case int32(msg.C2SMsgType_START_GAME):
-		fmt.Println(">>>>>>>>>开始+++")
+		log.Traceln(">>>>>>>>>开始+++")
 		game.ProcStartGame(buffer, user)
 	case int32(msg.C2SMsgType_CHOOSE_CAIJIN):
-		fmt.Println(">>>>>>>>>选择彩金宝珠+++")
+		log.Traceln(">>>>>>>>>选择彩金宝珠+++")
 		game.ProcChooseCaijin(buffer, user)
 	case int32(msg.C2SMsgType_NORMAL_QUIT):
-		fmt.Println(">>>>>>>>>用户正常离开+++")
+		log.Traceln(">>>>>>>>>用户正常离开+++")
 		game.ProcNormalQuit(buffer, user)
 	case int32(msg.C2SMsgType_TEST_TOOL):
-		fmt.Println(">>>>>>>>>测试工具+++")
+		log.Traceln(">>>>>>>>>测试工具+++")
 		//game.ProcTestTool(buffer,user)
 	}
 }
 
 //GameStart 游戏开始
 func (game *Game) GameStart(user player.PlayerInterface) bool {
-	//fmt.Println("game start ... ")
+	//log.Traceln("game start ... ")
 	if game.Table.GetID() < 0 || game.user == nil {
-		fmt.Println("房间id < 0 ")
+		log.Traceln("房间id < 0 ")
 		return false
 	}
 	game.user.Cheat = user.GetProb()
@@ -145,7 +146,7 @@ func (game *Game) GameStart(user player.PlayerInterface) bool {
 		game.user.Cheat = game.Table.GetRoomProb()
 	}
 	rc := game.Table.GetRoomProb()
-	fmt.Println("用户作弊率：", game.user.Cheat, "房间作弊率：", rc)
+	log.Traceln("用户作弊率：", game.user.Cheat, "房间作弊率：", rc)
 
 	return true
 }
@@ -159,22 +160,22 @@ type TableConfig struct {
 func (game *Game) SendScene(userInter player.PlayerInterface) bool {
 	user := game.GetUserList()
 	if user == nil {
-		fmt.Println("SendScene user nil ")
+		log.Traceln("SendScene user nil ")
 		return false
 	}
 
 	var tableConfig TableConfig
 	if err := json.Unmarshal([]byte(game.Table.GetAdviceConfig()), &tableConfig); err != nil {
-		fmt.Println("advice 的 值不对： ", game.Table.GetAdviceConfig())
+		log.Traceln("advice 的 值不对： ", game.Table.GetAdviceConfig())
 		return false
 	}
-	fmt.Println("配置：", tableConfig.Bottom_Pouring)
+	log.Traceln("配置：", tableConfig.Bottom_Pouring)
 	game.Bottom = tableConfig.Bottom_Pouring
 	game.Bottom2C = []int64{game.Bottom, game.Bottom * 2, game.Bottom * 3, game.Bottom * 4}
 	game.BottomCount2C = []int64{1, 2, 3, 4, 5}
 
 	_ = userInter.SendMsg(int32(msg.S2CMsgType_ROOM_INFO_RES), game.GetRoomInfo2C(user))
-	fmt.Println("消息0，", fmt.Sprintf(`%+v`, game.GetRoomInfo2C(user)))
+	log.Traceln("消息0，", fmt.Sprintf(`%+v`, game.GetRoomInfo2C(user)))
 	return true
 }
 

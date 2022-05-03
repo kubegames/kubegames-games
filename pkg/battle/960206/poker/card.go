@@ -1,6 +1,10 @@
 package poker
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/kubegames/kubegames-sdk/pkg/log"
+)
 
 //随便输入一个数字，得出它的牌值和花色
 func GetCardValueAndColor(value byte) (cardValue, cardColor byte) {
@@ -222,5 +226,5 @@ func Cards3ArrToSlice(cardsArr [3]byte) []byte {
 }
 
 func PrintCards(cards []byte) {
-	fmt.Println(fmt.Sprintf(`%x`, cards))
+	log.Traceln(fmt.Sprintf(`%x`, cards))
 }

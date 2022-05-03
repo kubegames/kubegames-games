@@ -1,52 +1,42 @@
 package game
 
 import (
-	"common/log"
 	"fmt"
-	"game_frame_v2/game/clock"
-	"game_poker/pai9/config"
-	"game_poker/pai9/model"
-	pai9 "game_poker/pai9/msg"
 	"math/rand"
 	"sort"
 	"time"
 
 	"github.com/bitly/go-simplejson"
 	protocol "github.com/golang/protobuf/proto"
+	"github.com/kubegames/kubegames-games/pkg/battle/960211/config"
+	"github.com/kubegames/kubegames-games/pkg/battle/960211/model"
+	pai9 "github.com/kubegames/kubegames-games/pkg/battle/960211/msg"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
+	"github.com/kubegames/kubegames-sdk/pkg/platform"
 	"github.com/kubegames/kubegames-sdk/pkg/player"
 	"github.com/kubegames/kubegames-sdk/pkg/table"
 )
 
 type Game struct {
-	table        table.TableInterface
-	userChairMap map[int]*User   // chairID:user
-	userIDMap    map[int64]*User // userID:user
-	multi        config.Multi
-
-	startTime time.Time
-	endTime   time.Time
-
-	startJob *clock.Job
-	isStart  bool // 游戏是否开始
-
+	table         table.TableInterface
+	userChairMap  map[int]*User   // chairID:user
+	userIDMap     map[int64]*User // userID:user
+	multi         config.Multi
+	startTime     time.Time
+	endTime       time.Time
+	startJob      *table.Job
+	isStart       bool    // 游戏是否开始
 	zhuangChairID int     // 庄家的chairid
 	zhuangWait    []int32 // 抢庄倍数一样时，随机庄
-
-	setNum int // 游戏局数；2局为一轮
-
-	// BetMultiList []int32 // 下注倍数列表
-
-	dealPokerMsg *pai9.DealPokerMsg
-	showPokerMsg *pai9.PokerInfoRespMsg
-
-	status pai9.GameStatus
-	job    *clock.Job //时间定时器
-
-	qiangNum int // 已经抢庄了的人数
-	betNum   int // 已经下注了的人数
-
-	poker   *model.Cards
-	UseProb int32
+	setNum        int     // 游戏局数；2局为一轮
+	dealPokerMsg  *pai9.DealPokerMsg
+	showPokerMsg  *pai9.PokerInfoRespMsg
+	status        pai9.GameStatus
+	job           *table.Job //时间定时器
+	qiangNum      int        // 已经抢庄了的人数
+	betNum        int        // 已经下注了的人数
+	poker         *model.Cards
+	UseProb       int32
 }
 
 func NewGame(table table.TableInterface) *Game {
@@ -69,23 +59,16 @@ func NewGame(table table.TableInterface) *Game {
 }
 
 func (game *Game) getUser(user player.PlayerInterface) (u *User, chairID int) {
-	u = game.userIDMap[user.GetId()]
+	u = game.userIDMap[user.GetID()]
 	if u == nil {
 		u = NewUser(user)
-		game.userIDMap[user.GetId()] = u
-		chairID = game.getChairID()
+		game.userIDMap[user.GetID()] = u
+		chairID = user.GetChairID() + 1
 		if chairID > 0 {
 			game.userChairMap[chairID] = u
 			u.chairID = chairID
 		}
-		if user.IsRobot() {
-			rb := NewRobot()
-			aiUser := user.BindRobot(rb)
-			rb.user = aiUser
-			rb.chairID = u.chairID
-		}
 	}
-
 	chairID = u.chairID
 	return
 }
@@ -103,7 +86,7 @@ func (game *Game) Shuffle() {
 	game.isStart = true
 	game.table.StartGame()
 	game.startTime = time.Now()
-	game.job, _ = game.table.AddTimer(time.Duration(config.Pai9Config.Taketimes.Shuffle), game.QiangZhuang)
+	game.job, _ = game.table.AddTimer(int64(config.Pai9Config.Taketimes.Shuffle), game.QiangZhuang)
 	game.status = pai9.GameStatus_Shuffle
 	// 发送游戏状态
 	game.sendStatusMsg(int(config.Pai9Config.Taketimes.Shuffle))
@@ -115,7 +98,7 @@ func (game *Game) QiangZhuang() {
 	// 洗牌
 	game.poker.Shuffle()
 	game.setNum++
-	game.job, _ = game.table.AddTimer(time.Duration(config.Pai9Config.Taketimes.QiangZhuang), game.SendWhoZhuang)
+	game.job, _ = game.table.AddTimer(int64(config.Pai9Config.Taketimes.QiangZhuang), game.SendWhoZhuang)
 	game.status = pai9.GameStatus_QiangZhuang
 	// 发送游戏状态
 	game.sendStatusMsg(int(5000))
@@ -132,7 +115,7 @@ func (game *Game) SendWhoZhuang() {
 		game.sendZhuangMsg()
 	}
 
-	game.job, _ = game.table.AddTimer(time.Duration(config.Pai9Config.Taketimes.SendZhuang), game.BetStatus)
+	game.job, _ = game.table.AddTimer(int64(config.Pai9Config.Taketimes.SendZhuang), game.BetStatus)
 }
 
 // 下注倍数阶段
@@ -141,7 +124,7 @@ func (game *Game) BetStatus() {
 	game.status = pai9.GameStatus_Bet
 	// 发送游戏状态
 	game.sendStatusMsg(int(config.Pai9Config.Taketimes.Bet))
-	game.job, _ = game.table.AddTimer(time.Duration(config.Pai9Config.Taketimes.Bet), game.DealPokerStatus)
+	game.job, _ = game.table.AddTimer(int64(config.Pai9Config.Taketimes.Bet), game.DealPokerStatus)
 }
 
 // 发牌阶段
@@ -161,7 +144,7 @@ func (game *Game) DealPokerStatus() {
 	// fmt.Println("game.dealPokerMsg   ==========  ", game.dealPokerMsg)
 	game.table.Broadcast(int32(pai9.SendToClientMessageType_DealPokerInfo), game.dealPokerMsg)
 
-	game.job, _ = game.table.AddTimer(time.Duration(config.Pai9Config.Taketimes.DealPoker), game.ShowPoker)
+	game.job, _ = game.table.AddTimer(int64(config.Pai9Config.Taketimes.DealPoker), game.ShowPoker)
 }
 
 // 结算结算/展示牌阶段
@@ -186,21 +169,19 @@ func (game *Game) ShowPoker() {
 
 	zhuangUser := game.userChairMap[game.zhuangChairID]
 
+	var records []*platform.PlayerRecord
 	for _, chair := range chairID {
-
 		user := game.userChairMap[chair]
 		poker := make([]*pai9.Poker, 0, len(user.Cards))
 		for _, v := range user.Cards {
 			poker = append(poker, (*pai9.Poker)(&v.Poker))
 		}
 
-		//fmt.Printf("用户名称【%s】   user.WinGoldActual   =========  %d   当前金额 ====== %d\n ", user.GetUser().GetNike(), user.WinGoldActual, user.GetUser().GetScore())
-
 		beforeSettle := user.GetUser().GetScore()
-		output, _ := user.GetUser().SetScore(game.table.GetGameNum(), user.WinGoldActual, game.table.GetRoomRate())
+		output := user.GetUser().SetScore(game.table.GetGameNum(), user.WinGoldActual, game.table.GetRoomRate())
 		pval, _ := user.Cards.CalcType()
 		user.WinGoldActual = output
-		//fmt.Printf("2222用户名称【%s】   user.WinGoldActual   =========  %d   当前金额 ====== %d\n ", user.GetUser().GetNike(), user.WinGoldActual, user.GetUser().GetScore())
+
 		game.showPokerMsg.Info = append(game.showPokerMsg.Info, &pai9.PokerInfoRespDetail{
 			ChairID:    int32(chair),
 			Poker:      poker,
@@ -208,8 +189,23 @@ func (game *Game) ShowPoker() {
 			GoldChange: user.WinGoldActual,
 			GoldNow:    user.GetUser().GetScore(),
 		})
+
 		// 每局发送战绩
-		user.GetUser().SendRecord(game.table.GetGameNum(), user.WinGold-int64(user.BetMulti)*bottom, int64(user.BetMulti)*bottom, user.WinGold-output, output, "")
+		// user.GetUser().SendRecord(game.table.GetGameNum(), user.WinGold-int64(user.BetMulti)*bottom, int64(user.BetMulti)*bottom, user.WinGold-output, output, "")
+		if !user.GetUser().IsRobot() {
+			records = append(records, &platform.PlayerRecord{
+				PlayerID:     uint32(user.GetUser().GetID()),
+				GameNum:      game.table.GetGameNum(),
+				ProfitAmount: user.WinGold - int64(user.BetMulti)*bottom,
+				BetsAmount:   int64(user.BetMulti) * bottom,
+				DrawAmount:   user.WinGold - output,
+				OutputAmount: output,
+				Balance:      user.GetUser().GetScore(),
+				UpdatedAt:    time.Now(),
+				CreatedAt:    time.Now(),
+			})
+		}
+
 		// 发送打码量
 		if user.WinGold-int64(user.BetMulti)*bottom > 0 {
 			// 表示赢
@@ -219,6 +215,10 @@ func (game *Game) ShowPoker() {
 		}
 
 		user.Settle(beforeSettle, int32(bottom), user == zhuangUser)
+	}
+
+	if len(records) > 0 {
+		game.table.UploadPlayerRecord(records)
 	}
 
 	// 发送结算牌消息
@@ -239,20 +239,18 @@ func (game *Game) ShowPoker() {
 	// 第一轮结束后有玩家不满足携带金额，直接进入一轮结算
 	if game.isEnd() && game.setNum == 1 {
 		log.Debugf("有玩家不满足当前最低携带金额 *****  直接进入一轮结算")
-		fmt.Println("有玩家不满足当前最低携带金额 *****  直接进入一轮结算")
 		next = game.SettleAll
 	}
 
 	if game.setNum == 1 {
-		game.job, _ = game.table.AddTimer(time.Duration(config.Pai9Config.Taketimes.ShowPoker1), next)
+		game.job, _ = game.table.AddTimer(int64(config.Pai9Config.Taketimes.ShowPoker1), next)
 	} else {
-		game.job, _ = game.table.AddTimer(time.Duration(config.Pai9Config.Taketimes.ShowPoker2), next)
+		game.job, _ = game.table.AddTimer(int64(config.Pai9Config.Taketimes.ShowPoker2), next)
 	}
 }
 
 // 一轮结算状态
 func (game *Game) SettleAll() {
-	fmt.Println("一轮结算")
 	game.status = pai9.GameStatus_SettleAll
 	// 发送游戏状态
 	game.sendStatusMsg(0)
@@ -270,24 +268,10 @@ func (game *Game) SettleAll() {
 			msg.Info = append(msg.Info, user.GetSettle()[1])
 		}
 	}
-
-	fmt.Println("一轮结算 ====== ", msg)
-
 	game.table.Broadcast(int32(pai9.SendToClientMessageType_SettleAllResp), msg)
-
 	game.Reset()
 	game.table.EndGame()
-}
-
-// 为用户增减金额
-func (game *Game) settleForUser() {
-	// for i := 1; i <= TABLE_NUM; i++ {
-	// 	user := game.userChairMap[i]
-	// 	user.EndSettle(game.table.GetGameNum(), game.table.GetRoomRate(), game.getBottom(), game.setNum)
-	// 	if user.WinGoldActual > 0 {
-	// 		game.PaoMaDeng(user.WinGoldActual, user.GetUser())
-	// 	}
-	// }
+	game.table.Close()
 }
 
 // 获取发牌顺序，返回椅子号
@@ -460,7 +444,7 @@ func (game *Game) Reset() {
 	game.Clear()
 	game.status = pai9.GameStatus_StartStatus
 	if game.startJob != nil {
-		game.startJob.Cancel()
+		game.table.DeleteJob(game.startJob)
 		game.startJob = nil
 	}
 	game.isStart = false
@@ -532,7 +516,8 @@ func (game *Game) qiangMsg(bts []byte, user player.PlayerInterface) {
 	game.sendZhuangMsg()
 	// 流程直接进入播放谁是庄的状态
 	if game.job != nil {
-		game.job.Cancel()
+		game.table.DeleteJob(game.job)
+		game.job = nil
 		// 进入谁是庄的状态
 		game.SendWhoZhuang()
 	}
@@ -613,7 +598,8 @@ func (game *Game) betMsg(bts []byte, user player.PlayerInterface) {
 		return
 	}
 	if game.job != nil {
-		game.job.Cancel()
+		game.table.DeleteJob(game.job)
+		game.job = nil
 		game.DealPokerStatus()
 	}
 
@@ -710,7 +696,7 @@ func (game *Game) CalcUserBetMulti() {
 		} else {
 			msg.List = user.BetMultiList
 		}
-		fmt.Printf("玩家【%d】的下注倍数列表 == %v\n", user.GetUser().GetId(), msg.List)
+		fmt.Printf("玩家【%d】的下注倍数列表 == %v\n", user.GetUser().GetID(), msg.List)
 
 		// 发送下注倍数
 		user.GetUser().SendMsg(int32(pai9.SendToClientMessageType_UserBetMulti), msg)
@@ -721,7 +707,7 @@ func (game *Game) CalcUserBetMulti() {
 func (game *Game) writeLog() {
 	str := fmt.Sprintf("参与用户：\n")
 	for i := 1; i <= TABLE_NUM; i++ {
-		str += fmt.Sprintf("用户%dID:%v,\n", i, game.userChairMap[i].GetUser().GetId())
+		str += fmt.Sprintf("用户%dID:%v,\n", i, game.userChairMap[i].GetUser().GetID())
 	}
 	str += fmt.Sprintf("开始时间：%s\n", game.startTime.Format("2006-01-02 15:04:05"))
 	str += fmt.Sprintf("结束时间：%s\n", game.endTime.Format("2006-01-02 15:04:05"))
@@ -729,13 +715,13 @@ func (game *Game) writeLog() {
 
 	for i := 1; i <= TABLE_NUM; i++ {
 		user := game.userChairMap[i]
-		str += fmt.Sprintf("用户%dID:%v   抢庄：%d  下注：%d  \n", i, user.GetUser().GetId(), user.QiangMulti, user.BetMulti)
+		str += fmt.Sprintf("用户%dID:%v   抢庄：%d  下注：%d  \n", i, user.GetUser().GetID(), user.QiangMulti, user.BetMulti)
 	}
 	str += "开牌结果\n"
 	for i := 1; i <= TABLE_NUM; i++ {
 		user := game.userChairMap[i]
 		_, pvalName := user.Cards.CalcType()
-		str += fmt.Sprintf("用户%dID:%v   当前局数：%d  牌型：%s/%s  %s 输赢金额：%d\n", i, user.GetUser().GetId(), game.setNum, user.Cards[0].Name, user.Cards[1].Name, pvalName, user.WinGold)
+		str += fmt.Sprintf("用户%dID:%v   当前局数：%d  牌型：%s/%s  %s 输赢金额：%d\n", i, user.GetUser().GetID(), game.setNum, user.Cards[0].Name, user.Cards[1].Name, pvalName, user.WinGold)
 	}
 
 	game.table.WriteLogs(0, str)
@@ -750,7 +736,7 @@ func (game *Game) dealPoker() {
 	}
 	sort.Sort(pokers)
 
-	roomProb, _ := game.table.GetRoomProb()
+	roomProb := game.table.GetRoomProb()
 	// 真人玩家，机器人玩家
 	var realUser, robotUser []int
 	for chairID, user := range game.userChairMap {

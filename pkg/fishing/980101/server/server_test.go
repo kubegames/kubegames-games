@@ -1,11 +1,12 @@
 package server_test
 
 import (
-	"common/log"
 	msg "game_frame/msg"
 	"sync"
 	"testing"
 	"time"
+
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 
 	"github.com/golang/protobuf/proto"
 	"github.com/gorilla/websocket"

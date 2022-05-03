@@ -1,10 +1,11 @@
 package game
 
 import (
-	"common/log"
 	"fmt"
 	"game_poker/doudizhu/msg"
 	"reflect"
+
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 
 	"github.com/antonmedv/expr"
 	b3 "github.com/magicsea/behavior3go"
@@ -17,7 +18,7 @@ var cfg *b3cfg.BTProjectCfg
 
 func ErrorCheck(cond bool, err int32, logargs ...interface{}) {
 	if !cond {
-		fmt.Println(logargs...)
+		log.Traceln(logargs...)
 		//panic(err)
 	}
 }
@@ -25,9 +26,9 @@ func ErrorCheck(cond bool, err int32, logargs ...interface{}) {
 func B3cfgInit() {
 	//dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
 	//if err != nil {
-	//	fmt.Println(err)
+	//	log.Traceln(err)
 	//}
-	//fmt.Println(dir)
+	//log.Traceln(dir)
 
 	if config, ok := b3cfg.LoadProjectCfg("config/ddz.json"); ok {
 		cfg = config

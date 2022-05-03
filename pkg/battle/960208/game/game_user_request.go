@@ -1,14 +1,12 @@
 package game
 
 import (
-	"github.com/kubegames/kubegames-sdk/pkg/log"
-	"github.com/kubegames/kubegames-sdk/pkg/player"
-
+	"github.com/golang/protobuf/proto"
 	"github.com/kubegames/kubegames-games/pkg/battle/960208/data"
 	"github.com/kubegames/kubegames-games/pkg/battle/960208/msg"
 	"github.com/kubegames/kubegames-games/pkg/battle/960208/poker"
-
-	"github.com/golang/protobuf/proto"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
+	"github.com/kubegames/kubegames-sdk/pkg/player"
 )
 
 // UserRobBanker 用户抢庄
@@ -71,7 +69,9 @@ func (game *ThreeDoll) UserRobBanker(buffer []byte, userInter player.PlayerInter
 	}
 
 	if allRob {
-		game.TimerJob.Cancel()
+		if game.TimerJob != nil {
+			game.Table.DeleteJob(game.TimerJob)
+		}
 		game.EndRob()
 	}
 }
@@ -159,8 +159,9 @@ func (game *ThreeDoll) UserBetChips(buffer []byte, userInter player.PlayerInterf
 	}
 
 	if allBet {
-		game.TimerJob.Cancel()
-
+		if game.TimerJob != nil {
+			game.Table.DeleteJob(game.TimerJob)
+		}
 		game.EndBet()
 	}
 }
@@ -209,10 +210,10 @@ func (game *ThreeDoll) UserShowCards(buffer []byte, userInter player.PlayerInter
 	}
 
 	if allShow {
-		game.TimerJob.Cancel()
-
+		if game.TimerJob != nil {
+			game.Table.DeleteJob(game.TimerJob)
+		}
 		game.EndShow()
-
 		//game.TimerJob, ok = game.Table.AddTimer(int64(game.TimeCfg.StatusSpace), game.EndShow)
 		//if !ok {
 		//	log.Tracef("定时进入摊牌结束状态失败")

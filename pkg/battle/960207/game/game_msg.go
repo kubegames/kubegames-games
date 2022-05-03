@@ -1,10 +1,9 @@
 package game
 
 import (
+	"github.com/kubegames/kubegames-games/pkg/battle/960207/msg"
 	"github.com/kubegames/kubegames-sdk/pkg/log"
 	"github.com/kubegames/kubegames-sdk/pkg/player"
-
-	"github.com/kubegames/kubegames-games/pkg/battle/960207/msg"
 )
 
 // SendGameStatus 发送游戏状态
@@ -72,12 +71,12 @@ func (game *GeneralNiuniu) SendSceneInfo(userInter player.PlayerInterface, reCon
 	}
 
 	messageResp := msg.SceneMessageRes{
-		UserData:   userData,               // 玩家数据
-		GameStatus: game.Status,            // 游戏状态
-		RoomCost:   game.RoomCfg.RoomCost,  // 底分
-		MinLimit:   game.RoomCfg.MinLimit,  // 入场限制
-		Reconnect:  reConnect,              // 是否重联
-		RoomID:     game.Table.GetRoomID(), // roomID
+		UserData:   userData,                      // 玩家数据
+		GameStatus: game.Status,                   // 游戏状态
+		RoomCost:   game.RoomCfg.RoomCost,         // 底分
+		MinLimit:   game.RoomCfg.MinLimit,         // 入场限制
+		Reconnect:  reConnect,                     // 是否重联
+		RoomID:     int64(game.Table.GetRoomID()), // roomID
 	}
 
 	if game.TimerJob != nil {

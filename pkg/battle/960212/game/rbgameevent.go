@@ -1,10 +1,11 @@
 package game
 
 import (
-	"common/log"
 	"common/rand"
 	"game_poker/doudizhu/msg"
 	"reflect"
+
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 )
 
 func (rb *robot) processPlayerInfos() {

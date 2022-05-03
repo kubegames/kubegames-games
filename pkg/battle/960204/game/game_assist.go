@@ -255,7 +255,7 @@ func (game *RunFaster) SettleDivision(userID int64) (result, profit int64) {
 	// 结果
 	result = user.CurAmount - user.InitAmount
 
-	_, profit = game.UserList[userID].User.SetScore(game.Table.GetGameNum(), result, game.RoomCfg.TaxRate)
+	profit = game.UserList[userID].User.SetScore(game.Table.GetGameNum(), result, game.RoomCfg.TaxRate)
 
 	// 打码量
 	var chip int64

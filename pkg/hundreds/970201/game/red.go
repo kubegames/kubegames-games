@@ -114,9 +114,9 @@ func (red *Red) GetLevel(baseAmount int64) int32 {
 }
 
 //获取该次抢包金额
-func (red *Red) GetRobAmount(robUser *data.User,isMine bool) int64 {
+func (red *Red) GetRobAmount(robUser *data.User, isMine bool) int64 {
 	if red.RobbedCount == red.RedFlood-1 {
-		//fmt.Println("最后一个血量：",red.Amount)
+		//log.Traceln("最后一个血量：",red.Amount)
 		return red.Amount
 	}
 	//if red.Amount < 10 {
@@ -128,7 +128,7 @@ func (red *Red) GetRobAmount(robUser *data.User,isMine bool) int64 {
 	}
 	amount := rand.RandInt(1, int(max))
 	if !robUser.User.IsRobot() && !red.sender.User.IsRobot() {
-		//fmt.Println("抢包人和发包人都是真实玩家，不做控制",robUser.User.GetId(),red.sender.User.GetId())
+		//log.Traceln("抢包人和发包人都是真实玩家，不做控制",robUser.User.GetId(),red.sender.User.GetId())
 		return int64(amount)
 	}
 	if isMine {

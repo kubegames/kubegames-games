@@ -2,13 +2,14 @@ package game
 
 import (
 	"common/rand"
-	"fmt"
 	"game_buyu/crazy_red/config"
 	"game_buyu/crazy_red/data"
 	"game_buyu/crazy_red/global"
 	"game_buyu/crazy_red/msg"
 	"sync"
 	"time"
+
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 )
 
 type Red struct {
@@ -76,7 +77,7 @@ func (red *Red) GetCurRed2C() *msg.S2CCurRed {
 //score : 玩家积分
 func (red *Red) NewRobbedRed(isMine bool, robAmount int64, robUser *data.User) *msg.S2CRobRed {
 	if !robUser.User.IsRobot() {
-		fmt.Println("发送金额：", robUser.User.GetId(), "  ", robUser.User.GetScore())
+		log.Traceln("发送金额：", robUser.User.GetId(), "  ", robUser.User.GetScore())
 	}
 	s2cRobRed := &msg.S2CRobRed{
 		RedId: red.Id, IsMine: isMine, RobbedAmount: robAmount, Amount: red.OriginAmount, NotRobbedCount: red.RedFlood - red.RobbedCount,
@@ -122,9 +123,9 @@ func (red *Red) GetLevel() int32 {
 }
 
 //获取该次抢包金额
-func (red *Red) GetRobAmount(robUser *data.User,isMine bool) int64 {
+func (red *Red) GetRobAmount(robUser *data.User, isMine bool) int64 {
 	if red.RobbedCount == red.RedFlood-1 {
-		//fmt.Println("最后一个血量：",red.Amount)
+		//log.Traceln("最后一个血量：",red.Amount)
 		return red.Amount
 	}
 	if red.Amount < 10 {
@@ -136,15 +137,15 @@ func (red *Red) GetRobAmount(robUser *data.User,isMine bool) int64 {
 	}
 	amount := rand.RandInt(1, int(max))
 	if !robUser.User.IsRobot() && !red.sender.User.IsRobot() {
-		fmt.Println("抢包人和发包人都是真实玩家，不做控制",robUser.User.GetId(),red.sender.User.GetId())
+		log.Traceln("抢包人和发包人都是真实玩家，不做控制", robUser.User.GetId(), red.sender.User.GetId())
 		return int64(amount)
 	}
 	if isMine {
 		amount /= 10
 		amount *= 10
 		amount += int(red.MineNum)
-	}else {
-		if amount % 10 == int(red.MineNum) {
+	} else {
+		if amount%10 == int(red.MineNum) {
 			amount -= 1
 		}
 	}

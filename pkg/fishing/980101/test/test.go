@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"encoding/json"
 	"game_buyu/renyuchuanshuo/config"
 	"game_buyu/renyuchuanshuo/msg"
 	"io/ioutil"
@@ -10,7 +10,7 @@ import (
 	"time"
 
 	"github.com/bitly/go-simplejson"
-	"github.com/gin-gonic/gin/json"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 )
 
 var (
@@ -73,7 +73,7 @@ func main() {
 func writeFile() {
 	f, err := os.OpenFile("result.txt", os.O_APPEND|os.O_CREATE|os.O_TRUNC, 0644)
 	if err != nil {
-		fmt.Println("open file err", err)
+		log.Traceln("open file err", err)
 		return
 	}
 	defer f.Close()
@@ -127,7 +127,7 @@ func loadCfg() {
 	if err == nil {
 		Conf, err = simplejson.NewJson(f)
 		if err != nil {
-			fmt.Println("test conf err", err)
+			log.Traceln("test conf err", err)
 			return
 		}
 	}

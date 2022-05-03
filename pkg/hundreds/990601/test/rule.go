@@ -1,12 +1,13 @@
 package main
 
 import (
-	"fmt"
 	"game_LaBa/birdAnimal/config"
 	"game_LaBa/birdAnimal/model"
 	bridanimal "game_LaBa/birdAnimal/msg"
 	"math/rand"
 	"sort"
+
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 )
 
 const (
@@ -69,7 +70,7 @@ func bet(tr *TestResult, i int64) {
 	}
 	// betBird(tr)
 	// betAnimal(tr)
-	// fmt.Println("TotalBet=", TotalBet)
+	// log.Traceln("TotalBet=", TotalBet)
 	tr.TestTimes = i
 }
 
@@ -163,7 +164,7 @@ func shakeRW(tr *TestResult) (result []*model.Element) {
 		lastElement.ID == ALL_KILL_ID ||
 		lastElement.ID == GOLD_SHARK_ID ||
 		lastElement.ID == SILVER_SHARK_ID {
-		fmt.Println("lastElement.ID=", lastElement.ID)
+		log.Traceln("lastElement.ID=", lastElement.ID)
 	}
 
 	if lastElement == nil {

@@ -1,7 +1,6 @@
 package game
 
 import (
-	"fmt"
 	"go-game-sdk/example/game_LaBa/970601/config"
 	"go-game-sdk/example/game_LaBa/970601/global"
 	"go-game-sdk/example/game_LaBa/970601/msg"
@@ -225,7 +224,7 @@ func (game *Game) GetDifferentIcon2(x, y int, value int32) int32 {
 	}
 	//index := rand.RandInt(0,len(alternative)-1)
 	//return alternative[index]
-	fmt.Println("GetDifferentIcon2 return start ::: ", start)
+	log.Traceln("GetDifferentIcon2 return start ::: ", start)
 	return start
 }
 
@@ -250,11 +249,11 @@ func (game *Game) GetIconTimesAndTmp() (axisList []*Axis, times int64) {
 			case 3:
 				winCountVar = 6
 			}
-			//fmt.Println("game.PushIntoSameList(x, y) ::: ",game.GetWinTmpArrCount(), game.Icons[game.WinTmpArr[0].X][game.WinTmpArr[0].Y])
+			//log.Traceln("game.PushIntoSameList(x, y) ::: ",game.GetWinTmpArrCount(), game.Icons[game.WinTmpArr[0].X][game.WinTmpArr[0].Y])
 			if game.GetWinTmpArrCount() >= winCountVar {
 				times += game.getIcocTimes(int32(game.GetWinTmpArrCount()), game.Icons[game.WinTmpArr[0].X][game.WinTmpArr[0].Y])
 
-				fmt.Println("GetIconTimesAndTmp ====== ", times, "int32(game.GetWinTmpArrCount()):", int32(game.GetWinTmpArrCount()), "game.Icons[game.WinTmpArr[0].X][game.WinTmpArr[0].Y] ", game.Icons[game.WinTmpArr[0].X][game.WinTmpArr[0].Y])
+				log.Traceln("GetIconTimesAndTmp ====== ", times, "int32(game.GetWinTmpArrCount()):", int32(game.GetWinTmpArrCount()), "game.Icons[game.WinTmpArr[0].X][game.WinTmpArr[0].Y] ", game.Icons[game.WinTmpArr[0].X][game.WinTmpArr[0].Y])
 				for _, tmp := range game.WinTmpArr {
 					if tmp != nil {
 						tmp.Value = game.Icons[tmp.X][tmp.Y]
@@ -269,7 +268,7 @@ func (game *Game) GetIconTimesAndTmp() (axisList []*Axis, times int64) {
 	for _, v := range axisList {
 		game.Icons[v.X][v.Y] = v.Value
 	}
-	//fmt.Println("GetIconTimes ::: ",times)
+	//log.Traceln("GetIconTimes ::: ",times)
 	return
 
 }
@@ -292,10 +291,10 @@ func (game *Game) GetErgodicTimes(totalAxisList []*Axis, times int64) (totalAxis
 			case 3:
 				winCountVar = 6
 			}
-			//fmt.Println("game.PushIntoSameList(x, y) ::: ",game.GetWinTmpArrCount(), game.Icons[game.WinTmpArr[0].X][game.WinTmpArr[0].Y])
+			//log.Traceln("game.PushIntoSameList(x, y) ::: ",game.GetWinTmpArrCount(), game.Icons[game.WinTmpArr[0].X][game.WinTmpArr[0].Y])
 			if game.GetWinTmpArrCount() >= winCountVar {
 				times += game.getIcocTimes(int32(game.GetWinTmpArrCount()), game.Icons[game.WinTmpArr[0].X][game.WinTmpArr[0].Y])
-				//fmt.Println("times ====== ",times)
+				//log.Traceln("times ====== ",times)
 				for _, tmp := range game.WinTmpArr {
 					if tmp != nil {
 						tmp.Value = game.Icons[tmp.X][tmp.Y]
@@ -311,7 +310,7 @@ func (game *Game) GetErgodicTimes(totalAxisList []*Axis, times int64) (totalAxis
 	if len(tmpAxisList) == 0 {
 		totalAxisListRes = totalAxisList
 		totalTimes = times
-		//fmt.Println("return出去：",totalAxisListRes,"total : ",totalAxisList)
+		//log.Traceln("return出去：",totalAxisListRes,"total : ",totalAxisList)
 		return
 	} else {
 		game.fillIconsSelfErgodic()
@@ -323,16 +322,16 @@ func (game *Game) GetErgodicTimes(totalAxisList []*Axis, times int64) (totalAxis
 	//for _,v := range axisList{
 	//	game.Icons[v.X][v.Y] = v.Value
 	//}
-	//fmt.Println("GetIconTimes ::: ",times)
+	//log.Traceln("GetIconTimes ::: ",times)
 
 }
 
 ////生成一个与上下左右都不同的top icon , x始终为0
 //disListRes 是本次game.icons 还要消除的图标
 func (game *Game) GetDifferentTopIcon(y int, disListRes []*Axis) int32 {
-	//fmt.Println("需要补充的顶部y：",y)
+	//log.Traceln("需要补充的顶部y：",y)
 	//for _,v := range disListRes {
-	//	fmt.Println("消的坐标：",v)
+	//	log.Traceln("消的坐标：",v)
 	//}
 	//game.PrintIcons()
 	var start int32 = global.ICON_BAIYU
@@ -348,7 +347,7 @@ func (game *Game) GetDifferentTopIcon(y int, disListRes []*Axis) int32 {
 		end = global.ICON_BAIZUANSHI
 		//lenth = 6
 	}
-	//fmt.Println("超过了，补充新图标")
+	//log.Traceln("超过了，补充新图标")
 	//既不能等于相邻的，又不能等于下面相同的
 	if len(disListRes) != 0 {
 		var maxX *Axis
@@ -359,11 +358,11 @@ func (game *Game) GetDifferentTopIcon(y int, disListRes []*Axis) int32 {
 			}
 		}
 		if maxX == nil {
-			fmt.Println("---------maxX为空，不管")
+			log.Traceln("---------maxX为空，不管")
 		} else {
 			var value int32 = 0
 			if y < len(game.TopIcons)-1 {
-				fmt.Println("GetDifferentTopIcon >>>> top icons : ", game.TopIcons)
+				log.Traceln("GetDifferentTopIcon >>>> top icons : ", game.TopIcons)
 				value = game.TopIcons[y+1]
 			}
 			return game.GetDifferentIcon2(maxX.X, maxX.Y, value)
@@ -377,11 +376,11 @@ func (game *Game) GetDifferentTopIcon(y int, disListRes []*Axis) int32 {
 	//			maxX = v
 	//		}
 	//	}
-	//	//fmt.Println("max ::: ",maxX)
+	//	//log.Traceln("max ::: ",maxX)
 	//	dif := game.GetDifferentIcon(maxX.X,maxX.Y)
-	//	//fmt.Println("get dif ::: ",dif)
+	//	//log.Traceln("get dif ::: ",dif)
 	//	return dif
-	//	//fmt.Println("-------补充顶部图标时，下面的还能继续消除，并且没有key")
+	//	//log.Traceln("-------补充顶部图标时，下面的还能继续消除，并且没有key")
 	//	//var maxX *Axis
 	//	//for _,v := range disListRes {
 	//	//	if v.Y == y {
@@ -390,20 +389,20 @@ func (game *Game) GetDifferentTopIcon(y int, disListRes []*Axis) int32 {
 	//	//	}
 	//	//}
 	//	//if maxX == nil {
-	//	//	fmt.Println("---------maxX为空，不管")
+	//	//	log.Traceln("---------maxX为空，不管")
 	//	//}else {
 	//	//	for _,v := range disListRes {
 	//	//		if v.X > maxX.X && v.Y == maxX.Y {
 	//	//			maxX = v
 	//	//		}
 	//	//	}
-	//	//	//fmt.Println("max ::: ",maxX)
+	//	//	//log.Traceln("max ::: ",maxX)
 	//		dif := game.GetDifferentIcon(maxX.X,maxX.Y)
-	//	//	//fmt.Println("get dif ::: ",dif)
+	//	//	//log.Traceln("get dif ::: ",dif)
 	//	//	return dif
 	//	//}
 	//}else {
-	//	//fmt.Println("===补充顶部图标时,按原来的逻辑处理")
+	//	//log.Traceln("===补充顶部图标时,按原来的逻辑处理")
 	//}
 	if y == 0 {
 		//alter = append(alter,start)
@@ -429,7 +428,7 @@ func (game *Game) GetDifferentTopIcon(y int, disListRes []*Axis) int32 {
 func (game *Game) GetRandIcon(needKey bool, x, y int) int32 {
 	//hasKey, _, _ := game.IsIconsHasKey()
 	//是否需要生成钻头
-	//fmt.Println("game.CheatConfig.KeyRate ",game.CheatConfig.KeyRate,needKey,hasKey,game.CurBoxNum)
+	//log.Traceln("game.CheatConfig.KeyRate ",game.CheatConfig.KeyRate,needKey,hasKey,game.CurBoxNum)
 	//if rand.RateToExec(game.CheatConfig.KeyRate) && !hasKey && needKey && game.CurBoxNum > 0 {
 	//	return global.ICON_KEY
 	//}
@@ -455,14 +454,14 @@ func (game *Game) GetRandIconWithCheat(x, y int) int32 {
 
 	index := game.GetCheatIconIndex(x, y)
 	cheatConfig := config.GetLhdbConfig(game.user.Cheat)
-	//fmt.Println("x, y,index : ",x, y,index)
+	//log.Traceln("x, y,index : ",x, y,index)
 	if index%2 == 1 {
 		//奇数选第1个方案
 		switch game.level {
 		case 1:
 			total := cheatConfig.BaiyuRateA + cheatConfig.BiyuRateA + cheatConfig.MoyuRateA + cheatConfig.ManaoRateA + cheatConfig.HupoRateA
 			index := rand.RandInt(0, total)
-			//fmt.Println("奇数选第1个方案随机值：",index,cheatConfig.BaiyuRateA,cheatConfig.BiyuRateA)
+			//log.Traceln("奇数选第1个方案随机值：",index,cheatConfig.BaiyuRateA,cheatConfig.BiyuRateA)
 			if index < cheatConfig.BaiyuRateA {
 				return global.ICON_BAIYU
 			}
@@ -516,7 +515,7 @@ func (game *Game) GetRandIconWithCheat(x, y int) int32 {
 		case 1:
 			total := cheatConfig.BaiyuRateB + cheatConfig.BiyuRateB + cheatConfig.MoyuRateB + cheatConfig.ManaoRateB + cheatConfig.HupoRateB
 			index := rand.RandInt(0, total)
-			//fmt.Println("偶数选第1个方案随机值：",index,cheatConfig.BaiyuRateB,cheatConfig.BiyuRateB)
+			//log.Traceln("偶数选第1个方案随机值：",index,cheatConfig.BaiyuRateB,cheatConfig.BiyuRateB)
 			if index < cheatConfig.BaiyuRateB {
 				return global.ICON_BAIYU
 			}

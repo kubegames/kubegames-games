@@ -1,9 +1,10 @@
 package main
 
 import (
-	"game_poker/pai9/config"
 	"math/rand"
 	"time"
+
+	"github.com/kubegames/kubegames-games/pkg/battle/960211/config"
 )
 
 func main() {

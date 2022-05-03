@@ -2,7 +2,6 @@ package server
 
 import (
 	"encoding/json"
-	"fmt"
 	"go-game-sdk/define"
 	"go-game-sdk/example/game_buyu/980301/config"
 	"go-game-sdk/example/game_buyu/980301/data"
@@ -11,12 +10,13 @@ import (
 	"go-game-sdk/inter"
 	"go-game-sdk/lib/clock"
 	"go-game-sdk/sdk/global"
-	frameMsg "go-game-sdk/sdk/msg"
 	"math"
 	"sort"
 	"strconv"
 	"sync"
 	"time"
+
+	frameMsg "github.com/kubegames/kubegames-sdk/app/message"
 
 	"github.com/kubegames/kubegames-games/internal/pkg/score"
 
@@ -2214,7 +2214,7 @@ func (table *TableLogic) addRobot() {
 	}
 	err := table.Table.GetRobot(1)
 	if err != nil {
-		fmt.Println("GET robot err", err)
+		log.Traceln("GET robot err", err)
 	}
 }
 

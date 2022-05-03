@@ -1,7 +1,6 @@
 package iconlogic
 
 import (
-	"fmt"
 	"math/rand"
 
 	"github.com/kubegames/kubegames-games/internal/pkg/labacom/config"
@@ -168,9 +167,7 @@ func (icon *Iconinfo) Gettotalodds(lbcfg *config.LabaConfig) int {
 			}
 			var AwardIncoIndex []int
 			AwardIncoIndex = append(AwardIncoIndex, i)
-			//fmt.Println("========================")
 			icon.GetIconIter(lbcfg, iconid, 1, AwardIncoIndex, extraodds, wildcount)
-			//fmt.Println("========================")
 		}
 	} else {
 		for index, v := range lbcfg.LineBall {
@@ -207,7 +204,6 @@ func (icon *Iconinfo) Gettotalodds(lbcfg *config.LabaConfig) int {
 
 				icon.Odds += int(iconaward[int64(count)])
 				if iconaward[int64(count)] != 0 {
-					//fmt.Println(icon.Odds, count, iconaward, iconid)
 					var li LineInfo
 					li.Count = int32(count) + 1
 					li.Gold = iconaward[int64(count)]
@@ -281,7 +277,6 @@ func (icon *Iconinfo) GetIconIter(lbcfg *config.LabaConfig, id int32, row int, a
 			icon.Iconarr[index] != int32(lbcfg.FreeGame.IconId) &&
 			icon.Iconarr[index] != int32(lbcfg.Jackpot.IconId) {
 			iconid = icon.Iconarr[index]
-			//fmt.Println("======", iconid)
 			iconcount[iconid]++
 			tmpwild++
 			AwardIncoIndex = append(AwardIncoIndex, index)
@@ -302,12 +297,10 @@ func (icon *Iconinfo) GetIconIter(lbcfg *config.LabaConfig, id int32, row int, a
 			li.WildCount = int32(tmpwild)
 			li.AwardIconIndex = AwardIncoIndex
 			icon.Line = append(icon.Line, li)
-			fmt.Println(id, li.Gold, ex, row)
 			icon.Odds += int(iconaward[int64(row-1)]) * ex
 		}
 		return
 	}
-	//fmt.Println("======", iconcount)
 	for key, v := range iconcount {
 		extraodds := ex
 		if v > 0 {
@@ -318,7 +311,6 @@ func (icon *Iconinfo) GetIconIter(lbcfg *config.LabaConfig, id int32, row int, a
 			iconid = id
 		}
 
-		//fmt.Println("iconaward", iconid, row, extraodds, lbcfg.Row)
 		if row+1 >= lbcfg.Row || v == 0 {
 			iconaward, _ := lbcfg.IconAward[int64(iconid)]
 			if iconaward[int64(row)] != 0 {
@@ -330,12 +322,10 @@ func (icon *Iconinfo) GetIconIter(lbcfg *config.LabaConfig, id int32, row int, a
 				li.WildCount = int32(tmpwild)
 				li.AwardIconIndex = AwardIncoIndex
 				icon.Line = append(icon.Line, li)
-				fmt.Println("======", iconid, li.Gold, extraodds, row)
 				icon.Odds += int(iconaward[int64(row)]) * extraodds
 			}
 			continue
 		} else {
-			//fmt.Println("next", iconid, row)
 			icon.GetIconIter(lbcfg, iconid, row+1, AwardIncoIndex, extraodds, tmpwild)
 		}
 	}

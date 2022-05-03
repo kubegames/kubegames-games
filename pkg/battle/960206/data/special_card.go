@@ -5,6 +5,7 @@ import (
 
 	"github.com/kubegames/kubegames-games/pkg/battle/960206/global"
 	"github.com/kubegames/kubegames-games/pkg/battle/960206/poker"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 )
 
 //特殊牌型
@@ -204,14 +205,14 @@ func (user *User) isSFTX(cards []byte) bool {
 		cvArr = append(cvArr, cv)
 	}
 	uniqueArr := RemoveRepeatedByte(cvArr)
-	//fmt.Println("去重之后 ", fmt.Sprintf(`%x`, uniqueArr))
+	//log.Traceln("去重之后 ", fmt.Sprintf(`%x`, uniqueArr))
 	if len(uniqueArr) == 4 {
 		user.HeadCards = cards[10:]
 		user.MiddleCards = cards[5:10]
 		user.TailCards = cards[:5]
 		return true
 	}
-	//fmt.Println("len(uniqueArr) ",len(uniqueArr))
+	//log.Traceln("len(uniqueArr) ",len(uniqueArr))
 	return false
 }
 
@@ -285,7 +286,7 @@ func (user *User) isSTST(cardsAll []byte, cardsArr [][]byte) bool {
 	uniqueArr := RemoveRepeatedByte(cvArr)
 	if len(uniqueArr) == 5 {
 		for _, unique := range uniqueArr {
-			//fmt.Println("unique : ",fmt.Sprintf(`%x`,unique))
+			//log.Traceln("unique : ",fmt.Sprintf(`%x`,unique))
 			uniqueCv, _ := poker.GetCardValueAndColor(unique)
 			eqCount := 0
 			for _, card := range cardsAll {
@@ -325,7 +326,7 @@ func (user *User) isWDST(cardsAll []byte, cardsArr [][]byte) bool {
 	if len(uniqueArr) == 6 {
 		//再看里面是否存在单张的情况
 		for _, unique := range uniqueArr {
-			//fmt.Println("unique : ",fmt.Sprintf(`%x`,unique))
+			//log.Traceln("unique : ",fmt.Sprintf(`%x`,unique))
 			uniqueCv, _ := poker.GetCardValueAndColor(unique)
 			eqCount := 0
 			for _, card := range cardsAll {
@@ -373,7 +374,7 @@ func (user *User) isLDB(cardsAll []byte, cardsArr [][]byte) bool {
 //是否为三 顺 子 头墩、中墩、尾墩都是顺子
 func (user *User) isSSZ(cardsAll []byte, cardsArr [][]byte) bool {
 	if len(cardsAll) != 13 {
-		fmt.Println("len(cardsAll) != 13 isSSZ ")
+		log.Traceln("len(cardsAll) != 13 isSSZ ")
 		return false
 	}
 	//先找出13张牌中可组成的5张顺子可能
@@ -381,7 +382,7 @@ func (user *User) isSSZ(cardsAll []byte, cardsArr [][]byte) bool {
 	if len(szArr) == 0 {
 		return false
 	}
-	//fmt.Println("三顺子第一手选出的顺子：", fmt.Sprintf(`%x`, szArr))
+	//log.Traceln("三顺子第一手选出的顺子：", fmt.Sprintf(`%x`, szArr))
 	leftHasSz := false
 	var headCardsShow []byte
 	var midCardsShow []byte
@@ -389,13 +390,13 @@ func (user *User) isSSZ(cardsAll []byte, cardsArr [][]byte) bool {
 	for _, szCards := range szArr {
 		//再找出8张中的顺子
 		left8Cards := user.GetDifferentCards(cardsAll, szCards)
-		//fmt.Println("三顺子剩下的8张牌：", fmt.Sprintf(`%x`, left8Cards))
+		//log.Traceln("三顺子剩下的8张牌：", fmt.Sprintf(`%x`, left8Cards))
 		//A2345 678 10jqkA
 		leftSzArr := user.GetSzArr(poker.GetCombineCardsArr(left8Cards, 5))
 		if len(leftSzArr) == 0 {
 			continue
 		}
-		//fmt.Println("三顺子第二手选出的5张牌：", fmt.Sprintf(`%x`, leftSzArr))
+		//log.Traceln("三顺子第二手选出的5张牌：", fmt.Sprintf(`%x`, leftSzArr))
 		for _, leftSzCards := range leftSzArr {
 			//再看剩余的三张是不是对子
 			last3Cards := user.GetDifferentCards(left8Cards, leftSzCards)
@@ -422,7 +423,7 @@ func (user *User) isSSZ(cardsAll []byte, cardsArr [][]byte) bool {
 	}
 	return false
 
-	//fmt.Println("三顺子剩下的3张牌：", fmt.Sprintf(`%x`, last3Cards))
+	//log.Traceln("三顺子剩下的3张牌：", fmt.Sprintf(`%x`, last3Cards))
 }
 
 // del by wd in 2020.3.9 获取可能的顺子组合 修复是同花顺而导致对顺子的判定错过
@@ -469,12 +470,12 @@ func (user *User) isSTH(cardsAll []byte, cardsArr [][]byte) bool {
 		return false
 	}
 	//if !user.User.IsRobot(){
-	//	fmt.Println("midShow：", fmt.Sprintf(`%x`, midShow))
+	//	log.Traceln("midShow：", fmt.Sprintf(`%x`, midShow))
 	//}
 	tailShow := make([]byte, 0)
 	//再找出8张中的同花
 	left8Cards := user.GetDifferentCards(cardsAll, first5Cards)
-	//fmt.Println("剩下的8张牌：", fmt.Sprintf(`%x`, left8Cards))
+	//log.Traceln("剩下的8张牌：", fmt.Sprintf(`%x`, left8Cards))
 	//A2345 678 10jqkA
 	leftCardsArr := poker.GetCombineCardsArr(left8Cards, 5)
 	hasTh = false
@@ -494,7 +495,7 @@ func (user *User) isSTH(cardsAll []byte, cardsArr [][]byte) bool {
 	//再看剩余的三张是不是同花
 	last3Cards := user.GetDifferentCards(left8Cards, first5Cards)
 	if poker.IsCard3TypeJH(last3Cards) {
-		fmt.Println("三同花剩下的3张牌：", fmt.Sprintf(`%x`, last3Cards))
+		log.Traceln("三同花剩下的3张牌：", fmt.Sprintf(`%x`, last3Cards))
 		user.HeadCards = last3Cards
 		user.MiddleCards = midShow
 		user.TailCards = tailShow
@@ -508,7 +509,7 @@ func (user *User) isSTH(cardsAll []byte, cardsArr [][]byte) bool {
 
 //找出cards1中不包含card2中的牌 eg: [3,4,5,6] [3,4,5] => 6
 func (user *User) GetDifferentCards(cards1 []byte, cards2 []byte) []byte {
-	//fmt.Println("1 : ",fmt.Sprintf(`%x`,cards1)," 2 : ",fmt.Sprintf(`%x`,cards2))
+	//log.Traceln("1 : ",fmt.Sprintf(`%x`,cards1)," 2 : ",fmt.Sprintf(`%x`,cards2))
 	lastCardsAll := make([]byte, 0)
 	for _, c1 := range cards1 {
 		if !IsByteInArr(c1, cards2) {
@@ -549,7 +550,7 @@ func RemoveRepeatedByte(arr []byte) (newArr []byte) {
 // GetSpecialEncode 获取特殊牌编码
 func GetSpecialEncode(cards []byte) (encode int64) {
 	for i, card := range cards {
-		fmt.Println((int64(card) >> 4) << uint((13-i-1)*4))
+		log.Traceln((int64(card) >> 4) << uint((13-i-1)*4))
 		encode |= (int64(card) >> 4) << uint((13-i-1)*4)
 	}
 	return

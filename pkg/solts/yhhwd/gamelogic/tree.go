@@ -3,6 +3,8 @@ package gamelogic
 import (
 	"fmt"
 	"strconv"
+
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 )
 
 //定义二叉树的节点
@@ -121,7 +123,7 @@ func (g *gametest) PreOrder12(a []int32, n *Node, iconid int32, indexarr []int) 
 	if iconid == 0 {
 		currenid = a[n.value]
 	}
-	fmt.Println("xia", currenid)
+	log.Traceln("xia", currenid)
 	indexarr = append(indexarr, n.value)
 	bEnter := true
 	if n.left != nil && (a[n.left.value] == 0 || a[n.left.value] == currenid || currenid == 0) {
@@ -144,8 +146,8 @@ func (g *gametest) PreOrder12(a []int32, n *Node, iconid int32, indexarr []int) 
 	}
 	if bEnter {
 		if n.hight > 2 {
-			fmt.Println(indexarr)
-			fmt.Println("=====", n.hight, n.value, currenid)
+			log.Traceln(indexarr)
+			log.Traceln("=====", n.hight, n.value, currenid)
 		}
 
 		return
@@ -574,12 +576,12 @@ func (g *Game) CreatTree1(cheatvalue int64) {
 		ggg.PreOrder12(a, StageTree[1][i], a[StageTree[1][i].value], aa)
 	}
 	//ggg.PreOrder12(a, StageTree[1][2], a[StageTree[1][2].value])
-	//fmt.Println(binaryTreePaths3(StageTree[0][1]))
+	//log.Traceln(binaryTreePaths3(StageTree[0][1]))
 	//for i:=0;i<len(StageTree);i++ {
-	//	//fmt.Println("-------阶段%v------", i)
+	//	//log.Traceln("-------阶段%v------", i)
 	//	for j := 0; j < len(StageTree[i]); j++ {
-	//		fmt.Println("--- 树%v%v---", i, j)
-	//		fmt.Println(binaryTreePaths3(StageTree[i][j]))
+	//		log.Traceln("--- 树%v%v---", i, j)
+	//		log.Traceln(binaryTreePaths3(StageTree[i][j]))
 	//		TreePath= append(TreePath,binaryTreePaths3(StageTree[i][j]))
 	//
 	//	}

@@ -1,10 +1,9 @@
 package game
 
 import (
+	"github.com/kubegames/kubegames-games/pkg/battle/960208/msg"
 	"github.com/kubegames/kubegames-sdk/pkg/log"
 	"github.com/kubegames/kubegames-sdk/pkg/player"
-
-	"github.com/kubegames/kubegames-games/pkg/battle/960208/msg"
 )
 
 // SendUserSitDown 广播用户坐下信息
@@ -68,12 +67,12 @@ func (game *ThreeDoll) SendSceneInfo(userInter player.PlayerInterface, reConnect
 	}
 
 	messageResp := msg.SceneMessageRes{
-		GameStatus: game.Status,            // 游戏状态
-		RoomCost:   game.RoomCfg.RoomCost,  // 底分
-		MinLimit:   game.RoomCfg.MinLimit,  // 入场限制
-		RoomID:     game.Table.GetRoomID(), // roomID
-		Reconnect:  reConnect,              // 是否重联
-		UserData:   userDatas,              // 玩家数据
+		GameStatus: game.Status,                   // 游戏状态
+		RoomCost:   game.RoomCfg.RoomCost,         // 底分
+		MinLimit:   game.RoomCfg.MinLimit,         // 入场限制
+		RoomID:     int64(game.Table.GetRoomID()), // roomID
+		Reconnect:  reConnect,                     // 是否重联
+		UserData:   userDatas,                     // 玩家数据
 	}
 
 	if game.TimerJob != nil {

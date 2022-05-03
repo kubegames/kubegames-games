@@ -1,8 +1,6 @@
 package game
 
 import (
-	"fmt"
-
 	"github.com/kubegames/kubegames-sdk/pkg/log"
 	"github.com/kubegames/kubegames-sdk/pkg/player"
 
@@ -89,7 +87,9 @@ func (game *GeneralNiuniu) UserBetChips(buffer []byte, userInter player.PlayerIn
 	}
 
 	if allBet {
-		game.TimerJob.Cancel()
+		if game.TimerJob != nil {
+			game.Table.DeleteJob(game.TimerJob)
+		}
 
 		game.TimerJob, ok = game.Table.AddTimer(int64(game.TimeCfg.StatusSpace), game.EndBet)
 		if !ok {
@@ -150,7 +150,9 @@ func (game *GeneralNiuniu) UserShowCards(buffer []byte, userInter player.PlayerI
 	}
 
 	if allShow {
-		game.TimerJob.Cancel()
+		if game.TimerJob != nil {
+			game.Table.DeleteJob(game.TimerJob)
+		}
 
 		game.TimerJob, ok = game.Table.AddTimer(int64(game.TimeCfg.StatusSpace), game.EndShow)
 		if !ok {
@@ -197,5 +199,5 @@ func (game *GeneralNiuniu) UserDemandCards(buffer []byte, userInter player.Playe
 		SpecialCardIndexs: poker.GetSpecialCardIndexs(cards, cardsType),
 	}
 
-	fmt.Println(game.UserList[userID].HoldCards)
+	log.Traceln(game.UserList[userID].HoldCards)
 }

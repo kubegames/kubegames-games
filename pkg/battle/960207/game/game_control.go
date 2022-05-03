@@ -1,14 +1,10 @@
 package game
 
 import (
-	rand2 "math/rand"
-	"time"
-
 	"github.com/kubegames/kubegames-games/internal/pkg/rand"
-
-	"github.com/kubegames/kubegames-sdk/pkg/log"
-
+	rand2 "github.com/kubegames/kubegames-games/internal/pkg/rand"
 	"github.com/kubegames/kubegames-games/pkg/battle/960207/poker"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 )
 
 // Control 控制牌
@@ -20,7 +16,7 @@ func (game *GeneralNiuniu) Control() {
 	game.ControlBiggerCards()
 
 	for _, holdCards := range game.CardsSequence {
-		for id, _ := range game.UserList {
+		for id := range game.UserList {
 			if _, ok := game.ControlledCards[id]; !ok {
 				game.ControlledCards[id] = holdCards
 				break
@@ -175,10 +171,8 @@ func (game *GeneralNiuniu) checkProb(prob int32) (probIndex int) {
 
 // ShuffleSlice 切片随机
 func ShuffleSlice(group []int64) []int64 {
-	rand2.Seed(time.Now().UnixNano())
 	rand2.Shuffle(len(group), func(i, j int) {
 		group[i], group[j] = group[j], group[i]
 	})
-
 	return group
 }

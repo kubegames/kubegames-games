@@ -59,14 +59,14 @@ func (r *Robot) OnGameMessage(subCmd int32, buffer []byte) {
 	//case int32(errenmajiang.ReMsgIDS2C_MoPai):
 	//	msg := &errenmajiang.UserMoPaiMessage{}
 	//	proto.Unmarshal(buffer, msg)
-	//	fmt.Println("机器人摸牌值",msg)
+	//	log.Traceln("机器人摸牌值",msg)
 	//	break
 	case int32(errenmajiang.ReMsgIDS2C_BroadTing):
 		msg := &errenmajiang.TingCardMessage{}
 		proto.Unmarshal(buffer, msg)
 		if msg.TingUserIndex == r.ChairId {
 			r.baoTing = true
-			//fmt.Println("------机器人报听报听成功------", msg)
+			//log.Traceln("------机器人报听报听成功------", msg)
 			return
 		} else {
 			r.TingSatusNum = 1
@@ -145,7 +145,7 @@ func (r *Robot) Robotop(b []byte) {
 	//如果操作有胡直接胡
 	if int32(r.GameLogic.ud[r.ChairId].Opt)&msg.OptType != 0 && msg.OptType&majiangcom.OptTypeHu != 0 {
 		r.SendOpMsg(majiangcom.OptTypeHu)
-		//fmt.Println("服务器机器人胡牌后手牌", majiangcom.GetHandCards(r.GameLogic.ud[1].HandCards))
+		//log.Traceln("服务器机器人胡牌后手牌", majiangcom.GetHandCards(r.GameLogic.ud[1].HandCards))
 		return
 	}
 	//如果是报听的话只操作胡的消息
@@ -197,7 +197,7 @@ func (r *Robot) Robotop(b []byte) {
 	switch temp {
 	//有杠有碰有吃
 	case 0x7:
-		//fmt.Println("======0x7=====")
+		//log.Traceln("======0x7=====")
 		if r.TingStatus == true {
 			if !r.tingStatusGangOp(majiangcom.OptTypeGang) {
 				r.tingStatusPenOp()
@@ -210,7 +210,7 @@ func (r *Robot) Robotop(b []byte) {
 		}
 	//有杠有碰无吃
 	case 0x6:
-		//fmt.Println("======0x6=====")
+		//log.Traceln("======0x6=====")
 		if r.TingStatus == true {
 			if !r.tingStatusGangOp(majiangcom.OptTypeGang) {
 				r.tingStatusPenOp()
@@ -223,7 +223,7 @@ func (r *Robot) Robotop(b []byte) {
 		}
 		//有杠无碰无吃
 	case 0x4:
-		//fmt.Println("======0x4=====")
+		//log.Traceln("======0x4=====")
 		//摸杠检测哪张牌是杠牌
 		r.findHandCardsMoGangCard(msg.OptType)
 		if r.TingStatus == true {
@@ -239,7 +239,7 @@ func (r *Robot) Robotop(b []byte) {
 		}
 	//无杠有碰有吃
 	case 0x3:
-		//fmt.Println("======0x3=====")
+		//log.Traceln("======0x3=====")
 		if r.TingStatus == true {
 			r.tingStatusPenOp()
 			break
@@ -250,7 +250,7 @@ func (r *Robot) Robotop(b []byte) {
 		}
 		//无杠有碰无吃
 	case 0x2:
-		//fmt.Println("======0x2=====")
+		//log.Traceln("======0x2=====")
 		if r.TingStatus == true {
 			r.tingStatusPenOp()
 			break
@@ -266,7 +266,7 @@ func (r *Robot) Robotop(b []byte) {
 		}
 		//无杠无碰有吃
 	case 0x1:
-		//fmt.Println("======0x1=====")
+		//log.Traceln("======0x1=====")
 		if r.TingStatus == true {
 			r.SendOpMsg(0)
 			break
@@ -537,8 +537,8 @@ func (r *Robot) tingCheck(handCards [majiangcom.MaxCardValue]int) (bool, int) {
 		canTingCount += r.HandCards[canHuPaiArr[i]]
 		canTingCount += r.GameLogic.ud[0].HandCards[canHuPaiArr[i]]
 	}
-	//fmt.Println(canTingCount, count)
-	//fmt.Println(canHuPaiArr)
+	//log.Traceln(canTingCount, count)
+	//log.Traceln(canHuPaiArr)
 	canTingCount = 4*count - canTingCount
 	return true, canTingCount
 }
@@ -654,7 +654,7 @@ func (r *Robot) IsCanTing() (bool, int, int) {
 	//6对听牌
 	if (jiangcount + duicount) == 6 {
 		r.TingQiDui = true
-		//fmt.Println("------听七对----")
+		//log.Traceln("------听七对----")
 		//fmt.Print(tmp)
 		a := r.TableCards[t[0]]
 		a += r.HandCards[t[0]]
@@ -681,7 +681,7 @@ func (r *Robot) IsCanTing() (bool, int, int) {
 			ziSingleNum++
 		}
 	}
-	//fmt.Println(ziSingleNum)
+	//log.Traceln(ziSingleNum)
 	//如果单张字牌数量超过3则不符合听牌情况
 	if ziSingleNum >= 3 {
 		return false, 0, 0
@@ -719,7 +719,7 @@ func (r *Robot) IsCanTing() (bool, int, int) {
 				tmpfu[a+2] -= 1
 			}
 		}
-		//fmt.Println(tmpfu)
+		//log.Traceln(tmpfu)
 		//统计剩余的牌数量，对子数量，单牌数量无相隔相隔，相邻相隔牌数量。向前对比
 		for k, v := range tmpfu {
 			//如果是大于最后一张牌结束循环
@@ -751,7 +751,7 @@ func (r *Robot) IsCanTing() (bool, int, int) {
 				}
 			}
 		}
-		//fmt.Println(resdiuCard,singlect)
+		//log.Traceln(resdiuCard,singlect)
 		if resdiuCard > 5 {
 			count++
 			tmpfu = tempa
@@ -868,7 +868,7 @@ func (r *Robot) tingStatusOutCardOp() {
 		return
 	}
 	//else {
-	//	fmt.Println("机器听牌状态出牌", cardValue)
+	//	log.Traceln("机器听牌状态出牌", cardValue)
 	//	r.SendPlayCardOpMsg(cardValue)
 	//	r.CurrTingNum = num
 	//	return

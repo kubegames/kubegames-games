@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"game_poker/saima/config"
 	gameLogic "game_poker/saima/game"
@@ -11,7 +12,7 @@ import (
 	"time"
 
 	"github.com/bitly/go-simplejson"
-	"github.com/gin-gonic/gin/json"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 )
 
 var (
@@ -89,7 +90,7 @@ func main() {
 			}
 			win = pay(game, v)
 			lossRation := win * 10000 / game.AllBet
-			//fmt.Println("lossRation =", win, v, lossRation, min, controlLossRation)
+			//log.Traceln("lossRation =", win, v, lossRation, min, controlLossRation)
 			if lossRation > min && lossRation < controlLossRation {
 				//result = append(result, v...)
 				tem = append(tem, v)
@@ -172,13 +173,13 @@ func xiazhu(game *gameLogic.Game, dizhu int64) {
 
 	}
 
-	//fmt.Println("下注信息 = ", game.BetInfo)
+	//log.Traceln("下注信息 = ", game.BetInfo)
 }
 
 func writeFile() {
 	f, err := os.OpenFile("result.txt", os.O_APPEND|os.O_CREATE|os.O_TRUNC, 0644)
 	if err != nil {
-		fmt.Println("open file err", err)
+		log.Traceln("open file err", err)
 		return
 	}
 	defer f.Close()
@@ -294,7 +295,7 @@ func loadCfg() {
 	if err == nil {
 		Conf, err = simplejson.NewJson(f)
 		if err != nil {
-			fmt.Println("test conf err", err)
+			log.Traceln("test conf err", err)
 			return
 		}
 	}

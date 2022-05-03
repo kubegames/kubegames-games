@@ -2,7 +2,6 @@ package config
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 
 	"github.com/kubegames/kubegames-sdk/pkg/log"
@@ -93,7 +92,7 @@ func (conf *RunFasterConfig) LoadRunFasterCfg() {
 func (robotCfg *RobotConfig) LoadRobotCfg() {
 	data, err := ioutil.ReadFile("conf/robot.json")
 	if err != nil {
-		fmt.Println("File reading error", err)
+		log.Traceln("File reading error", err)
 		return
 	}
 	//去除配置文件中的注释
@@ -109,7 +108,7 @@ func (robotCfg *RobotConfig) LoadRobotCfg() {
 func (CardsOrderCfg *CardsOrderConfig) LoadCardsOrderCfg() {
 	data, err := ioutil.ReadFile("conf/cardsOrderForm.json")
 	if err != nil {
-		fmt.Println("File reading error", err)
+		log.Traceln("File reading error", err)
 		return
 	}
 	//去除配置文件中的注释

@@ -1,25 +1,19 @@
 package main
 
 import (
-	"fmt"
 	"os"
 	"os/signal"
 	"syscall"
 
 	conf "github.com/kubegames/kubegames-games/pkg/battle/960203/config"
 	"github.com/kubegames/kubegames-games/pkg/battle/960203/game"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 	room "github.com/kubegames/kubegames-sdk/pkg/room/poker"
 )
 
 func main() {
-	fmt.Println("************************************************")
-	fmt.Println("*                                              *")
-	fmt.Println("*            Watch Banker System !             *")
-	fmt.Println("*                                              *")
-	fmt.Println("************************************************")
-
-	fmt.Println("### VER: ", "0.0.9")
-	fmt.Println("### PID: ", os.Getpid())
+	log.Traceln("### VER: ", "0.0.9")
+	log.Traceln("### PID: ", os.Getpid())
 
 	//系统中断捕获
 	sigs := make(chan os.Signal, 1)

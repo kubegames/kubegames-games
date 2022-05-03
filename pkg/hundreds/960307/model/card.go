@@ -100,7 +100,7 @@ func GetEncodeCard(cardType int, cards [3]byte) (cardEncode int) {
 //比如 3、8、3、3、9，则返回 葫芦(cardType)，33389(排序之后的牌面值)
 func GetCardTypeJH(cards [3]byte) (cardType int, sortRes [3]byte) {
 	//if len(cards) != 3 {
-	//	fmt.Println("金花牌型比较只能3张牌")
+	//	log.Traceln("金花牌型比较只能3张牌")
 	//	return
 	//}
 	sortRes = SortCards(cards)

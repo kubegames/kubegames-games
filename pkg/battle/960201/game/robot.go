@@ -9,6 +9,7 @@ import (
 	"github.com/kubegames/kubegames-games/pkg/battle/960201/global"
 	"github.com/kubegames/kubegames-games/pkg/battle/960201/msg"
 	"github.com/kubegames/kubegames-games/pkg/battle/960201/poker"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 	"github.com/kubegames/kubegames-sdk/pkg/player"
 )
 
@@ -26,15 +27,15 @@ func NewRobot(game *Game, user *data.User) *Robot {
 
 // OnGameMessage 机器人收到消息
 func (robot *Robot) OnGameMessage(subCmd int32, buffer []byte) {
-	////fmt.Println("机器人接收消息：",subCmd)
+	////log.Traceln("机器人接收消息：",subCmd)
 	switch subCmd {
 	case global.S2C_CUR_ACTION_USER:
 		s2cMsg := &msg.S2CUserInfo{}
 		if err := proto.Unmarshal(buffer, s2cMsg); err != nil {
-			//fmt.Println("unmarshal err : ", err)
+			//log.Traceln("unmarshal err : ", err)
 			return
 		}
-		//fmt.Println("该机器人：",s2cMsg.UserId," 发言"," 自己的id：",robot.user.Id)
+		//log.Traceln("该机器人：",s2cMsg.UserId," 发言"," 自己的id：",robot.user.Id)
 		if s2cMsg.UserId != robot.user.Id {
 			return
 		}
@@ -51,13 +52,13 @@ func (robot *Robot) OnGameMessage(subCmd int32, buffer []byte) {
 
 //直接跟注
 func (robot *Robot) straightFollow(buffer []byte) {
-	fmt.Println("收到 直接跟注")
+	log.Traceln("收到 直接跟注")
 	s2cMsg := &msg.S2CUserInfo{}
 	if err := proto.Unmarshal(buffer, s2cMsg); err != nil {
-		fmt.Println("unmarshal err : ", err)
+		log.Traceln("unmarshal err : ", err)
 		return
 	}
-	////fmt.Println("该机器人：",s2cMsg.UserId," 发言"," 自己的id：",robot.user.Id)
+	////log.Traceln("该机器人：",s2cMsg.UserId," 发言"," 自己的id：",robot.user.Id)
 	if s2cMsg.UserId != robot.user.Id {
 		return
 	}
@@ -73,10 +74,10 @@ func (robot *Robot) AiActionNew() {
 	}
 
 	if robot.user.IsSawCards {
-		//fmt.Println("aiSawAction：：：",robot.AiUser.GetID())
+		//log.Traceln("aiSawAction：：：",robot.AiUser.GetID())
 		robot.aiSawAction()
 	} else {
-		//fmt.Println("aiSawAction else ：：：",robot.AiUser.GetID())
+		//log.Traceln("aiSawAction else ：：：",robot.AiUser.GetID())
 		robot.aiNotSee()
 	}
 }
@@ -186,20 +187,20 @@ func (robot *Robot) aiNotSeeAction() {
 	rateFollow += robot.user.AigetNotSeeRaiseAmountWeight(*robot.game.GameConfig, global.USER_OPTION_FOLLOW, robot.game.MinAction)
 	rateFollow += robot.user.AigetNotSeeRoundWeight(global.USER_OPTION_FOLLOW, robot.game.Round)
 	//加注
-	////fmt.Println("not see 加注 base ::: ",rateRaise)
+	////log.Traceln("not see 加注 base ::: ",rateRaise)
 	rateRaise += robot.user.AigetNotSeeRaiseSawWeight(sawCount)
 	rateRaise += robot.user.AigetNotSeeRaiseCardsIndexWeight()
-	////fmt.Println("AigetNotSeeRaiseSawWeight  ",rateRaise)
+	////log.Traceln("AigetNotSeeRaiseSawWeight  ",rateRaise)
 	rateRaise += robot.user.AigetNotSeeRemainRaiseWeight(len(userList))
-	////fmt.Println("AigetNotSeeRemainRaiseWeight  ",rateRaise)
+	////log.Traceln("AigetNotSeeRemainRaiseWeight  ",rateRaise)
 	rateRaise += robot.user.AigetNotSeeOtherCompareWeight(global.USER_OPTION_RAISE, robot.game.CompareCount)
-	////fmt.Println("AigetNotSeeOtherCompareWeight  ",rateRaise)
+	////log.Traceln("AigetNotSeeOtherCompareWeight  ",rateRaise)
 	rateRaise += robot.user.AigetNotSeeSelfCompareWeight(global.USER_OPTION_RAISE)
-	////fmt.Println("AigetNotSeeSelfCompareWeight  ",rateRaise)
+	////log.Traceln("AigetNotSeeSelfCompareWeight  ",rateRaise)
 	rateRaise += robot.user.AigetNotSeeRaiseAmountWeight(*robot.game.GameConfig, global.USER_OPTION_RAISE, robot.game.MinAction)
-	////fmt.Println("AigetNotSeeRaiseAmountWeight  ",rateRaise)
+	////log.Traceln("AigetNotSeeRaiseAmountWeight  ",rateRaise)
 	rateRaise += robot.user.AigetNotSeeRoundWeight(global.USER_OPTION_RAISE, robot.game.Round)
-	////fmt.Println("AigetNotSeeRoundWeight  ",rateRaise)
+	////log.Traceln("AigetNotSeeRoundWeight  ",rateRaise)
 	//比牌
 	rateCompare += robot.user.AigetNotSeeCompareSawWeight(sawCount)
 	rateCompare += robot.user.AigetNotSeeCompareCardsIndexWeight()
@@ -208,7 +209,7 @@ func (robot *Robot) aiNotSeeAction() {
 	rateCompare += robot.user.AigetNotSeeSelfCompareWeight(global.USER_OPTION_COMPARE)
 	rateCompare += robot.user.AigetNotSeeRaiseAmountWeight(*robot.game.GameConfig, global.USER_OPTION_COMPARE, robot.game.MinAction)
 	rateCompare += robot.user.AigetNotSeeRoundWeight(global.USER_OPTION_COMPARE, robot.game.Round)
-	////fmt.Println("ai未看牌，follow: ", rateFollow, " raise: ", rateRaise, " compare: ", rateCompare)
+	////log.Traceln("ai未看牌，follow: ", rateFollow, " raise: ", rateRaise, " compare: ", rateCompare)
 	robot.chooseOneToAction(rateFollow, rateRaise, rateCompare, 0)
 }
 
@@ -223,7 +224,7 @@ func (robot *Robot) aiSawAction() {
 	rateFollow := robot.user.AiCharacter.SawBaseFollow
 	rateRaise := robot.user.AiCharacter.SawBaseRaise
 	rateCompare := robot.user.AiCharacter.SawBaseCompare
-	//fmt.Println("rateCompare11111 : ",rateCompare)
+	//log.Traceln("rateCompare11111 : ",rateCompare)
 	rateGiveUp := robot.user.AiCharacter.SawBaseGiveUp
 
 	//将各项加起来再做权重运算
@@ -248,7 +249,7 @@ func (robot *Robot) aiSawAction() {
 	rateRaise += robot.user.AigetSawCardType(global.USER_OPTION_RAISE)
 	//比牌
 	rateCompare += robot.user.AigetSawCompareSawWeight(sawCount)
-	//fmt.Println("rateCompare2222: ",rateCompare)
+	//log.Traceln("rateCompare2222: ",rateCompare)
 	rateCompare += robot.user.AigetSawCompareCardsIndexWeight()
 	rateCompare += robot.user.AigetSawRemainCompareWeight(len(userList))
 	rateCompare += robot.user.AigetSawOtherCompareWeight(global.USER_OPTION_COMPARE, robot.game.CompareCount)
@@ -257,24 +258,24 @@ func (robot *Robot) aiSawAction() {
 	rateCompare += robot.user.AigetSawRoundWeight(global.USER_OPTION_COMPARE, robot.game.Round)
 	rateCompare += robot.user.AigetSawCardType(global.USER_OPTION_COMPARE)
 	//弃牌
-	////fmt.Println("弃牌基础概率::::",rateGiveUp)
+	////log.Traceln("弃牌基础概率::::",rateGiveUp)
 	rateGiveUp += robot.user.AigetSawGiveUpSawWeight(sawCount)
 	rateGiveUp += robot.user.AigetSawGiveUpCardsIndexWeight()
-	////fmt.Println("AigetSawGiveUpSawWeight >>> ",rateGiveUp)
+	////log.Traceln("AigetSawGiveUpSawWeight >>> ",rateGiveUp)
 	rateGiveUp += robot.user.AigetSawRemainGiveUpWeight(len(userList))
-	////fmt.Println("AigetSawRemainGiveUpWeight >>> ",rateGiveUp)
+	////log.Traceln("AigetSawRemainGiveUpWeight >>> ",rateGiveUp)
 	rateGiveUp += robot.user.AigetSawOtherCompareWeight(global.USER_OPTION_GIVE_UP, robot.game.CompareCount)
-	////fmt.Println("AigetSawOtherCompareWeight >>> ",rateGiveUp)
+	////log.Traceln("AigetSawOtherCompareWeight >>> ",rateGiveUp)
 	rateGiveUp += robot.user.AigetSawSelfCompareWeight(global.USER_OPTION_GIVE_UP)
-	////fmt.Println("AigetSawSelfCompareWeight >>> ",rateGiveUp)
+	////log.Traceln("AigetSawSelfCompareWeight >>> ",rateGiveUp)
 	rateGiveUp += robot.user.AigetSawRaiseAmountWeight(*robot.game.GameConfig, global.USER_OPTION_GIVE_UP, robot.game.MinAction)
-	////fmt.Println("AigetSawRaiseAmountWeight >>> ",rateGiveUp)
+	////log.Traceln("AigetSawRaiseAmountWeight >>> ",rateGiveUp)
 	rateGiveUp += robot.user.AigetSawRoundWeight(global.USER_OPTION_GIVE_UP, robot.game.Round)
-	////fmt.Println("AigetSawRoundWeight >>> ",rateGiveUp)
+	////log.Traceln("AigetSawRoundWeight >>> ",rateGiveUp)
 	rateGiveUp += robot.user.AigetSawCardType(global.USER_OPTION_GIVE_UP)
-	////fmt.Println("AigetSawCardType >>> ",rateGiveUp)
+	////log.Traceln("AigetSawCardType >>> ",rateGiveUp)
 
-	////fmt.Println("ai看了牌，follow: ", rateFollow, " raise: ", rateRaise, " compare: ", rateCompare, " give up: ", rateGiveUp)
+	////log.Traceln("ai看了牌，follow: ", rateFollow, " raise: ", rateRaise, " compare: ", rateCompare, " give up: ", rateGiveUp)
 	robot.chooseOneToAction(rateFollow, rateRaise, rateCompare, rateGiveUp)
 }
 
@@ -298,27 +299,27 @@ func (robot *Robot) chooseOneToAction(rateFollow, rateRaise, rateCompare, rateGi
 	if rateGiveUp > 0 {
 		totalRate += rateGiveUp
 	}
-	////fmt.Println("总概率》》》》》》: ", totalRate)
-	////fmt.Println("看弃牌概率《《《《《《《 ", rateGiveUp, "   ", totalRate)
+	////log.Traceln("总概率》》》》》》: ", totalRate)
+	////log.Traceln("看弃牌概率《《《《《《《 ", rateGiveUp, "   ", totalRate)
 	if rateGiveUp > 0 && robot.user.RateToExecWithIn(rateGiveUp, totalRate) {
-		//fmt.Println("机器人弃牌：：：", robot.AiUser.GetID())
+		//log.Traceln("机器人弃牌：：：", robot.AiUser.GetID())
 		if err := robot.AiUser.SendMsgToServer(global.C2S_USER_ACTION, NewC2sUserAction(robot.user.Id, 0, global.USER_OPTION_GIVE_UP)); err != nil {
 		}
 		//robot.Action(robot.CurActionUser, global.USER_OPTION_GIVE_UP, 0)
 		return
 	}
-	////fmt.Println("看比牌概率《《《《《《《", rateCompare, "   ", totalRate)
+	////log.Traceln("看比牌概率《《《《《《《", rateCompare, "   ", totalRate)
 	if rateCompare > 0 && robot.user.RateToExecWithIn(rateCompare, totalRate) && robot.game.Round < uint(robot.game.GameConfig.MaxRound)-1 {
-		//fmt.Println("机器人比牌：：：", robot.AiUser.GetID())
+		//log.Traceln("机器人比牌：：：", robot.AiUser.GetID())
 		if robot.user.CardType >= poker.CardTypeSJ {
-			fmt.Println("机器人比牌：：：", robot.AiUser.GetID(), "牌型超过了顺金：", robot.user.CardType)
-			fmt.Println("比牌概率：" + fmt.Sprintf(`%d  %d`, rateCompare, totalRate))
+			log.Traceln("机器人比牌：：：", robot.AiUser.GetID(), "牌型超过了顺金：", robot.user.CardType)
+			log.Traceln("比牌概率：" + fmt.Sprintf(`%d  %d`, rateCompare, totalRate))
 			robot.game.Table.WriteLogs(robot.AiUser.GetID(), "比牌概率："+fmt.Sprintf(`%d  %d`, rateCompare, totalRate))
 		}
 		toCompareUser := robot.game.getCompareUser()
-		////fmt.Println("机器人获取到的要比牌的玩家： ",toCompareUser)
+		////log.Traceln("机器人获取到的要比牌的玩家： ",toCompareUser)
 		if len(toCompareUser) == 0 {
-			//fmt.Println("机器人获取到的要比牌的玩家为空： ", toCompareUser)
+			//log.Traceln("机器人获取到的要比牌的玩家为空： ", toCompareUser)
 			return
 		}
 		toCompareUser = append(toCompareUser, robot.user)
@@ -326,7 +327,7 @@ func (robot *Robot) chooseOneToAction(rateFollow, rateRaise, rateCompare, rateGi
 
 		} else {
 			if toCompareUser[0] != nil {
-				////fmt.Println("机器人：",robot.CurActionUser.Id," 选择要比牌的：",toCompareUser[0].Id)
+				////log.Traceln("机器人：",robot.CurActionUser.Id," 选择要比牌的：",toCompareUser[0].Id)
 				robot.game.CompareCards(robot.user, toCompareUser[0], toCompareUser)
 				if robot.game.IsSatisfyEnd() {
 					//robot.Table.AddTimer(global.COMPARE_CARDS_DELAY, func() {
@@ -338,28 +339,28 @@ func (robot *Robot) chooseOneToAction(rateFollow, rateRaise, rateCompare, rateGi
 					//robot.SetNextActionUser("")
 				}
 			} else {
-				//fmt.Println("居然为kong 机器人选择比牌玩家")
+				//log.Traceln("居然为kong 机器人选择比牌玩家")
 			}
 			return
 		}
 	}
-	////fmt.Println("看加注概率《《《《《《《", rateRaise, "   ", totalRate)
+	////log.Traceln("看加注概率《《《《《《《", rateRaise, "   ", totalRate)
 	if rateRaise > 0 && robot.user.RateToExecWithIn(rateRaise, totalRate) {
-		//fmt.Println("机器人加注：：：", robot.AiUser.GetID())
+		//log.Traceln("机器人加注：：：", robot.AiUser.GetID())
 		if err := robot.AiUser.SendMsgToServer(global.C2S_USER_ACTION, NewC2sUserAction(robot.user.Id, robot.game.getRaiseAmount(), global.USER_OPTION_RAISE)); err != nil {
 		}
 		return
 	}
-	////fmt.Println("执行跟注《《《<<<")
-	//fmt.Println("机器人跟注：：：", robot.AiUser.GetID())
+	////log.Traceln("执行跟注《《《<<<")
+	//log.Traceln("机器人跟注：：：", robot.AiUser.GetID())
 	if err := robot.AiUser.SendMsgToServer(global.C2S_USER_ACTION, NewC2sUserAction(robot.user.Id, 0, global.USER_OPTION_FOLLOW)); err != nil {
-		fmt.Println("跟注err : ", err)
+		log.Traceln("跟注err : ", err)
 	}
 }
 
 //对方全押，考虑是否要全押
 func (robot *Robot) aiAllIn() {
-	////fmt.Println("有用户进入全押：：：：：：：")
+	////log.Traceln("有用户进入全押：：：：：：：")
 	if !robot.user.IsSawCards {
 		//看牌
 		if err := robot.AiUser.SendMsgToServer(global.C2S_USER_ACTION, NewC2sUserAction(robot.user.Id, 0, global.USER_OPTION_SEE_CARDS)); err != nil {

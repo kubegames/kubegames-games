@@ -38,7 +38,7 @@ func NewRobot(table table.TableInterface) *Robot {
 	robot := &Robot{}
 	//err := table.GetRobot()
 	//if err != nil {
-	//	//fmt.Println(err)
+	//	//log.Traceln(err)
 	//	return nil
 	//}
 	robot.Table = table
@@ -245,7 +245,7 @@ func (robot *Robot) startShoot() {
 		Point:  robot.LastShoot,
 	}
 	robot.AI.SendMsgToServer(int32(msg.MsgId_SHOOT_Req), req)
-	//fmt.Println("shoot =", robot.LastShoot, robot.TargetFishId, robot.Fishes[robot.TargetFishId])
+	//log.Traceln("shoot =", robot.LastShoot, robot.TargetFishId, robot.Fishes[robot.TargetFishId])
 	t := robot.getRobotRestTime()
 	robot.AI.AddTimer(int64(robot.ShootTime+int32(t)), func() {
 		robot.startShoot()
@@ -253,7 +253,7 @@ func (robot *Robot) startShoot() {
 }
 
 func (robot *Robot) changeShootPoint(point *msg.Point) {
-	//fmt.Println("shoot point", point.X, point.Y)
+	//log.Traceln("shoot point", point.X, point.Y)
 	robot.LastShoot = point
 }
 
@@ -494,7 +494,7 @@ func (robot *Robot) refresh(buffer []byte) {
 
 func (robot *Robot) checkSpeedModel() {
 	speed := robot.getChanceWan(config.GetRobotSpeedChance())
-	//fmt.Println(speed, robot.Speed)
+	//log.Traceln(speed, robot.Speed)
 	if (speed && !robot.Speed) || (!speed && robot.Speed) {
 		robot.changeModel(2)
 	}

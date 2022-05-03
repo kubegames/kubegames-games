@@ -1,7 +1,6 @@
 package game
 
 import (
-	"common/log"
 	"common/page"
 	"common/score"
 	"fmt"
@@ -10,6 +9,8 @@ import (
 	"game_buyu/rob_red/msg"
 	msg2 "game_frame_v2/msg"
 	"time"
+
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 
 	"github.com/golang/protobuf/proto"
 )
@@ -25,27 +26,27 @@ func (game *Game) ProcSendRed(buff []byte, user *data.User) {
 		return
 	}
 	if user.User.GetScore() < c2sMsg.Amount || c2sMsg.Amount < 100 {
-		//fmt.Println("user.User.GetScore() ",user.User.GetScore(),c2sMsg.Amount)
+		//log.Traceln("user.User.GetScore() ",user.User.GetScore(),c2sMsg.Amount)
 		user.User.SendMsg(global.ERROR_CODE_NOT_ENOUGH, &msg.C2SIntoGame{})
 		return
 	}
 	if c2sMsg.MineNum > 9 {
-		//fmt.Println("雷号大于9")
+		//log.Traceln("雷号大于9")
 		user.User.SendMsg(global.ERROR_CODE_RED_MINENUM, &msg.C2SIntoGame{})
 		return
 	}
 
 	if game.redList.Len() > 60 || game.waitSendRedList.Len() > 60 {
-		fmt.Println("红包长度超过60")
+		log.Traceln("红包长度超过60")
 		return
 	}
 
 	if c2sMsg.Amount < game.sendAmount[0] || c2sMsg.Amount > game.sendAmount[len(game.sendAmount)-1] {
-		//fmt.Println("发送金额 小于/大于 配置的金额：", c2sMsg.Amount, "  ", game.sendAmount[0], "  ", game.sendAmount[len(game.sendAmount)-1])
+		//log.Traceln("发送金额 小于/大于 配置的金额：", c2sMsg.Amount, "  ", game.sendAmount[0], "  ", game.sendAmount[len(game.sendAmount)-1])
 		if user.User.IsRobot() && user.User.GetScore() >= game.sendAmount[0] {
 			c2sMsg.Amount = game.sendAmount[0]
 		} else {
-			//fmt.Println("发送金额 小于/大于 配置的金额 222 ：", c2sMsg.Amount, "  ", game.sendAmount[0], "  ", game.sendAmount[len(game.sendAmount)-1])
+			//log.Traceln("发送金额 小于/大于 配置的金额 222 ：", c2sMsg.Amount, "  ", game.sendAmount[0], "  ", game.sendAmount[len(game.sendAmount)-1])
 			_ = user.User.SendMsg(global.ERROR_CODE_LESS_MIN_ACTION, &msg.C2SIntoGame{})
 			return
 		}
@@ -56,7 +57,7 @@ func (game *Game) ProcSendRed(buff []byte, user *data.User) {
 	_, _ = user.User.SetScore(game.Table.GetGameNum(), -c2sMsg.Amount, game.Table.GetRoomRate())
 	user.ProfitAmount -= c2sMsg.Amount
 	if !user.User.IsRobot() {
-		fmt.Println("发送用户日志：：：用户发红包，发包金额")
+		log.Traceln("发送用户日志：：：用户发红包，发包金额")
 		user.GameLogs = append(user.GameLogs, &msg2.GameLog{
 			UserId: user.User.GetId(),
 			Content: "用户id: " + fmt.Sprintf(`%d`, user.User.GetID()) + " 发红包，发包金额：" + score.GetScoreStr(c2sMsg.Amount) + " 余额：" + score.GetScoreStr(user.User.GetScore()) +
@@ -72,10 +73,10 @@ func (game *Game) ProcSendRed(buff []byte, user *data.User) {
 		//不发不抢3分钟就被踢出
 		user.LastRobTime = time.Now()
 	}
-	//fmt.Println("红包id：", red.Id)
+	//log.Traceln("红包id：", red.Id)
 	game.SetRedListMap(red)
 	if game.redList.Len() <= 15 {
-		//fmt.Println("消息2 发送的 红包id：",red.Id)
+		//log.Traceln("消息2 发送的 红包id：",red.Id)
 		game.curShowRedList.PushBack(red)
 		red.Route = game.GetRouteAxis()
 		game.Table.Broadcast(global.S2C_SEND_RED, red.GetRedInfo2C())
@@ -115,7 +116,7 @@ func (game *Game) GetBeforeSelfRedCount(userId int64) (count int32) {
 
 //锁定红包
 func (game *Game) ProcLockRed(buffer []byte, user *data.User) {
-	//fmt.Println("<<<<<<<<<<锁定红包---")
+	//log.Traceln("<<<<<<<<<<锁定红包---")
 	var c2sMsg msg.C2SLockRed
 	err := proto.Unmarshal(buffer, &c2sMsg)
 	if err != nil {
@@ -123,16 +124,16 @@ func (game *Game) ProcLockRed(buffer []byte, user *data.User) {
 		user.User.SendMsg(global.ERROR_CODE_NOT_INTOROOM, &msg.C2SIntoGame{})
 		return
 	}
-	//fmt.Println("1111>>>>> : ",time.Now().Sub(nowTime))
+	//log.Traceln("1111>>>>> : ",time.Now().Sub(nowTime))
 	red := game.GetRedListMap(c2sMsg.RedId)
 	if red == nil {
 		user.User.SendMsg(global.ERROR_CODE_RED_OVER, &msg.S2CRedId{RedId: c2sMsg.RedId})
-		fmt.Println("procLockRed err : ", "该红包不存在 ", c2sMsg.RedId)
+		log.Traceln("procLockRed err : ", "该红包不存在 ", c2sMsg.RedId)
 		game.DelCurShowRed(c2sMsg.RedId)
 		return
 	}
 	if red.RobbedCount >= red.RedFlood {
-		fmt.Println("procLockRed err : ", "该红包血量没了 ", c2sMsg.RedId)
+		log.Traceln("procLockRed err : ", "该红包血量没了 ", c2sMsg.RedId)
 		_ = user.User.SendMsg(global.ERROR_CODE_RED_OVER, &msg.S2CRedId{RedId: c2sMsg.RedId})
 		game.DelCurShowRed(c2sMsg.RedId)
 		game.DelRedListMap(red)
@@ -140,7 +141,7 @@ func (game *Game) ProcLockRed(buffer []byte, user *data.User) {
 	}
 
 	game.SetLockListMap(user.Id, red)
-	//fmt.Println("2222>>>>>> : ",time.Now().Sub(nowTime))
+	//log.Traceln("2222>>>>>> : ",time.Now().Sub(nowTime))
 	user.User.SendMsg(global.S2C_LOCK_RED, red.GetRedInfo2C())
 }
 
@@ -164,7 +165,7 @@ func (game *Game) ProcCancelLockRed(buffer []byte, user *data.User) {
 
 //抢红包
 func (game *Game) ProcRobRed(buffer []byte, user *data.User) {
-	//fmt.Println("<<<<<<<<<<抢红包---")
+	//log.Traceln("<<<<<<<<<<抢红包---")
 	var c2sMsg msg.C2SRobRed
 	err := proto.Unmarshal(buffer, &c2sMsg)
 	if err != nil {
@@ -179,7 +180,7 @@ func (game *Game) ProcRobRed(buffer []byte, user *data.User) {
 	}
 	//玩家金额小于入场金额，并且场内没有自己发的红包 就踢出去
 	if user.User.GetScore() < game.Table.GetEntranceRestrictions() && !game.HasRed(user) {
-		fmt.Println("玩家金额小于入场金额：", user.User.GetScore(), game.Table.GetEntranceRestrictions(), "profitAmount: ", user.ProfitAmount)
+		log.Traceln("玩家金额小于入场金额：", user.User.GetScore(), game.Table.GetEntranceRestrictions(), "profitAmount: ", user.ProfitAmount)
 		game.BroadNoAi(global.S2C_LEAVE_TABLE, &msg.S2CKickOutUser{Uid: user.User.GetId(), Reason: global.KICKOUT_SCORE_NOT_ENOUGH})
 		user.User.SendRecord(user.GameNum, user.ProfitAmount,
 			user.BetsAmount, user.DrawAmount, user.Output, "")
@@ -219,30 +220,30 @@ func (game *Game) ProcGetUserList(buffer []byte, user *data.User) {
 		return
 	}
 	game.userList = game.SortUserList(game.userList)
-	//fmt.Println("c2smsg : ",fmt.Sprintf(`%+v`,c2sMsg))
+	//log.Traceln("c2smsg : ",fmt.Sprintf(`%+v`,c2sMsg))
 	s2cMsg := new(msg.S2CUserInfoArr)
 	s2cMsg.UserArr = make([]*msg.S2CUserInfo, 0)
 	start := c2sMsg.PageIndex * c2sMsg.PageSize
 	end := c2sMsg.PageIndex*c2sMsg.PageSize + c2sMsg.PageSize
-	//fmt.Println("start : ",start,end,game.userList.Len())
+	//log.Traceln("start : ",start,end,game.userList.Len())
 	var i int64 = 0
 	for e := game.userList.Front(); e != nil; e = e.Next() {
 		if i >= start && i < end {
 			v := e.Value.(*data.User)
 			s2cMsg.UserArr = append(s2cMsg.UserArr, v.GetUserMsgInfo())
-			//fmt.Println("玩家列表信息：",fmt.Sprintf(`%+v`,v.GetUserMsgInfo()))
+			//log.Traceln("玩家列表信息：",fmt.Sprintf(`%+v`,v.GetUserMsgInfo()))
 		}
 		if i >= end {
 			break
 		}
 		i++
 	}
-	//fmt.Println("front ::: ",game.userList.Front().Value.(*data.User))
-	//fmt.Println("s2c 用户列表：",s2cMsg.UserArr)
+	//log.Traceln("front ::: ",game.userList.Front().Value.(*data.User))
+	//log.Traceln("s2c 用户列表：",s2cMsg.UserArr)
 	s2cMsg.Total = int64(game.userList.Len())
 	pager := page.NewPager(int(c2sMsg.PageIndex), int(c2sMsg.PageSize), game.userList.Len())
 	s2cMsg.Size, s2cMsg.Pages, s2cMsg.Current = int32(pager.Size), int32(pager.Pages), int32(pager.Current)
-	fmt.Println("玩家总人数：", s2cMsg.Total)
+	log.Traceln("玩家总人数：", s2cMsg.Total)
 	user.User.SendMsg(global.S2C_GET_USER_LIST, s2cMsg)
 }
 
@@ -256,7 +257,7 @@ func (game *Game) ProcGetMineRecord(buffer []byte, user *data.User) {
 		return
 	}
 	if err := user.User.SendMsg(global.S2C_GET_MINE_RECORD, user.GetMineRecord(int(c2sMsg.PageIndex), int(c2sMsg.PageSize))); err != nil {
-		fmt.Println("err : err : ", err)
+		log.Traceln("err : err : ", err)
 	}
 }
 

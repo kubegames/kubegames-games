@@ -3,22 +3,26 @@ package game
 import (
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/kubegames/kubegames-games/internal/pkg/rand"
-
-	"github.com/kubegames/kubegames-sdk/pkg/log"
-	"github.com/kubegames/kubegames-sdk/pkg/player"
-
 	"github.com/kubegames/kubegames-games/pkg/battle/960207/msg"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
+	"github.com/kubegames/kubegames-sdk/pkg/platform"
+	"github.com/kubegames/kubegames-sdk/pkg/player"
 )
 
 // KickCheck 踢人检测
 func (game *GeneralNiuniu) KickCheck() {
 	for _, user := range game.UserList {
 		if user.Status == int32(msg.UserStatus_Ready) {
-			game.UserExit(user.User)
+			game.UserLeaveGame(user.User)
 			game.Table.KickOut(user.User)
 		}
+	}
+
+	if game.Table.PlayerCount() <= 0 {
+		game.Table.Close()
 	}
 }
 
@@ -36,17 +40,21 @@ func (game *GeneralNiuniu) CheckLeftRobot() {
 	if robotCount == len(game.UserList) {
 		// 停掉所有定时器
 		if game.RobotTimer != nil {
-			game.RobotTimer.Cancel()
+			game.Table.DeleteJob(game.RobotTimer)
 		}
 		if game.TimerJob != nil {
-			game.TimerJob.Cancel()
+			game.Table.DeleteJob(game.TimerJob)
 		}
 
 		// 踢开说有机器人
 		for _, user := range game.UserList {
-			game.UserExit(user.User)
+			game.UserOffline(user.User)
 			game.Table.KickOut(user.User)
 		}
+	}
+
+	if game.Table.PlayerCount() <= 0 {
+		game.Table.Close()
 	}
 }
 
@@ -98,7 +106,7 @@ func (game *GeneralNiuniu) RobotSit() {
 		return
 	}
 
-	err := game.Table.GetRobot(1)
+	err := game.Table.GetRobot(1, game.Table.GetConfig().RobotMinBalance, game.Table.GetConfig().RobotMaxBalance)
 	if err != nil {
 		log.Errorf("生成机器人失败：%v", err)
 	}
@@ -177,25 +185,29 @@ func (game *GeneralNiuniu) SetChip(userID int64, chip int64) {
 
 // SetExitPermit 设置用户退出权限
 func (game *GeneralNiuniu) SetExitPermit(permit bool) {
-	for id, _ := range game.UserList {
+	for id := range game.UserList {
 		game.UserList[id].ExitPermit = permit
 	}
 }
 
 // UserSendRecord 发送战绩，计算产出
-func (game *GeneralNiuniu) TableSendRecord(userID int64, result int64, netProfit int64) {
+func (game *GeneralNiuniu) TableSendRecord(userID int64, result int64, netProfit int64) *platform.PlayerRecord {
 	user, ok := game.UserList[userID]
 	if !ok {
 		log.Errorf("发送战绩查询用户 %d 失败", userID)
-		return
+		return nil
+	}
+
+	if user.User.IsRobot() {
+		return nil
 	}
 
 	var (
-		profitAmount int64  // 盈利
-		betsAmount   int64  // 总下注
-		drawAmount   int64  // 总抽水
-		outputAmount int64  // 总产出
-		endCards     string // 结算牌
+		profitAmount int64 // 盈利
+		betsAmount   int64 // 总下注
+		drawAmount   int64 // 总抽水
+		outputAmount int64 // 总产出
+		//endCards     string // 结算牌
 	)
 
 	profitAmount = netProfit
@@ -208,7 +220,18 @@ func (game *GeneralNiuniu) TableSendRecord(userID int64, result int64, netProfit
 		betsAmount = result
 	}
 
-	user.User.SendRecord(game.Table.GetGameNum(), profitAmount, betsAmount, drawAmount, outputAmount, endCards)
+	//user.User.SendRecord(game.Table.GetGameNum(), profitAmount, betsAmount, drawAmount, outputAmount, endCards)
+	return &platform.PlayerRecord{
+		PlayerID:     uint32(user.User.GetID()),
+		GameNum:      game.Table.GetGameNum(),
+		ProfitAmount: profitAmount,
+		BetsAmount:   betsAmount,
+		DrawAmount:   drawAmount,
+		OutputAmount: outputAmount,
+		Balance:      user.User.GetScore(),
+		UpdatedAt:    time.Now(),
+		CreatedAt:    time.Now(),
+	}
 }
 
 type SettleResult struct {

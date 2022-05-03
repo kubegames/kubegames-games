@@ -1,7 +1,6 @@
 package game
 
 import (
-	"fmt"
 	"go-game-sdk/example/game_LaBa/970601/config"
 	"go-game-sdk/example/game_LaBa/970601/data"
 	"go-game-sdk/example/game_LaBa/970601/msg"
@@ -37,29 +36,29 @@ func (game *Game) ProcStartGame(buffer []byte, user *data.User) {
 	}
 
 	if c2sMsg.Bottom < 0 || int(c2sMsg.Bottom) >= len(game.Bottom2C) {
-		fmt.Println("用户传来数据不在数组内：", c2sMsg)
+		log.Traceln("用户传来数据不在数组内：", c2sMsg)
 		return
 	}
 	if c2sMsg.Count < 0 || int(c2sMsg.Count) >= len(game.BottomCount2C) {
-		fmt.Println("用户传来数据不在数组内222：", c2sMsg)
+		log.Traceln("用户传来数据不在数组内222：", c2sMsg)
 		return
 	}
 
 	// 检查用户金额等信息
 	score := game.Bottom2C[int(c2sMsg.Bottom)] * game.BottomCount2C[int(c2sMsg.Count)]
-	fmt.Println("c2sMsg.Bottom,c2sMsg.Count : ", c2sMsg.Bottom, c2sMsg.Count, game.Bottom2C, game.BottomCount2C)
+	log.Traceln("c2sMsg.Bottom,c2sMsg.Count : ", c2sMsg.Bottom, c2sMsg.Count, game.Bottom2C, game.BottomCount2C)
 	if score > user.User.GetScore() {
-		fmt.Println("用户余额不足：", c2sMsg.Bottom, c2sMsg.Count, user.User.GetScore(), game.Bottom2C[int(c2sMsg.Bottom)], game.Bottom2C[int(c2sMsg.Count)])
+		log.Traceln("用户余额不足：", c2sMsg.Bottom, c2sMsg.Count, user.User.GetScore(), game.Bottom2C[int(c2sMsg.Bottom)], game.Bottom2C[int(c2sMsg.Count)])
 		return
 	}
-	//fmt.Println("投入：",score)
+	//log.Traceln("投入：",score)
 	game.TotalInvest += score
 	game.Table.StartGame()
 	game.Table.WriteLogs(user.User.GetID(), "开始游戏用户余额："+score2.GetScoreStr(user.User.GetScore()))
 	game.Bottom, game.BottomCount = game.Bottom2C[int(c2sMsg.Bottom)], game.BottomCount2C[int(c2sMsg.Count)]
-	//fmt.Println("用户原来的金额：",user.User.GetScore(),"扣除的score：",score)
+	//log.Traceln("用户原来的金额：",user.User.GetScore(),"扣除的score：",score)
 	_, _ = user.User.SetScore(user.Table.GetGameNum(), -score, game.Table.GetRoomRate())
-	//fmt.Println("现在的金额：",user.User.GetScore())
+	//log.Traceln("现在的金额：",user.User.GetScore())
 	_ = user.User.SendMsg(int32(msg.S2CMsgType_START_GAME_RES), &msg.S2CUserScore{
 		Score: user.User.GetScore(),
 	})
@@ -78,11 +77,11 @@ func (game *Game) ProcChooseCaijin(buffer []byte, user *data.User) {
 		return
 	}
 	if game.user == nil || !game.user.IsIntoSmallGame {
-		fmt.Println("玩家为空或者IsIntoSmallGame为false")
+		log.Traceln("玩家为空或者IsIntoSmallGame为false")
 		return
 	}
 	if !rand.RateToExec(game.CheatConfig.IntoCaijin) {
-		fmt.Println("没触发彩金，", game.CheatConfig.IntoCaijin)
+		log.Traceln("没触发彩金，", game.CheatConfig.IntoCaijin)
 		return
 	}
 	game.user.IntoCaijinCount++
@@ -92,7 +91,7 @@ func (game *Game) ProcChooseCaijin(buffer []byte, user *data.User) {
 	rate3 := rate2 + game.CheatConfig.Caijin4
 	rate4 := rate3 + game.CheatConfig.Caijin5
 	index := rand.RandInt(0, 10000)
-	fmt.Println("caijin and index : ", rate0, rate1, rate2, rate3, rate4, index, " score：", config.IconConfig.CaijinScore)
+	log.Traceln("caijin and index : ", rate0, rate1, rate2, rate3, rate4, index, " score：", config.IconConfig.CaijinScore)
 	score := game.user.CaijinBase
 	if index < rate0 {
 		game.user.Caijin1Count++
@@ -114,7 +113,7 @@ func (game *Game) ProcChooseCaijin(buffer []byte, user *data.User) {
 		game.user.Caijin5Count++
 		score = score * config.IconConfig.CaijinScore[4] / 10000
 	}
-	//fmt.Println("彩金金额：",score)
+	//log.Traceln("彩金金额：",score)
 	game.user.TotalCaijin += score
 	_, _ = game.user.User.SetScore(game.Table.GetGameNum(), score, game.Table.GetRoomRate())
 	_ = user.User.SendMsg(int32(msg.S2CMsgType_RES_CAIJIN), &msg.S2CCaijin{
@@ -151,7 +150,7 @@ func (game *Game) ProcTestTool(buffer []byte, user *data.User) {
 		return
 	}
 	game.CheatConfig = config.GetLhdbConfig(game.user.Cheat)
-	fmt.Println("测试工具传过来的：", c2sMsg.Icon, c2sMsg.Count)
+	log.Traceln("测试工具传过来的：", c2sMsg.Icon, c2sMsg.Count)
 	game.IsTest = true
 	var i int32
 	game.InitIcons(true)
@@ -170,7 +169,7 @@ func (game *Game) ProcTestTool(buffer []byte, user *data.User) {
 		}
 	}
 BreakLoop:
-	fmt.Println("跳出循环")
+	log.Traceln("跳出循环")
 	game.PrintIcons()
 	for y, _ := range game.Icons {
 		for x, _ := range game.Icons[y] {

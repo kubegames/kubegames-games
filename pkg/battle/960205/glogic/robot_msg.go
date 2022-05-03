@@ -1,8 +1,9 @@
 package glogic
 
 import (
-	"go-game-sdk/example/game_MaJiang/960205/msg"
 	"math/rand"
+
+	"github.com/kubegames/kubegames-games/pkg/battle/960205/msg"
 
 	"github.com/kubegames/kubegames-sdk/pkg/log"
 

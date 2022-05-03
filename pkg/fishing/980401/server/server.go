@@ -35,14 +35,14 @@ func (self *Server) UserExit(user player.PlayerInterface) {
 
 //func (self *Server) Accept(cli inter.InteClient) {
 //	cli.Start(func(mainCmd int32, subCmd int32, buffer []byte) {
-//		fmt.Println("maincmd : ", mainCmd, "sub cmd : ", subCmd, " buffer : ", string(buffer))
+//		log.Traceln("maincmd : ", mainCmd, "sub cmd : ", subCmd, " buffer : ", string(buffer))
 //		if mainCmd != 2 {
-//			fmt.Println("框架消息，不处理")
+//			log.Traceln("框架消息，不处理")
 //			return
 //		}
 //		switch msg2.MsgId(subCmd) {
 //		//case msg2.MsgId_INTO_ROOM_Req:
-//		//	fmt.Println("进入房间")
+//		//	log.Traceln("进入房间")
 //		//	testMsg := &msg2.EnterRoomReq{}
 //		//	err := proto.Unmarshal(buffer, testMsg)
 //		//	if err != nil {
@@ -52,7 +52,7 @@ func (self *Server) UserExit(user player.PlayerInterface) {
 //		//		procIntoRoom(cli, testMsg)
 //		//	}
 //		case msg2.MsgId_SHOOT_Req:
-//			fmt.Println("射击")
+//			log.Traceln("射击")
 //			testMsg := &msg2.ShootReq{}
 //			if err := proto.Unmarshal(buffer, testMsg); err != nil {
 //				cli.SendMsgToClinet([]byte(err.Error()))
@@ -60,7 +60,7 @@ func (self *Server) UserExit(user player.PlayerInterface) {
 //			}
 //			shoot(cli, testMsg)
 //		//case msg2.MsgId_EXIST_ROOM_Req:
-//		//	fmt.Println("退出")
+//		//	log.Traceln("退出")
 //		//	testMsg := &msg2.ExistRoomReq{}
 //		//	if err := proto.Unmarshal(buffer, testMsg); err != nil {
 //		//		cli.SendMsgToClinet([]byte(err.Error()))
@@ -69,7 +69,7 @@ func (self *Server) UserExit(user player.PlayerInterface) {
 //		//	procLeaveTable(cli, testMsg)
 //
 //		case msg2.MsgId_HIT_Req:
-//			fmt.Println("击中")
+//			log.Traceln("击中")
 //			testMsg := &msg2.HitReq{}
 //			if err := proto.Unmarshal(buffer, testMsg); err != nil {
 //				cli.SendMsgToClinet([]byte(err.Error()))
@@ -78,7 +78,7 @@ func (self *Server) UserExit(user player.PlayerInterface) {
 //			hit(cli, testMsg)
 //
 //		default:
-//			fmt.Println("非法游戏协议: ", subCmd)
+//			log.Traceln("非法游戏协议: ", subCmd)
 //			cli.SendMsgToClinet([]byte("非法游戏协议"))
 //		}
 //
@@ -95,7 +95,7 @@ func (self *Server) UserExit(user player.PlayerInterface) {
 //*测试服务端代码
 // */
 //func StartServer(port int, maxConn int32, heartBeat int) {
-//	fmt.Println("ws监听端口：", port)
+//	log.Traceln("ws监听端口：", port)
 //	ser := &Server{}
 //	server := libnet.NewServer(port, maxConn, heartBeat, ser)
 //	go func() {

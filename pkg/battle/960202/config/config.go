@@ -2,7 +2,6 @@ package conf
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 
 	"github.com/kubegames/kubegames-sdk/pkg/log"
@@ -98,7 +97,7 @@ func (conf *BankerNiuniuConfig) LoadBankerNiuniuCfg() {
 func (robotCfg *RobotConfig) LoadRobotCfg() {
 	data, err := ioutil.ReadFile("conf/robot.json")
 	if err != nil {
-		fmt.Println("File reading error", err)
+		log.Traceln("File reading error", err)
 		return
 	}
 	//去除配置文件中的注释

@@ -10,11 +10,11 @@ import (
 	"time"
 
 	"github.com/golang/protobuf/proto"
+	"github.com/kubegames/kubegames-games/internal/pkg/score"
 	"github.com/kubegames/kubegames-games/pkg/fishing/yaoqianshubuyu/config"
 	"github.com/kubegames/kubegames-games/pkg/fishing/yaoqianshubuyu/data"
 	"github.com/kubegames/kubegames-games/pkg/fishing/yaoqianshubuyu/msg"
 	"github.com/kubegames/kubegames-games/pkg/fishing/yaoqianshubuyu/tools"
-	"github.com/kubegames/kubegames-games/pkg/score"
 	"github.com/kubegames/kubegames-sdk/app/message"
 	"github.com/kubegames/kubegames-sdk/pkg/log"
 	"github.com/kubegames/kubegames-sdk/pkg/player"
@@ -2282,7 +2282,7 @@ func (table *TableLogic) addRobot() {
 
 	err := table.Table.GetRobot(1, int64(config.GetFishBet(table.Table.GetAdviceConfig(), 1))*1000, int64(config.GetFishBet(table.Table.GetAdviceConfig(), 10))*10000)
 	if err != nil {
-		fmt.Println("GET robot err", err)
+		log.Traceln("GET robot err", err)
 	}
 }
 

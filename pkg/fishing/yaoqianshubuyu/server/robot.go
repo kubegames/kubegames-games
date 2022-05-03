@@ -5,10 +5,10 @@ import (
 	"time"
 
 	"github.com/golang/protobuf/proto"
+	"github.com/kubegames/kubegames-games/internal/pkg/rand"
 	"github.com/kubegames/kubegames-games/pkg/fishing/yaoqianshubuyu/config"
 	"github.com/kubegames/kubegames-games/pkg/fishing/yaoqianshubuyu/msg"
 	"github.com/kubegames/kubegames-games/pkg/fishing/yaoqianshubuyu/tools"
-	"github.com/kubegames/kubegames-games/pkg/rand"
 	"github.com/kubegames/kubegames-sdk/pkg/log"
 	"github.com/kubegames/kubegames-sdk/pkg/player"
 	"github.com/kubegames/kubegames-sdk/pkg/table"
@@ -40,7 +40,7 @@ func NewRobot(table table.TableInterface) *Robot {
 	robot := &Robot{}
 	//err := table.GetRobot()
 	//if err != nil {
-	//	fmt.Println(err)
+	//	log.Traceln(err)
 	//	return nil
 	//}
 	robot.Table = table

@@ -73,21 +73,21 @@ func (user *User) GetUserMsgInfo(isLastRoundFirstUid bool) *msg.S2CUserInfo {
 func (ai *User) InitAiCharacter(gameConfig config.GameConfig) {
 	time.AfterFunc(10*time.Millisecond, func() {
 		if rand2.RateToExec(gameConfig.AiJiJin) {
-			//fmt.Println("激进行机器人")
+			//log.Traceln("激进行机器人")
 			ai.AiCharacter = config.AiConfigArr[1]
 			return
 		}
 		if rand2.RateToExecWithIn(gameConfig.AiTouJi, gameConfig.AiTouJi+gameConfig.AiZhengChang+gameConfig.AiWenZhong) {
-			//fmt.Println("投机行机器人")
+			//log.Traceln("投机行机器人")
 			ai.AiCharacter = config.AiConfigArr[3]
 			return
 		}
 		if rand2.RateToExecWithIn(gameConfig.AiWenZhong, gameConfig.AiWenZhong+gameConfig.AiZhengChang) {
-			//fmt.Println("稳重行机器人")
+			//log.Traceln("稳重行机器人")
 			ai.AiCharacter = config.AiConfigArr[2]
 			return
 		} else {
-			//fmt.Println("正常行机器人")
+			//log.Traceln("正常行机器人")
 			ai.AiCharacter = config.AiConfigArr[0]
 			return
 		}
@@ -171,7 +171,7 @@ func (user *User) SetCheatByChair(prob int32) {
 		}
 	}
 
-	//fmt.Println("user : ",user.Id,"作弊率： ",user.CheatRate)
+	//log.Traceln("user : ",user.Id,"作弊率： ",user.CheatRate)
 }
 
 //是否含有某张牌

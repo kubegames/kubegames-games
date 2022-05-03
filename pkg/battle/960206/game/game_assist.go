@@ -5,10 +5,9 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/kubegames/kubegames-games/pkg/battle/960206/config"
 	"github.com/kubegames/kubegames-sdk/pkg/log"
 	"github.com/kubegames/kubegames-sdk/pkg/player"
-
-	"github.com/kubegames/kubegames-games/pkg/battle/960206/config"
 )
 
 type SettleResult struct {

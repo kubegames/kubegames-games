@@ -2,11 +2,11 @@ package xiaomali
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"strconv"
 
 	"github.com/bitly/go-simplejson"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 	"github.com/sipt/GoJsoner"
 )
 
@@ -46,8 +46,7 @@ func (xml *XiaoMaLiCfg) analysiscfg(json_str string) {
 	//使用简单json来解析。
 	res, err := simplejson.NewJson([]byte(json_str))
 	if err != nil {
-		fmt.Println("XiaoMaLiCfg", json_str)
-		fmt.Printf("%v\n", err)
+		log.Warnf("analysiscfg %s error %s", json_str, err.Error())
 		return
 	}
 

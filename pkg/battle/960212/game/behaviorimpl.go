@@ -1,12 +1,13 @@
 package game
 
 import (
-	"common/log"
 	"common/rand"
 	"fmt"
 	"reflect"
 	"strings"
 	"time"
+
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 
 	"github.com/antonmedv/expr"
 	b3 "github.com/magicsea/behavior3go"
@@ -26,7 +27,7 @@ func fillEnv(env map[string]interface{}, robot robot) map[string]interface{} {
 	typeOfType := ref.Type()
 	for i := 0; i < ref.NumField(); i++ {
 		field := ref.Field(i)
-		//fmt.Println(typeOfType.Field(i).Name)
+		//log.Traceln(typeOfType.Field(i).Name)
 		env[typeOfType.Field(i).Name] = field.Interface()
 	}
 	return env

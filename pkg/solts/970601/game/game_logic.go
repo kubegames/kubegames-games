@@ -7,6 +7,7 @@ import (
 	"go-game-sdk/example/game_LaBa/970601/msg"
 
 	"github.com/kubegames/kubegames-games/internal/pkg/score"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 
 	"github.com/golang/protobuf/proto"
 )
@@ -30,11 +31,11 @@ func (game *Game) StartGame() {
 		game.Table.WriteLogs(0, "系统作弊率为0，使用1000作为系统作弊率")
 		rc = 1000
 	}
-	fmt.Println("用户作弊率222222：", game.user.Cheat, "房间作弊率：", rc, "用户投入：", game.user.TotalInvestForCount, "收益：", game.user.TotalWin)
+	log.Traceln("用户作弊率222222：", game.user.Cheat, "房间作弊率：", rc, "用户投入：", game.user.TotalInvestForCount, "收益：", game.user.TotalWin)
 	game.CheatConfig = config.GetLhdbConfig(game.user.Cheat)
-	//fmt.Println("游戏作弊率配置：",fmt.Sprintf(`%+v`,game.CheatConfig))
+	//log.Traceln("游戏作弊率配置：",fmt.Sprintf(`%+v`,game.CheatConfig))
 	game.user.CaijinBase += game.Bottom * game.BottomCount
-	//fmt.Println("StartGame ::: ",fmt.Sprintf(`%+v`,game.CheatConfig))
+	//log.Traceln("StartGame ::: ",fmt.Sprintf(`%+v`,game.CheatConfig))
 	//初始化图标数组
 	if !game.IsTest {
 		game.InitIcons(true)
@@ -75,13 +76,13 @@ func (game *Game) StartGame() {
 		game.CurBoxNum = global.TOTAL_BOX_COUNT
 	}
 	game.EndGameInfo.NextLevel = game.level
-	//fmt.Println("开始游戏耗时：", time.Now().Sub(t1))
-	//fmt.Println("-----------------")
-	//fmt.Println("topIcons: ", game.EndGameInfo.TopIcons)
-	//fmt.Println("score : ", game.EndGameInfo.Score)
+	//log.Traceln("开始游戏耗时：", time.Now().Sub(t1))
+	//log.Traceln("-----------------")
+	//log.Traceln("topIcons: ", game.EndGameInfo.TopIcons)
+	//log.Traceln("score : ", game.EndGameInfo.Score)
 	game.EndGame()
 	//game.PrintIcons()
-	//fmt.Println("arr topIcons: ",game.EndGameInfo.AllWinInfoArr[0].TopIcons)
+	//log.Traceln("arr topIcons: ",game.EndGameInfo.AllWinInfoArr[0].TopIcons)
 }
 
 //结算玩家赢钱，并上分
@@ -89,12 +90,12 @@ func (game *Game) EndGame() {
 	winSerial := 0
 	logStr := fmt.Sprintf(`第%d关，用户id：%d，投入金额：%.2f`, game.level, game.user.User.GetID(), float64(game.Bottom*game.BottomCount)/100)
 	for _, v := range game.EndGameInfo.AllWinInfoArr {
-		//fmt.Println("-----------第", v.Serial, "中奖-----------")
+		//log.Traceln("-----------第", v.Serial, "中奖-----------")
 		if v.DisappearInfoArr[0].Count >= 4 {
 			winSerial++
 		}
 		for _, dInfo := range v.DisappearInfoArr {
-			//fmt.Println("        -----------中奖数量：", dInfo.Count, "中奖金额：", dInfo.WinScore, "消除的图标：", dInfo.WinAxis[0].Value)
+			//log.Traceln("        -----------中奖数量：", dInfo.Count, "中奖金额：", dInfo.WinScore, "消除的图标：", dInfo.WinAxis[0].Value)
 			logStr += fmt.Sprintf(`中奖物品：%s，相连%d，赢得金额:%.2f / `, game.getIconName(dInfo.WinAxis[0].Value), dInfo.Count, float64(dInfo.WinScore)/100)
 		}
 	}
@@ -108,7 +109,7 @@ func (game *Game) EndGame() {
 		logStr += " 被点控"
 	}
 
-	//fmt.Println("总中奖金额：",game.EndGameInfo.WinScore,"中奖次数：",winSerial,totalSerial)
+	//log.Traceln("总中奖金额：",game.EndGameInfo.WinScore,"中奖次数：",winSerial,totalSerial)
 	//game.user.TotalWinNoKey = game.user.TotalWinNoKey + winSerial
 	game.user.TotalWinSerial += winSerial
 	//---------统计信息---------
@@ -171,13 +172,13 @@ func (game *Game) EndGame() {
 			game.BottomCount*game.Bottom, 0, 0, "") //1月15新加的据结束，用户离开调用
 	}
 	logStr += " 玩家余额：" + score.GetScoreStr(game.user.User.GetScore())
-	//fmt.Println("日志：：：", logStr)
+	//log.Traceln("日志：：：", logStr)
 	game.Table.WriteLogs(game.user.User.GetID(), logStr)
 	game.TriggerHorseLamp(game.EndGameInfo.WinScore)
 
 	game.EndGameInfo.Score = game.user.User.GetScore()
 	game.EndGameInfo.TotalInvest = game.TotalInvest
-	//fmt.Println("投入：",game.EndGameInfo.TotalInvest,"产出：",game.EndGameInfo.WinScore,game.EndGameInfo.WinScore,game.Bottom,game.BottomCount)
+	//log.Traceln("投入：",game.EndGameInfo.TotalInvest,"产出：",game.EndGameInfo.WinScore,game.EndGameInfo.WinScore,game.Bottom,game.BottomCount)
 	_ = game.user.User.SendMsg(int32(msg.S2CMsgType_END_GAME_RES), game.EndGameInfo)
 	//踢掉用户，重置牌桌
 	game.EndGameInfo = nil

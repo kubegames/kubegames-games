@@ -25,7 +25,6 @@ type User struct {
 }
 
 const (
-
 	// 系统角色
 	SysRolePlayer = "玩家"  // 玩家
 	SysRoleRobot  = "机器人" // 机器人
@@ -38,6 +37,5 @@ func (user *User) GetSysRole() (SysRole string) {
 	if user.User.IsRobot() {
 		SysRole = SysRoleRobot
 	}
-
 	return
 }

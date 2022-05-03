@@ -1,9 +1,7 @@
 package frameinter
 
 import (
-	"game_poker/pai9/game"
-
-	"github.com/kubegames/kubegames-sdk/pkg/player"
+	"github.com/kubegames/kubegames-games/pkg/battle/960211/game"
 	"github.com/kubegames/kubegames-sdk/pkg/table"
 )
 
@@ -14,7 +12,4 @@ type Pai9Room struct {
 func (lhRoom *Pai9Room) InitTable(table table.TableInterface) {
 	game := game.NewGame(table)
 	table.Start(game, nil, nil)
-}
-
-func (lhRoom *Pai9Room) UserExit(user player.PlayerInterface) {
 }

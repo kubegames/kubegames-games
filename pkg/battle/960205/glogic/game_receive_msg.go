@@ -1,14 +1,10 @@
 package glogic
 
 import (
-	"fmt"
-	"go-game-sdk/example/game_MaJiang/960205/msg"
-	"go-game-sdk/sdk/global"
-
+	"github.com/golang/protobuf/proto"
+	"github.com/kubegames/kubegames-games/pkg/battle/960205/msg"
 	"github.com/kubegames/kubegames-sdk/pkg/log"
 	"github.com/kubegames/kubegames-sdk/pkg/player"
-
-	"github.com/golang/protobuf/proto"
 )
 
 // ReceiveMsgRobBtnEnd 接收用户按下抢庄按钮消息
@@ -144,19 +140,17 @@ func (game *ErBaGangGame) deposit(buffer []byte, userInter player.PlayerInterfac
 }
 
 func (game *ErBaGangGame) test(buffer []byte, userInter player.PlayerInterface) {
-	if global.GConfig.Runmode != "dev" {
-		return
-	}
-	req := &msg.TestResp{}
-	proto.Unmarshal(buffer, req)
-	fmt.Println(req)
-	if len(req.GetCards()) != 40 {
-		return
-	}
-	cards := make([]byte, 0)
-	for _, v := range req.GetCards() {
-		cards = append(cards, byte(v))
-	}
-	fmt.Println(cards)
-	game.GamePoker.Cards = cards
+	return
+	// req := &msg.TestResp{}
+	// proto.Unmarshal(buffer, req)
+	// fmt.Println(req)
+	// if len(req.GetCards()) != 40 {
+	// 	return
+	// }
+	// cards := make([]byte, 0)
+	// for _, v := range req.GetCards() {
+	// 	cards = append(cards, byte(v))
+	// }
+	// fmt.Println(cards)
+	// game.GamePoker.Cards = cards
 }

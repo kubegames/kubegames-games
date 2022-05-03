@@ -3,7 +3,6 @@ package game
 import (
 	"common/dynamic"
 	"container/list"
-	"fmt"
 	"game_buyu/rob_red/config"
 	"game_buyu/rob_red/data"
 	"game_buyu/rob_red/global"
@@ -13,6 +12,7 @@ import (
 	"time"
 
 	"github.com/golang/protobuf/proto"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 	"github.com/kubegames/kubegames-sdk/pkg/table"
 )
 
@@ -95,7 +95,7 @@ func (game *Game) SetUserList(userInter *data.User) {
 		game.userList.PushBack(userInter)
 	}
 
-	//fmt.Println("开头用户：",game.userList.Front().Value.(*data.User).Id)
+	//log.Traceln("开头用户：",game.userList.Front().Value.(*data.User).Id)
 
 }
 func (game *Game) GetUserList(uid int64) *data.User {
@@ -140,7 +140,7 @@ func (game *Game) DelRedListMap(red *Red) {
 		for e := game.userList.Front(); e != nil; e = e.Next() {
 			user := e.Value.(*data.User)
 			if !user.IsAi {
-				//fmt.Println("红包消失id：", red.Id)
+				//log.Traceln("红包消失id：", red.Id)
 				if err := user.User.SendMsg(global.S2C_RED_DISAPPEAR, &msg.S2CRedDisappear{
 					RedId: red.Id, Level: red.level, IsRobbed: user.IsRobbedRed(red.Id), IsOtherRobbed: game.IsOtherRobbed(red.Id, user.User.GetId()),
 				}); err != nil {
@@ -155,7 +155,7 @@ func (game *Game) DelRedListMap(red *Red) {
 func (game *Game) IsOtherRobbed(redId, uid int64) bool {
 	game.robRedUserLock.Lock()
 	if game.robRedUserArrMap[redId] == nil || len(game.robRedUserArrMap[redId]) == 0 {
-		fmt.Println("robRedUserArrMap[redId] 为空 ")
+		log.Traceln("robRedUserArrMap[redId] 为空 ")
 		game.robRedUserLock.Unlock()
 		return false
 	}
@@ -241,9 +241,9 @@ func (game *Game) GetRoomBaseInfo2C(userSelf *data.User) *msg.S2CRoomBaseInfo {
 	}
 	info.RedConfig = &msg.S2CRedConfigInfo{Odds: config.RedConfig.Odds, Count: config.RedConfig.Count, Amount: game.sendAmount, SpaceAmount: config.RedConfig.SpaceAmount}
 	info.UserCount = int64(game.userList.Len())
-	//fmt.Println("玩家人数：", info.UserCount)
-	//fmt.Println("当前显示红包长度：", game.curShowRedList.Len())
-	//fmt.Println("返回给客户端的红包：", info.RedArr)
+	//log.Traceln("玩家人数：", info.UserCount)
+	//log.Traceln("当前显示红包长度：", game.curShowRedList.Len())
+	//log.Traceln("返回给客户端的红包：", info.RedArr)
 	return info
 }
 
@@ -252,9 +252,9 @@ func (game *Game) BroadNoAi(subCmd int32, pb proto.Message) {
 	for e := game.userList.Front(); e != nil; e = e.Next() {
 		user := e.Value.(*data.User)
 		if !user.IsAi {
-			//fmt.Println("给玩家：",user.User.GetId(),"发送消息6")
+			//log.Traceln("给玩家：",user.User.GetId(),"发送消息6")
 			if err := user.User.SendMsg(subCmd, pb); err != nil {
-				//fmt.Println("BroadNoSelf err : ", err)
+				//log.Traceln("BroadNoSelf err : ", err)
 				//continue
 			}
 		}
@@ -299,14 +299,14 @@ func (game *Game) goGameTimer() {
 	//for {
 	//	select {
 	//	case <-lockRedTicker.C:
-	//		//fmt.Println("每秒检查lockRedMap : ",game.lockRedMap)
+	//		//log.Traceln("每秒检查lockRedMap : ",game.lockRedMap)
 	//		game.lockRedLock.Lock()
 	//		for uid, red := range game.lockRedMap {
 	//			user := game.GetUserList(uid)
 	//			if user != nil && red != nil && red.RobbedCount < red.RedFlood {
 	//				game.sendUserLockRedInfo(user, red)
 	//			} else {
-	//				//fmt.Println(" red : ", fmt.Sprintf(`%v`, red))
+	//				//log.Traceln(" red : ", fmt.Sprintf(`%v`, red))
 	//			}
 	//		}
 	//		game.lockRedLock.Unlock()
@@ -327,12 +327,12 @@ func (game *Game) goGameTimer() {
 
 //检查机器人金额不足就踢出
 func (game *Game) CheckKickRobot() {
-	//fmt.Println(game.Table.GetLevel(),game.RobotScore)
+	//log.Traceln(game.Table.GetLevel(),game.RobotScore)
 	for e := game.userList.Front(); e != nil; e = e.Next() {
 		user := e.Value.(*data.User)
 		if user.User.IsRobot() && (user.User.GetScore() < game.RobotScore[0] || user.User.GetScore() > game.RobotScore[1]) {
 			if game.Table.GetLevel() == 1 {
-				fmt.Println("初级场 。。。 CheckKickRobot robot,机器人金额： ", user.User.GetScore(), "配置金额：", game.RobotScore)
+				log.Traceln("初级场 。。。 CheckKickRobot robot,机器人金额： ", user.User.GetScore(), "配置金额：", game.RobotScore)
 			}
 			red := game.GetRedFromListByUid(user.User.GetId())
 			if red != nil {
@@ -358,10 +358,10 @@ func (game *Game) tickerCheckKickOut() {
 	//t1 := time.Now()
 	for e := game.userList.Front(); e != nil; e = e.Next() {
 		user := e.Value.(*data.User)
-		//fmt.Println("table id : ",game.Table.GetId(),"user id ::: ",user.User.GetId())
+		//log.Traceln("table id : ",game.Table.GetId(),"user id ::: ",user.User.GetId())
 		if time.Now().Sub(user.LastRobTime) > 3*time.Minute && game.GetRedFromListByUid(user.User.GetId()) == nil {
 			//if !user.User.IsRobot()  {
-			//fmt.Println("用户3分钟没发言，踢掉", user.User.GetId(), " 上一次发言：", user.LastRobTime, "是否机器人：", user.User.IsRobot())
+			//log.Traceln("用户3分钟没发言，踢掉", user.User.GetId(), " 上一次发言：", user.LastRobTime, "是否机器人：", user.User.IsRobot())
 			//}
 			//game.DelLockListMap(user.User.GetId())
 			game.BroadNoAi(global.S2C_LEAVE_TABLE, &msg.S2CKickOutUser{Uid: user.User.GetId(), Reason: global.KICKOUT_TIME_OUT})
@@ -370,12 +370,12 @@ func (game *Game) tickerCheckKickOut() {
 			//game.DelUserList(user.User.GetId())
 		}
 	}
-	//fmt.Println("table id : ",game.Table.GetId(),"执行时间：",time.Now().Sub(t1))
+	//log.Traceln("table id : ",game.Table.GetId(),"执行时间：",time.Now().Sub(t1))
 }
 
 //每秒给锁定了红包的用户发消息
 func (game *Game) sendUserLockRedInfo(user *data.User, red *Red) {
-	//fmt.Println("给user : ", user.Id, " 发送红包 ：", red.Id, "  血量：", red.RedFlood, "已抢：", red.RobbedCount)
+	//log.Traceln("给user : ", user.Id, " 发送红包 ：", red.Id, "  血量：", red.RedFlood, "已抢：", red.RobbedCount)
 	if err := user.User.SendMsg(global.S2C_RED_INFO, &msg.S2CRedFlood{
 		RedId: red.Id, RedFlood: red.RedFlood, RobbedCount: red.RobbedCount, Level: red.level,
 	}); err != nil {
@@ -395,14 +395,14 @@ func (game *Game) SendRedFromWaitList() {
 			game.waitSendRedList.Remove(game.waitSendRedList.Front())
 		}
 
-		//fmt.Println("给",red.sender.User.GetId(),"发送消息15   ",game.GetBeforeSelfRedCount(red.sender.User.GetId()))
+		//log.Traceln("给",red.sender.User.GetId(),"发送消息15   ",game.GetBeforeSelfRedCount(red.sender.User.GetId()))
 		if err := red.sender.User.SendMsg(global.S2C_RED_WAIT_SEND, &msg.S2CRedWaitSend{Count: game.GetBeforeSelfRedCount(red.sender.User.GetId())}); err != nil {
-			fmt.Println("发送失败，err ： ", err)
+			log.Traceln("发送失败，err ： ", err)
 		}
 	}
-	//fmt.Println("------------11-----------",time.Now().Sub(t1))
+	//log.Traceln("------------11-----------",time.Now().Sub(t1))
 	for e := game.waitSendRedList.Front(); e != nil; e = e.Next() {
-		//fmt.Println("发送消息15 ",red.sender.User.GetId()," 数量：",game.GetBeforeSelfRedCount(red.sender.User.GetId()))
+		//log.Traceln("发送消息15 ",red.sender.User.GetId()," 数量：",game.GetBeforeSelfRedCount(red.sender.User.GetId()))
 		red := e.Value.(*Red)
 		if !red.sender.IsSendWaitMsg {
 			if err := red.sender.User.SendMsg(global.S2C_RED_WAIT_SEND, &msg.S2CRedWaitSend{Count: game.GetBeforeSelfRedCount(red.sender.User.GetId())}); err != nil {
@@ -414,16 +414,16 @@ func (game *Game) SendRedFromWaitList() {
 		user := e.Value.(*data.User)
 		user.IsSendWaitMsg = false
 	}
-	//fmt.Println("------------22-----------",time.Now().Sub(t1))
+	//log.Traceln("------------22-----------",time.Now().Sub(t1))
 }
 
 func (game *Game) checkData() {
 	//检查数据是否过期
 	for e := game.userList.Front(); e != nil; e = e.Next() {
 		user := e.Value.(*data.User)
-		//fmt.Println("user ：",user.Id,"发包条数：",len(user.SendRedList))
-		//fmt.Println("user ：",user.Id,"抢包条数：",len(user.RobbedList))
-		//fmt.Println("user ：",user.Id,"中雷条数：",len(user.MineList))
+		//log.Traceln("user ：",user.Id,"发包条数：",len(user.SendRedList))
+		//log.Traceln("user ：",user.Id,"抢包条数：",len(user.RobbedList))
+		//log.Traceln("user ：",user.Id,"中雷条数：",len(user.MineList))
 		for i := 0; i < len(user.SendRedList); {
 			if time.Now().Unix()-user.SendRedList[i].Time > 60*60*24 {
 				user.SendRedList = append(user.SendRedList[:i], user.SendRedList[i+1:]...)
@@ -485,7 +485,7 @@ func (game *Game) SortUserList(oldList *list.List) (newList *list.List) {
 			newList.PushBack(v.Value.(*data.User))
 		}
 	}
-	//fmt.Println("排序耗时>>>", time.Now().Sub(t1))
+	//log.Traceln("排序耗时>>>", time.Now().Sub(t1))
 	return newList
 }
 
@@ -520,10 +520,10 @@ func (game *Game) HasRed(user *data.User) bool {
 
 //没抢完的红包退还给用户
 func (game *Game) GiveBackToUser(red *Red) {
-	fmt.Println("红包没抢完，退回：", red.sender.User.GetId(), "红包金额：", red.Amount)
+	log.Traceln("红包没抢完，退回：", red.sender.User.GetId(), "红包金额：", red.Amount)
 	//红包退回 添加打码量 被抢走的金额
 	if !red.sender.User.IsRobot() {
-		fmt.Println("红包没抢完，退回，打码量：", red.OriginAmount-red.Amount, " 红包id：", red.Id, " 发包者id：", red.sender.User.GetId())
+		log.Traceln("红包没抢完，退回，打码量：", red.OriginAmount-red.Amount, " 红包id：", red.Id, " 发包者id：", red.sender.User.GetId())
 	}
 	//robbedAmount := red.OriginAmount - red.Amount
 	//red.sender.BetsAmount += robbedAmount

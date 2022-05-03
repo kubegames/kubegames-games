@@ -11,11 +11,11 @@ func (game *Game) AddUserIntoTable(user *data.User) (isDised bool) {
 	if game.GetUserListMap(user.User.GetID()) == nil {
 		user.InTableCount = 0
 		game.SetUserListMap(user)
-		//fmt.Println("user list : ",game.userListArr)
+		//log.Traceln("user list : ",game.userListArr)
 		//设置椅子号
 		game.SetCurUserChairId(user)
 	} else {
-		//fmt.Println("被分配过")
+		//log.Traceln("被分配过")
 		isDised = true
 	}
 	return

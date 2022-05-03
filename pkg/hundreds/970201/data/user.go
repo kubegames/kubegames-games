@@ -2,7 +2,6 @@ package data
 
 import (
 	"common/page"
-	"fmt"
 	"game_buyu/rob_red/config"
 	"game_buyu/rob_red/global"
 	"game_buyu/rob_red/msg"
@@ -10,6 +9,7 @@ import (
 	"math/rand"
 	"time"
 
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 	"github.com/kubegames/kubegames-sdk/pkg/player"
 	"github.com/kubegames/kubegames-sdk/pkg/table"
 )
@@ -79,7 +79,7 @@ func (user *User) RandInt(min, max int) int {
 //传入指定概率，然后返回是否执行  比如 rate：90 表示有90%的概率要执行
 func (user *User) RateToExec(rate int) bool {
 	r := user.RandInt(1, 100)
-	//fmt.Println("随机数r : ",r)
+	//log.Traceln("随机数r : ",r)
 	if r < rate {
 		return true
 	}
@@ -89,7 +89,7 @@ func (user *User) RateToExec(rate int) bool {
 //从max中随机去一个数，看是否小于rate
 func (user *User) RateToExecWithIn(rate, max int) bool {
 	r := user.RandInt(1, max)
-	//fmt.Println("随机数r : ", r)
+	//log.Traceln("随机数r : ", r)
 	if r < rate {
 		return true
 	}
@@ -113,7 +113,7 @@ func (user *User) AddSendRedRecord(record *msg.S2CSendRedRecord) {
 func (user *User) ChangeUserSendRedStatus(redId int64, status int32) {
 	for _, v := range user.SendRedList {
 		if v.RedId == redId {
-			//fmt.Println("更改红包status")
+			//log.Traceln("更改红包status")
 			v.Status = status
 			break
 		}
@@ -137,7 +137,7 @@ func (user *User) AddMineRecord(record *msg.S2CMinRecord) {
 }
 
 func (user *User) GetSendRedRecord(pageIndex, pageSize int) *msg.S2CSendRedRecordArr {
-	//fmt.Println("user : ", user.Id, " 发包 index :", pageIndex, "size : ", pageSize, " total : ", len(user.SendRedList))
+	//log.Traceln("user : ", user.Id, " 发包 index :", pageIndex, "size : ", pageSize, " total : ", len(user.SendRedList))
 	res := new(msg.S2CSendRedRecordArr)
 	res.RedArr = make([]*msg.S2CSendRedRecord, 0)
 	pager := page.NewPager(pageIndex, pageSize, len(user.SendRedList))
@@ -153,12 +153,12 @@ func (user *User) GetSendRedRecord(pageIndex, pageSize int) *msg.S2CSendRedRecor
 	res.Total = int64(pager.Total)
 	res.Pages = int32(pager.Pages)
 	for _, v := range user.SendRedList {
-		//fmt.Println("红包id：",v.RedId," origin amount: ",v.OriginAmount)
+		//log.Traceln("红包id：",v.RedId," origin amount: ",v.OriginAmount)
 		res.TotalAmount += v.RedAmount
 	}
-	fmt.Println("res total : ", res.TotalAmount)
+	log.Traceln("res total : ", res.TotalAmount)
 	res.TotalCount = int64(len(user.SendRedList))
-	//fmt.Println("res ::: ", fmt.Sprintf(`%+v`, res))
+	//log.Traceln("res ::: ", fmt.Sprintf(`%+v`, res))
 	return res
 }
 
@@ -173,7 +173,7 @@ func (user *User) IsRobbedRed(redId int64) bool {
 }
 
 func (user *User) GetRobRedRecord(pageIndex, pageSize int) *msg.S2CRobbedRedInfoArr {
-	//fmt.Println("user : ", user.Id, "抢包：index :", pageIndex, "size : ", pageSize, " total : ", len(user.RobbedList))
+	//log.Traceln("user : ", user.Id, "抢包：index :", pageIndex, "size : ", pageSize, " total : ", len(user.RobbedList))
 	res := new(msg.S2CRobbedRedInfoArr)
 	res.RobbedArr = make([]*msg.S2CRobbedRedInfo, 0)
 	for i := pageIndex * pageSize; i < pageIndex*pageSize+pageSize; i++ {
@@ -190,12 +190,12 @@ func (user *User) GetRobRedRecord(pageIndex, pageSize int) *msg.S2CRobbedRedInfo
 	res.Pages = int32(pager.Pages)
 	res.TotalAmount = user.totalRobbedAmount
 	res.TotalCount = int64(len(user.RobbedList))
-	//fmt.Println("res ::: ", fmt.Sprintf(`%+v`, res))
+	//log.Traceln("res ::: ", fmt.Sprintf(`%+v`, res))
 	return res
 }
 
 func (user *User) GetMineRecord(pageIndex, pageSize int) *msg.S2CMinRecordArr {
-	//fmt.Println("user : ", user.Id, "抢包：index :", pageIndex, "size : ", pageSize, " total : ", len(user.MineList))
+	//log.Traceln("user : ", user.Id, "抢包：index :", pageIndex, "size : ", pageSize, " total : ", len(user.MineList))
 	res := new(msg.S2CMinRecordArr)
 	res.MineArr = make([]*msg.S2CMinRecord, 0)
 	for i := pageIndex * pageSize; i < pageIndex*pageSize+pageSize; i++ {
@@ -212,7 +212,7 @@ func (user *User) GetMineRecord(pageIndex, pageSize int) *msg.S2CMinRecordArr {
 	res.Pages = int32(pager.Pages)
 	res.TotalAmount = user.totalMineAmount
 	res.TotalCount = int64(len(user.MineList))
-	//fmt.Println("res ::: ", fmt.Sprintf(`%+v`, res))
+	//log.Traceln("res ::: ", fmt.Sprintf(`%+v`, res))
 	return res
 }
 

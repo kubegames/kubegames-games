@@ -1,6 +1,6 @@
 package poker
 
-import "fmt"
+import "github.com/kubegames/kubegames-sdk/pkg/log"
 
 var (
 	CardTypeBZ     = 8 //豹子
@@ -18,7 +18,7 @@ var (
 //比如 3、8、3、3、9，则返回 葫芦(cardType)，33389(排序之后的牌面值)
 func GetCardTypeJH(cards []byte) (cardType int, sortRes []byte) {
 	if len(cards) != 3 {
-		fmt.Println("金花牌型只能3张牌,现在有：",cards)
+		log.Traceln("金花牌型只能3张牌,现在有：", cards)
 		return
 	}
 	sortRes = sortCards(cards)
@@ -91,15 +91,13 @@ func isCardTypeSJ123(cards []byte, isSort bool) bool {
 		cards = sortCards(cards)
 	}
 
-
-
 	_, cc0 := GetCardValueAndColor(cards[0])
 	_, cc1 := GetCardValueAndColor(cards[1])
 	_, cc2 := GetCardValueAndColor(cards[2])
 	if cc0 != cc1 || cc0 != cc2 {
 		return false
 	}
-	return isCardTypeSZA23(cards,isSort)
+	return isCardTypeSZA23(cards, isSort)
 }
 
 //判断牌型是否为顺子
@@ -121,8 +119,8 @@ func isCardTypeSZA23(cards []byte, isSort bool) bool {
 	cv0, _ := GetCardValueAndColor(cards[0])
 	cv1, _ := GetCardValueAndColor(cards[1])
 	cv2, _ := GetCardValueAndColor(cards[2])
-	//fmt.Println(fmt.Sprintf(`%x %x %x`,cv0,cv1,cv2))
-	return cv0 == 0xe0 && cv1 == 0x30 && cv2==0x20
+	//log.Traceln(fmt.Sprintf(`%x %x %x`,cv0,cv1,cv2))
+	return cv0 == 0xe0 && cv1 == 0x30 && cv2 == 0x20
 }
 
 //判断牌型是否为对子
@@ -167,11 +165,11 @@ func SortCardsArrFromBig(cardsArr [][]byte) [][]byte {
 	return cardsArr
 }
 
-func IsCardsRepeat(cards []byte,cardsArr [][]byte) bool {
-	for _,v := range cardsArr {
-		for i := 0;i <len(cards);i++ {
-			c1 ,_ := GetCardValueAndColor(cards[i])
-			c2 ,_ := GetCardValueAndColor(v[i])
+func IsCardsRepeat(cards []byte, cardsArr [][]byte) bool {
+	for _, v := range cardsArr {
+		for i := 0; i < len(cards); i++ {
+			c1, _ := GetCardValueAndColor(cards[i])
+			c2, _ := GetCardValueAndColor(v[i])
 			if c1 != c2 {
 				return false
 			}

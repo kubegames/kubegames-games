@@ -1,7 +1,6 @@
 package game
 
 import (
-	"common/log"
 	"common/score"
 	"fmt"
 	"game_poker/BRTB/config"
@@ -9,6 +8,8 @@ import (
 	"math/rand"
 	"sort"
 	"time"
+
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 
 	"game_frame_v2/game/clock"
 
@@ -699,7 +700,7 @@ func (game *Game) getResult() {
 			tempi = 10
 		}
 	}
-	//fmt.Println("循环次数",tempi,"吃分",eat,"吐分",out)
+	//log.Traceln("循环次数",tempi,"吃分",eat,"吐分",out)
 	Count := int32(0)
 	BSWType := int32(0)
 	SDWType := int32(0)
@@ -1081,7 +1082,7 @@ func (game *Game) GetRoomconfig() {
 	game.Rule.SingleUserAllSpaceLimit = config.BRTBConfig.Singleuserallspacelimit5times[level-1]
 	game.Rule.AllSpaceLimit = config.BRTBConfig.Allspacelimit5times[level-1]
 	for i := 0; i < 25; i++ {
-		//fmt.Println(config.BRNNConfig.Singleusersinglespacelimit5times[level-1][3],config.BRNNConfig.Allusersinglespacelimit5times[level-1][i])
+		//log.Traceln(config.BRNNConfig.Singleusersinglespacelimit5times[level-1][3],config.BRNNConfig.Allusersinglespacelimit5times[level-1][i])
 		game.Rule.SingleUserSingleSpaceLimit[i] = config.BRTBConfig.Singleusersinglespacelimit5times[level-1][i]
 		game.Rule.AllUserSingleSpaceLimit[i] = config.BRTBConfig.Allusersinglespacelimit5times[level-1][i]
 	}
@@ -1089,14 +1090,14 @@ func (game *Game) GetRoomconfig() {
 		game.Rule.BetList = append(game.Rule.BetList, config.BRTBConfig.Chips5times[level-1][i])
 
 	}
-	//fmt.Println(level, RConfig.Line)
+	//log.Traceln(level, RConfig.Line)
 	game.Rule.RobotLine[0] = RConfig.Line[level-1][0]
 	game.Rule.RobotLine[1] = RConfig.Line[level-1][1]
 	game.Rule.RobotLine[2] = RConfig.Line[level-1][2]
 	game.Rule.RobotLine[3] = RConfig.Line[level-1][3]
 	game.Rule.UserBetLimit = game.Rule.SingleUserAllSpaceLimit
-	//fmt.Println("=====", game.Rule.RobotLine)
-	//fmt.Println(game.Rule.BetList,":",game.Rule.SingleUserSingleSpaceLimit,":",game.Rule.SingleUserAllSpaceLimit,":",game.Rule.AllUserSingleSpaceLimit,":",game.Rule.AllSpaceLimit)
+	//log.Traceln("=====", game.Rule.RobotLine)
+	//log.Traceln(game.Rule.BetList,":",game.Rule.SingleUserSingleSpaceLimit,":",game.Rule.SingleUserAllSpaceLimit,":",game.Rule.AllUserSingleSpaceLimit,":",game.Rule.AllSpaceLimit)
 }
 
 func (game *Game) SendRuleInfo(u player.PlayerInterface) {
@@ -1258,7 +1259,7 @@ func (game *Game) SetIcon() {
 	Millionaireid := int64(0)
 	mastid := int64(0)
 	var user []*model.User
-	//fmt.Println("chushihua ")
+	//log.Traceln("chushihua ")
 	for k, v := range game.CountUserList {
 		if k >= 6 {
 			break
@@ -1275,7 +1276,7 @@ func (game *Game) SetIcon() {
 	u, ok := game.AllUserList[Millionaireid]
 	if ok {
 		u.Icon = Millionaire
-		//fmt.Println("大赢家", u.User.GetId())
+		//log.Traceln("大赢家", u.User.GetId())
 	}
 	if len(user) == 1 {
 		return
@@ -1292,7 +1293,7 @@ func (game *Game) SetIcon() {
 	u1, ok1 := game.AllUserList[bigWinnerid]
 	if ok1 {
 		u1.Icon = bigWinner
-		//fmt.Println("大富豪",u1.User.GetId())
+		//log.Traceln("大富豪",u1.User.GetId())
 	}
 	//神算子1 胜率最高的 大赢家> 大富豪> 神算子
 	sort.Sort(model.MasterUser(user))
@@ -1305,7 +1306,7 @@ func (game *Game) SetIcon() {
 	u2, ok2 := game.AllUserList[mastid]
 	if ok2 {
 		u2.Icon = Master
-		//fmt.Println("神算子",u2.User.GetId())
+		//log.Traceln("神算子",u2.User.GetId())
 	}
 }
 

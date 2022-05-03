@@ -1,9 +1,10 @@
 package gamelogic
 
 import (
-	"common/log"
 	proto "game_LaBa/benzbmw/msg"
 	"game_frame_v2/game/inter"
+
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 
 	"github.com/kubegames/kubegames-sdk/pkg/player"
 	"github.com/kubegames/kubegames-sdk/pkg/table"

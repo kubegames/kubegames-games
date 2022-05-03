@@ -117,7 +117,7 @@ func (game *Blackjack) SetNestCurUser() {
 	// 下一个curUser
 	nextUser := CurUser{}
 
-	//fmt.Println(curUser.UserID)
+	//log.Traceln(curUser.UserID)
 
 	// 是否可继续操作
 	if user.HoldCards[betIndex].ActionPermit {
@@ -475,7 +475,7 @@ func (game *Blackjack) SettleDivision(userID int64) int64 {
 		log.Errorf("用户 %d 上下分查找不到当前用户")
 		return 0
 	}
-	_, profit := game.UserList[userID].User.SetScore(game.table.GetGameNum(), user.CurAmount-user.InitAmount, game.RoomCfg.TaxRate)
+	profit := game.UserList[userID].User.SetScore(game.table.GetGameNum(), user.CurAmount-user.InitAmount, game.RoomCfg.TaxRate)
 
 	// 有扣税操作，更新当前金额
 	if profit > 0 {

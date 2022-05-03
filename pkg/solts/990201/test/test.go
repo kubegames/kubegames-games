@@ -11,6 +11,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 	"github.com/sipt/GoJsoner"
 )
 
@@ -73,7 +74,7 @@ type testres struct {
 func (t *testconf) gettestconfig() {
 	data, err := ioutil.ReadFile("test.txt")
 	if err != nil {
-		fmt.Println("File reading error", err)
+		log.Traceln("File reading error", err)
 		return
 	}
 
@@ -152,14 +153,14 @@ func Test(lb *config.LabaConfig, xml *xiaomali.XiaoMaLiCfg, bbc *bibei.BiBeiConf
 			tres.littlegamefun(g.XiaoMaLiTimes)
 			odds := 0
 			//统计小玛丽
-			//fmt.Println("进入小玛丽")
+			//log.Traceln("进入小玛丽")
 			for {
 				odds += g.GetXiaoMaLiOdds(int64(tres.tc.cheatvalue))
 				if g.XiaoMaLiTimes <= 0 {
 					break
 				}
 			}
-			//fmt.Println("小玛丽跑完了小玛丽")
+			//log.Traceln("小玛丽跑完了小玛丽")
 			tres.littlegame(odds)
 		}
 

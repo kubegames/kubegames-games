@@ -12,6 +12,7 @@ import (
 
 	"github.com/bitly/go-simplejson"
 	"github.com/golang/protobuf/proto"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 	"github.com/kubegames/kubegames-sdk/pkg/table"
 	"github.com/sipt/GoJsoner"
 )
@@ -61,7 +62,7 @@ var RConfig RobotConfig
 func (rc *RobotConfig) LoadLabadCfg() {
 	data, err := ioutil.ReadFile("conf/robot.json")
 	if err != nil {
-		fmt.Println("File reading error", err)
+		log.Traceln("File reading error", err)
 		return
 	}
 	//去除配置文件中的注释

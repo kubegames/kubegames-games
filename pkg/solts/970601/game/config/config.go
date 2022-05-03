@@ -6,6 +6,7 @@ import (
 	"game_LaBa/lhdb/global"
 	"io/ioutil"
 
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 	"github.com/sipt/GoJsoner"
 	"github.com/tidwall/gjson"
 )
@@ -112,7 +113,7 @@ type IconConfigStruct struct {
 var IconConfig = new(IconConfigStruct)
 var IconScoreMap = make(map[int32]map[int32]int64) //种类、数量=>得分
 func InitIconScoreMap() {
-	//fmt.Println("InitIconScoreMap CaijinScore: ",IconConfig.CaijinScore)
+	//log.Traceln("InitIconScoreMap CaijinScore: ",IconConfig.CaijinScore)
 	//第一关 白玉
 	IconScoreMap[global.ICON_BAIYU] = make(map[int32]int64)
 	IconScoreMap[global.ICON_BAIYU][4] = IconConfig.Baiyu[0]
@@ -478,7 +479,7 @@ func InitIconScoreMap() {
 func LoadLhdbConfig() {
 	data, err := ioutil.ReadFile("./config/cheat.json")
 	if err != nil {
-		fmt.Println("File reading error", err)
+		log.Traceln("File reading error", err)
 		return
 	}
 	//去除配置文件中的注释
@@ -493,14 +494,14 @@ func LoadLhdbConfig() {
 	//作弊率配置文件
 	iconConfigData, err := ioutil.ReadFile("./config/icon.json")
 	if err != nil {
-		fmt.Println("gameConfigData reading error", err)
+		log.Traceln("gameConfigData reading error", err)
 		panic("")
 		return
 	}
 	iConConfigResult, _ := GoJsoner.Discard(string(iconConfigData))
 	err = json.Unmarshal([]byte(iConConfigResult), &IconConfig)
 	if err != nil {
-		fmt.Println("Load cheat_config.go file err: ", err.Error())
+		log.Traceln("Load cheat_config.go file err: ", err.Error())
 		panic("")
 		return
 	}
@@ -508,13 +509,13 @@ func LoadLhdbConfig() {
 
 	configData, err := ioutil.ReadFile("./config/config.json")
 	if err != nil {
-		fmt.Println("configData reading error", err)
+		log.Traceln("configData reading error", err)
 		panic("")
 	}
 	configResult, _ := GoJsoner.Discard(string(configData))
 	err = json.Unmarshal([]byte(configResult), &Config)
 	if err != nil {
-		fmt.Println("configResult cheat_config.go file err: ", err.Error())
+		log.Traceln("configResult cheat_config.go file err: ", err.Error())
 		panic("")
 	}
 }
@@ -543,7 +544,7 @@ func Analysiscfg(cfg gjson.Result, cheatvalue int) {
 	str := fmt.Sprintf("%v.MaxTimes", cheatvalue)
 	tmp.MaxTimes = int64(cfg.Get(str).Int())
 	str = fmt.Sprintf("%v.MaxDisCount", cheatvalue)
-	//fmt.Println("tmp.MaxTimes ",tmp.MaxTimes)
+	//log.Traceln("tmp.MaxTimes ",tmp.MaxTimes)
 	tmp.MaxDisCount = int(cfg.Get(str).Int())
 	str = fmt.Sprintf("%v.KeyRate", cheatvalue)
 	tmp.KeyRate = int(cfg.Get(str).Int())

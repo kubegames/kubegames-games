@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"math/rand"
 	_ "net/http/pprof"
@@ -10,12 +9,13 @@ import (
 
 	"github.com/kubegames/kubegames-games/pkg/battle/960201/config"
 	"github.com/kubegames/kubegames-games/pkg/battle/960201/game"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 	room "github.com/kubegames/kubegames-sdk/pkg/room/poker"
 	"github.com/sipt/GoJsoner"
 )
 
 func main() {
-	fmt.Println("version ### 2.0.29 ")
+	log.Traceln("version ### 2.0.29 ")
 	//初始化配置
 	initConfig()
 	//启动服务
@@ -40,7 +40,7 @@ func initConfig() {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println("ai config ： ", len(config.AiConfigArr))
+	log.Traceln("ai config ： ", len(config.AiConfigArr))
 
 	//游戏配置文件
 	gameConfigData, err := ioutil.ReadFile("./conf/game.json")
@@ -53,7 +53,7 @@ func initConfig() {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println("game config ： ", config.GameConfigArr[0].MinAction, config.GameConfigArr[1].MinAction, config.GameConfigArr[2].MinAction, config.GameConfigArr[3].MinAction)
+	log.Traceln("game config ： ", config.GameConfigArr[0].MinAction, config.GameConfigArr[1].MinAction, config.GameConfigArr[2].MinAction, config.GameConfigArr[3].MinAction)
 
 	//作弊率配置文件
 	cheatConfigData, err := ioutil.ReadFile("./conf/cheat.json")
@@ -68,7 +68,7 @@ func initConfig() {
 	if len(config.CheatConfigArr) != 4 {
 		panic("作弊率的配置文件必须为2个，最大和第二大")
 	}
-	fmt.Println("作弊率：", config.CheatConfigArr[0].MustLoseRate)
+	log.Traceln("作弊率：", config.CheatConfigArr[0].MustLoseRate)
 
 	//作弊率配置文件
 	changeConfigData, err := ioutil.ReadFile("./conf/change_cards.json")
@@ -80,5 +80,5 @@ func initConfig() {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println("change config json : ", config.ChangeCardsArr)
+	log.Traceln("change config json : ", config.ChangeCardsArr)
 }

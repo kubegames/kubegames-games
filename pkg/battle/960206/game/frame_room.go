@@ -3,7 +3,6 @@ package game
 import (
 	"sync"
 
-	"github.com/kubegames/kubegames-sdk/pkg/player"
 	"github.com/kubegames/kubegames-sdk/pkg/table"
 )
 
@@ -28,8 +27,5 @@ func (game *Game) Init(table table.TableInterface) {
 func (redRoom *WaterRoom) InitTable(table table.TableInterface) {
 	g := NewGame(int64(table.GetID()), redRoom)
 	g.Init(table)
-	table.BindGame(g)
-}
-
-func (redRoom *WaterRoom) UserExit(user player.PlayerInterface) {
+	table.Start(g, nil, nil)
 }

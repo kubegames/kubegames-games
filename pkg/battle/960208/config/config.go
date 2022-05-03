@@ -1,11 +1,10 @@
 package config
 
 import (
-	"common/log"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 	"github.com/sipt/GoJsoner"
 )
 
@@ -60,7 +59,7 @@ var RobotConf RobotConfig
 
 // LoadBlackjackCfg 读取配置文件
 func (conf *ThreeDollConfig) LoadThreeDollCfg() {
-	data, err := ioutil.ReadFile("config/three_doll.json")
+	data, err := ioutil.ReadFile("./conf/three_doll.json")
 	if err != nil {
 		log.Errorf("File reading error : %v", err)
 		return
@@ -77,9 +76,9 @@ func (conf *ThreeDollConfig) LoadThreeDollCfg() {
 
 // LoadRobotCfg 读取机器人配置文件
 func (robotCfg *RobotConfig) LoadRobotCfg() {
-	data, err := ioutil.ReadFile("config/robot.json")
+	data, err := ioutil.ReadFile("./conf/robot.json")
 	if err != nil {
-		fmt.Println("File reading error", err)
+		log.Traceln("File reading error", err)
 		return
 	}
 	//去除配置文件中的注释

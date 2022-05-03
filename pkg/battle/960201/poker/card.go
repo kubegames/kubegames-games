@@ -2,12 +2,12 @@ package poker
 
 import (
 	"errors"
-	"fmt"
 	"time"
 
 	"github.com/kubegames/kubegames-games/internal/pkg/poker"
 	"github.com/kubegames/kubegames-games/internal/pkg/rand"
 	"github.com/kubegames/kubegames-games/pkg/battle/960201/data"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 )
 
 var Deck = []byte{
@@ -37,8 +37,8 @@ func testCardEncode() {
 		}
 	}
 	end := time.Now()
-	fmt.Println("cards : ", cards)
-	fmt.Println(end.Sub(start), count)
+	log.Traceln("cards : ", cards)
+	log.Traceln(end.Sub(start), count)
 }
 
 //比较得出手上牌最大的用户
@@ -51,13 +51,13 @@ func GetMaxUser(userList []*data.User) (maxUserRes []*data.User) {
 	}
 	//先单独处理为对子的情况
 	if isDz, maxRes := IsDzMax(userList); isDz {
-		//fmt.Println("最大的牌型是对子")
+		//log.Traceln("最大的牌型是对子")
 		return maxRes
 	}
 
 	maxUserRes = make([]*data.User, 0)
 	if len(userList) == 0 {
-		fmt.Println("userlist 为空 ！！！！！！")
+		log.Traceln("userlist 为空 ！！！！！！")
 		return
 	}
 	maxReq := userList[0]
@@ -182,7 +182,7 @@ func IsDzMax(userList []*data.User) (isDz bool, maxUserRes []*data.User) {
 
 	//如果只有一个玩家是对子，说明就是最大的，直接返回结果
 	if len(dzUsers) == 1 {
-		fmt.Println("只有一个对子")
+		log.Traceln("只有一个对子")
 		return true, dzUsers
 	}
 
@@ -259,7 +259,7 @@ func GetCardsBz() []byte {
 	var i byte = 1
 	for i = 1; i <= 13; i++ {
 		cv := []byte{cBase[0] + i*16, cBase[1] + i*16, cBase[2] + i*16}
-		//fmt.Println(fmt.Sprintf(`%x`,cv))
+		//log.Traceln(fmt.Sprintf(`%x`,cv))
 		bzArr = append(bzArr, cv)
 	}
 
@@ -275,7 +275,7 @@ func GetCardsSj() []byte {
 	var i byte = 1
 	for i = 1; i < 12; i++ {
 		cv := []byte{cBase[0] + i*16, cBase[1] + i*16, cBase[2] + i*16}
-		//fmt.Println(fmt.Sprintf(`%x`,cv))
+		//log.Traceln(fmt.Sprintf(`%x`,cv))
 		bzArr = append(bzArr, cv)
 	}
 
@@ -315,7 +315,7 @@ func GetCardsSz() []byte {
 	var i byte = 1
 	for i = 1; i < 11; i++ {
 		cv := []byte{cBase[0] + i*16, cBase[1] + i*16, cBase[2] + i*16}
-		//fmt.Println(fmt.Sprintf(`%x`,cv))
+		//log.Traceln(fmt.Sprintf(`%x`,cv))
 		bzArr = append(bzArr, cv)
 	}
 
@@ -334,7 +334,7 @@ func GetCardsDz() []byte {
 		if cv[2] > 0xe1 {
 			cv[2] = 0xe3
 		}
-		//fmt.Println(fmt.Sprintf(`%x`,cv))
+		//log.Traceln(fmt.Sprintf(`%x`,cv))
 		bzArr = append(bzArr, cv)
 	}
 
@@ -345,7 +345,7 @@ func GetCardsDz() []byte {
 //输入4张牌，获取牌型最大的牌
 func GetMaxCardsIn4(arr []byte) (cards []byte, err error) {
 	if len(arr) != 4 {
-		fmt.Println("必须4张牌")
+		log.Traceln("必须4张牌")
 		err = errors.New("必须4张牌")
 		return
 	}
@@ -355,7 +355,7 @@ func GetMaxCardsIn4(arr []byte) (cards []byte, err error) {
 	for i := 0; i < len(arr)-2; i++ {
 		for j := i + 1; j < len(arr)-1; j++ {
 			for k := j + 1; k < len(arr); k++ {
-				//fmt.Println("4张牌中的三张：",fmt.Sprintf(`%x`,arr[i])," ",fmt.Sprintf(`%x`,arr[j])," ",fmt.Sprintf(`%x`,arr[k]))
+				//log.Traceln("4张牌中的三张：",fmt.Sprintf(`%x`,arr[i])," ",fmt.Sprintf(`%x`,arr[j])," ",fmt.Sprintf(`%x`,arr[k]))
 				maxCards[0], maxCards[1], maxCards[2] = arr[i], arr[j], arr[k]
 				cardType, _ := GetCardTypeJH(maxCards)
 				if cardType > maxCardType {
@@ -365,7 +365,7 @@ func GetMaxCardsIn4(arr []byte) (cards []byte, err error) {
 			}
 		}
 	}
-	//fmt.Println("4选3返回的牌：：：",cards)
+	//log.Traceln("4选3返回的牌：：：",cards)
 	return
 }
 

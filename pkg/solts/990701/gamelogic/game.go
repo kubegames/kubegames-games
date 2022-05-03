@@ -106,7 +106,7 @@ func (g *Game) OnGameMessage(subCmd int32, buffer []byte, user player.PlayerInte
 		break
 
 	case int32(powergame.MsgIDC2S_Test):
-		//fmt.Println("测试", buffer)
+		//log.Traceln("测试", buffer)
 		//g.handleTest(buffer)
 	}
 }

@@ -1,10 +1,11 @@
 package gamelogic
 
 import (
-	"fmt"
 	"math/rand"
 	"testing"
 	"time"
+
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 )
 
 func TestName(t *testing.T) {
@@ -15,12 +16,12 @@ func TestName(t *testing.T) {
 	//	game.Poker.ShuffleCards()
 	//	r := rand.Intn(11)
 	//	game.getACards(msg.PokerType(r))
-	//	//fmt.Println("+++++++++++++++++++++")
+	//	//log.Traceln("+++++++++++++++++++++")
 	//	//game.transformCardForMsg(cards)
 	//}
-	card := []byte {161,193,242,241,129}
-	fmt.Println(game.checkPokerType(card))
+	card := []byte{161, 193, 242, 241, 129}
+	log.Traceln(game.checkPokerType(card))
 	//pokerType := game.checkPokerType([]byte{68,100,98,66,84})
 	//r := game.getAllCompose(10, 5)
-	//fmt.Println(pokerType)
+	//log.Traceln(pokerType)
 }

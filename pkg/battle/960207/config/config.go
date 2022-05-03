@@ -1,11 +1,10 @@
 package conf
 
 import (
-	"common/log"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 	"github.com/sipt/GoJsoner"
 )
 
@@ -72,7 +71,7 @@ var RobotConf RobotConfig
 
 // LoadBlackjackCfg 读取配置文件
 func (conf *GeneralNiuniuConfig) LoadGeneralNiuniuCfg() {
-	data, err := ioutil.ReadFile("config/general_niuniu.json")
+	data, err := ioutil.ReadFile("./conf/general_niuniu.json")
 	if err != nil {
 		log.Errorf("File reading error : %v", err)
 		return
@@ -88,14 +87,13 @@ func (conf *GeneralNiuniuConfig) LoadGeneralNiuniuCfg() {
 
 // LoadRobotCfg 读取机器人配置文件
 func (robotCfg *RobotConfig) LoadRobotCfg() {
-	data, err := ioutil.ReadFile("config/robot.json")
+	data, err := ioutil.ReadFile("./conf/robot.json")
 	if err != nil {
-		fmt.Println("File reading error", err)
+		log.Traceln("File reading error", err)
 		return
 	}
 	//去除配置文件中的注释
 	result, _ := GoJsoner.Discard(string(data))
-
 	if err := json.Unmarshal([]byte(result), &robotCfg); err != nil {
 		log.Errorf("Unmarshal json error : %v", err)
 		return

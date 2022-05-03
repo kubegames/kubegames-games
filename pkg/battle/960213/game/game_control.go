@@ -2,7 +2,7 @@ package game
 
 //
 //import (
-//	"common/log"
+//	"github.com/kubegames/kubegames-sdk/pkg/log"
 //	"common/rand"
 //	"game_poker/ddzall/poker"
 //)

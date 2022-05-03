@@ -3,7 +3,6 @@ package game
 import (
 	"go-game-sdk/inter"
 	"go-game-sdk/lib/clock"
-	"go-game-sdk/sdk/msg"
 	"time"
 
 	"github.com/golang/protobuf/proto"

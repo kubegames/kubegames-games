@@ -11,6 +11,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 	"github.com/sipt/GoJsoner"
 )
 
@@ -72,7 +73,7 @@ type testres struct {
 func (t *testconf) gettestconfig() {
 	data, err := ioutil.ReadFile("test.txt")
 	if err != nil {
-		fmt.Println("File reading error", err)
+		log.Traceln("File reading error", err)
 		return
 	}
 
@@ -122,7 +123,7 @@ func Test(lb *config.LabaConfig) {
 		//如果两次免费不一样就表示新的免费
 		tmp := g.FreeGameTimes - freegame
 		if tmp != 0 && tmp != 5 && tmp != 10 && tmp != 15 {
-			fmt.Println("免费游戏次数", tmp)
+			log.Traceln("免费游戏次数", tmp)
 		}
 		if g.EnterFreeGame {
 			g.FreeGameIndex = rand.Int31n(5)
@@ -134,7 +135,7 @@ func Test(lb *config.LabaConfig) {
 
 			if bfree {
 				//免费游戏触发免费游戏
-				fmt.Println("免费游戏触发免费游戏")
+				log.Traceln("免费游戏触发免费游戏")
 				select {}
 			}
 		}

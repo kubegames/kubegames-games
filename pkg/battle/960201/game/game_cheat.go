@@ -7,6 +7,7 @@ import (
 	"github.com/kubegames/kubegames-games/pkg/battle/960201/config"
 	"github.com/kubegames/kubegames-games/pkg/battle/960201/data"
 	"github.com/kubegames/kubegames-games/pkg/battle/960201/poker"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 )
 
 //TODO 3月1号新增
@@ -35,7 +36,7 @@ func (game *Game) sendBz() (cards []byte) {
 	var i byte
 	count := 0
 	for i = 0x21; i < 0xe1; i += 16 {
-		//fmt.Println(fmt.Sprintf(`%x`,i))
+		//log.Traceln(fmt.Sprintf(`%x`,i))
 		if count >= 14 {
 			break
 		}
@@ -63,13 +64,13 @@ func (game *Game) sendBz() (cards []byte) {
 		}
 	}
 	if len(cardsArr) == 0 {
-		fmt.Println("豹子 =======> len(cardsArr) == 0")
+		log.Traceln("豹子 =======> len(cardsArr) == 0")
 		cards[0], cards[1], cards[2] = game.Cards[0], game.Cards[1], game.Cards[2]
 	} else {
 		index := rand.RandInt(0, len(cardsArr)-1)
-		fmt.Println("index : ", index, fmt.Sprintf(`%x`, cardsArr))
+		log.Traceln("index : ", index, fmt.Sprintf(`%x`, cardsArr))
 		cards = cardsArr[index]
-		fmt.Println("cards ::: ", fmt.Sprintf(`%x`, cards))
+		log.Traceln("cards ::: ", fmt.Sprintf(`%x`, cards))
 	}
 	return
 }
@@ -140,12 +141,12 @@ func (game *Game) sendSj() (cards []byte) {
 		cardsArr = append(cardsArr, cardsTmp)
 	}
 	if len(cardsArr) == 0 {
-		fmt.Println("顺金 =======> len(cardsArr) == 0")
+		log.Traceln("顺金 =======> len(cardsArr) == 0")
 		cards[0], cards[1], cards[2] = game.Cards[0], game.Cards[1], game.Cards[2]
 	} else {
 		index := rand.RandInt(0, len(cardsArr)-1)
 		cards = cardsArr[index]
-		fmt.Println("发顺金index：", index, "cards ::: ", fmt.Sprintf(`%x`, cards))
+		log.Traceln("发顺金index：", index, "cards ::: ", fmt.Sprintf(`%x`, cards))
 	}
 	return
 }
@@ -155,11 +156,11 @@ func (game *Game) getSpeCardTypeCards(cardType int) (cards []byte) {
 	cards = make([]byte, 3)
 	switch cardType {
 	case poker.CardTypeBZ:
-		fmt.Println("发豹子")
+		log.Traceln("发豹子")
 		cards = game.sendBz()
 		return
 	case poker.CardTypeSJ:
-		fmt.Println("发顺金")
+		log.Traceln("发顺金")
 		cards = game.sendSj()
 		return
 	case poker.CardTypeSJ123:
@@ -238,7 +239,7 @@ func (game *Game) getSpeCardTypeCards(cardType int) (cards []byte) {
 		cards[0], cards[1], cards[2] = game.Cards[0], game.Cards[1], game.Cards[2]
 		return
 	}
-	fmt.Println("要发的牌型 ==================  ：", cardType)
+	log.Traceln("要发的牌型 ==================  ：", cardType)
 	//panic("没有发到指定的牌")
 	return
 }
@@ -246,7 +247,7 @@ func (game *Game) getSpeCardTypeCards(cardType int) (cards []byte) {
 //检查是否需要换牌
 func (game *Game) checkChangeCards(ai *data.User) {
 	if !ai.User.IsRobot() {
-		fmt.Println("checkChangeCards 居然会不是机器人？？？")
+		log.Traceln("checkChangeCards 居然会不是机器人？？？")
 		return
 	}
 	if game.isChangeCards {
@@ -270,13 +271,13 @@ func (game *Game) checkChangeCards(ai *data.User) {
 	aiInvest := game.getAiInvestTotal()
 	times := aiInvest / ncUser.Amount
 	if times > config.ChangeCardsArr[len(config.ChangeCardsArr)-1].Times {
-		fmt.Println("新增换牌》》》》》超过了最大倍数：", times)
+		log.Traceln("新增换牌》》》》》超过了最大倍数：", times)
 		game.changeCardsForAi(ncUser, ai)
 		return
 	}
 	for _, v := range config.ChangeCardsArr {
 		if v.Times == times && v.Cheat == ncUser.CheatRate && rand.RateToExec(v.ChangeRate) {
-			fmt.Println("新增换牌》》》》》times : ", times, "玩家作弊率：", ncUser.CheatRate, " 配置作弊率: ", v.Cheat, v.ChangeRate)
+			log.Traceln("新增换牌》》》》》times : ", times, "玩家作弊率：", ncUser.CheatRate, " 配置作弊率: ", v.Cheat, v.ChangeRate)
 			game.changeCardsForAi(ncUser, ai)
 			return
 		}
@@ -288,13 +289,13 @@ func (game *Game) changeCardsForAi(ncUser *data.User, ai *data.User) {
 	game.isChangeCards = true
 	needCardType := ncUser.CardType + 1
 	if ncUser.CardType == poker.CardTypeBZ {
-		fmt.Println("新增换牌-----用户的牌为豹子")
+		log.Traceln("新增换牌-----用户的牌为豹子")
 		needCardType = poker.CardTypeBZ
 	}
 	cards, ct := game.GetSpeCardTypeCards(needCardType, needCardType)
-	fmt.Println("新增换牌-----换牌前：", fmt.Sprintf(`%x %d`, ai.Cards, ai.CardType))
+	log.Traceln("新增换牌-----换牌前：", fmt.Sprintf(`%x %d`, ai.Cards, ai.CardType))
 	ai.Cards, ai.CardType = cards, ct
-	fmt.Println("新增换牌-----换牌后：", fmt.Sprintf(`%x %d`, ai.Cards, ai.CardType))
+	log.Traceln("新增换牌-----换牌后：", fmt.Sprintf(`%x %d`, ai.Cards, ai.CardType))
 	game.Table.WriteLogs(ai.User.GetID(), aiRealStr(ai.User.IsRobot())+"用户id："+fmt.Sprintf(`%d`, ai.User.GetID())+
 		" 玩家点控输状态下，机器人投入高于数倍玩家投入时，触发换牌，机器人换牌之后：的牌为： "+poker.GetCardsCNName(ai.Cards)+" 牌型："+poker.GetCardTypeCNName(ai.CardType))
 	//todo 后续要删除
@@ -309,7 +310,7 @@ func (game *Game) changeCardsForAi(ncUser *data.User, ai *data.User) {
 	//		})
 	//	}
 	//}
-	//fmt.Println("换牌之后给ncUser：",ncUser.User.GetID()," 发送消息")
+	//log.Traceln("换牌之后给ncUser：",ncUser.User.GetID()," 发送消息")
 	//ncUser.User.SendMsg(global.S2C_SEE_OTHER_CARDS, res)
 
 	return

@@ -6,6 +6,8 @@ import (
 	"reflect"
 	"sync"
 	"time"
+
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 )
 
 type Function struct {
@@ -43,8 +45,6 @@ func (self *Dynamic) AddFunc(funcName string, target interface{}, callback inter
 		self.Lock()
 		self.funcList[funcName] = f
 		self.Unlock()
-	} else {
-		fmt.Println(fmt.Sprintf("Dynamic.AddFunc::Function[%s] Fail!", funcName))
 	}
 }
 func (self *Dynamic) RemoveFunc(funcName string) {
@@ -69,13 +69,13 @@ func (self *Dynamic) Run(funcName string, args ...interface{}) (res []interface{
 		resTmp := f.Foo.Call(tmp)
 		n := (time.Now().UnixNano() - t) / int64(time.Millisecond)
 		if n > 200 {
-			fmt.Println("Dynamic.Run::>100ms:", funcName, args, n)
+			log.Traceln("Dynamic.Run::>100ms:", funcName, args, n)
 		}
 		for _, v := range resTmp {
 			res = append(res, v.Interface())
 		}
 	} else {
-		fmt.Println(fmt.Sprintf("Dynamic.Run(not Find)::[%s] args=%v", funcName, args))
+		log.Traceln(fmt.Sprintf("Dynamic.Run(not Find)::[%s] args=%v", funcName, args))
 		err = errors.New("Dynamic.Run(not Find)")
 	}
 	return

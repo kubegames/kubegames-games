@@ -65,11 +65,11 @@ func (es Elements) Rand(id ElementType) *Element {
 		allWeight += (v.OddsMin.Prob)
 	}
 	// bts, _ := json.Marshal(es)
-	// fmt.Println("es = ", string(bts))
+	// log.Traceln("es = ", string(bts))
 	prob := rand.Intn(allWeight) + 1
 
 	for _, v := range es {
-		// fmt.Println("prob = ", prob)
+		// log.Traceln("prob = ", prob)
 		if prob <= (v.OddsMin.Prob + v.OddsMax.Prob) {
 			if prob <= v.OddsMax.Prob {
 				v.IsMax = true

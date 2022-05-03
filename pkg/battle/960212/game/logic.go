@@ -1,12 +1,13 @@
 package game
 
 import (
-	"common/log"
 	"game_poker/doudizhu/msg"
 	"game_poker/doudizhu/poker"
 	"math/rand"
 	"strings"
 	"time"
+
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 )
 
 func ExcludeOne(srcCard []byte, ddz []uint32) ([]byte, []byte) {

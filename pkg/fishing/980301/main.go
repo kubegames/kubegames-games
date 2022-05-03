@@ -10,14 +10,14 @@ import (
 
 func main() {
 	//defer recover_handle.RecoverHandle()
-	//fmt.Println("****************************************")
-	//fmt.Println("*                                      *")
-	//fmt.Println("*       Poker   Jh   System !          *")
-	//fmt.Println("*                                      *")
-	//fmt.Println("****************************************\n")
+	//log.Traceln("****************************************")
+	//log.Traceln("*                                      *")
+	//log.Traceln("*       Poker   Jh   System !          *")
+	//log.Traceln("*                                      *")
+	//log.Traceln("****************************************\n")
 	//
-	//fmt.Println("### VER: ", "0.0.8")
-	//fmt.Println("### PID: ", os.Getpid())
+	//log.Traceln("### VER: ", "0.0.8")
+	//log.Traceln("### PID: ", os.Getpid())
 	//
 	////系统中断捕获
 	//sigs := make(chan os.Signal, 1)
@@ -25,14 +25,14 @@ func main() {
 	//signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM, syscall.SIGKILL)
 	//go func() {
 	//	sig := <-sigs
-	//	fmt.Println("###SIGNAL::", sig, "   PID:", os.Getpid())
+	//	log.Traceln("###SIGNAL::", sig, "   PID:", os.Getpid())
 	//	over <- 1
 	//}()
 	//
 	////开启pprof
 	//go func() {
-	//	fmt.Println("pprof start at :9876")
-	//	fmt.Println(http.ListenAndServe(":9876", nil))
+	//	log.Traceln("pprof start at :9876")
+	//	log.Traceln(http.ListenAndServe(":9876", nil))
 	//}()
 	//
 	////可修改部分---开始

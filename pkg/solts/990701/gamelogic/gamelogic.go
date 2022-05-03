@@ -100,7 +100,7 @@ func (g *Game) OnUserBet(b []byte) {
 	senddata.UserGold = g.user.GetScore()
 	senddata.FreeGames = int32(g.FreeGameTimes)
 	senddata.IconArr = append(senddata.IconArr, g.icon.Iconarr...)
-	//fmt.Println("图形", senddata.IconArr)
+	//log.Traceln("图形", senddata.IconArr)
 	for _, v := range g.icon.Line {
 		li := new(powergame.LineInfo)
 		li.Count = v.Count
@@ -112,13 +112,13 @@ func (g *Game) OnUserBet(b []byte) {
 	if g.WildArr != nil {
 		//是龙母的情况下发送随机3个下标
 		senddata.WildArr = g.WildArr
-		//fmt.Println(senddata.WildArr)
+		//log.Traceln(senddata.WildArr)
 	} else {
 		//非龙母的情况下发送-1下标
 		senddata.WildArr = []int32{-1, -1, -1}
-		//fmt.Println(senddata.WildArr)
+		//log.Traceln(senddata.WildArr)
 	}
-	//fmt.Println("发送数据", senddata, g.icon.Iconarr)
+	//log.Traceln("发送数据", senddata, g.icon.Iconarr)
 	g.user.SendMsg(int32(powergame.ReMsgIDS2C_BetRet), senddata)
 
 	BetGold := data.BetMoney * g.Line

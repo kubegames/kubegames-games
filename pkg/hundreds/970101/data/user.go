@@ -79,7 +79,7 @@ func (user *User) RandInt(min, max int) int {
 //传入指定概率，然后返回是否执行  比如 rate：90 表示有90%的概率要执行
 func (user *User) RateToExec(rate int) bool {
 	r := user.RandInt(1, 100)
-	//fmt.Println("随机数r : ",r)
+	//log.Traceln("随机数r : ",r)
 	if r < rate {
 		return true
 	}
@@ -89,7 +89,7 @@ func (user *User) RateToExec(rate int) bool {
 //从max中随机去一个数，看是否小于rate
 func (user *User) RateToExecWithIn(rate, max int) bool {
 	r := user.RandInt(1, max)
-	//fmt.Println("随机数r : ", r)
+	//log.Traceln("随机数r : ", r)
 	if r < rate {
 		return true
 	}
@@ -129,7 +129,7 @@ func (user *User) DelUserSentRedRecord(redId int64) {
 }
 
 func (user *User) GetSendRedRecord(pageIndex, pageSize int) *msg.S2CSendRedRecordArr {
-	//fmt.Println("user : ", user.Id, " 发包 index :", pageIndex, "size : ", pageSize, " total : ", len(user.SendRedList))
+	//log.Traceln("user : ", user.Id, " 发包 index :", pageIndex, "size : ", pageSize, " total : ", len(user.SendRedList))
 	res := new(msg.S2CSendRedRecordArr)
 	res.RedArr = make([]*msg.S2CSendRedRecord, 0)
 	pager := page.NewPager(pageIndex, pageSize, len(user.SendRedList))
@@ -149,12 +149,12 @@ func (user *User) GetSendRedRecord(pageIndex, pageSize int) *msg.S2CSendRedRecor
 	}
 	//res.TotalAmount = user.totalSentAmount
 	res.TotalCount = int64(len(user.SendRedList))
-	//fmt.Println("res ::: ", fmt.Sprintf(`%+v`, res))
+	//log.Traceln("res ::: ", fmt.Sprintf(`%+v`, res))
 	return res
 }
 
 func (user *User) GetRobRedRecord(pageIndex, pageSize int) *msg.S2CRobbedRedInfoArr {
-	//fmt.Println("user : ", user.Id, "抢包：index :", pageIndex, "size : ", pageSize, " total : ", len(user.RobbedList))
+	//log.Traceln("user : ", user.Id, "抢包：index :", pageIndex, "size : ", pageSize, " total : ", len(user.RobbedList))
 	res := new(msg.S2CRobbedRedInfoArr)
 	res.RobbedArr = make([]*msg.S2CRobbedRedInfo, 0)
 	for i := pageIndex * pageSize; i < pageIndex*pageSize+pageSize; i++ {
@@ -171,7 +171,7 @@ func (user *User) GetRobRedRecord(pageIndex, pageSize int) *msg.S2CRobbedRedInfo
 	res.Pages = int32(pager.Pages)
 	res.TotalAmount = user.totalRobbedAmount
 	res.TotalCount = int64(len(user.RobbedList))
-	//fmt.Println("res ::: ", fmt.Sprintf(`%+v`, res))
+	//log.Traceln("res ::: ", fmt.Sprintf(`%+v`, res))
 	return res
 }
 

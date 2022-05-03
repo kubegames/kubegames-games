@@ -1,24 +1,19 @@
 package game
 
 import (
-	"go-game-sdk/lib/clock"
-
+	"github.com/golang/protobuf/proto"
 	"github.com/kubegames/kubegames-games/internal/pkg/rand"
-
-	"github.com/kubegames/kubegames-sdk/pkg/log"
-
 	conf "github.com/kubegames/kubegames-games/pkg/battle/960207/config"
 	"github.com/kubegames/kubegames-games/pkg/battle/960207/msg"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 	"github.com/kubegames/kubegames-sdk/pkg/player"
 	"github.com/kubegames/kubegames-sdk/pkg/table"
-
-	"github.com/golang/protobuf/proto"
 )
 
 // Robot 机器人结构体
 type Robot struct {
 	User      player.RobotInterface
-	TimerJob  *clock.Job
+	TimerJob  *player.Job
 	Cfg       conf.RobotConfig
 	GameLogic *GeneralNiuniu
 	IsBanker  bool

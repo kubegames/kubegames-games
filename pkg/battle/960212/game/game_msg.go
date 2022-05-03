@@ -1,10 +1,11 @@
 package game
 
 import (
-	"common/log"
 	"fmt"
 	"game_poker/doudizhu/msg"
 	"game_poker/doudizhu/poker"
+
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 
 	"github.com/kubegames/kubegames-sdk/pkg/player"
 )

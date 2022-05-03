@@ -1,6 +1,6 @@
 package poker
 
-import "fmt"
+import "github.com/kubegames/kubegames-sdk/pkg/log"
 
 var (
 	CardTypeTW     = 4 //天王
@@ -14,7 +14,7 @@ var (
 //比如 3、8、3、3、9，则返回 葫芦(cardType)，33389(排序之后的牌面值)
 func GetCardType(cards []byte) (cardType int, sortRes []byte) {
 	if len(cards) != 2 {
-		fmt.Println("牌型比较只能2张牌")
+		log.Traceln("牌型比较只能2张牌")
 		return
 	}
 	sortRes = sortCards(cards)
@@ -80,7 +80,7 @@ func sortCards(cards []byte) []byte {
 func GetCompareCardsRes(bank []byte, xian []byte) int {
 	bankType, bankSortRes := GetCardType(bank)
 	xianType, xianSortRes := GetCardType(xian)
-	//fmt.Println(bankType, bankSortRes, xianType, xianSortRes)
+	//log.Traceln(bankType, bankSortRes, xianType, xianSortRes)
 	if bankType > xianType {
 		return 1
 	} else if bankType == xianType {

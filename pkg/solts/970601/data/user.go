@@ -90,7 +90,7 @@ func (user *User) RandInt(min, max int) int {
 //传入指定概率，然后返回是否执行  比如 rate：90 表示有90%的概率要执行
 func (user *User) RateToExec(rate int) bool {
 	r := user.RandInt(1, 100)
-	//fmt.Println("随机数r : ",r)
+	//log.Traceln("随机数r : ",r)
 	if r < rate {
 		return true
 	}
@@ -100,7 +100,7 @@ func (user *User) RateToExec(rate int) bool {
 //从max中随机去一个数，看是否小于rate
 func (user *User) RateToExecWithIn(rate, max int) bool {
 	r := user.RandInt(1, max)
-	//fmt.Println("随机数r : ", r)
+	//log.Traceln("随机数r : ", r)
 	if r < rate {
 		return true
 	}

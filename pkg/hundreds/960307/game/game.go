@@ -1,7 +1,6 @@
 package game
 
 import (
-	"common/log"
 	"common/score"
 	"fmt"
 	"game_poker/BRZJH/config"
@@ -9,6 +8,8 @@ import (
 	"math/rand"
 	"sort"
 	"time"
+
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 
 	"game_frame_v2/game/clock"
 
@@ -419,16 +420,16 @@ func (game *Game) sendSettleMsg() {
 	var tmpTrend TableTrend
 	WinCount := 0
 	PayCount := 0
-	//fmt.Println("庄家",model.GetCardString(game.SendCard[0].Cards),"牌型",model.GetTypeString(model.GetCardsType(game.SendCard[0].Cards)))
+	//log.Traceln("庄家",model.GetCardString(game.SendCard[0].Cards),"牌型",model.GetTypeString(model.GetCardsType(game.SendCard[0].Cards)))
 	for i := 1; i < 5; i++ {
 		tmpTrend.t[i-1].Type = model.GetCardsType(game.SendCard[i].Cards)
 		//和庄家比牌，记录赔付和赢次数及输赢走势
 		if model.ComPareCard(game.SendCard[0].Cards, game.SendCard[i].Cards) == 2 {
-			//fmt.Println("赢",model.GetCardString(game.SendCard[i].Cards),"牌型",model.GetTypeString(model.GetCardsType(game.SendCard[i].Cards)))
+			//log.Traceln("赢",model.GetCardString(game.SendCard[i].Cards),"牌型",model.GetTypeString(model.GetCardsType(game.SendCard[i].Cards)))
 			tmpTrend.t[i-1].Win = true
 			PayCount++
 		} else {
-			//fmt.Println("输",model.GetCardString(game.SendCard[i].Cards),"牌型",model.GetTypeString(model.GetCardsType(game.SendCard[i].Cards)))
+			//log.Traceln("输",model.GetCardString(game.SendCard[i].Cards),"牌型",model.GetTypeString(model.GetCardsType(game.SendCard[i].Cards)))
 			tmpTrend.t[i-1].Win = false
 			WinCount++
 		}
@@ -519,7 +520,7 @@ func (game *Game) sendSettleMsg() {
 				game.ZhuangTotalWin.TotalWin += win
 			}
 		}
-		fmt.Println(game.ZhuangTotalWin, game.ZhuangTotalWin.UserId, game.Zhuang.GetId(), win)
+		log.Traceln(game.ZhuangTotalWin, game.ZhuangTotalWin.UserId, game.Zhuang.GetId(), win)
 	} else {
 		game.ZhuangTotalWin.TotalWin = 0
 		game.ZhuangTotalWin.UserId = 0
@@ -602,7 +603,7 @@ func (game *Game) sendSettleMsg() {
 				msg.UserWin = append(msg.UserWin, win)
 			}
 		}
-		//fmt.Println("=========", msg.UserWin, msg.UserBetInfo, msg.TotalBetInfo, msg.TotalWin)
+		//log.Traceln("=========", msg.UserWin, msg.UserBetInfo, msg.TotalBetInfo, msg.TotalWin)
 		if u.User != game.Zhuang {
 			SceneUserInfo.BetInfo = msg.UserBetInfo
 		} else {
@@ -703,7 +704,7 @@ func (game *Game) sendSettleMsg() {
 			SceneUserInfo.SceneSeatID = 7 //庄家座位ID7
 			//SceneUserInfo.ZhuangTotalWin = game.ZhuangTotalWin.TotalWin
 			SceneSettleMsg.UserList = append(SceneSettleMsg.UserList, SceneUserInfo)
-			//fmt.Println("庄信息", SceneUserInfo)
+			//log.Traceln("庄信息", SceneUserInfo)
 		} else {
 			u.User.SendChip(u.TotalBet + ResBet)
 			//u.User.SetBetsAmount(u.TotalBet + ResBet)
@@ -1351,7 +1352,7 @@ func (game *Game) GetRoomconfig() {
 	game.Rule.SingleUserAllSpaceLimit = config.BRZJHConfig.Singleuserallspacelimit5times[level-1]
 	game.Rule.AllSpaceLimit = config.BRZJHConfig.Allspacelimit5times[level-1]
 	for i := 0; i < 4; i++ {
-		//fmt.Println(config.BRNNConfig.Singleusersinglespacelimit5times[level-1][3],config.BRNNConfig.Allusersinglespacelimit5times[level-1][i])
+		//log.Traceln(config.BRNNConfig.Singleusersinglespacelimit5times[level-1][3],config.BRNNConfig.Allusersinglespacelimit5times[level-1][i])
 		game.Rule.SingleUserSingleSpaceLimit[i] = config.BRZJHConfig.Singleusersinglespacelimit5times[level-1][i]
 		game.Rule.AllUserSingleSpaceLimit[i] = config.BRZJHConfig.Allusersinglespacelimit5times[level-1][i]
 	}
@@ -1360,7 +1361,7 @@ func (game *Game) GetRoomconfig() {
 	}
 
 	game.Rule.UserBetLimit = game.Rule.SingleUserAllSpaceLimit
-	//fmt.Println(game.OddsInfo,":",game.Rule.BetList,":",game.Rule.ZhuangLimit,":",game.Rule.SingleUserSingleSpaceLimit,":",game.Rule.SingleUserAllSpaceLimit,":",game.Rule.AllUserSingleSpaceLimit,":",game.Rule.AllSpaceLimit)
+	//log.Traceln(game.OddsInfo,":",game.Rule.BetList,":",game.Rule.ZhuangLimit,":",game.Rule.SingleUserSingleSpaceLimit,":",game.Rule.SingleUserAllSpaceLimit,":",game.Rule.AllUserSingleSpaceLimit,":",game.Rule.AllSpaceLimit)
 
 }
 
@@ -1425,7 +1426,7 @@ func (game *Game) SendRoomInfo() {
 }
 
 func (game *Game) shangZhuang(user player.PlayerInterface) {
-	//fmt.Println("上庄", user.GetId())
+	//log.Traceln("上庄", user.GetId())
 	if user == game.Zhuang {
 		return
 	}
@@ -1727,7 +1728,7 @@ func (game *Game) SetIcon() {
 	Millionaireid := int64(0)
 	mastid := int64(0)
 	var user []*model.User
-	//fmt.Println("chushihua ")
+	//log.Traceln("chushihua ")
 	index := 6
 	for k, v := range game.CountUserList {
 		if k >= index {
@@ -1749,7 +1750,7 @@ func (game *Game) SetIcon() {
 	u, ok := game.AllUserList[Millionaireid]
 	if ok {
 		u.Icon = Millionaire
-		//fmt.Println("大赢家", u.User.GetId())
+		//log.Traceln("大赢家", u.User.GetId())
 	}
 	if len(user) == 1 {
 		return
@@ -1766,7 +1767,7 @@ func (game *Game) SetIcon() {
 	u1, ok1 := game.AllUserList[bigWinnerid]
 	if ok1 {
 		u1.Icon = bigWinner
-		//fmt.Println("大富豪",u1.User.GetId())
+		//log.Traceln("大富豪",u1.User.GetId())
 	}
 	//神算子
 	sort.Sort(model.MasterUser(user))
@@ -1779,7 +1780,7 @@ func (game *Game) SetIcon() {
 	u2, ok2 := game.AllUserList[mastid]
 	if ok2 {
 		u2.Icon = Master
-		//fmt.Println("神算子",u2.User.GetId())
+		//log.Traceln("神算子",u2.User.GetId())
 	}
 }
 

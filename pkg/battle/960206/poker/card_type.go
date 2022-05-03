@@ -1,6 +1,10 @@
 package poker
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/kubegames/kubegames-sdk/pkg/log"
+)
 
 const (
 	CardTypeTHS      = 11 //同花顺
@@ -22,7 +26,7 @@ const (
 )
 
 func GetPrintCards(cards []byte) string {
-	return fmt.Sprintf(`%x`,cards)
+	return fmt.Sprintf(`%x`, cards)
 }
 
 //获取金花牌型
@@ -149,7 +153,7 @@ func GetDzSingleCards(arr []byte) (newArr []byte) {
 }
 
 func IsInByteArr(num byte, arr []byte) bool {
-	//fmt.Println(fmt.Sprintf(`%x`,num)," arr : ",fmt.Sprintf(`%x`,arr))
+	//log.Traceln(fmt.Sprintf(`%x`,num)," arr : ",fmt.Sprintf(`%x`,arr))
 	for _, v := range arr {
 		if num == v {
 			return true
@@ -229,13 +233,13 @@ func IsCardTypeSz(cards []byte) bool {
 	//将牌进行大小排序
 	cards = SortCards(cards)
 	cv0, _ := GetCardValueAndColor(cards[len(cards)-1])
-	//fmt.Println("cv0:: ",cv0)
+	//log.Traceln("cv0:: ",cv0)
 	var value byte = 64
 	for i := 0; i < len(cards)-1; i++ {
 		cv, _ := GetCardValueAndColor(cards[i])
-		//fmt.Println("cv",i," : ",cv)
+		//log.Traceln("cv",i," : ",cv)
 		if (cv - cv0) != value {
-			//fmt.Println(" cv : ",cv, " cv0 : " ,cv0," value : ",value)
+			//log.Traceln(" cv : ",cv, " cv0 : " ,cv0," value : ",value)
 			//比如1、2、3、4、5，2-1等于1，3-1等于2，以此类推
 			return false
 		}
@@ -251,7 +255,7 @@ func IsCardTypeSZA2345(cards []byte) bool {
 	cv2, _ := GetCardValueAndColor(cards[2])
 	cv3, _ := GetCardValueAndColor(cards[3])
 	cv4, _ := GetCardValueAndColor(cards[4])
-	fmt.Sprintf(`%x ,%x ,%x ,%x ,%x `, cv0, cv1, cv2, cv3, cv4)
+	//fmt.Sprintf(`%x ,%x ,%x ,%x ,%x `, cv0, cv1, cv2, cv3, cv4)
 	return cv0 == 0xe0 && cv1 == 0x50 && cv2 == 0x40 && cv3 == 0x30 && cv4 == 0x20
 }
 
@@ -290,7 +294,7 @@ func isCardTypeTw(cards []byte) bool {
 //判断牌型是否为顺子
 func IsCard3TypeSZ(cards []byte) bool {
 	if len(cards) != 3 {
-		fmt.Println("len(cards) != 3 ",fmt.Sprintf(`%x`,cards))
+		log.Traceln("len(cards) != 3 ", fmt.Sprintf(`%x`, cards))
 		return false
 	}
 	cards = SortCards(cards)
@@ -306,7 +310,7 @@ func IsCard3TypeSZA23(cards []byte) bool {
 	cv0, _ := GetCardValueAndColor(cards[0])
 	cv1, _ := GetCardValueAndColor(cards[1])
 	cv2, _ := GetCardValueAndColor(cards[2])
-	//fmt.Println(fmt.Sprintf(`%x %x %x`,cv0,cv1,cv2))
+	//log.Traceln(fmt.Sprintf(`%x %x %x`,cv0,cv1,cv2))
 	return cv0 == 0xe0 && cv1 == 0x30 && cv2 == 0x20
 }
 

@@ -7,17 +7,15 @@ import (
 	"sync"
 	"time"
 
-	"github.com/kubegames/kubegames-games/internal/pkg/score"
-
 	rand1 "github.com/kubegames/kubegames-games/internal/pkg/rand"
-
-	"github.com/kubegames/kubegames-sdk/pkg/log"
-
+	"github.com/kubegames/kubegames-games/internal/pkg/score"
 	"github.com/kubegames/kubegames-games/pkg/battle/960206/config"
 	"github.com/kubegames/kubegames-games/pkg/battle/960206/data"
 	"github.com/kubegames/kubegames-games/pkg/battle/960206/global"
 	"github.com/kubegames/kubegames-games/pkg/battle/960206/msg"
 	"github.com/kubegames/kubegames-games/pkg/battle/960206/poker"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
+	"github.com/kubegames/kubegames-sdk/pkg/platform"
 )
 
 func (game *Game) StartGame() {
@@ -27,7 +25,7 @@ func (game *Game) StartGame() {
 
 	t1 := time.Now()
 	if game.GetRoomUserCount() != 4 {
-		fmt.Println("人数不为4 怎么就开赛了")
+		log.Traceln("人数不为4 怎么就开赛了")
 		return
 	}
 	//给用户发牌
@@ -63,7 +61,7 @@ func (game *Game) StartGame() {
 	game.Table.AddTimer(global.TIMER_START_GAME, func() {
 		game.splitCardsForAllUser()
 	})
-	fmt.Println("开始游戏耗时：", time.Now().Sub(t1), game.Table.GetID())
+	log.Traceln("开始游戏耗时：", time.Now().Sub(t1), game.Table.GetID())
 }
 
 //
@@ -81,9 +79,9 @@ func (game *Game) splitCardsForAllUser() {
 	//根据作弊率交换用户的牌
 	game.CheatChangeCards()
 	//for _,user := range game.userList {
-	//	fmt.Println("作弊后玩家的牌 ： ", user.User.GetID(), fmt.Sprintf(`%x,%x,%x`, user.HeadCards, user.MiddleCards, user.TailCards))
+	//	log.Traceln("作弊后玩家的牌 ： ", user.User.GetID(), fmt.Sprintf(`%x,%x,%x`, user.HeadCards, user.MiddleCards, user.TailCards))
 	//}
-	//fmt.Println("user cards : ",game.userList[0].HeadCards,game.userList[0].HeadCardType,game.userList[0].User.GetID())
+	//log.Traceln("user cards : ",game.userList[0].HeadCards,game.userList[0].HeadCardType,game.userList[0].User.GetID())
 	//发好牌通知用户开赛
 	for _, user := range game.userList {
 		//isbeat, tailType, midType := user.Compare5Cards(user.TailCards, user.MiddleCards)
@@ -99,7 +97,7 @@ func (game *Game) splitCardsForAllUser() {
 	//game.timerJob, _ = game.Table.AddTimer(25*1000, func() {
 	//	if game.Status == global.TABLE_CUR_STATUS_ING {
 	//		//系统比牌
-	//		fmt.Println("定时结束比赛", time.Now(), game.Table.GetID())
+	//		log.Traceln("定时结束比赛", time.Now(), game.Table.GetID())
 	//		game.SystemCompareCards()
 	//		game.Table.AddTimer(3*1000, game.EndGame)
 	//		//game.EndGame()
@@ -142,13 +140,16 @@ func (game *Game) Settle() {
 	// 结算结算
 	game.Status = global.TABLE_CUR_STATUS_SETTLE
 
-	fmt.Println("日志-结束比赛：", time.Now())
+	log.Traceln("日志-结束比赛：", time.Now())
+
+	//战绩
+	var records []*platform.PlayerRecord
 
 	//结算上下分所有用户的输赢
 	for i, user := range game.userList {
 
 		//13水因为不知道用户下了多少注，所以就传房间底注
-		netProfit, _ := user.User.SetScore(user.Table.GetGameNum(), user.FinalSettle, game.Table.GetRoomRate())
+		netProfit := user.User.SetScore(user.Table.GetGameNum(), user.FinalSettle, game.Table.GetRoomRate())
 
 		// 跑马灯触发
 		if netProfit > 0 {
@@ -174,8 +175,20 @@ func (game *Game) Settle() {
 		}
 
 		// 发送战绩
-		user.User.SendRecord(game.Table.GetGameNum(), netProfit, betsAmount, drawAmount, outputAmount, "") //1月15新加的据结束，用户离开调用
-
+		// user.User.SendRecord(game.Table.GetGameNum(), netProfit, betsAmount, drawAmount, outputAmount, "") //1月15新加的据结束，用户离开调用
+		if !user.User.IsRobot() {
+			records = append(records, &platform.PlayerRecord{
+				PlayerID:     uint32(user.User.GetID()),
+				GameNum:      game.Table.GetGameNum(),
+				ProfitAmount: netProfit,
+				BetsAmount:   betsAmount,
+				DrawAmount:   drawAmount,
+				OutputAmount: outputAmount,
+				Balance:      user.User.GetScore(),
+				UpdatedAt:    time.Now(),
+				CreatedAt:    time.Now(),
+			})
+		}
 		// 发送打码量
 		user.User.SendChip(betsAmount)
 
@@ -213,6 +226,13 @@ func (game *Game) Settle() {
 		game.Table.WriteLogs(user.User.GetID(), logStr)
 	}
 
+	//发送战绩
+	if len(records) > 0 {
+		if _, err := game.Table.UploadPlayerRecord(records); err != nil {
+			log.Warnf("upload player record error %s", err.Error())
+		}
+	}
+
 	// 广播计算消息
 	game.Table.Broadcast(int32(msg.S2CMsgType_END_GAME), game.NewS2CEndGame())
 
@@ -227,6 +247,8 @@ func (game *Game) EndGame() {
 	game.ResetLogicTable()
 	//框架结束比赛
 	game.Table.EndGame()
+	//关闭房间逻辑
+	game.Table.Close()
 }
 
 //根据作弊率换牌
@@ -534,7 +556,7 @@ func (game *Game) CheatChangeCards() {
 func (game *Game) SystemCompareCards() {
 	for k, v := range game.userList {
 		game.userList[k].IsSettleCards = true
-		fmt.Println("userList[i].IsSettleCards : ", v.User.GetID())
+		log.Traceln("userList[i].IsSettleCards : ", v.User.GetID())
 	}
 
 	// del by wd in 2020.3.12 系统比牌游戏状态不做更改
@@ -575,7 +597,7 @@ func (game *Game) HomeRun() {
 		if count != 3 {
 			continue
 		}
-		fmt.Println("全垒打id：", homeRunUid)
+		log.Traceln("全垒打id：", homeRunUid)
 		//可以全垒打
 		game.HomeRunUid = homeRunUid
 		homeRunUser := game.GetUserList(homeRunUid)
@@ -584,15 +606,15 @@ func (game *Game) HomeRun() {
 				continue
 			}
 			beHitUser := game.GetUserList(v.BeHitUid)
-			//fmt.Println("被全垒打玩家：",beHitUser.User.GetID(),v.HitHeadScore,v.HitMidScore,v.HitTailScore)
+			//log.Traceln("被全垒打玩家：",beHitUser.User.GetID(),v.HitHeadScore,v.HitMidScore,v.HitTailScore)
 			beHitUser.HeadPlus -= int(v.HitHeadScore * 2)
 			beHitUser.MidPlus -= int(v.HitMidScore * 2)
 			beHitUser.TailPlus -= int(v.HitTailScore * 2)
 			homeRunUser.HeadPlus += int(v.HitHeadScore * 2)
 			homeRunUser.MidPlus += int(v.HitMidScore * 2)
 			homeRunUser.TailPlus += int(v.HitTailScore * 2)
-			//fmt.Println("全垒打玩家：",homeRunUser.User.GetID(),v.HitHeadScore,v.HitMidScore,v.HitTailScore)
-			//fmt.Println("全垒打玩家：",homeRunUser.User.GetID(),homeRunUser.HeadPlus,homeRunUser.MidPlus,homeRunUser.TailPlus)
+			//log.Traceln("全垒打玩家：",homeRunUser.User.GetID(),v.HitHeadScore,v.HitMidScore,v.HitTailScore)
+			//log.Traceln("全垒打玩家：",homeRunUser.User.GetID(),homeRunUser.HeadPlus,homeRunUser.MidPlus,homeRunUser.TailPlus)
 			score := int(v.HitScore) * 2
 			//beHitUser.TotalPlus -= score
 			//homeRunUser.TotalPlus += score
@@ -845,7 +867,7 @@ func (game *Game) ResetLogicTable() {
 	for _, v := range game.userList {
 		if v != nil {
 			v.SpecialCardType = 0
-			fmt.Println("游戏结束，踢掉用户：", v.User.GetID())
+			log.Traceln("游戏结束，踢掉用户：", v.User.GetID())
 			game.DelChairID(v.ChairId)
 			game.DelUserList(v.User.GetID())
 			game.Table.KickOut(v.User)
@@ -871,6 +893,8 @@ func (game *Game) AllUserSettleEndGame() {
 		}
 	}
 
-	game.timerJob.Cancel()
+	if game.timerJob != nil {
+		game.Table.DeleteJob(game.timerJob)
+	}
 	game.EndCompose()
 }

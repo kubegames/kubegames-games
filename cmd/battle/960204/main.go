@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"math/rand"
 	"os"
 	"os/signal"
@@ -14,15 +13,6 @@ import (
 )
 
 func main() {
-	fmt.Println("************************************************")
-	fmt.Println("*                                              *")
-	fmt.Println("*              Run Faster System !             *")
-	fmt.Println("*                                              *")
-	fmt.Println("************************************************")
-
-	fmt.Println("### VER: ", "0.0.9")
-	fmt.Println("### PID: ", os.Getpid())
-
 	//系统中断捕获
 	sigs := make(chan os.Signal, 1)
 	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM, syscall.SIGKILL)

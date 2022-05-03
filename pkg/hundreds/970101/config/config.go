@@ -1,11 +1,12 @@
 package config
 
 import (
-	"common/log"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"os"
+
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 
 	"github.com/tidwall/gjson"
 )
@@ -203,7 +204,7 @@ func InitConfig(cfg gjson.Result) {
 		}
 		crazyRedConfig.Robotgold = append(crazyRedConfig.Robotgold, gold)
 	}
-	fmt.Println("crazyRedConfig.Robotgold : ", crazyRedConfig.Robotgold)
+	log.Traceln("crazyRedConfig.Robotgold : ", crazyRedConfig.Robotgold)
 }
 
 //获取机器人的配置[min,max]

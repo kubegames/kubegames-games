@@ -1,12 +1,13 @@
 package config
 
 import (
-	"common/log"
 	"encoding/json"
 	"io/ioutil"
 	"math/rand"
 	"os"
 	"strconv"
+
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 
 	"github.com/bitly/go-simplejson"
 )

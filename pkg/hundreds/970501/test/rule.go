@@ -41,7 +41,7 @@ func shake(tr *result) (element model.Elements, isRand bool) {
 	// 根据返奖率进行计算
 
 	back := goodLuck.Backs.Rand()
-	// fmt.Println("返奖率 ===  ", back)
+	// log.Traceln("返奖率 ===  ", back)
 	backProbMin, backProbMax := int64(back.Min), int64(back.Max)
 
 	backProb := [16]int64{}
@@ -51,14 +51,14 @@ func shake(tr *result) (element model.Elements, isRand bool) {
 		allBet += v
 	}
 
-	// fmt.Println("allBet = ", allBet)
+	// log.Traceln("allBet = ", allBet)
 	for id, v := range BetArr {
 		ele := model.ElementsAll.GetById(model.ElementType(id), nil)
 		backProb[id] = int64(float64(v*int64(ele.OddsMax.Odds)) / float64(allBet) * 100)                 // 大倍率
 		backProb[id+BET_AREA_LENGHT] = int64(float64(v*int64(ele.OddsMin.Odds)) / float64(allBet) * 100) // 小倍率
 	}
 
-	// fmt.Println("backProb = ", backProb)
+	// log.Traceln("backProb = ", backProb)
 	var wait []int
 	for id, v := range backProb {
 		if v >= backProbMin && v < backProbMax {
@@ -66,7 +66,7 @@ func shake(tr *result) (element model.Elements, isRand bool) {
 		}
 	}
 
-	// fmt.Println("wait = ", wait)
+	// log.Traceln("wait = ", wait)
 	if len(wait) != 0 {
 		randIndex := wait[rand.Intn(len(wait))]
 		var ismax bool
@@ -83,7 +83,7 @@ func shake(tr *result) (element model.Elements, isRand bool) {
 		isRand = true
 	}
 
-	// fmt.Println()
+	// log.Traceln()
 	return
 }
 

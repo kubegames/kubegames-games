@@ -1,7 +1,6 @@
 package game
 
 import (
-	"common/log"
 	"fmt"
 	"game_poker/longhu/config"
 	"game_poker/longhu/model"
@@ -9,6 +8,8 @@ import (
 	"math/rand"
 	"sort"
 	"time"
+
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 
 	"game_frame_v2/game/clock"
 
@@ -905,7 +906,7 @@ func (game *Game) GetRoomconfig() {
 	game.Rule.SingleUserAllSpaceLimit = config.LongHuConfig.Singleuserallspacelimit5times[level-1]
 	game.Rule.AllSpaceLimit = config.LongHuConfig.Allspacelimit5times[level-1]
 	for i := 0; i < 3; i++ {
-		//fmt.Println(config.BRNNConfig.Singleusersinglespacelimit5times[level-1][3],config.BRNNConfig.Allusersinglespacelimit5times[level-1][i])
+		//log.Traceln(config.BRNNConfig.Singleusersinglespacelimit5times[level-1][3],config.BRNNConfig.Allusersinglespacelimit5times[level-1][i])
 		game.Rule.SingleUserSingleSpaceLimit[i] = config.LongHuConfig.Singleusersinglespacelimit5times[level-1][i]
 		game.Rule.AllUserSingleSpaceLimit[i] = config.LongHuConfig.Allusersinglespacelimit5times[level-1][i]
 	}
@@ -913,7 +914,7 @@ func (game *Game) GetRoomconfig() {
 		game.Rule.BetList = append(game.Rule.BetList, config.LongHuConfig.Chips5times[level-1][i])
 	}
 	game.Rule.UserBetLimit = game.Rule.SingleUserAllSpaceLimit
-	//fmt.Println(game.Rule.BetList, ":", game.Rule.SingleUserSingleSpaceLimit, ":", game.Rule.SingleUserAllSpaceLimit, ":", game.Rule.AllUserSingleSpaceLimit, ":", game.Rule.AllSpaceLimit)
+	//log.Traceln(game.Rule.BetList, ":", game.Rule.SingleUserSingleSpaceLimit, ":", game.Rule.SingleUserAllSpaceLimit, ":", game.Rule.AllUserSingleSpaceLimit, ":", game.Rule.AllSpaceLimit)
 }
 
 func (game *Game) SendRuleInfo(u player.PlayerInterface) {
@@ -1155,7 +1156,7 @@ func (game *Game) SetIcon() {
 	Millionaireid := int64(0)
 	mastid := int64(0)
 	var user []*model.User
-	//fmt.Println("chushihua ")
+	//log.Traceln("chushihua ")
 	for k, v := range game.CountUserList {
 		if k >= 6 {
 			break
@@ -1172,7 +1173,7 @@ func (game *Game) SetIcon() {
 	u, ok := game.AllUserList[Millionaireid]
 	if ok {
 		u.Icon = Millionaire
-		//fmt.Println("大赢家", u.User.GetId())
+		//log.Traceln("大赢家", u.User.GetId())
 	}
 	if len(user) == 1 {
 		return
@@ -1189,7 +1190,7 @@ func (game *Game) SetIcon() {
 	u1, ok1 := game.AllUserList[bigWinnerid]
 	if ok1 {
 		u1.Icon = bigWinner
-		//fmt.Println("大富豪",u1.User.GetId())
+		//log.Traceln("大富豪",u1.User.GetId())
 	}
 	//神算子
 	sort.Sort(model.MasterUser(user))
@@ -1202,6 +1203,6 @@ func (game *Game) SetIcon() {
 	u2, ok2 := game.AllUserList[mastid]
 	if ok2 {
 		u2.Icon = Master
-		//fmt.Println("神算子",u2.User.GetId())
+		//log.Traceln("神算子",u2.User.GetId())
 	}
 }

@@ -1,9 +1,10 @@
 package model
 
 import (
-	pai9 "game_poker/pai9/msg"
 	"math/rand"
 	"sort"
+
+	pai9 "github.com/kubegames/kubegames-games/pkg/battle/960211/msg"
 )
 
 const (

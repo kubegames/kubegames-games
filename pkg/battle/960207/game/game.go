@@ -1,21 +1,15 @@
 package game
 
 import (
-	"go-game-sdk/define"
-	"go-game-sdk/lib/clock"
-
+	"github.com/bitly/go-simplejson"
 	"github.com/kubegames/kubegames-games/internal/pkg/rand"
-
-	"github.com/kubegames/kubegames-sdk/pkg/log"
-	"github.com/kubegames/kubegames-sdk/pkg/table"
-
 	conf "github.com/kubegames/kubegames-games/pkg/battle/960207/config"
 	"github.com/kubegames/kubegames-games/pkg/battle/960207/data"
 	"github.com/kubegames/kubegames-games/pkg/battle/960207/msg"
 	"github.com/kubegames/kubegames-games/pkg/battle/960207/poker"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 	"github.com/kubegames/kubegames-sdk/pkg/player"
-
-	"github.com/bitly/go-simplejson"
+	"github.com/kubegames/kubegames-sdk/pkg/table"
 )
 
 type GeneralNiuniu struct {
@@ -23,8 +17,8 @@ type GeneralNiuniu struct {
 	Chairs          map[int32]int64           // 玩家座位号
 	UserList        map[int64]*data.User      // 所有的玩家列表
 	Poker           *poker.GamePoker          // 牌堆
-	TimerJob        *clock.Job                // job
-	RobotTimer      *clock.Job                // 轮训机器人检测
+	TimerJob        *table.Job                // job
+	RobotTimer      *table.Job                // 轮训机器人检测
 	ControlledCards map[int64]poker.HoldCards // 控制的牌堆
 	CardsSequence   []poker.HoldCards         // 牌组序列
 	Status          int32                     // 游戏的状态
@@ -69,11 +63,6 @@ func (room *GeneralNiuniuRoom) InitTable(table table.TableInterface) {
 	table.Start(game, nil, nil)
 }
 
-// UserExit 用户退出游戏房间
-func (room *GeneralNiuniuRoom) UserExit(userInter player.PlayerInterface) {
-
-}
-
 // InitConfig 加载配置文件
 func (game *GeneralNiuniu) InitConfig() {
 	// 加载房间配置
@@ -109,7 +98,7 @@ func (game *GeneralNiuniu) InitConfig() {
 }
 
 // OnActionUserSitDown 用户坐下
-func (game *GeneralNiuniu) OnActionUserSitDown(userInter player.PlayerInterface, orderIndex int, config string) int {
+func (game *GeneralNiuniu) OnActionUserSitDown(userInter player.PlayerInterface, orderIndex int, config string) table.MatchKind {
 	userID := userInter.GetID()
 	log.Tracef("玩家 %d 进入房间 %d", userID, game.Table.GetID())
 
@@ -120,13 +109,13 @@ func (game *GeneralNiuniu) OnActionUserSitDown(userInter player.PlayerInterface,
 		if game.Status != int32(msg.GameStatus_ReadyStatus) &&
 			game.Status != int32(msg.GameStatus_StartMove) {
 			log.Tracef("游戏中不能进入")
-			return define.SIT_DOWN_ERROR_NORMAL
+			return table.SitDownErrorNomal
 		}
 
 		// 倒计时最后一秒不让进来
 		if game.Status == int32(msg.GameStatus_StartMove) && game.TimerJob.GetTimeDifference() < 500 {
 			log.Tracef("游戏 %d 最后0.5秒不能进入", game.Table.GetID())
-			return define.SIT_DOWN_ERROR_NORMAL
+			return table.SitDownErrorNomal
 		}
 
 		////// 随机一个无人座位
@@ -140,7 +129,7 @@ func (game *GeneralNiuniu) OnActionUserSitDown(userInter player.PlayerInterface,
 
 		i := 0
 
-		for k, _ := range game.Chairs {
+		for k := range game.Chairs {
 			if i == randChair {
 				chairID = k
 				break
@@ -173,7 +162,7 @@ func (game *GeneralNiuniu) OnActionUserSitDown(userInter player.PlayerInterface,
 		log.Tracef("重联，玩家 %d走到坐下", userID)
 	}
 
-	return define.SIT_DOWN_OK
+	return table.SitDownOk
 }
 
 func (game *GeneralNiuniu) BindRobot(ai player.RobotInterface) player.RobotHandler {
@@ -195,12 +184,12 @@ func (game *GeneralNiuniu) BindRobot(ai player.RobotInterface) player.RobotHandl
 }
 
 // SendScene 发送场景消息
-func (game *GeneralNiuniu) SendScene(userInter player.PlayerInterface) bool {
+func (game *GeneralNiuniu) SendScene(userInter player.PlayerInterface) {
 	userID := userInter.GetID()
 	user, ok := game.UserList[userID]
 	if !ok {
 		log.Errorf("获取玩家异常！！！！")
-		return false
+		return
 	}
 
 	if !game.LoadCfg {
@@ -231,7 +220,7 @@ func (game *GeneralNiuniu) SendScene(userInter player.PlayerInterface) bool {
 	// 发送场景消息
 	game.SendSceneInfo(userInter, game.UserList[userID].ReConnect)
 
-	return true
+	return
 }
 
 // UserReady 用户准备
@@ -287,14 +276,14 @@ func (game *GeneralNiuniu) GameStart() {
 		// 准备人数至少有两人就开始游戏
 		if readyUserCount >= 2 {
 			game.Start()
-			return true
+			return
 		}
 	}
-	return false
+	return
 }
 
-// UserExit 用户离线
-func (game *GeneralNiuniu) UserExit(userInter player.PlayerInterface) bool {
+// UserOffline 用户离线
+func (game *GeneralNiuniu) UserOffline(userInter player.PlayerInterface) bool {
 
 	userID := userInter.GetID()
 
@@ -336,8 +325,8 @@ func (game *GeneralNiuniu) UserExit(userInter player.PlayerInterface) bool {
 	return exitPermit
 }
 
-// LeaveGame 用户正常申请离开
-func (game *GeneralNiuniu) LeaveGame(userInter player.PlayerInterface) bool {
+// UserLeaveGame 用户正常申请离开
+func (game *GeneralNiuniu) UserLeaveGame(userInter player.PlayerInterface) bool {
 
 	userID := userInter.GetID()
 

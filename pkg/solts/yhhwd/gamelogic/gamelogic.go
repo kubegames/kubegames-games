@@ -1,12 +1,13 @@
 package gamelogic
 
 import (
-	"common/log"
 	"common/score"
 	"math/rand"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 
 	"fmt"
 	"game_LaBa/labacom/config"
@@ -118,16 +119,16 @@ func (g *Game) OnUserBet(b []byte) {
 TEST_LABEL:
 	sendSingleresdata := new(yhhwd.SingleRes)
 	g.ChangeMatrix(g.Stage)
-	//fmt.Println("==========",g.Stage,g.lbcfg.Matrix)
+	//log.Traceln("==========",g.Stage,g.lbcfg.Matrix)
 	g.GetIconRes(int64(cheat))
 	odds := g.icon.Odds
-	fmt.Println("当前倍数", odds, g.CruentOdd)
+	log.Traceln("当前倍数", odds, g.CruentOdd)
 
 	//if g.testMsg != nil && g.testMsg.Result == 0 && odds < 120 {
 	//
 	//}
 	//免费游戏
-	fmt.Println("免费游戏次数==", g.FreeGameTimes, tmpfree)
+	log.Traceln("免费游戏次数==", g.FreeGameTimes, tmpfree)
 	if g.FreeGameTimes != tmpfree {
 		senddata.BEnterFree = true
 	} else {
@@ -147,7 +148,7 @@ TEST_LABEL:
 	//	g.FreeGameGold = 0
 	//}
 	//免费游戏赢取金额统计
-	fmt.Println("xiazhu", g.LastBet)
+	log.Traceln("xiazhu", g.LastBet)
 	if bfree {
 		//g.FreeGameTimes--
 		g.FreeGameGold += int64(odds) * int64(g.LastBet)
@@ -172,11 +173,11 @@ TEST_LABEL:
 			sendSingleresdata.Line = append(sendSingleresdata.Line, int32(k))
 		}
 	}
-	fmt.Println("下标====", g.CruentIndex, sendSingleresdata.Line, sendSingleresdata.IconArr)
+	log.Traceln("下标====", g.CruentIndex, sendSingleresdata.Line, sendSingleresdata.IconArr)
 	g.dealWithTest(senddata)
 	//所有结果
 	senddata.AllResArr = append(senddata.AllResArr, sendSingleresdata)
-	//fmt.Println("发送数据",senddata,g.icon.Iconarr)
+	//log.Traceln("发送数据",senddata,g.icon.Iconarr)
 	//如果中奖继续出将 中将得情况下不出免费游戏，免费游戏只在第一次出
 
 	if g.FreeGameTimes > 0 && senddata.BEnterFree {
@@ -248,7 +249,7 @@ func (g *Game) GetIconRes(cheatvalue int64) {
 	*/
 	if g.Stage == 1 {
 		count := g.icon.Getfreegametimes(g.lbcfg)
-		fmt.Println("免费游戏", count)
+		log.Traceln("免费游戏", count)
 		for _, v := range count {
 			g.FreeGameTimes += int(g.lbcfg.FreeGame.Times[v])
 
@@ -355,23 +356,23 @@ func (g *Game) GetIconCount() int {
 
 //替换wild图标
 func (g *Game) ChangeIconRet(cheatvalue int64) {
-	fmt.Println("阶段", g.Stage)
+	log.Traceln("阶段", g.Stage)
 	if g.FreeGameTimes > 0 {
 		if g.Stage <= 3 {
-			fmt.Println("不替换")
+			log.Traceln("不替换")
 			return
 		}
 
 	}
 	if g.Stage > 1 && g.Stage <= 5 {
-		fmt.Println("-----jie", g.Stage)
+		log.Traceln("-----jie", g.Stage)
 		for i := 5; i <= 24; i++ {
 			if g.CruentIndex[i] != -1 {
 				g.icon.Iconarr[i-5] = g.CruentIndex[i]
 			}
 		}
 	} else if g.Stage > 5 {
-		fmt.Println("-----jie5", g.Stage)
+		log.Traceln("-----jie5", g.Stage)
 		for i := 0; i <= 24; i++ {
 			if g.CruentIndex[i] != -1 {
 				g.icon.Iconarr[i] = g.CruentIndex[i]
@@ -415,7 +416,7 @@ func (g *Game) PaoMaDeng(Gold int64) {
 }
 
 func (game *Game) dealWithTest(br *yhhwd.BetRes) {
-	fmt.Println("测试")
+	log.Traceln("测试")
 	if game.testMsg == nil {
 		return
 	}
@@ -433,7 +434,7 @@ func (game *Game) handleTest(bts []byte) {
 	if err := proto.Unmarshal(bts, msg); err != nil {
 		return
 	}
-	fmt.Println("测试", msg)
+	log.Traceln("测试", msg)
 	switch msg.Result {
 	case 0, 1:
 	default:
@@ -857,7 +858,7 @@ func (g *Game) CreatTree() {
 
 }
 func (g *Game) GetNewOdds(cheat int64) {
-	fmt.Println(g.StageTree)
+	log.Traceln(g.StageTree)
 	g.icon.Odds = 0
 	g.CurrenticonidInit()
 	stage := g.Stage
@@ -871,7 +872,7 @@ func (g *Game) GetNewOdds(cheat int64) {
 				if v == nil {
 					continue
 				}
-				fmt.Println("=====jieguo=====", v.value)
+				log.Traceln("=====jieguo=====", v.value)
 				var temp []int
 				g.OneTreeOdds(v, g.icon.Iconarr[v.value], temp)
 			}
@@ -918,10 +919,10 @@ func (g *Game) OneTreeOdds(n *Node, iconid int32, indexarr []int) {
 
 	}
 	if bEnter {
-		//fmt.Println("=====",n.hight,n.value,currenid)
-		//fmt.Println()
+		//log.Traceln("=====",n.hight,n.value,currenid)
+		//log.Traceln()
 		if n.hight > 2 {
-			//fmt.Println("中奖下标路劲",indexarr,"值",n.value,"高度",n.hight,currenid)
+			//log.Traceln("中奖下标路劲",indexarr,"值",n.value,"高度",n.hight,currenid)
 			for _, v := range indexarr {
 				g.CruentIndex[v] = g.icon.Iconarr[v]
 			}

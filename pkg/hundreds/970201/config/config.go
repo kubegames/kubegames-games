@@ -1,11 +1,12 @@
 package config
 
 import (
-	"common/log"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"os"
+
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 
 	"github.com/tidwall/gjson"
 )
@@ -195,10 +196,10 @@ type AiSendNew struct {
 var AiSendNewArr = make([]*AiSendNew, 0)
 
 func GetAiSendNew(redCount int) *AiSendNew {
-	//fmt.Println("AiSendNewArr : ",fmt.Sprintf(`%+v`,AiSendNewArr),len(AiSendNewArr))
+	//log.Traceln("AiSendNewArr : ",fmt.Sprintf(`%+v`,AiSendNewArr),len(AiSendNewArr))
 	for _, v := range AiSendNewArr {
-		//fmt.Println(fmt.Sprintf(`%+v`,v))
-		//fmt.Println("red count : ",redCount, v.RedCount)
+		//log.Traceln(fmt.Sprintf(`%+v`,v))
+		//log.Traceln("red count : ",redCount, v.RedCount)
 		if redCount >= v.RedCount[0] && redCount <= v.RedCount[1] {
 			return v
 		}
@@ -217,10 +218,10 @@ type AiRobNew struct {
 var AiRobNewArr = make([]*AiRobNew, 0)
 
 func GetAiRobNew(redCount int) *AiRobNew {
-	//fmt.Println("AiSendNewArr : ",fmt.Sprintf(`%+v`,AiSendNewArr),len(AiSendNewArr))
+	//log.Traceln("AiSendNewArr : ",fmt.Sprintf(`%+v`,AiSendNewArr),len(AiSendNewArr))
 	for _, v := range AiRobNewArr {
-		//fmt.Println(fmt.Sprintf(`%+v`,v))
-		//fmt.Println("red count : ",redCount, v.RedCount)
+		//log.Traceln(fmt.Sprintf(`%+v`,v))
+		//log.Traceln("red count : ",redCount, v.RedCount)
 		if redCount >= v.RedCount[0] && redCount <= v.RedCount[1] {
 			return v
 		}
@@ -256,7 +257,7 @@ func InitConfig(cfg gjson.Result) {
 		}
 		crazyRedConfig.Robotgold = append(crazyRedConfig.Robotgold, gold)
 	}
-	fmt.Println("crazyRedConfig.Robotgold : ", crazyRedConfig.Robotgold)
+	log.Traceln("crazyRedConfig.Robotgold : ", crazyRedConfig.Robotgold)
 }
 
 //获取机器人的配置[min,max]

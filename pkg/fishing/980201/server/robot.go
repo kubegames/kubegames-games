@@ -43,7 +43,7 @@ func NewRobot(table table.TableInterface) *Robot {
 	robot := &Robot{}
 	//err := table.GetRobot()
 	//if err != nil {
-	//	fmt.Println(err)
+	//	log.Traceln(err)
 	//	return nil
 	//}
 	robot.Table = table

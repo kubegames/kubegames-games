@@ -1,11 +1,12 @@
 package game
 
 import (
-	"common/log"
 	"fmt"
 	"game_poker/doudizhu/msg"
 	"game_poker/doudizhu/poker"
 	"sort"
+
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 )
 
 type SplitMode int
@@ -218,11 +219,11 @@ func GetMostValueGroup(cards []byte) (int, []*CardGroup) {
 	// for k, groups := range vecGroups {
 	// 	groupValue := GetGroupsValue(groups)
 	// 	fmt.Printf(" >>>>>>>>>>>>> mode : %v \n", k)
-	// 	fmt.Println(" >>>>>>>>>>>>> groupValue : ", groupValue)
+	// 	log.Traceln(" >>>>>>>>>>>>> groupValue : ", groupValue)
 	// 	for index, group := range groups {
-	// 		fmt.Println(" index : ", index, *group)
+	// 		log.Traceln(" index : ", index, *group)
 	// 	}
-	// 	fmt.Println()
+	// 	log.Traceln()
 	// }
 	vecGroups = sortGroupsVec(vecGroups, false)
 	maxGroups = vecGroups[0]

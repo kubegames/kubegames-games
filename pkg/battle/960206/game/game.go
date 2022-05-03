@@ -2,14 +2,12 @@ package game
 
 import (
 	"fmt"
-	"go-game-sdk/lib/clock"
 	"sync"
-
-	"github.com/kubegames/kubegames-sdk/pkg/log"
-	"github.com/kubegames/kubegames-sdk/pkg/table"
 
 	"github.com/kubegames/kubegames-games/pkg/battle/960206/data"
 	"github.com/kubegames/kubegames-games/pkg/battle/960206/msg"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
+	"github.com/kubegames/kubegames-sdk/pkg/table"
 )
 
 type Game struct {
@@ -24,8 +22,8 @@ type Game struct {
 	Bottom     int64            // 底注
 	lock       sync.Mutex       // 锁
 	Level      int32            // 游戏当前关卡
-	timerJob   *clock.Job       // 定时器
-	robotTimer *clock.Job       // 机器人定时器
+	timerJob   *table.Job       // 定时器
+	robotTimer *table.Job       // 机器人定时器
 	Charis     [4]int64         // 座位
 }
 
@@ -89,7 +87,7 @@ func (game *Game) GetRoomInfo2C(userSelf *data.User) *msg.S2CRoomInfo {
 		},
 		SpareArr:    userSelf.SpareArr,
 		SpecialType: userSelf.SpecialCardType,
-		RoomId:      game.Table.GetRoomID(),
+		RoomId:      int64(game.Table.GetRoomID()),
 		MinLimit:    game.Table.GetEntranceRestrictions(),
 	}
 	if game.timerJob != nil {
@@ -117,9 +115,9 @@ func (game *Game) NewS2CStartGame(user *data.User) (s2cStartGame *msg.S2CStartGa
 		s2cStartGame.SpareArr[k].TailCards = user.SortCardsSelf(v.TailCards, int(v.TailType))
 	}
 	if !user.User.IsRobot() {
-		fmt.Println("s2cStartGame.SpareArr len 111 : ", len(s2cStartGame.SpareArr))
+		log.Traceln("s2cStartGame.SpareArr len 111 : ", len(s2cStartGame.SpareArr))
 		for _, v := range s2cStartGame.SpareArr {
-			fmt.Println("发给用户的备选：", fmt.Sprintf(`%x %x %x`, v.HeadCards, v.MidCards, v.TailCards))
+			log.Traceln("发给用户的备选：", fmt.Sprintf(`%x %x %x`, v.HeadCards, v.MidCards, v.TailCards))
 		}
 	}
 	for _, v := range game.userList {
@@ -127,10 +125,10 @@ func (game *Game) NewS2CStartGame(user *data.User) (s2cStartGame *msg.S2CStartGa
 			s2cStartGame.UserArr = append(s2cStartGame.UserArr, v.GetUserS2CInfo())
 		}
 	}
-	//fmt.Println("s2cStartGame : uid :  ", user.User.GetID(), fmt.Sprintf(`%x`, s2cStartGame.SpareArr[0].HeadCards), "用户头墩：", fmt.Sprintf(`%x`, user.HeadCards), user.HeadCardType, user.MidCardType, user.TailCardType)
-	//fmt.Println("s2cStartGame : uid :  ", user.User.GetID(), fmt.Sprintf(`%x`, s2cStartGame.SpareArr[0].HeadCards), "用户中墩：", fmt.Sprintf(`%x`, user.TailCards))
-	//fmt.Println("s2cStartGame : uid :  ", user.User.GetID(), fmt.Sprintf(`%x`, s2cStartGame.SpareArr[0].HeadCards), "用户尾蹲：", fmt.Sprintf(`%x`, user.TailCards))
-	//fmt.Println(s2cStartGame.SpareArr[0].HeadType,s2cStartGame.SpareArr[0].MidType,s2cStartGame.SpareArr[0].TailType)
+	//log.Traceln("s2cStartGame : uid :  ", user.User.GetID(), fmt.Sprintf(`%x`, s2cStartGame.SpareArr[0].HeadCards), "用户头墩：", fmt.Sprintf(`%x`, user.HeadCards), user.HeadCardType, user.MidCardType, user.TailCardType)
+	//log.Traceln("s2cStartGame : uid :  ", user.User.GetID(), fmt.Sprintf(`%x`, s2cStartGame.SpareArr[0].HeadCards), "用户中墩：", fmt.Sprintf(`%x`, user.TailCards))
+	//log.Traceln("s2cStartGame : uid :  ", user.User.GetID(), fmt.Sprintf(`%x`, s2cStartGame.SpareArr[0].HeadCards), "用户尾蹲：", fmt.Sprintf(`%x`, user.TailCards))
+	//log.Traceln(s2cStartGame.SpareArr[0].HeadType,s2cStartGame.SpareArr[0].MidType,s2cStartGame.SpareArr[0].TailType)
 	return
 }
 
@@ -149,9 +147,9 @@ func (game *Game) NewS2CEndGame() (s2cEndGame *msg.S2CEndGame) {
 		}
 	}
 
-	//fmt.Println("结束游戏：打枪用户：")
+	//log.Traceln("结束游戏：打枪用户：")
 	//for _, v := range s2cEndGame.HitArr {
-	//	fmt.Println(fmt.Sprintf(`%+v`, v))
+	//	log.Traceln(fmt.Sprintf(`%+v`, v))
 	//}
 
 	return
@@ -203,7 +201,7 @@ func (game *Game) DelChairID(chairID int32) {
 //		cv1 ,_ := poker.GetCardValueAndColor(cards[1])
 //		cv2 ,_ := poker.GetCardValueAndColor(cards[2])
 //		cv3 ,_ := poker.GetCardValueAndColor(cards[3])
-//		//fmt.Println(cv0,cv1,cv2,cv3)
+//		//log.Traceln(cv0,cv1,cv2,cv3)
 //		cv4 ,_ := poker.GetCardValueAndColor(cards[4])
 //		if cv1 == cv2 && cv1 == cv3 {
 //			return cards

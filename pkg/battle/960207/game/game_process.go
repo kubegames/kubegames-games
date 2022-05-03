@@ -4,12 +4,11 @@ import (
 	"fmt"
 
 	"github.com/kubegames/kubegames-games/internal/pkg/score"
-
-	"github.com/kubegames/kubegames-sdk/pkg/log"
-
 	"github.com/kubegames/kubegames-games/pkg/battle/960207/data"
 	"github.com/kubegames/kubegames-games/pkg/battle/960207/msg"
 	"github.com/kubegames/kubegames-games/pkg/battle/960207/poker"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
+	"github.com/kubegames/kubegames-sdk/pkg/platform"
 )
 
 // Start 游戏开始，进入动画状态
@@ -18,7 +17,7 @@ func (game *GeneralNiuniu) Start() {
 	log.Tracef("游戏 %d 倒计时开始", game.Table.GetID())
 
 	if game.TimerJob != nil {
-		game.TimerJob.Cancel()
+		game.Table.DeleteJob(game.TimerJob)
 	}
 
 	game.MatchRobot()
@@ -361,9 +360,12 @@ func (game *GeneralNiuniu) Settle() {
 		Result:  winnerResult,
 	})
 
+	//战绩
+	var records []*platform.PlayerRecord
+
 	// 上下分
 	for i, v := range resultList {
-		netProfit, _ := game.UserList[v.UserId].User.SetScore(game.Table.GetGameNum(), v.Result, game.Table.GetRoomRate())
+		netProfit := game.UserList[v.UserId].User.SetScore(game.Table.GetGameNum(), v.Result, game.Table.GetRoomRate())
 
 		// 计算打码量,触发跑马灯
 		chip := netProfit
@@ -385,9 +387,18 @@ func (game *GeneralNiuniu) Settle() {
 		game.UserList[v.UserId].CurAmount += netProfit
 
 		// 发送战绩，计算产出
-		game.TableSendRecord(v.UserId, resultList[i].Result, netProfit)
+		if record := game.TableSendRecord(v.UserId, resultList[i].Result, netProfit); record != nil {
+			records = append(records, record)
+		}
 
 		resultList[i].Result = netProfit
+	}
+
+	//发送战绩
+	if len(records) > 0 {
+		if _, err := game.Table.UploadPlayerRecord(records); err != nil {
+			log.Warnf("upload player record error %s", err.Error())
+		}
 	}
 
 	// 记录游戏日志
@@ -473,8 +484,9 @@ func (game *GeneralNiuniu) GameOver() {
 
 	// 所有人退出去
 	for _, user := range game.UserList {
-		game.UserExit(user.User)
+		game.UserLeaveGame(user.User)
 		game.Table.KickOut(user.User)
 	}
 
+	game.Table.Close()
 }

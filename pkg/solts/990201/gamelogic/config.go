@@ -8,6 +8,7 @@ import (
 	"strconv"
 
 	"github.com/bitly/go-simplejson"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 	"github.com/sipt/GoJsoner"
 	"github.com/tidwall/gjson"
 )
@@ -36,7 +37,7 @@ var GameConfig Config
 func LoadConfig() {
 	data, err := ioutil.ReadFile("conf/shz.json")
 	if err != nil {
-		fmt.Println("File reading error", err)
+		log.Traceln("File reading error", err)
 		return
 	}
 
@@ -53,7 +54,7 @@ func LoadConfig() {
 	GameConfig.GetArmsIconWeight(js)
 	GameConfig.GetHumanIconWeight(js)
 
-	fmt.Println(GameConfig)
+	log.Traceln(GameConfig)
 }
 
 func (cfg *Config) GetOdds(res gjson.Result) {

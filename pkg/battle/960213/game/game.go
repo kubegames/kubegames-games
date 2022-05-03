@@ -1,7 +1,6 @@
 package game
 
 import (
-	"common/log"
 	"common/rand"
 	"game_frame_v2/define"
 	"game_frame_v2/game/clock"
@@ -10,6 +9,8 @@ import (
 	"game_poker/ddzall/msg"
 	"game_poker/ddzall/poker"
 	"time"
+
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 
 	"github.com/bitly/go-simplejson"
 	"github.com/kubegames/kubegames-sdk/pkg/player"

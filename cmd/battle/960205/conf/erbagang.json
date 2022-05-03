@@ -1,0 +1,16 @@
+{
+    "sleep_time": {
+        "players_match_sleep_time": 5000,
+        "game_start_sleep_time": 2000,
+        "rob_zhuang_sleep_time": 5000,
+        "bet_sleep_time": 5000
+    },
+    "qiang_zhuang_multiple": {
+        "200": [3, 68, 134, 200],
+        "199": [3, 67, 133, 199]
+    },
+    "xia_zhu": {
+        "200": [16, 33, 50, 66],
+        "199": [16, 33, 49, 66]
+    }
+}

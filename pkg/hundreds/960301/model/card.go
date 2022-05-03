@@ -3,7 +3,7 @@ package model
 import (
 	"fmt"
 
-	"github.com/kubegames/kubegames-games/pkg/poker"
+	"github.com/kubegames/kubegames-games/internal/pkg/poker"
 )
 
 // 随机两副牌

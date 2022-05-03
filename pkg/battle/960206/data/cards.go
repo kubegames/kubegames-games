@@ -3,11 +3,10 @@ package data
 import (
 	"fmt"
 
-	"github.com/kubegames/kubegames-sdk/pkg/log"
-
 	"github.com/kubegames/kubegames-games/pkg/battle/960206/global"
 	"github.com/kubegames/kubegames-games/pkg/battle/960206/msg"
 	"github.com/kubegames/kubegames-games/pkg/battle/960206/poker"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 )
 
 type Compare struct {
@@ -22,10 +21,10 @@ type Compare struct {
 
 //根据最优配牌法将员工的牌进行分牌
 func (user *User) SplitCards() {
-	//fmt.Println("开始给用户分牌")
+	//log.Traceln("开始给用户分牌")
 	cards, cardsArr := user.SetSpecialCardType()
 	if user.SpecialCardType > SPECIAL_CARD_NO {
-		//fmt.Println("玩家特殊牌就直接返回")
+		//log.Traceln("玩家特殊牌就直接返回")
 		user.addIntoSpareArrNew(true, &msg.S2CCardsAndCardType{
 			HeadCards: user.HeadCards,
 			MidCards:  user.MiddleCards,
@@ -38,22 +37,22 @@ func (user *User) SplitCards() {
 	}
 
 	if hasFour, resCards, cardType := user.cardsHasOverFour(cardsArr); hasFour {
-		//fmt.Println("走手牌中有四条同花顺逻辑线···,用户id：",user.User.GetId())
+		//log.Traceln("走手牌中有四条同花顺逻辑线···,用户id：",user.User.GetId())
 		user.splitFourOrThs(cards, resCards, cardType)
 	} else {
-		//fmt.Println("按照普通的牌型来处理")
+		//log.Traceln("按照普通的牌型来处理")
 		user.splitNormalCards(cards)
 	}
 
-	//fmt.Println("作弊前玩家的牌 ： ", user.User.GetId(), fmt.Sprintf(`%x,%x,%x`, user.HeadCards, user.MiddleCards, user.TailCards))
-	//fmt.Println("玩家的牌型：", "  ", user.HeadCardType, user.MidCardType, user.TailCardType)
+	//log.Traceln("作弊前玩家的牌 ： ", user.User.GetId(), fmt.Sprintf(`%x,%x,%x`, user.HeadCards, user.MiddleCards, user.TailCards))
+	//log.Traceln("玩家的牌型：", "  ", user.HeadCardType, user.MidCardType, user.TailCardType)
 
 }
 
 //有四条或同花顺并且已经确定尾墩的分法
 func (user *User) splitFourOrThs(cardsAll, tailCards []byte, tailType int) {
 	if tailType == poker.CardTypeFour {
-		fmt.Println("走四条的逻辑")
+		log.Traceln("走四条的逻辑")
 		user.splitFour(cardsAll, tailCards, tailType)
 	} else {
 		user.splitNormalCards(cardsAll)
@@ -79,7 +78,7 @@ func (user *User) addIntoSpareArrNew(isSpecial bool, spare *msg.S2CCardsAndCardT
 	}
 	if !hasSame {
 		//if !user.User.IsRobot(){
-		//	fmt.Println("非特殊牌型，单独处理 头墩中墩尾墩：",fmt.Sprintf(`%x %x %x`,spare.HeadCards,spare.MidCards,spare.TailCards))
+		//	log.Traceln("非特殊牌型，单独处理 头墩中墩尾墩：",fmt.Sprintf(`%x %x %x`,spare.HeadCards,spare.MidCards,spare.TailCards))
 		//}
 		user.SpareArr = append(user.SpareArr, spare)
 	}
@@ -137,12 +136,12 @@ func (user *User) splitFour(cardsAllVar, tailCardsVar []byte, tailType int) {
 	leftCards = append(leftCards, single...)
 	//再把原来的尾墩中剔除掉落单的牌
 	tailCards = poker.DelByteSlice(tailCards, single[0])
-	//fmt.Println("剩余的牌有：",fmt.Sprintf(`%x , %x `,leftCards,tailCards))
+	//log.Traceln("剩余的牌有：",fmt.Sprintf(`%x , %x `,leftCards,tailCards))
 	compareList := make([]*Compare, 0)
 	leftCardsArr := poker.GetCombineCardsArr(leftCards, 5)
 	maxCards2Type := user.GetMaxCardType(leftCardsArr)
 	if maxCards2Type == poker.CardTypeSingle {
-		fmt.Println("==============四条之后剩余的都是单张============")
+		log.Traceln("==============四条之后剩余的都是单张============")
 		leftCards = poker.SortCards(leftCards) // 987654321
 		tailCardsNew := append(tailCards, leftCards[8])
 		midCards := make([]byte, 0)
@@ -158,9 +157,9 @@ func (user *User) splitFour(cardsAllVar, tailCardsVar []byte, tailType int) {
 		})
 		return
 	}
-	//fmt.Println("maxCards2Type : ",maxCards2Type)
+	//log.Traceln("maxCards2Type : ",maxCards2Type)
 	for _, midCards := range leftCardsArr {
-		//fmt.Println("tail cards : ",poker.GetPrintCards(tailCards))
+		//log.Traceln("tail cards : ",poker.GetPrintCards(tailCards))
 		//目前还剩9张牌在剩余的牌里面
 		midType, _ := poker.GetCardType13Water(midCards)
 		//剩4张牌
@@ -173,7 +172,7 @@ func (user *User) splitFour(cardsAllVar, tailCardsVar []byte, tailType int) {
 		left4Cards = poker.SortCards(left4Cards)
 		//fmt.
 		if maxCards2Type == poker.CardTypeDz && midType == poker.CardTypeDz {
-			//fmt.Println("四张里面 最大是对=============")
+			//log.Traceln("四张里面 最大是对=============")
 			tailCardsNew := make([]byte, 0)
 			for _, v := range tailCards {
 				tailCardsNew = append(tailCardsNew, v)
@@ -189,11 +188,11 @@ func (user *User) splitFour(cardsAllVar, tailCardsVar []byte, tailType int) {
 		//如果是葫芦就直接返回
 		//var headCards = left4Cards
 		if midType >= poker.CardTypeSZA2345 || midType == poker.CardTypeDz {
-			//fmt.Println("中墩是大于CardTypeSZA2345，直接就返回 此时的尾墩：",poker.GetPrintCards(tailCards))
+			//log.Traceln("中墩是大于CardTypeSZA2345，直接就返回 此时的尾墩：",poker.GetPrintCards(tailCards))
 			maxHead3 := user.GetMaxCards3(poker.GetCombineCardsArr(left4Cards, 3))
-			//fmt.Println("maxHead3 之后的尾墩：",poker.GetPrintCards(tailCards))
+			//log.Traceln("maxHead3 之后的尾墩：",poker.GetPrintCards(tailCards))
 			remainHead := user.GetDifferentCards(left4Cards, maxHead3) //剩余的从头墩中选出的一张
-			//fmt.Println("GetDifferentCards 之后的尾墩：",poker.GetPrintCards(tailCards))
+			//log.Traceln("GetDifferentCards 之后的尾墩：",poker.GetPrintCards(tailCards))
 			//这里有个巨坑，如果直接写成 tailCardsNew := append(tailCards,remain)，之后会将tailCards的值改变，巨坑，要重新make
 			tailCardsNew := make([]byte, 0)
 			for _, v := range tailCards {
@@ -201,21 +200,21 @@ func (user *User) splitFour(cardsAllVar, tailCardsVar []byte, tailType int) {
 			}
 			tailCardsNew = append(tailCardsNew, remainHead...)
 
-			//fmt.Println("left4Cards: ",poker.GetPrintCards(left4Cards),"remainHead : ",poker.GetPrintCards(remainHead))
-			//fmt.Println("头墩：",fmt.Sprintf(`%x`,maxHead3),"添加中墩：",fmt.Sprintf(`%x`,midCards)," 尾墩：",fmt.Sprintf(`%x`,taiCardsNew))
+			//log.Traceln("left4Cards: ",poker.GetPrintCards(left4Cards),"remainHead : ",poker.GetPrintCards(remainHead))
+			//log.Traceln("头墩：",fmt.Sprintf(`%x`,maxHead3),"添加中墩：",fmt.Sprintf(`%x`,midCards)," 尾墩：",fmt.Sprintf(`%x`,taiCardsNew))
 			compareList = user.AppendCompareList(&Compare{
 				headCards: maxHead3, midCards: midCards, tailCards: tailCardsNew,
 				midType: midType,
 			}, compareList)
-			//fmt.Println("AppendCompareList 之后的尾墩：",poker.GetPrintCards(tailCards))
+			//log.Traceln("AppendCompareList 之后的尾墩：",poker.GetPrintCards(tailCards))
 			continue
 		}
 		//如果中墩是两对或者三条，就选出 落单的几张 再去落单的几张中组成最大的头墩
 		if midType == poker.CardTypeTK || midType == poker.CardTypeTW {
-			//fmt.Println("如果中墩是两对或者三条，就选出 落单的几张 再去-----",poker.GetPrintCards(midCards))
+			//log.Traceln("如果中墩是两对或者三条，就选出 落单的几张 再去-----",poker.GetPrintCards(midCards))
 			singleCards := poker.GetDzSingleCards(midCards)
 			midRemain := user.GetDifferentCards(midCards, singleCards) // 2233
-			//fmt.Println("//取出中墩之后剩余的牌: ",fmt.Sprintf(`%x`,midRemain))
+			//log.Traceln("//取出中墩之后剩余的牌: ",fmt.Sprintf(`%x`,midRemain))
 			leftAllCards := make([]byte, 0)
 			for _, v := range left4Cards {
 				leftAllCards = append(leftAllCards, v)
@@ -227,7 +226,7 @@ func (user *User) splitFour(cardsAllVar, tailCardsVar []byte, tailType int) {
 			//取出头墩之后剩余的牌
 			headRemain := user.GetDifferentCards(leftAllCards, maxHead3) // 4561
 			headRemain = poker.SortCards(headRemain)
-			//fmt.Println("最后剩余的牌：",fmt.Sprintf(`%x`,leftAllCards),"中墩：",poker.GetPrintCards(midRemain),"尾墩：",poker.GetPrintCards(tailCards))
+			//log.Traceln("最后剩余的牌：",fmt.Sprintf(`%x`,leftAllCards),"中墩：",poker.GetPrintCards(midRemain),"尾墩：",poker.GetPrintCards(tailCards))
 			//选出了头墩3张和最后一张放到尾墩，剩余的都是中墩的牌
 			hasChoose := append(maxHead3, headRemain[len(headRemain)-1])
 			remainForMid := user.GetDifferentCards(headRemain, hasChoose)
@@ -242,7 +241,7 @@ func (user *User) splitFour(cardsAllVar, tailCardsVar []byte, tailType int) {
 			tailCardsNew = append(tailCardsNew, headRemain[len(headRemain)-1])
 			compareList = user.AppendCompareList(&Compare{headCards: maxHead3, midCards: midCardsNew, tailCards: tailCardsNew}, compareList)
 		} else {
-			//fmt.Println("不是三条或对子，就选出最大的牌")
+			//log.Traceln("不是三条或对子，就选出最大的牌")
 			maxHead3 := user.GetMaxCards3(poker.GetCombineCardsArr(left4Cards, 3))
 			remainHead := user.GetDifferentCards(left4Cards, maxHead3) //剩余的从头墩中选出的一张
 			tailCardsNew := append(tailCards, remainHead...)
@@ -328,7 +327,7 @@ func (user *User) GetMaxCompareCards(compareList []*Compare) (maxCompare *Compar
 	maxCompare.headType, _ = poker.GetCardType13Water(maxCompare.headCards)
 	maxCompare.midType, _ = poker.GetCardType13Water(maxCompare.midCards)
 	maxCompare.tailType, _ = poker.GetCardType13Water(maxCompare.tailCards)
-	//fmt.Println("maxCompare.tailType, ",maxCompare.tailType)
+	//log.Traceln("maxCompare.tailType, ",maxCompare.tailType)
 	return
 }
 
@@ -401,7 +400,7 @@ func (user *User) BeatCompare(c1, c2 *Compare) bool {
 	}
 
 	//if isShow {
-	//	fmt.Println("c1.score", c1.score, "c2.score", c2.score, "  ", beatResHead, beatResMid, beatResTail)
+	//	log.Traceln("c1.score", c1.score, "c2.score", c2.score, "  ", beatResHead, beatResMid, beatResTail)
 	//}
 
 	//
@@ -444,7 +443,7 @@ func (user *User) cardsHasOverFour(cardsArr [][]byte) (has bool, res []byte, car
 	for _, cards := range cardsArr {
 		cardType, sortCards := poker.GetCardType13Water(cards)
 		if cardType >= poker.CardTypeFour {
-			//fmt.Println("cards : ",fmt.Sprintf(`%x`,cards))
+			//log.Traceln("cards : ",fmt.Sprintf(`%x`,cards))
 			has = true
 			encode := poker.GetEncodeCard(cardType, sortCards)
 			if encode > maxSzEncode {
@@ -485,7 +484,7 @@ func (user *User) GetMidAndHeadList(cardsAll, tailCards []byte, tailType int) (c
 	}
 
 	for _, midCards := range left8CardsArr {
-		//fmt.Println("中墩：",poker.GetPrintCards(midCards),"尾墩：",poker.GetPrintCards(tailCards))
+		//log.Traceln("中墩：",poker.GetPrintCards(midCards),"尾墩：",poker.GetPrintCards(tailCards))
 		tailCardsArr := poker.Cards5SliceToArr(tailCards)
 		midCardsArr := poker.Cards5SliceToArr(midCards)
 		isBeat, _, c2Type := user.Compare5Cards(tailCardsArr, midCardsArr)
@@ -509,7 +508,7 @@ func (user *User) GetMidAndHeadList(cardsAll, tailCards []byte, tailType int) (c
 		}
 		//如果是葫芦就直接返回
 		if c2Type == poker.CardTypeHL {
-			//fmt.Println("葫芦：中墩尾墩：",fmt.Sprintf(`%x %x`,midCards,tailCards))
+			//log.Traceln("葫芦：中墩尾墩：",fmt.Sprintf(`%x %x`,midCards,tailCards))
 			compareList = user.AppendCompareList(&Compare{headCards: left3Cards, midCards: midCards, tailCards: tailCards}, compareList)
 			continue
 		}
@@ -550,7 +549,7 @@ func (user *User) AppendCompareList(compare *Compare, compareList []*Compare) []
 		return compareList
 	}
 	//if !user.User.IsRobot(){
-	//	fmt.Println("比较通过：头墩，中墩，尾墩：",fmt.Sprintf(`%x %x %x`,compare.headCards,compare.midCards,compare.tailCards))
+	//	log.Traceln("比较通过：头墩，中墩，尾墩：",fmt.Sprintf(`%x %x %x`,compare.headCards,compare.midCards,compare.tailCards))
 	//}
 	isExist := false
 	for _, v := range compareList {
@@ -561,7 +560,7 @@ func (user *User) AppendCompareList(compare *Compare, compareList []*Compare) []
 	}
 	if !isExist {
 		compareList = append(compareList, compare)
-		//fmt.Println("不存在就添加：",len(compareList))
+		//log.Traceln("不存在就添加：",len(compareList))
 	}
 	return compareList
 }
@@ -589,7 +588,7 @@ func (user *User) cardsHasCardType(theCardType int, cardsArr [][]byte) (has bool
 	for _, cards := range cardsArr {
 		cardType, sortCards := poker.GetCardType13Water(cards)
 		if cardType == theCardType {
-			//fmt.Println("cards : ",fmt.Sprintf(`%x`,cards))
+			//log.Traceln("cards : ",fmt.Sprintf(`%x`,cards))
 			has = true
 			encode := poker.GetEncodeCard(cardType, sortCards)
 			if encode > maxSzEncode {
@@ -606,7 +605,7 @@ func (user *User) cardsIsWuLong(cardsArr [][]byte) bool {
 	for _, cards := range cardsArr {
 		cardType, _ := poker.GetCardType13Water(cards)
 		if cardType > poker.CardTypeSingle {
-			//fmt.Println("cards : ",fmt.Sprintf(`%x`,cards))
+			//log.Traceln("cards : ",fmt.Sprintf(`%x`,cards))
 			return false
 		}
 	}
@@ -616,21 +615,21 @@ func (user *User) cardsIsWuLong(cardsArr [][]byte) bool {
 //三张或两对落单的牌 重新组合成新的
 func (user *User) GetSinkSingleMidHead(midOld, headOld []byte) (midNew, headNew []byte) {
 	singleCards := poker.GetDzSingleCards(midOld)
-	//fmt.Println("落单的牌: ",fmt.Sprintf(`%x`,singleCards))
+	//log.Traceln("落单的牌: ",fmt.Sprintf(`%x`,singleCards))
 	//中墩剩余的牌
 	midRemain := user.GetDifferentCards(midOld, singleCards) // 2233
-	//fmt.Println("//取出中墩之后剩余的牌: ",fmt.Sprintf(`%x`,midRemain))
+	//log.Traceln("//取出中墩之后剩余的牌: ",fmt.Sprintf(`%x`,midRemain))
 
 	headOld = append(headOld, singleCards...)
-	//fmt.Println("最后剩余的牌：",fmt.Sprintf(`%x`,headOld))
+	//log.Traceln("最后剩余的牌：",fmt.Sprintf(`%x`,headOld))
 	//取出最大的头墩
 	maxHead3 := user.GetMaxCards3(poker.GetCombineCardsArr(headOld, 3))
-	//fmt.Println("//取出最大的头墩: ",fmt.Sprintf(`%x`,maxHead3))
+	//log.Traceln("//取出最大的头墩: ",fmt.Sprintf(`%x`,maxHead3))
 	//取出头墩之后剩余的牌
 	headRemain := user.GetDifferentCards(headOld, maxHead3) // 4561
-	//fmt.Println("//中墩剩余的牌: ",fmt.Sprintf(`%x`,midRemain))
+	//log.Traceln("//中墩剩余的牌: ",fmt.Sprintf(`%x`,midRemain))
 	midNew = append(midRemain, headRemain...)
-	//fmt.Println("//新的中墩: ",fmt.Sprintf(`%x`,midNew))
+	//log.Traceln("//新的中墩: ",fmt.Sprintf(`%x`,midNew))
 	headNew = maxHead3
 	return
 }
@@ -652,16 +651,16 @@ func (user *User) GetMaxCards3(cardsArr [][]byte) (maxCards []byte) {
 //中墩5张 和 尾墩3张比较
 func (user *User) Compare5And3Cards(cards1, cards2 []byte) bool {
 	if len(cards1) != 5 || len(cards2) != 3 {
-		fmt.Println("len(cards1) != 5 || len(cards2) != 3 ", fmt.Sprintf(`%x %x`, cards1, cards2))
+		log.Warnln("len(cards1) != 5 || len(cards2) != 3 ", fmt.Sprintf(`%x %x`, cards1, cards2))
 		panic("Compare5And3Cards ")
-		return false
+		//return false
 	}
 	c1Type, _ := poker.GetCardType13Water(cards1)
 	c2Type, _ := poker.GetCardType13Water(cards2)
-	//fmt.Println("c1type : ",c1Type," c2Type : ",c2Type)
+	//log.Traceln("c1type : ",c1Type," c2Type : ",c2Type)
 
 	if c1Type == poker.CardTypeTK && c2Type == poker.Card3TypeBz {
-		//fmt.Println("都是三个：",)
+		//log.Traceln("都是三个：",)
 		c1DzCard, _ := poker.GetDzCard(cards1)
 		return c1DzCard > cards2[0]
 	}
@@ -681,12 +680,12 @@ func (user *User) Compare5And3Cards(cards1, cards2 []byte) bool {
 	if c1Type == poker.CardTypeDz && c2Type == poker.CardTypeDz {
 		userCardDz, ok := poker.GetDzCard(cards1)
 		if !ok {
-			fmt.Println("玩家牌不是对子 : ", fmt.Sprintf(`%x`, cards1))
+			log.Traceln("玩家牌不是对子 : ", fmt.Sprintf(`%x`, cards1))
 			panic("玩家牌不是对子")
 		}
 		anotherCardDz, ok := poker.GetDzCard(cards2)
 		if !ok {
-			fmt.Println("玩家牌不是对子 : ", fmt.Sprintf(`%x`, cards2))
+			log.Traceln("玩家牌不是对子 : ", fmt.Sprintf(`%x`, cards2))
 			panic("玩家牌不是对子")
 		}
 		if userCardDz > anotherCardDz {
@@ -717,12 +716,12 @@ func (user *User) Compare3Cards(cards1, cards2 []byte) (isBeat, c1Type, c2Type i
 	if c1Type == poker.Card3TypeDz && c2Type == poker.Card3TypeDz {
 		userCardDz, ok := poker.GetDzCard(cards1)
 		if !ok {
-			fmt.Println("玩家牌不是对子 : ", fmt.Sprintf(`%x`, cards1))
+			log.Traceln("玩家牌不是对子 : ", fmt.Sprintf(`%x`, cards1))
 			panic("玩家牌不是对子")
 		}
 		anotherCardDz, ok := poker.GetDzCard(cards2)
 		if !ok {
-			fmt.Println("玩家牌不是对子 : ", fmt.Sprintf(`%x`, cards2))
+			log.Traceln("玩家牌不是对子 : ", fmt.Sprintf(`%x`, cards2))
 			panic("玩家牌不是对子")
 		}
 		if userCardDz > anotherCardDz {
@@ -781,10 +780,10 @@ func (user *User) Compare5Cards(cards1Arr, cards2Arr [5]byte) (isBeat, c1Type, c
 		}
 	} else if c1Type == poker.CardTypeTW && c2Type == poker.CardTypeTW {
 		// del by wd in 2020.3.10 for 双对可能出现合牌
-		//fmt.Println("都是两对 ")
+		//log.Traceln("都是两对 ")
 		//c1MaxDzCard := user.GetTwoDzMax(cards1)
 		//c2MaxDzCard := user.GetTwoDzMax(cards2)
-		////fmt.Println("max c1 c2 : ",fmt.Sprintf(`%x %x`,c1MaxDzCard,c2MaxDzCard))
+		////log.Traceln("max c1 c2 : ",fmt.Sprintf(`%x %x`,c1MaxDzCard,c2MaxDzCard))
 		//if c1MaxDzCard > c2MaxDzCard {
 		//	return global.COMPARE_WIN, c1Type, c2Type
 		//} else {
@@ -808,7 +807,7 @@ func (user *User) Compare5Cards(cards1Arr, cards2Arr [5]byte) (isBeat, c1Type, c
 		if c1Encode > c2Encode {
 			return global.COMPARE_WIN, c1Type, c2Type
 		} else if c1Encode == c2Encode {
-			//fmt.Println("compare 5 相等 ")
+			//log.Traceln("compare 5 相等 ")
 			return global.COMPARE_EQ, c1Type, c2Type
 		} else {
 			return global.COMPARE_LOSE, c1Type, c2Type
@@ -950,8 +949,8 @@ func (user *User) SortCardsSelf(cards []byte, cardType int) []byte {
 
 func (user *User) PrintUserSpare() {
 	for _, v := range user.SpareArr {
-		fmt.Println("头墩：", v.HeadType, fmt.Sprintf(`%x`, v.HeadCards))
-		fmt.Println("中墩：", v.MidType, fmt.Sprintf(`%x`, v.MidCards))
-		fmt.Println("尾墩：", v.TailType, fmt.Sprintf(`%x`, v.TailCards))
+		log.Traceln("头墩：", v.HeadType, fmt.Sprintf(`%x`, v.HeadCards))
+		log.Traceln("中墩：", v.MidType, fmt.Sprintf(`%x`, v.MidCards))
+		log.Traceln("尾墩：", v.TailType, fmt.Sprintf(`%x`, v.TailCards))
 	}
 }

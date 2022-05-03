@@ -2,10 +2,10 @@ package config
 
 import (
 	"encoding/json"
-	"game_poker/pai9/model"
 	"io/ioutil"
 	"log"
 
+	"github.com/kubegames/kubegames-games/pkg/battle/960211/model"
 	"github.com/tidwall/gjson"
 )
 

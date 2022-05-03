@@ -8,7 +8,6 @@ package game
 import "C"
 
 import (
-	"common/log"
 	"common/rand"
 	"game_frame_v2/game/clock"
 	"game_poker/ddzall/config"
@@ -18,6 +17,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 
 	"github.com/golang/protobuf/proto"
 	"github.com/kubegames/kubegames-sdk/pkg/player"

@@ -2,15 +2,16 @@ package game
 
 import (
 	"common/rand"
-	"fmt"
 	"game_buyu/rob_red/config"
 	"game_buyu/rob_red/data"
 	"game_buyu/rob_red/global"
 	"game_buyu/rob_red/msg"
 	"game_frame_v2/game/inter"
-	"github.com/golang/protobuf/proto"
 	"sync"
 	"time"
+
+	"github.com/golang/protobuf/proto"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 )
 
 type Robot struct {
@@ -42,7 +43,7 @@ func (robot *Robot) OnGameMessage(subCmd int32, buffer []byte) {
 		//return
 		realUserCount := robot.game.getRealUserCount()
 		if realUserCount == 0 || realUserCount > 10 {
-			if rand.RandInt(1,100) <= 75 {
+			if rand.RandInt(1, 100) <= 75 {
 				return
 			}
 		}
@@ -53,11 +54,11 @@ func (robot *Robot) OnGameMessage(subCmd int32, buffer []byte) {
 		//return
 		realUserCount := robot.game.getRealUserCount()
 		if realUserCount == 0 || realUserCount > 10 {
-			if rand.RandInt(1,100) <= 50 {
+			if rand.RandInt(1, 100) <= 50 {
 				return
 			}
 		}
-		//fmt.Println("收到 S2C_CHECK_OVERDUE_RED ")
+		//log.Traceln("收到 S2C_CHECK_OVERDUE_RED ")
 		time.AfterFunc(500*time.Millisecond, func() {
 			robot.procCheckOverdueRed(buffer)
 		})
@@ -65,18 +66,18 @@ func (robot *Robot) OnGameMessage(subCmd int32, buffer []byte) {
 }
 
 //定期检查屏幕上存在已久的红包
-func (robot *Robot)procCheckOverdueRed(buffer []byte)  {
+func (robot *Robot) procCheckOverdueRed(buffer []byte) {
 	var s2cSendRed msg.S2CRedId
 	if err := proto.Unmarshal(buffer, &s2cSendRed); err != nil {
-		//fmt.Println("procAiRobRed err : ", err)
+		//log.Traceln("procAiRobRed err : ", err)
 		return
 	}
 	red := robot.game.GetRedListMap(s2cSendRed.RedId)
 	if red == nil {
-		//fmt.Println("procCheckOverdueRed red is nil ", s2cSendRed.RedId)
+		//log.Traceln("procCheckOverdueRed red is nil ", s2cSendRed.RedId)
 		return
 	}
-	go robot.robRed(red,0)
+	go robot.robRed(red, 0)
 
 }
 
@@ -84,12 +85,12 @@ func (robot *Robot)procCheckOverdueRed(buffer []byte)  {
 func (robot *Robot) procAiRobRed(buffer []byte) {
 	var s2cSendRed msg.S2CRedInfo
 	if err := proto.Unmarshal(buffer, &s2cSendRed); err != nil {
-		fmt.Println("procAiRobRed err : ", err)
+		log.Traceln("procAiRobRed err : ", err)
 		return
 	}
 	red := robot.game.GetRedListMap(s2cSendRed.RedId)
 	if red == nil {
-		fmt.Println("red is nil ", s2cSendRed.RedId)
+		log.Traceln("red is nil ", s2cSendRed.RedId)
 		return
 	}
 	redRobCountLock.Lock()
@@ -98,14 +99,14 @@ func (robot *Robot) procAiRobRed(buffer []byte) {
 
 	if config.AiConfig.IsRobotRobOn && redRobCount == 0 && robot.user.User.GetId() != red.sender.User.GetId() {
 		SetRedRobCountMap(red.Id)
-		robot.robRed(red,0)
+		robot.robRed(red, 0)
 
 		//检查数据是否过期，过期则删除
 		robot.game.Table.AddTimer(3000, func() {
 			redRobCountLock.Lock()
 			for redId, count := range redRobCountMap {
 				if count != 0 {
-					//fmt.Println("删除redRobCountMap")
+					//log.Traceln("删除redRobCountMap")
 					delete(redRobCountMap, redId)
 				}
 			}
@@ -116,12 +117,12 @@ func (robot *Robot) procAiRobRed(buffer []byte) {
 }
 
 //寻找对应作弊率下的抢红包概率
-func (robot *Robot) robRed(red *Red,i int) {
+func (robot *Robot) robRed(red *Red, i int) {
 	i++
 	if i > 20 || red.RobbedCount >= red.RedFlood {
 		return
 	}
-	robot.user.Cheat,_ = robot.game.Table.GetRoomProb()
+	robot.user.Cheat, _ = robot.game.Table.GetRoomProb()
 	if robot.user.Cheat == 0 {
 		robot.user.Cheat = 1000
 	}
@@ -132,9 +133,9 @@ func (robot *Robot) robRed(red *Red,i int) {
 		}
 	}
 	//一直抢该红包，直到该红包被抢完
-	if red.RobbedCount < red.RedFlood && robot.game.getRealUserCount() >=1 {
-		robot.robRed(red,i)
-		time.Sleep(10*time.Millisecond)
+	if red.RobbedCount < red.RedFlood && robot.game.getRealUserCount() >= 1 {
+		robot.robRed(red, i)
+		time.Sleep(10 * time.Millisecond)
 		//time.AfterFunc(10*time.Millisecond, func() {
 		//
 		//})
@@ -163,15 +164,15 @@ func (robot *Robot) aiRateRob(interTime int, red *Red) {
 	for {
 		i += 100
 		if i > 1000 {
-			//fmt.Println("超过1000ms，退出")
+			//log.Traceln("超过1000ms，退出")
 			return
 		}
 		if i >= interTime {
-			//fmt.Println("jiqiren : ",robot.user.Id," 进行抢包：",red.Id,time.Now())
-			_=robot.AiUser.SendMsgToServer(global.C2S_ROB_RED, &msg.C2SRobRed{RedId: red.Id})
-			time.Sleep(100*time.Millisecond)
+			//log.Traceln("jiqiren : ",robot.user.Id," 进行抢包：",red.Id,time.Now())
+			_ = robot.AiUser.SendMsgToServer(global.C2S_ROB_RED, &msg.C2SRobRed{RedId: red.Id})
+			time.Sleep(100 * time.Millisecond)
 			break
 		}
-		time.Sleep(100*time.Millisecond)
+		time.Sleep(100 * time.Millisecond)
 	}
 }

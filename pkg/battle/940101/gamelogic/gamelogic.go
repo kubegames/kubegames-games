@@ -952,9 +952,9 @@ func (g *Game) Settle(lieu bool) {
 	if g.ud[next].User.GetScore() < int64(totalNumber) {
 		totalNumber = int32(g.ud[next].User.GetScore())
 	}
-	profitMoney1, _ := g.ud[curr].User.SetScore(g.table.GetGameNum(), int64(totalNumber), g.table.GetRoomRate())
+	profitMoney1 := g.ud[curr].User.SetScore(g.table.GetGameNum(), int64(totalNumber), g.table.GetRoomRate())
 	log.Debugf("税后 %v %v", profitMoney1, g.table.GetRoomRate())
-	profitMoney2, _ := g.ud[next].User.SetScore(g.table.GetGameNum(), -int64(totalNumber), g.table.GetRoomRate())
+	profitMoney2 := g.ud[next].User.SetScore(g.table.GetGameNum(), -int64(totalNumber), g.table.GetRoomRate())
 
 	settleMes1 := new(errenmajiang.Settle)
 	settleMes2 := new(errenmajiang.Settle)

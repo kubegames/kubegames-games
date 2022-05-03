@@ -584,7 +584,7 @@ func (game *WatchBanker) Settle() {
 			betAmount = v.Result
 		}
 
-		_, netProfit := game.UserList[v.UserId].User.SetScore(game.Table.GetGameNum(), v.Result, game.Table.GetRoomRate())
+		netProfit := game.UserList[v.UserId].User.SetScore(game.Table.GetGameNum(), v.Result, game.Table.GetRoomRate())
 
 		// 设置打码量
 		game.SetChip(v.UserId, betAmount)

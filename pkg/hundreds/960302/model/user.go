@@ -1,10 +1,11 @@
 package model
 
 import (
-	"common/log"
 	"fmt"
 	"game_poker/longhu/config"
 	"math"
+
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 
 	"github.com/kubegames/kubegames-sdk/pkg/player"
 	"github.com/kubegames/kubegames-sdk/pkg/table"

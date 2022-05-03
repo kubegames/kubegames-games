@@ -10,6 +10,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 	"github.com/sipt/GoJsoner"
 )
 
@@ -72,7 +73,7 @@ type testres struct {
 func (t *testconf) gettestconfig() {
 	data, err := ioutil.ReadFile("test.txt")
 	if err != nil {
-		fmt.Println("File reading error", err)
+		log.Traceln("File reading error", err)
 		return
 	}
 
@@ -134,19 +135,19 @@ func Test(lb *config.LabaConfig, xml *xiaomali.XiaoMaLiCfg) {
 		//如果两次免费不一样就表示新的免费
 		tmp := g.FreeGameTimes - freegame
 		if tmp != 0 && tmp != 5 && tmp != 10 && tmp != 15 {
-			//fmt.Println("免费游戏次数", tmp)
+			//log.Traceln("免费游戏次数", tmp)
 		}
 		if freegame != g.FreeGameTimes {
 			total += g.FreeGameTimes - freegame
 			tres.freegamefun(g.FreeGameTimes - freegame)
 			if bfree {
 				//免费游戏触发免费游戏
-				fmt.Println("免费游戏触发免费游戏")
+				log.Traceln("免费游戏触发免费游戏")
 				select {}
 			}
 		}
 
-		//fmt.Println(smallgame)
+		//log.Traceln(smallgame)
 		if bfree {
 			g.FreeGameTimes--
 			//统计免费游戏

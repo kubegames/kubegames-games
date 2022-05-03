@@ -197,7 +197,7 @@ func initBenzBMWConf(cfg gjson.Result) {
 
 	BenzBMWConf.Betmin = cfg.Get("betmin").Int()
 
-	fmt.Println("BenzBMWConf.IsOpen3000Ctrl = ", BenzBMWConf.IsOpen3000Ctrl)
+	log.Traceln("BenzBMWConf.IsOpen3000Ctrl = ", BenzBMWConf.IsOpen3000Ctrl)
 
 }
 

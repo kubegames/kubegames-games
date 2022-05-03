@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"math/rand"
 
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 	"github.com/tidwall/gjson"
 )
 
@@ -34,7 +35,7 @@ var GameConfig []*Config
 func LoadConfig() {
 	data, err := ioutil.ReadFile("conf/777.json")
 	if err != nil {
-		fmt.Println("File reading error", err)
+		log.Traceln("File reading error", err)
 		return
 	}
 	//去除配置文件中的注释
@@ -371,6 +372,6 @@ func (cfg *ConfigLogic) ExterIcon(v int64) {
 	if bar+3 == seven && (bar == three || three == seven || three == 6) {
 		cfg.icon.Odds = 1
 	} else if v == 1 {
-		fmt.Println(cfg.icon.Iconarr, bar, seven, three)
+		log.Traceln(cfg.icon.Iconarr, bar, seven, three)
 	}
 }

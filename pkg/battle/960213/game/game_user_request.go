@@ -1,11 +1,12 @@
 package game
 
 import (
-	"common/log"
 	"fmt"
 	"game_poker/ddzall/msg"
 	"game_poker/ddzall/poker"
 	"time"
+
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 
 	"github.com/golang/protobuf/proto"
 	"github.com/kubegames/kubegames-sdk/pkg/player"

@@ -6,13 +6,15 @@ import (
 	"go-game-sdk/example/game_LaBa/970601/data"
 	"go-game-sdk/example/game_LaBa/970601/global"
 	"go-game-sdk/example/game_LaBa/970601/msg"
-	msg2 "go-game-sdk/sdk/msg"
 	"strings"
 	"sync"
 	"time"
 
+	msg2 "github.com/kubegames/kubegames-sdk/app/message"
+
 	"github.com/kubegames/kubegames-games/internal/pkg/rand"
 
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 	"github.com/kubegames/kubegames-sdk/pkg/table"
 )
 
@@ -65,7 +67,7 @@ func (game *Game) checkTime() {
 	for {
 		select {
 		case <-ticker.C:
-			fmt.Println("3分钟检查用户超时没玩儿")
+			log.Traceln("3分钟检查用户超时没玩儿")
 			ticker = time.NewTimer(3 * time.Second)
 		}
 	}
@@ -78,19 +80,19 @@ func (game *Game) InitIcons(isChangeLevel bool) {
 		game.level = 1
 	}
 	if game.level > 3 {
-		fmt.Println("传过来的game.level怎么会大于3  ")
+		log.Traceln("传过来的game.level怎么会大于3  ")
 		return
 	}
 	//如果没有改变关卡，并且不是初始化，就只将所有的图标数组置为0
 	if game.Icons != nil && !isChangeLevel {
-		//fmt.Println("没有变换关卡，全部置0")
+		//log.Traceln("没有变换关卡，全部置0")
 		for y, _ := range game.Icons {
 			for x, _ := range game.Icons[y] {
 				game.Icons[x][y] = game.GetRandIconWithCheat(x, y)
 			}
 		}
 	} else {
-		//fmt.Println("重新初始化关卡")
+		//log.Traceln("重新初始化关卡")
 		switch game.level {
 		case 1:
 			game.Icons = make([][]int32, 4)
@@ -138,7 +140,7 @@ func (game *Game) InitTopIcons(isChangeLevel bool) {
 	game.AssignTopIcons(topIcons)
 	//wins, times := game.GetIconTimesAndTmp()
 	if times > game.CheatConfig.MaxTimes {
-		fmt.Println("InitIcons 大于最大倍数：", times, game.CheatConfig.MaxTimes)
+		log.Traceln("InitIcons 大于最大倍数：", times, game.CheatConfig.MaxTimes)
 		for y, _ := range game.Icons {
 			for x, _ := range game.Icons[y] {
 				game.Icons[x][y] = game.GetDifferentIcon(x, y)
@@ -211,12 +213,12 @@ func (game *Game) GetRoomInfo2C(userSelf *data.User) *msg.S2CRoomInfo {
 
 //添加 下 元素
 func (game *Game) pushBelow(curX, curY int) {
-	//fmt.Println("curX , curY ：",curX,curY)
+	//log.Traceln("curX , curY ：",curX,curY)
 	if curX < 0 || curX >= len(game.Icons) || curY < 0 || curY >= len(game.Icons) {
 		return
 	}
 	//if game.Icons[curX][curY] == 3 {
-	//	fmt.Println("pushBelow x y : ",curX,curY)
+	//	log.Traceln("pushBelow x y : ",curX,curY)
 	//}
 
 	nextX := curX + 1
@@ -226,7 +228,7 @@ func (game *Game) pushBelow(curX, curY int) {
 	if game.Icons[curX][curY] != game.Icons[nextX][curY] {
 		return
 	}
-	//fmt.Println("x,y对应的值：",game.Icons[curX][curY])
+	//log.Traceln("x,y对应的值：",game.Icons[curX][curY])
 	//将下一个元素入栈
 	game.AddIntoWinTmpArr(&Axis{X: nextX, Y: curY})
 	game.pushBelow(nextX, curY)
@@ -236,12 +238,12 @@ func (game *Game) pushBelow(curX, curY int) {
 
 //添加 上 元素
 func (game *Game) pushAbove(curX, curY int) {
-	//fmt.Println("下：",curX)
+	//log.Traceln("下：",curX)
 	if curX < 0 || curX >= len(game.Icons) || curY < 0 || curY >= len(game.Icons) {
 		return
 	}
 	//if game.Icons[curX][curY] == 3 {
-	//	fmt.Println("pushAbove x y : ",curX,curY)
+	//	log.Traceln("pushAbove x y : ",curX,curY)
 	//}
 
 	nextX := curX - 1
@@ -284,7 +286,7 @@ func (game *Game) pushRight(curX, curY int) {
 		return
 	}
 	//if game.Icons[curX][curY] == 3 {
-	//	fmt.Println("pushRight x y : ",curX,curY)
+	//	log.Traceln("pushRight x y : ",curX,curY)
 	//}
 	nextY := curY + 1
 	if nextY < 0 || nextY >= len(game.Icons) {
@@ -320,12 +322,12 @@ func (game *Game) PushIntoSameList(x, y int) {
 //遍历-找出整个二维数组中存在的相邻相同图标    serial 表示当前中奖的次数 1:第1次中奖
 //效率大概 1000次 170ms
 func (game *Game) Ergodic(serial int32) {
-	//fmt.Println("-----------第", serial, "次图标-----------")
-	//fmt.Println(game.TopIcons)
+	//log.Traceln("-----------第", serial, "次图标-----------")
+	//log.Traceln(game.TopIcons)
 	//game.PrintIcons()
 	if game.HasKeyOperate(serial) {
 		game.user.KeyCount++
-		fmt.Println("第", serial, "次有key：", game.user.KeyCount)
+		log.Traceln("第", serial, "次有key：", game.user.KeyCount)
 		game.MaxDisCount++
 		serial++
 		game.Ergodic(serial)
@@ -386,7 +388,7 @@ func (game *Game) Win(serial int32) {
 	for _, axis := range game.WinTmpArr {
 		if axis != nil {
 			//将中奖的坐标位置置为0
-			//fmt.Println("zhongjiang坐标：",axis)
+			//log.Traceln("zhongjiang坐标：",axis)
 			game.Icons[axis.X][axis.Y] = 0
 		}
 	}
@@ -425,7 +427,7 @@ func (game *Game) updateAllWinInfoDisCache(serial int32) {
 	//game.MaxTimes += times
 	disInfo.WinScore += game.Bottom * game.BottomCount * times / 10
 	game.EndGameInfo.WinScore += disInfo.WinScore
-	//fmt.Println("disInfo.WinScore::: ",disInfo.WinScore,game.Bottom,game.BottomCount,times,game.EndGameInfo.WinScore)
+	//log.Traceln("disInfo.WinScore::: ",disInfo.WinScore,game.Bottom,game.BottomCount,times,game.EndGameInfo.WinScore)
 	game.AllWinInfoCache.DisappearInfoArr = append(game.AllWinInfoCache.DisappearInfoArr, disInfo)
 	// ----- 消除的图标和积分信息 -----
 
@@ -433,9 +435,9 @@ func (game *Game) updateAllWinInfoDisCache(serial int32) {
 
 //获取消除的图标数量产生的倍数
 func (game *Game) getIcocTimes(count, icon int32) int64 {
-	//fmt.Println("count : ",count,"icon : ",icon)
+	//log.Traceln("count : ",count,"icon : ",icon)
 	score := config.IconScoreMap[icon][count]
-	//fmt.Println("score : ",score)
+	//log.Traceln("score : ",score)
 	return score
 }
 
@@ -494,7 +496,7 @@ func (game *Game) FillIconsByTop4() {
 	//		game.TopIcons[i] = game.GetRandIcon(false)
 	//	}
 	//}
-	//fmt.Println("顶部填充之后的：")
+	//log.Traceln("顶部填充之后的：")
 	//game.PrintIcons()
 }
 
@@ -530,7 +532,7 @@ func (game *Game) FillTopIcons() {
 			tmp = append(tmp, i)
 			game.TopIcons[i] = game.GetRandIcon(false, 0, 0)
 			//if game.MaxTimes+times >= game.CheatConfig.MaxTimes-1 || game.MaxDisCount >= game.CheatConfig.MaxDisCount-2 {
-			//	fmt.Println("顶部图标需要获取不一样的：",game.TopIcons)
+			//	log.Traceln("顶部图标需要获取不一样的：",game.TopIcons)
 			//	game.TopIcons[i] = game.GetDifferentTopIcon(i, disListRes)
 			//} else {
 			//
@@ -548,11 +550,11 @@ func (game *Game) FillTopIcons() {
 	game.AssignGameIcons(icons)
 	game.AssignTopIcons(topIcons)
 	if game.MaxTimes+times >= game.CheatConfig.MaxTimes || game.MaxDisCount >= game.CheatConfig.MaxDisCount {
-		fmt.Println("FillTopIcons 超过最大倍数，原来准备fill的：", game.TopIcons)
+		log.Traceln("FillTopIcons 超过最大倍数，原来准备fill的：", game.TopIcons)
 		for _, v := range tmp {
 			game.TopIcons[v] = game.GetDifferentTopIcon(v, disListRes)
 		}
-		fmt.Println("FillTopIcons 超过最大倍数，现在fill的：", game.TopIcons)
+		log.Traceln("FillTopIcons 超过最大倍数，现在fill的：", game.TopIcons)
 	}
 
 	game.AllWinInfoCache.TopIcons = game.TopIcons
@@ -565,23 +567,23 @@ func (game *Game) fillKey(needKey bool) (int, int, bool) {
 
 	hasKey, _, _ := game.IsIconsHasKey()
 	//是否需要生成钻头
-	//fmt.Println("game.CheatConfig.KeyRate ",game.CheatConfig.KeyRate,needKey,hasKey,game.CurBoxNum)
+	//log.Traceln("game.CheatConfig.KeyRate ",game.CheatConfig.KeyRate,needKey,hasKey,game.CurBoxNum)
 	randIndex := rand.RandInt(0, 100)
-	//fmt.Println("randIndex : ",randIndex,randIndex <= game.CheatConfig.KeyRate)
+	//log.Traceln("randIndex : ",randIndex,randIndex <= game.CheatConfig.KeyRate)
 	if randIndex <= game.CheatConfig.KeyRate && !hasKey && needKey && game.CurBoxNum > 0 {
 		for y, _ := range game.Icons {
 			for x, _ := range game.Icons[y] {
 				if game.Icons[x][y] == 0 {
 					game.Icons[x][y] = global.ICON_KEY
-					//fmt.Println("生成钻头------")
+					//log.Traceln("生成钻头------")
 					//game.PrintIcons()
 					return x, y, true
-					//fmt.Println(x,y,"装填：",value)
+					//log.Traceln(x,y,"装填：",value)
 				}
 			}
 		}
 	}
-	//fmt.Println("不生成钻头------")
+	//log.Traceln("不生成钻头------")
 
 	return 0, 0, false
 }
@@ -590,7 +592,7 @@ func (game *Game) fillKey(needKey bool) (int, int, bool) {
 //todo 现在的问题是砖头消失后，掉落下来的会有概率连上
 //todo 以及传到remain的时候已经存在可以消除的
 func (game *Game) FillRemainIcons(needKey bool) (resArr []*AxisValue) {
-	//fmt.Println("FillRemainIcons >>> ")
+	//log.Traceln("FillRemainIcons >>> ")
 	//game.PrintIcons()
 	//装填消除了的积分信息
 	if game.AllWinInfoCache == nil {
@@ -611,7 +613,7 @@ func (game *Game) FillRemainIcons(needKey bool) (resArr []*AxisValue) {
 			if game.Icons[x][y] == 0 {
 				value := game.GetRandIcon(needKey, x, y)
 				game.Icons[x][y] = value
-				//fmt.Println(x,y,"装填：",value)
+				//log.Traceln(x,y,"装填：",value)
 				tmpAxisList = append(tmpAxisList, &Axis{X: x, Y: y, Value: value})
 			}
 		}
@@ -621,13 +623,13 @@ func (game *Game) FillRemainIcons(needKey bool) (resArr []*AxisValue) {
 	icons := game.CopyGameIcons()
 	topIcons := game.CopyTopIcons()
 	_, times = game.GetErgodicTimes(totalAxisList, times)
-	//fmt.Println("times : ",times)
+	//log.Traceln("times : ",times)
 	game.AssignTopIcons(topIcons)
 	game.AssignGameIcons(icons)
 	//_, times := game.GetIconTimesAndTmp()
 	if game.MaxTimes+times >= game.CheatConfig.MaxTimes || game.MaxDisCount >= game.CheatConfig.MaxDisCount {
-		fmt.Println("game.MaxTimes > game.CheatConfig.MaxTimes ------- 进行还原", game.MaxTimes+times)
-		//fmt.Println(" is IsShuzhi : ", game.IsShuzhi)
+		log.Traceln("game.MaxTimes > game.CheatConfig.MaxTimes ------- 进行还原", game.MaxTimes+times)
+		//log.Traceln(" is IsShuzhi : ", game.IsShuzhi)
 		for _, tmp := range tmpAxisList {
 			var max int32 = global.ICON_HUPO
 			if game.level == 2 {
@@ -642,10 +644,10 @@ func (game *Game) FillRemainIcons(needKey bool) (resArr []*AxisValue) {
 
 		_, timesNow := game.GetIconTimesAndTmp()
 		if timesNow > 0 {
-			fmt.Println("timesNow > 0")
+			log.Traceln("timesNow > 0")
 		}
 		if (game.MaxTimes + times) > 15*game.CheatConfig.MaxTimes {
-			fmt.Println(" > 15*game.CheatConfig.MaxTimes ..... ")
+			log.Traceln(" > 15*game.CheatConfig.MaxTimes ..... ")
 			//panic("123")
 			for y, _ := range game.Icons {
 				for x, _ := range game.Icons[y] {
@@ -665,7 +667,7 @@ func (game *Game) FillRemainIcons(needKey bool) (resArr []*AxisValue) {
 			Value: game.Icons[res.X][res.Y],
 		})
 	}
-	//fmt.Println("fill remain 之后：")
+	//log.Traceln("fill remain 之后：")
 	//game.PrintIcons()
 	return
 }
@@ -677,7 +679,7 @@ func (game *Game) fillIconsSelfErgodic() {
 			game.fillIconsSelf(x, y)
 		}
 	}
-	//fmt.Println("自由落体之后的：")
+	//log.Traceln("自由落体之后的：")
 	//game.PrintIcons()
 }
 
@@ -699,7 +701,7 @@ func (game *Game) fillIconsSelf(curX, curY int) {
 		game.Icons[i][curY], game.Icons[i+1][curY] = game.Icons[i+1][curY], game.Icons[i][curY]
 	}
 	if game.Icons[curX][curY] == 0 && game.Icons[nextX][curY] != 0 {
-		fmt.Println("curX : ", curX)
+		log.Traceln("curX : ", curX)
 		game.fillIconsSelf(curX, curY)
 	} else {
 		game.fillIconsSelf(nextX, curY)
@@ -709,14 +711,14 @@ func (game *Game) fillIconsSelf(curX, curY int) {
 
 func (game *Game) PrintIcons() {
 	for y, _ := range game.Icons {
-		fmt.Println(game.Icons[y])
+		log.Traceln(game.Icons[y])
 	}
-	fmt.Println("----------")
+	log.Traceln("----------")
 	//for y, _ := range game.Icons {
 	//	for x, _ := range game.Icons {
 	//		fmt.Print(game.GetCheatIconIndex(x, y))
 	//	}
-	//	fmt.Println()
+	//	log.Traceln()
 	//}
 }
 
@@ -762,19 +764,19 @@ func (game *Game) SetSpecialIcons() {
 
 //是否触发跑马灯,有特殊条件就是and，没有特殊条件满足触发金额即可
 func (game *Game) TriggerHorseLamp(winAmount int64) {
-	//fmt.Println("TriggerHorseLamp >>> ",winAmount,fmt.Sprintf(`%+v`,game.HoseLampArr))
+	//log.Traceln("TriggerHorseLamp >>> ",winAmount,fmt.Sprintf(`%+v`,game.HoseLampArr))
 	for _, v := range game.HoseLampArr {
 		if strings.TrimSpace(v.SpecialCondition) == "" {
 			if winAmount >= v.AmountLimit && fmt.Sprintf(`%d`, game.Table.GetRoomID()) == v.RoomId {
-				fmt.Println("创建没有特殊条件的跑马灯")
+				log.Traceln("创建没有特殊条件的跑马灯")
 				if err := game.Table.CreateMarquee(game.user.User.GetNike(), winAmount, "", v.RuleId); err != nil {
 				}
 				break
 			} else {
-				fmt.Println("不创建跑马灯：", winAmount, v.AmountLimit, game.Table.GetRoomID(), v.RoomId)
+				log.Traceln("不创建跑马灯：", winAmount, v.AmountLimit, game.Table.GetRoomID(), v.RoomId)
 			}
 		} else {
-			fmt.Println("跑马灯有特殊条件 : ", strings.TrimSpace(v.SpecialCondition))
+			log.Traceln("跑马灯有特殊条件 : ", strings.TrimSpace(v.SpecialCondition))
 		}
 
 	}

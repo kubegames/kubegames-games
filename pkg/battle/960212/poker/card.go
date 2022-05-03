@@ -1,10 +1,11 @@
 package poker
 
 import (
-	"common/log"
 	"game_poker/doudizhu/msg"
 	"math/rand"
 	"time"
+
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 )
 
 // GamePoker 牌堆

@@ -1,17 +1,18 @@
 package glogic
 
 import (
-	"go-game-sdk/example/game_MaJiang/960205/config"
-	"go-game-sdk/example/game_MaJiang/960205/msg"
-	"go-game-sdk/example/game_MaJiang/960205/poker"
-	"go-game-sdk/example/game_MaJiang/960205/utils"
-	frameMsg "go-game-sdk/sdk/msg"
 	"math/rand"
 	"strconv"
+	"time"
 
 	"github.com/kubegames/kubegames-games/internal/pkg/score"
-
+	"github.com/kubegames/kubegames-games/pkg/battle/960205/config"
+	"github.com/kubegames/kubegames-games/pkg/battle/960205/msg"
+	"github.com/kubegames/kubegames-games/pkg/battle/960205/poker"
+	"github.com/kubegames/kubegames-games/pkg/battle/960205/utils"
+	frameMsg "github.com/kubegames/kubegames-sdk/app/message"
 	"github.com/kubegames/kubegames-sdk/pkg/log"
+	"github.com/kubegames/kubegames-sdk/pkg/platform"
 )
 
 // SendMsgUSitSetDown 发送用户坐下消息
@@ -85,7 +86,7 @@ func (game *ErBaGangGame) SendMsgUSitSetDown(chairId int) {
 
 		res.UserIndex = int32(k)
 		res.Bet = int32(game.DiZhu)
-		res.RoomId = game.InterTable.GetRoomID()
+		res.RoomId = int64(game.InterTable.GetRoomID())
 		_ = v1.InterUser.SendMsg(int32(msg.SendToClientMessageType_S2CUserSitDown), res)
 	}
 
@@ -202,7 +203,7 @@ func (game *ErBaGangGame) SendMsgRobEnd() {
 	if !game.checkState(Game_Zhuang_End) {
 		return
 	}
-	for k, _ := range game.UserAllList {
+	for k := range game.UserAllList {
 		// 找出没有抢庄的用户
 		if game.RobZhuangMultipleList[k] == -1 {
 			log.Tracef("没有抢庄的用户是:%s", game.UserAllList[k].InterUser.GetNike())
@@ -644,6 +645,9 @@ func (game *ErBaGangGame) SendMsgSmallCloseAnAccount() {
 	}
 	log.Tracef("%v", goldArr)
 	log.Tracef("游戏局数:%d", game.GameCount)
+
+	//战绩
+	var records []*platform.PlayerRecord
 	for i := 0; i < len(goldArr); i++ {
 		user := game.UserAllList[i]
 		if user == nil {
@@ -657,7 +661,7 @@ func (game *ErBaGangGame) SendMsgSmallCloseAnAccount() {
 		//if goldArr[i] >= 0 {
 		//	bet = int64(game.DiZhu)
 		//}
-		score, _ := user.InterUser.SetScore(game.InterTable.GetGameNum(), int64(goldArr[i]), game.InterTable.GetRoomRate())
+		score := user.InterUser.SetScore(game.InterTable.GetGameNum(), int64(goldArr[i]), game.InterTable.GetRoomRate())
 		log.Tracef("user score =", user.InterUser.GetScore(), user.InterUser.GetID())
 		chip := int64(0)
 		outputAmount := score
@@ -670,10 +674,31 @@ func (game *ErBaGangGame) SendMsgSmallCloseAnAccount() {
 			chip = int64(game.DiZhu)
 		}
 		user.InterUser.SendChip(chip)
-		user.InterUser.SendRecord(gameNum, score, chip, int64(goldArr[i])-score, outputAmount, "")
+		//user.InterUser.SendRecord(gameNum, score, chip, int64(goldArr[i])-score, outputAmount, "")
+		if !user.InterUser.IsRobot() {
+			records = append(records, &platform.PlayerRecord{
+				PlayerID:     uint32(user.InterUser.GetID()),
+				GameNum:      gameNum,
+				ProfitAmount: score,
+				BetsAmount:   chip,
+				DrawAmount:   int64(goldArr[i]) - score,
+				OutputAmount: outputAmount,
+				Balance:      user.InterUser.GetScore(),
+				UpdatedAt:    time.Now(),
+				CreatedAt:    time.Now(),
+			})
+		}
 		game.createMarquee(user, int64(goldArr[i]))
 		goldArr[i] = int32(score)
 	}
+
+	//发送战绩
+	if len(records) > 0 {
+		if _, err := game.InterTable.UploadPlayerRecord(records); err != nil {
+			log.Warnf("upload player record error %s", err.Error())
+		}
+	}
+
 	game.createOperationLog(goldArr)
 	game.InterTable.Broadcast(int32(msg.SendToClientMessageType_S2CSmallCloseAnAccount), &msg.SmallCloseAnAccountRes{
 		GoldNumbers: goldArr,
@@ -685,6 +710,7 @@ func (game *ErBaGangGame) SendMsgSmallCloseAnAccount() {
 	if game.checkState(Game_End) {
 		game.changeState()
 		game.Reset()
+
 	}
 	game.IsEndToStart = true
 	// 判断局数是否达到5局
@@ -701,7 +727,6 @@ func (game *ErBaGangGame) SendMsgSmallCloseAnAccount() {
 		})
 	} else {
 		game.InterTable.AddTimer(7*1000, func() {
-
 			game.SendMsgPlayerStart()
 		})
 	}
@@ -902,4 +927,7 @@ func (game *ErBaGangGame) SendMsgBigCloseAnAccount(reason int32) {
 	game.Cards = make([]int32, 10)
 	game.GamePoker.InitPoker()
 	game.GamePoker.ShuffleCards()
+
+	//clsoe table
+	game.InterTable.Close()
 }

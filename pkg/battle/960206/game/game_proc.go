@@ -3,14 +3,12 @@ package game
 import (
 	"fmt"
 
-	"github.com/kubegames/kubegames-sdk/pkg/log"
-
+	"github.com/golang/protobuf/proto"
 	"github.com/kubegames/kubegames-games/pkg/battle/960206/data"
 	"github.com/kubegames/kubegames-games/pkg/battle/960206/global"
 	"github.com/kubegames/kubegames-games/pkg/battle/960206/msg"
 	"github.com/kubegames/kubegames-games/pkg/battle/960206/poker"
-
-	"github.com/golang/protobuf/proto"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 )
 
 //获取房间信息
@@ -29,7 +27,7 @@ func (game *Game) ProcGetRoomInfo(buffer []byte, user *data.User) {
 //开始匹配
 //func (game *Game) ProcStartMatch(buffer []byte, user *data.User) {
 //	if game.Status == global.TABLE_CUR_STATUS_ING {
-//		fmt.Println("游戏正在进行中不能请求机器人")
+//		log.Traceln("游戏正在进行中不能请求机器人")
 //		return
 //	}
 //	var c2sMsg msg.C2SStartMatch
@@ -59,7 +57,7 @@ func (game *Game) MatchRobot() {
 	log.Tracef("房间 %d 坐下 %d 个机器人", game.Id, robotCount)
 
 	if robotCount != 0 {
-		_ = game.Table.GetRobot(robotCount)
+		_ = game.Table.GetRobot(uint32(robotCount), game.Table.GetConfig().RobotMinBalance, game.Table.GetConfig().RobotMaxBalance)
 	}
 
 	// 补足机器人，防止有人卡时间退出
@@ -69,7 +67,7 @@ func (game *Game) MatchRobot() {
 //用户确定手动摆牌
 func (game *Game) ProcSetCards(buffer []byte, user *data.User) {
 	//if game.Status != global.TABLE_CUR_STATUS_ING {
-	//	fmt.Println("游戏没在进行中")
+	//	log.Traceln("游戏没在进行中")
 	//	return
 	//}
 	var c2sMsg msg.C2SSetCards
@@ -84,7 +82,7 @@ func (game *Game) ProcSetCards(buffer []byte, user *data.User) {
 		SpecialType: user.SpecialCardType,
 	}
 	if user.IsSettleCards {
-		fmt.Println("用户已经确定摆过牌了")
+		log.Traceln("用户已经确定摆过牌了")
 		return
 	}
 	if c2sMsg.IsAuto || c2sMsg.IsSpecial {
@@ -98,17 +96,17 @@ func (game *Game) ProcSetCards(buffer []byte, user *data.User) {
 	}
 	c2sCards := append(c2sMsg.HeadCards, c2sMsg.MidCards...)
 	c2sCards = append(c2sCards, c2sMsg.TailCards...)
-	//fmt.Println("用户传过来的所有牌: ", fmt.Sprintf(`%x`, c2sCards), " 自己原来的牌：", fmt.Sprintf(`%x`, user.Cards))
+	//log.Traceln("用户传过来的所有牌: ", fmt.Sprintf(`%x`, c2sCards), " 自己原来的牌：", fmt.Sprintf(`%x`, user.Cards))
 	//检查传过来的牌是否符合规则
 	if len(c2sMsg.HeadCards) != 3 || len(c2sMsg.MidCards) != 5 || len(c2sMsg.TailCards) != 5 {
-		fmt.Println("传过来的牌不符合规则: ", c2sMsg.HeadCards, c2sMsg.MidCards, c2sMsg.TailCards)
+		log.Traceln("传过来的牌不符合规则: ", c2sMsg.HeadCards, c2sMsg.MidCards, c2sMsg.TailCards)
 		return
 	}
 	//检查传过来的牌是否有两个完全相同的
 	for i := 0; i < len(c2sCards)-1; i++ {
 		for j := i + 1; j < len(c2sCards); j++ {
 			if c2sCards[i] == c2sCards[j] {
-				fmt.Println("用户传过来的牌有两张一样的，", fmt.Sprintf(`%x`, c2sCards[i]))
+				log.Traceln("用户传过来的牌有两张一样的，", fmt.Sprintf(`%x`, c2sCards[i]))
 				return
 			}
 		}
@@ -116,20 +114,20 @@ func (game *Game) ProcSetCards(buffer []byte, user *data.User) {
 	//检查传过来的牌是否是用户原来的牌
 	for _, card := range c2sCards {
 		if !user.IsCardInUserCards(card) {
-			fmt.Println("用户传过来的牌没在用户原来的牌中，", fmt.Sprintf(`%x`, card), "  ", fmt.Sprintf(`%x`, user.Cards))
+			log.Traceln("用户传过来的牌没在用户原来的牌中，", fmt.Sprintf(`%x`, card), "  ", fmt.Sprintf(`%x`, user.Cards))
 			return
 		}
 	}
 	midCardsArr := poker.Cards5SliceToArr(c2sMsg.MidCards)
 	tailCardsArr := poker.Cards5SliceToArr(c2sMsg.TailCards)
 	if isBeat, _, _ := user.Compare5Cards(midCardsArr, tailCardsArr); isBeat == global.COMPARE_WIN {
-		fmt.Println("中墩比尾墩更大，不合规则：", fmt.Sprintf(`%x , %x`, c2sMsg.MidCards, c2sMsg.TailCards))
+		log.Traceln("中墩比尾墩更大，不合规则：", fmt.Sprintf(`%x , %x`, c2sMsg.MidCards, c2sMsg.TailCards))
 		_ = user.User.SendMsg(global.ERROR_CODE_CARD_NOT_RULE, &msg.S2CHitRob{})
 		return
 	}
 	if isBeat := user.Compare5And3Cards(c2sMsg.MidCards, c2sMsg.HeadCards); !isBeat {
 		_ = user.User.SendMsg(global.ERROR_CODE_CARD_NOT_RULE, &msg.S2CHitRob{})
-		fmt.Println("头墩比中墩更大，不合规则：", fmt.Sprintf(`%x , %x`, c2sMsg.HeadCards, c2sMsg.MidCards))
+		log.Traceln("头墩比中墩更大，不合规则：", fmt.Sprintf(`%x , %x`, c2sMsg.HeadCards, c2sMsg.MidCards))
 		return
 	}
 	user.IsSettleCards = true
@@ -146,7 +144,7 @@ func (game *Game) ProcSetCards(buffer []byte, user *data.User) {
 	}
 	//user.SetSpecialCardType()
 
-	fmt.Println("手动摆牌ok", user.User.GetID())
+	log.Traceln("手动摆牌ok", user.User.GetID())
 	game.Table.Broadcast(int32(msg.S2CMsgType_SETTLE_CARDS), s2cSettleMsg)
 	//检查如果所有人都手动摆牌ok，就结束比赛
 	game.AllUserSettleEndGame()
@@ -156,7 +154,7 @@ func (game *Game) ProcSetCards(buffer []byte, user *data.User) {
 //todo 最后要删除
 func (game *Game) ProcUserSelectCards(buffer []byte, user *data.User) {
 	//if game.Status != global.TABLE_CUR_STATUS_ING {
-	//	fmt.Println("游戏没在进行中")
+	//	log.Traceln("游戏没在进行中")
 	//	return
 	//}
 	var c2sMsg msg.C2SUserSelectCards
@@ -166,7 +164,7 @@ func (game *Game) ProcUserSelectCards(buffer []byte, user *data.User) {
 		return
 	}
 	if len(c2sMsg.Cards) != 13 {
-		fmt.Println("c2sMsg 长度不对 ", len(c2sMsg.Cards))
+		log.Traceln("c2sMsg 长度不对 ", len(c2sMsg.Cards))
 		return
 	}
 	deck := []byte{

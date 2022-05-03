@@ -7,6 +7,7 @@ import (
 	powergame "game_LaBa/yhhwd/msg"
 	"game_frame_v2/game/inter"
 
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 	"github.com/kubegames/kubegames-sdk/pkg/player"
 	"github.com/kubegames/kubegames-sdk/pkg/table"
 )
@@ -89,7 +90,7 @@ func (g *Game) LeaveGame(user player.PlayerInterface) bool {
 func (g *Game) OnGameMessage(subCmd int32, buffer []byte, user player.PlayerInterface) {
 	switch subCmd {
 	case int32(powergame.MsgIDC2S_Bet):
-		fmt.Println("下注")
+		log.Traceln("下注")
 		g.OnUserBet(buffer)
 		break
 	case int32(powergame.MsgIDC2S_AskSence):
@@ -97,7 +98,7 @@ func (g *Game) OnGameMessage(subCmd int32, buffer []byte, user player.PlayerInte
 		break
 
 	case int32(powergame.MsgIDC2S_Test):
-		fmt.Println("测试", buffer)
+		log.Traceln("测试", buffer)
 		g.handleTest(buffer)
 	}
 }

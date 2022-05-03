@@ -634,7 +634,7 @@ func (user *User) AigetSawRoundWeight(option string, round uint) (weight int) {
 		case global.USER_OPTION_GIVE_UP:
 			weight = user.AiCharacter.SawRound2GiveUp
 		}
-		//fmt.Println("当前轮数 2 rate ::::::::::: ",weight," option : ",option)
+		//log.Traceln("当前轮数 2 rate ::::::::::: ",weight," option : ",option)
 		return
 	}
 	if round <= 5 {
@@ -648,7 +648,7 @@ func (user *User) AigetSawRoundWeight(option string, round uint) (weight int) {
 		case global.USER_OPTION_GIVE_UP:
 			weight = user.AiCharacter.SawRound5GiveUp
 		}
-		//fmt.Println("当前轮数 5 rate ::::::::::: ",weight," option : ",option)
+		//log.Traceln("当前轮数 5 rate ::::::::::: ",weight," option : ",option)
 		return
 	}
 	if round <= 10 {
@@ -662,7 +662,7 @@ func (user *User) AigetSawRoundWeight(option string, round uint) (weight int) {
 		case global.USER_OPTION_GIVE_UP:
 			weight = user.AiCharacter.SawRound10GiveUp
 		}
-		//fmt.Println("当前轮数 10  rate ::::::::::: ",weight," option : ",option)
+		//log.Traceln("当前轮数 10  rate ::::::::::: ",weight," option : ",option)
 		return
 	}
 
@@ -678,7 +678,7 @@ func (user *User) AigetSawRoundWeight(option string, round uint) (weight int) {
 			weight = user.AiCharacter.SawRound20GiveUp
 		}
 	}
-	//fmt.Println("当前轮数 rate ::::::::::: ",weight," option : ",option)
+	//log.Traceln("当前轮数 rate ::::::::::: ",weight," option : ",option)
 	return
 }
 

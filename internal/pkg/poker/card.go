@@ -1,9 +1,10 @@
 package poker
 
 import (
-	"fmt"
 	"math/rand"
 	"time"
+
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 )
 
 // 黑红梅方
@@ -61,8 +62,8 @@ func testCardEncode() {
 		}
 	}
 	end := time.Now()
-	fmt.Println("cards : ", cards)
-	fmt.Println(end.Sub(start), count)
+	log.Traceln("cards : ", cards)
+	log.Traceln(end.Sub(start), count)
 }
 
 //随便输入一个数字，得出它的牌值和花色
@@ -110,7 +111,7 @@ func GenerateCards() (cards []byte) {
 
 func Test(cards []byte) {
 	sortRes := sortCards(cards)
-	fmt.Println("sortRes : ", sortRes)
+	log.Traceln("sortRes : ", sortRes)
 	t, _ := GetCardTypeJH(sortRes)
-	fmt.Println("cardsType : ", t)
+	log.Traceln("cardsType : ", t)
 }

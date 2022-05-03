@@ -1,32 +1,31 @@
 package game
 
 import (
-	"fmt"
-
 	"github.com/golang/protobuf/proto"
 	"github.com/kubegames/kubegames-games/pkg/battle/960201/data"
 	"github.com/kubegames/kubegames-games/pkg/battle/960201/global"
 	"github.com/kubegames/kubegames-games/pkg/battle/960201/msg"
 	"github.com/kubegames/kubegames-games/pkg/battle/960201/poker"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 )
 
 //玩家点击开始游戏-请求机器人
 func (game *Game) ProcUserStartGame(buffer []byte, user *data.User) {
 	if user == nil {
-		//fmt.Println("ProcUserStartGame user nil ")
+		//log.Traceln("ProcUserStartGame user nil ")
 		return
 	}
 	//game.userStartGameLock.Lock()
 	//defer game.userStartGameLock.Unlock()
 	var c2sMsg msg.C2SUserStartGame
 	if err := proto.Unmarshal(buffer, &c2sMsg); err != nil {
-		//fmt.Println("procUserStartGame proto err : ", err)
+		//log.Traceln("procUserStartGame proto err : ", err)
 		return
 	}
 
 	if game.GetTableUserCount() == 1 {
 		if err := user.User.SendMsg(global.S2C_WAIT_START, &msg.S2CRoomInfo{}); err != nil {
-			fmt.Println("User.SendMsg err : ", err)
+			log.Traceln("User.SendMsg err : ", err)
 			return
 		}
 	}
@@ -37,12 +36,12 @@ func (game *Game) ProcUserStartGame(buffer []byte, user *data.User) {
 //用户发言
 func (game *Game) ProcAction(buffer []byte, user *data.User) {
 	if user == nil {
-		////fmt.Println("ProcAction user nil ")
+		////log.Traceln("ProcAction user nil ")
 		return
 	}
 	var c2sMsg msg.C2SUserAction
 	if err := proto.Unmarshal(buffer, &c2sMsg); err != nil {
-		//fmt.Println("Action proto err : ", err)
+		//log.Traceln("Action proto err : ", err)
 		return
 	}
 	game.Action(user, c2sMsg.Option, c2sMsg.Amount)
@@ -51,24 +50,24 @@ func (game *Game) ProcAction(buffer []byte, user *data.User) {
 //比牌
 func (game *Game) ProcCompare(buffer []byte, user *data.User) {
 	if user == nil {
-		//fmt.Println("ProcCompare user nil ")
+		//log.Traceln("ProcCompare user nil ")
 		return
 	}
-	//fmt.Println("倒计时时间：",game.timerJob.GetTimeDifference() )
+	//log.Traceln("倒计时时间：",game.timerJob.GetTimeDifference() )
 	if game.timerJob.GetTimeDifference() <= 1000 {
-		fmt.Println("倒计时时间 小于 1000 ")
+		log.Traceln("倒计时时间 小于 1000 ")
 		return
 	}
 	var c2sMsg msg.C2SCompareCards
 	if err := proto.Unmarshal(buffer, &c2sMsg); err != nil {
-		//fmt.Println("Action proto err : ", err)
+		//log.Traceln("Action proto err : ", err)
 		return
 	}
 	user1 := game.GetUserListMap(c2sMsg.FirstUserId)
 	user2 := game.GetUserListMap(c2sMsg.SecondUserId)
 	if user1 == nil || user2 == nil {
-		//fmt.Println("user1 : ", user1, " first : ", c2sMsg.FirstUserId)
-		//fmt.Println("user2 : ", user2, " second : ", c2sMsg.SecondUserId)
+		//log.Traceln("user1 : ", user1, " first : ", c2sMsg.FirstUserId)
+		//log.Traceln("user2 : ", user2, " second : ", c2sMsg.SecondUserId)
 		return
 	}
 
@@ -78,7 +77,7 @@ func (game *Game) ProcCompare(buffer []byte, user *data.User) {
 		needAmount *= 2
 	}
 	if user1.Score < needAmount {
-		fmt.Println("钱不够，不能比牌")
+		log.Traceln("钱不够，不能比牌")
 		user1.User.SendMsg(global.ERROR_CODE_COMPARE_NOT_ENOUGH, user1.GetUserMsgInfo(false))
 		return
 	}
@@ -92,7 +91,7 @@ func (game *Game) ProcCompare(buffer []byte, user *data.User) {
 	game.CompareCards(user1, user2, userList)
 	if game.IsSatisfyEnd() {
 		game.Table.AddTimer(4*1000, func() {
-			//fmt.Println("比牌结束，结束比赛")
+			//log.Traceln("比牌结束，结束比赛")
 			game.EndGame(false)
 		})
 	}
@@ -102,7 +101,7 @@ func (game *Game) ProcCompare(buffer []byte, user *data.User) {
 func (game *Game) ProcGetCanCompareList(buffer []byte, user *data.User) {
 	var c2sMsg msg.C2SIntoGame
 	if err := proto.Unmarshal(buffer, &c2sMsg); err != nil {
-		//fmt.Println("Action proto err : ", err)
+		//log.Traceln("Action proto err : ", err)
 		return
 	}
 	userInfoArr := new(msg.S2CUserInfoArr)
@@ -119,12 +118,12 @@ func (game *Game) ProcGetCanCompareList(buffer []byte, user *data.User) {
 //客户端发牌动画结束，通知服务器开始倒计时
 func (game *Game) ProcSendCardOver(buffer []byte, user *data.User) {
 	if user == nil {
-		//fmt.Println("ProcSendCardOver user nil ")
+		//log.Traceln("ProcSendCardOver user nil ")
 		return
 	}
 	var c2sMsg msg.C2SIntoGame
 	if err := proto.Unmarshal(buffer, &c2sMsg); err != nil {
-		//fmt.Println("Action proto err : ", err)
+		//log.Traceln("Action proto err : ", err)
 		return
 	}
 	game.SendCardOver(user)
@@ -133,21 +132,21 @@ func (game *Game) ProcSendCardOver(buffer []byte, user *data.User) {
 func (game *Game) ProcSetCardType(buffer []byte, user *data.User) {
 	var c2sMsg msg.C2SSetCardType
 	if err := proto.Unmarshal(buffer, &c2sMsg); err != nil {
-		//fmt.Println("Action proto err : ", err)
+		//log.Traceln("Action proto err : ", err)
 		return
 	}
 	if len(c2sMsg.Cards) != 3 {
-		fmt.Println("长度不为3 ", len(c2sMsg.Cards))
+		log.Traceln("长度不为3 ", len(c2sMsg.Cards))
 		return
 	}
-	//fmt.Println("用户设置的牌型为：", c2sMsg.CardType, "  牌为： ", fmt.Sprintf(`%x`, cards))
+	//log.Traceln("用户设置的牌型为：", c2sMsg.CardType, "  牌为： ", fmt.Sprintf(`%x`, cards))
 	user.CardType, user.Cards = poker.GetCardTypeJH(c2sMsg.Cards)
 }
 
 func (game *Game) ProcSeeOtherCards(buffer []byte, user *data.User) {
 	var c2sMsg msg.C2SSeeOtherCards
 	if err := proto.Unmarshal(buffer, &c2sMsg); err != nil {
-		//fmt.Println("Action proto err : ", err)
+		//log.Traceln("Action proto err : ", err)
 		return
 	}
 	res := &msg.S2CSeeOtherCards{
@@ -168,21 +167,21 @@ func (game *Game) ProcSeeOtherCards(buffer []byte, user *data.User) {
 func (game *Game) ProcLeaveGame(buffer []byte, user *data.User) {
 	//var c2sMsg msg.C2SIntoGame
 	//if err := proto.Unmarshal(buffer, &c2sMsg); err != nil {
-	//	//fmt.Println("procLeaveGame proto err : ", err)
+	//	//log.Traceln("procLeaveGame proto err : ", err)
 	//	return
 	//}
 	//if game.CurStatus == global.TABLE_CUR_STATUS_WAIT_SEND_CARDS {
-	//	//fmt.Println("发牌阶段不能退出...")
+	//	//log.Traceln("发牌阶段不能退出...")
 	//	user.User.SendMsg(global.ERROR_CODE_CANNOT_LEAVE, &msg.C2SIntoGame{})
 	//	return
 	//}
 	//if user.CurStatus == global.USER_CUR_STATUS_ING && game.CurStatus == global.TABLE_CUR_STATUS_ING {
-	//	//fmt.Println("用户未弃牌，不能离开房间")
+	//	//log.Traceln("用户未弃牌，不能离开房间")
 	//	user.User.SendMsg(global.ERROR_CODE_CANNOT_LEAVE, &msg.C2SIntoGame{})
 	//	return
 	//}
 	//
-	////fmt.Println("user : ", user.Id, " 离开牌桌")
+	////log.Traceln("user : ", user.Id, " 离开牌桌")
 	//game.Table.Broadcast(global.S2C_LEAVE_TABLE, user.GetUserMsgInfo())
 	//game.DelUserListMap(user.Id)
 	//if len(game.userListMap) <= 1 {
@@ -201,11 +200,11 @@ func (game *Game) GetNextUser(user *data.User) *data.User {
 		}
 		chairUser := game.GetUserByChairId(tmpChairId)
 		if chairUser == nil {
-			////fmt.Println("设置下一个发言时没找到：", tmpChairId)
+			////log.Traceln("设置下一个发言时没找到：", tmpChairId)
 			continue
 		}
 		if chairUser.CurStatus != global.USER_CUR_STATUS_ING {
-			////fmt.Println("下一个 chair ", chairUser.Id, " 状态 为： ", chairUser.CurStatus)
+			////log.Traceln("下一个 chair ", chairUser.Id, " 状态 为： ", chairUser.CurStatus)
 			continue
 		}
 		nextChair = tmpChairId

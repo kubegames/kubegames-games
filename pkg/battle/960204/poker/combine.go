@@ -1,11 +1,11 @@
 package poker
 
-import "fmt"
+import "github.com/kubegames/kubegames-sdk/pkg/log"
 
 //组合算法(从nums中取出m个数)
 func ZuheResult(n int, m int) [][]int {
 	if m < 1 || m > n {
-		fmt.Println("Illegal argument. Param m must between 1 and len(nums).")
+		log.Traceln("Illegal argument. Param m must between 1 and len(nums).")
 		return [][]int{}
 	}
 	//保存最终结果的数组，总数直接通过数学公式计算

@@ -1,10 +1,11 @@
 package main
 
 import (
-	"game_poker/pai9/config"
-	"game_poker/pai9/model"
 	"math/rand"
 	"sort"
+
+	"github.com/kubegames/kubegames-games/pkg/battle/960211/config"
+	"github.com/kubegames/kubegames-games/pkg/battle/960211/model"
 )
 
 const (

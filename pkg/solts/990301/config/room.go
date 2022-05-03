@@ -6,6 +6,7 @@ import (
 	"strconv"
 
 	"github.com/bitly/go-simplejson"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 	"github.com/sipt/GoJsoner"
 )
 
@@ -29,7 +30,7 @@ var RoomCfg RoomConfig
 func (rc *RoomConfig) LoadRoomConfig() {
 	data, err := ioutil.ReadFile("conf/room.json")
 	if err != nil {
-		fmt.Println("File reading error", err)
+		log.Traceln("File reading error", err)
 		return
 	}
 	//去除配置文件中的注释

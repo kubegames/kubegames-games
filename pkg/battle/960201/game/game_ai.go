@@ -9,7 +9,7 @@ import (
 //机器人通过概率进入分配
 func (zjh *Game) AiIntoRoom() {
 	//return
-	//fmt.Println("分配机器人 ... ")
+	//log.Traceln("分配机器人 ... ")
 	zjh.Table.AddTimer(2*1000, func() {
 		switch zjh.GetTableUserCount() {
 		case 1:

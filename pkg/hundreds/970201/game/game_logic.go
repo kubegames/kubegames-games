@@ -10,17 +10,19 @@ import (
 	msg2 "game_frame_v2/msg"
 	"strings"
 	"time"
+
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 )
 
 //抢红包
 func (game *Game) robRed(user *data.User, red *Red) {
 	if user.User.GetScore() < red.OriginAmount {
-		fmt.Println("用户金额少于红包金额")
+		log.Traceln("用户金额少于红包金额")
 		user.User.SendMsg(global.ERROR_ROB_NOT_ENOUGH, &msg.S2CAxis{})
 		return
 	}
 	if red.RobbedCount >= red.RedFlood {
-		fmt.Println("红包已被抢完")
+		log.Traceln("红包已被抢完")
 		user.User.SendMsg(global.ERROR_CODE_RED_OVER, &msg.S2CAxis{})
 		game.DelRedListMap(red)
 		return
@@ -59,7 +61,7 @@ func (game *Game) robRed(user *data.User, red *Red) {
 	if user.User.GetId() == red.sender.User.GetId() {
 		red.SelfRobbedAmount += robbedAmount
 	}
-	//fmt.Println("11111系统作弊率：",roomProb,"抢包玩家作弊率：",user.Cheat,"是否为机器人：",user.User.IsRobot(),"  发包玩家作弊率：",red.sender.Cheat,"是否为机器人：",red.sender.User.IsRobot())
+	//log.Traceln("11111系统作弊率：",roomProb,"抢包玩家作弊率：",user.Cheat,"是否为机器人：",user.User.IsRobot(),"  发包玩家作弊率：",red.sender.Cheat,"是否为机器人：",red.sender.User.IsRobot())
 	if isMine {
 		mineAmount = red.OriginAmount * (int64(config.RedConfig.Odds) / 100)
 		user.BetsAmount += mineAmount
@@ -82,7 +84,7 @@ func (game *Game) robRed(user *data.User, red *Red) {
 			chip := mineAmount
 			user.Chip += chip
 			if !user.User.IsRobot() {
-				fmt.Println("中雷打码量：", mineAmount, "当前打码量：", user.Chip)
+				log.Traceln("中雷打码量：", mineAmount, "当前打码量：", user.Chip)
 			}
 		}
 		game.TriggerHorseLamp(red.sender, mineAmount)
@@ -104,7 +106,7 @@ func (game *Game) robRed(user *data.User, red *Red) {
 			//	"发包人id："+fmt.Sprintf(`%d`,red.sender.User.GetId())+"抢包人id："+fmt.Sprintf(`%d`,user.User.GetId())+"雷号："+fmt.Sprintf(`%d`,red.MineNum))
 		}
 		if !red.sender.User.IsRobot() {
-			//fmt.Println("发包人id：",red.sender.User.GetId()," 内存地址：",red.sender,&red.sender,"日志长度：",len(red.sender.GameLogs))
+			//log.Traceln("发包人id：",red.sender.User.GetId()," 内存地址：",red.sender,&red.sender,"日志长度：",len(red.sender.GameLogs))
 			red.sender.GameLogs = append(red.sender.GameLogs, &msg2.GameLog{
 				UserId: red.sender.User.GetId(),
 				Content: "收到玩家中雷赔付金额：" + score.GetScoreStr(mineAmount) + " 余额：" + score.GetScoreStr(red.sender.User.GetScore()) +
@@ -113,10 +115,10 @@ func (game *Game) robRed(user *data.User, red *Red) {
 			})
 		}
 	} else {
-		//fmt.Println("房间税率：",game.Table.GetRoomRate(),"用户金额前：",user.User.GetScore()," 抢包金额：",robbedAmount)
+		//log.Traceln("房间税率：",game.Table.GetRoomRate(),"用户金额前：",user.User.GetScore()," 抢包金额：",robbedAmount)
 		_, _ = user.User.SetScore(game.Table.GetGameNum(), robbedAmount, 0)
-		//fmt.Println("房间税率：",game.Table.GetRoomRate(),"用户金额后：",user.User.GetScore())
-		//fmt.Println("user.Cheat : ",user.Cheat)
+		//log.Traceln("房间税率：",game.Table.GetRoomRate(),"用户金额后：",user.User.GetScore())
+		//log.Traceln("user.Cheat : ",user.Cheat)
 		//赢家打码量 服务费
 		if !user.User.IsRobot() {
 			user.GameLogs = append(user.GameLogs, &msg2.GameLog{
@@ -136,22 +138,22 @@ func (game *Game) robRed(user *data.User, red *Red) {
 	}
 	user.Output += robbedAmount
 	user.ProfitAmount += robbedAmount
-	//fmt.Println("22222系统作弊率：",roomProb,"抢包玩家作弊率：",user.Cheat,"是否为机器人：",user.User.IsRobot(),"  发包玩家作弊率：",red.sender.Cheat,"是否为机器人：",red.sender.User.IsRobot())
+	//log.Traceln("22222系统作弊率：",roomProb,"抢包玩家作弊率：",user.Cheat,"是否为机器人：",user.User.IsRobot(),"  发包玩家作弊率：",red.sender.Cheat,"是否为机器人：",red.sender.User.IsRobot())
 	_ = user.User.SendMsg(global.S2C_ROB_RED, red.NewRobbedRed(isMine, robbedAmount, user.User.GetScore()))
 	if red.RobbedCount >= red.RedFlood {
 		//red.sender.BetsAmount += red.OriginAmount
 		//红包被抢完添加打码量
 		red.sender.Chip = red.sender.Chip + red.OriginAmount - red.SelfRobbedAmount
 		if !red.sender.User.IsRobot() {
-			//fmt.Println("红包被抢完，打码量：",red.OriginAmount," 红包id：",red.Id," 发包者id：",red.sender.User.GetId(),"当前打码量：",red.sender.Chip)
+			//log.Traceln("红包被抢完，打码量：",red.OriginAmount," 红包id：",red.Id," 发包者id：",red.sender.User.GetId(),"当前打码量：",red.sender.Chip)
 		}
 		game.DelRedListMap(red)
 		game.DelLockListByRedId(red.Id)
 		go red.sender.ChangeUserSendRedStatus(red.Id, global.RED_CUR_STATUS_OVER)
 		game.DelRobRedUserArr(red.Id)
-		//fmt.Println("------------3-----------",time.Now().Sub(t1))
+		//log.Traceln("------------3-----------",time.Now().Sub(t1))
 		game.SendRedFromWaitList()
-		//fmt.Println("------------4-----------",time.Now().Sub(t1))
+		//log.Traceln("------------4-----------",time.Now().Sub(t1))
 	}
 	user.AddRobRedRecord(red.NewUserRobbedRedInfo(robbedAmount, game.GetLevelStr(), isMine))
 	//广播策略改为 人数50个以上如果是自己的就一定发，其他人则概率性发送
@@ -159,7 +161,7 @@ func (game *Game) robRed(user *data.User, red *Red) {
 		UserId: user.Id, UserName: user.User.GetNike(), RobbedAmount: robbedAmount, IsMine: isMine, MineAmount: mineAmount, Time: time.Now().Unix(),
 		SenderId: red.sender.Id, SenderName: red.sender.Name, RedAmount: red.OriginAmount, MineNum: red.MineNum,
 	})
-	//fmt.Println("user id : ",user.Id," 抢到的金额：", robbedAmount, " 中雷赔付的金额： ", mineAmount,"红包id：",red.Id, " 红包剩余金额： ", red.Amount,"雷号：",red.MineNum,"剩余血量：",red.RedFlood-red.RobbedCount)
+	//log.Traceln("user id : ",user.Id," 抢到的金额：", robbedAmount, " 中雷赔付的金额： ", mineAmount,"红包id：",red.Id, " 红包剩余金额： ", red.Amount,"雷号：",red.MineNum,"剩余血量：",red.RedFlood-red.RobbedCount)
 	if red.RobbedCount == 3 || red.RobbedCount == 6 {
 		game.Table.Broadcast(global.S2C_RED_ROBBED_COUNT, red.NewRobbedCount2C())
 	}
@@ -227,7 +229,7 @@ func isUserMine(user *data.User, red *Red, prob int32) bool {
 
 	index := user.RandInt(1, global.WAN_RATE_TOTAL)
 	if !user.User.IsRobot() {
-		fmt.Println("房间作弊率：", prob, "用户作弊率：", user.Cheat, "中雷概率：", userMine, "随机数：", index)
+		log.Traceln("房间作弊率：", prob, "用户作弊率：", user.Cheat, "中雷概率：", userMine, "随机数：", index)
 	}
 	if index < userMine {
 		return true
@@ -249,7 +251,7 @@ func (game *Game) GetRouteAxis() int32 {
 			break
 		}
 	}
-	//fmt.Println("红包路线   >>   :", route)
+	//log.Traceln("红包路线   >>   :", route)
 	return route
 }
 
@@ -274,7 +276,7 @@ func (game *Game) hasRedRoute(route int32) bool {
 //			for e := game.userList.Front(); e != nil; e = e.Next() {
 //				user := e.Value.(*data.User)
 //				if !user.IsAi {
-//					//fmt.Println("红包消失id：", red.Id)
+//					//log.Traceln("红包消失id：", red.Id)
 //					if err := user.User.SendMsg(global.S2C_RED_DISAPPEAR, &msg.S2CRedDisappear{
 //						RedId: red.Id, Level: red.level, IsRobbed: user.IsRobbedRed(red.Id), IsOtherRobbed: game.IsOtherRobbed(red.Id, user.User.GetId()),
 //					}); err != nil {
@@ -296,18 +298,18 @@ func (game *Game) TriggerHorseLamp(winner *data.User, winAmount int64) {
 		if strings.TrimSpace(v.SpecialCondition) == "" {
 			if winAmount >= v.AmountLimit && fmt.Sprintf(`%d`, game.Table.GetRoomID()) == v.RoomId {
 				if !winner.User.IsRobot() {
-					//fmt.Println("创建没有特殊条件的跑马灯")
+					//log.Traceln("创建没有特殊条件的跑马灯")
 				}
 				if err := game.Table.CreateMarquee(winner.User.GetNike(), winAmount, "", v.RuleId); err != nil {
 				}
 			} else {
 				if !winner.User.IsRobot() {
-					//fmt.Println("不创建跑马灯：抢到的金额和配置金额：",winAmount,v.AmountLimit,game.Table.GetRoomID(),v.RoomId)
+					//log.Traceln("不创建跑马灯：抢到的金额和配置金额：",winAmount,v.AmountLimit,game.Table.GetRoomID(),v.RoomId)
 				}
 			}
 		} else {
 			if !winner.User.IsRobot() {
-				//fmt.Println("带有特殊条件 : ",strings.TrimSpace(v.SpecialCondition),game.Table.GetRoomID(),v.RoomId)
+				//log.Traceln("带有特殊条件 : ",strings.TrimSpace(v.SpecialCondition),game.Table.GetRoomID(),v.RoomId)
 			}
 		}
 	}

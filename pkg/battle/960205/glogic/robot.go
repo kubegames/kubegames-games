@@ -1,9 +1,7 @@
 package glogic
 
 import (
-	"go-game-sdk/example/game_MaJiang/960205/msg"
-	"go-game-sdk/lib/clock"
-
+	"github.com/kubegames/kubegames-games/pkg/battle/960205/msg"
 	"github.com/kubegames/kubegames-sdk/pkg/player"
 	"github.com/kubegames/kubegames-sdk/pkg/table"
 )
@@ -11,9 +9,9 @@ import (
 type Robot struct {
 	User         player.RobotInterface
 	GameLogic    *ErBaGangGame
-	BetCount     int       //下注限制
-	TimerJob     clock.Job //job
-	LastBetPlace int       //机器人上次下注的区域
+	BetCount     int         //下注限制
+	TimerJob     *player.Job //job
+	LastBetPlace int         //机器人上次下注的区域
 }
 
 func (r *Robot) Init(User player.RobotInterface, g table.TableHandler) {

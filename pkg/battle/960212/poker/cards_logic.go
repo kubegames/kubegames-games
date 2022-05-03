@@ -1,11 +1,12 @@
 package poker
 
 import (
-	"common/log"
 	"fmt"
 	"game_poker/doudizhu/config"
 	"game_poker/doudizhu/data"
 	"game_poker/doudizhu/msg"
+
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 )
 
 // GetCardsWeightValue 获取牌组权重值

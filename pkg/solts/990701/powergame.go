@@ -3,7 +3,6 @@
 package main
 
 import (
-	"fmt"
 	game_frame "go-game-sdk"
 	roomconfig "go-game-sdk/example/game_LaBa/990701/config"
 	"go-game-sdk/example/game_LaBa/990701/gamelogic"
@@ -11,15 +10,17 @@ import (
 	"go-game-sdk/example/game_LaBa/labacom/config"
 	"math/rand"
 	"time"
+
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 )
 
 func maintest() {
-	fmt.Println("开始", time.Now())
+	log.Traceln("开始", time.Now())
 	var g gamelogic.Game
 	g.Init(&config.LBConfig)
 	//这里调用测试工具，如果是正式版本需要屏蔽这个结果
 	test.Test(&config.LBConfig)
-	fmt.Println("结束", time.Now())
+	log.Traceln("结束", time.Now())
 }
 
 func main() {

@@ -1,11 +1,12 @@
 package config
 
 import (
-	"common/log"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"math/rand"
+
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 
 	"github.com/tidwall/gjson"
 )
@@ -149,10 +150,10 @@ func InitConfig(cfg gjson.Result) {
 	}
 	BRTBConfig.Betmin = int(cfg.Get("betmin").Int())
 	BRTBConfig.Unplacebetnum = int(cfg.Get("unplacebetnum").Int())
-	//fmt.Println(BRTBConfig.PolicyTree.Find(1000).Back.Rand())
-	//fmt.Println(BRTBConfig.PolicyTree.Find(2000))
-	//fmt.Println(BRTBConfig.PolicyTree.Find(3000))
-	//fmt.Println(BRTBConfig.PolicyTree.Find(-1000))
+	//log.Traceln(BRTBConfig.PolicyTree.Find(1000).Back.Rand())
+	//log.Traceln(BRTBConfig.PolicyTree.Find(2000))
+	//log.Traceln(BRTBConfig.PolicyTree.Find(3000))
+	//log.Traceln(BRTBConfig.PolicyTree.Find(-1000))
 
 }
 

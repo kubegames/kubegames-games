@@ -1,9 +1,10 @@
 package poker
 
 import (
-	"fmt"
 	"math/rand"
 	"time"
+
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 )
 
 // 牌1-9,10为白板
@@ -56,7 +57,7 @@ func GenerateCards() (cards []byte) {
 
 func Test(cards []byte) {
 	sortRes := sortCards(cards)
-	fmt.Println("sortRes : ", sortRes)
+	log.Traceln("sortRes : ", sortRes)
 	t, _ := GetCardType(sortRes)
-	fmt.Println("cardsType : ", t)
+	log.Traceln("cardsType : ", t)
 }

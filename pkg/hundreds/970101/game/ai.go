@@ -6,14 +6,15 @@ import (
 	"game_buyu/crazy_red/data"
 	"game_buyu/crazy_red/global"
 	"game_buyu/crazy_red/msg"
+
 	"github.com/golang/protobuf/proto"
-	"fmt"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 )
 
 //机器人发红包
 func (game *Game) AiSendRedTimer() {
 	if game.isClosed {
-		fmt.Println("房间正在关闭，不再发红包")
+		log.Traceln("房间正在关闭，不再发红包")
 		return
 	}
 	//return
@@ -43,7 +44,7 @@ func (game *Game) AiSendRedTimer() {
 		if ai == nil {
 			return
 		}
-		//fmt.Println("机器人发红包..............当前红包数量：",len(game.redListMap))
+		//log.Traceln("机器人发红包..............当前红包数量：",len(game.redListMap))
 		c2sMsg := &msg.C2SSendRed{MineNum: int64(rand.RandInt(0, 9)), Amount: amount, UserId: ai.Id}
 		c2sMsgB, _ := proto.Marshal(c2sMsg)
 		game.ProcSendRed(c2sMsgB, ai)
@@ -78,7 +79,7 @@ func (game *Game) aiGetSendRedCountAmount(sendRate, count1, c2, amount1, a2, a3 
 //随机获取场上的一个机器人
 func (game *Game) randGetAi() *data.User {
 	if game.getAiCount() == 0 {
-		//fmt.Println("机器人数量为 0 ")
+		//log.Traceln("机器人数量为 0 ")
 		//game.Table.GetRobot()
 		return nil
 	}
@@ -99,11 +100,11 @@ func (game *Game) randGetAi() *data.User {
 //随机获取场上的几个机器人
 func (game *Game) randGetAis(count int) []*data.User {
 	if game.getAiCount() == 0 {
-		//fmt.Println("机器人数量为 0 ")
+		//log.Traceln("机器人数量为 0 ")
 		//game.Table.GetRobot()
 		return nil
 	}
-	ais := make([]*data.User,0)
+	ais := make([]*data.User, 0)
 	index := 0
 	aiArr := make([]*data.User, 0)
 	for e := game.userList.Front(); e != nil; e = e.Next() {
@@ -112,10 +113,10 @@ func (game *Game) randGetAis(count int) []*data.User {
 			aiArr = append(aiArr, user)
 		}
 	}
-	for i:=0;i<count;i++{
+	for i := 0; i < count; i++ {
 		if len(aiArr) > 1 {
 			index = rand.RandInt(0, len(aiArr)-1)
-			ais = append(ais,aiArr[index])
+			ais = append(ais, aiArr[index])
 		}
 	}
 

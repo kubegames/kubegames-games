@@ -1,13 +1,14 @@
 package game
 
 import (
-	"common/log"
 	"common/rand"
 	"time"
 
-	//"common/log"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
+
+	//"github.com/kubegames/kubegames-sdk/pkg/log"
 	//"common/rand"
-	"fmt"
+
 	"game_frame_v2/game/clock"
 	"game_poker/doudizhu/config"
 	"game_poker/doudizhu/data"
@@ -441,7 +442,7 @@ func (rb *robot) updateExportData() {
 			}
 		}
 	}
-	//fmt.Println("Seat: ", rb.mySeat, " MyHandCardsValue ", rb.exportData.MyHandCardsValue, " CardsValueDiffWithAnotherMax ", rb.exportData.CardsValueDiffWithAnotherMax, " CardsValueDiffWithBanker ", rb.exportData.CardsValueDiffWithBanker)
+	//log.Traceln("Seat: ", rb.mySeat, " MyHandCardsValue ", rb.exportData.MyHandCardsValue, " CardsValueDiffWithAnotherMax ", rb.exportData.CardsValueDiffWithAnotherMax, " CardsValueDiffWithBanker ", rb.exportData.CardsValueDiffWithBanker)
 	if nil != rb.GameLogic.Dizhu {
 		bankerseat := rb.GameLogic.Dizhu.ChairID
 		bankerprev := (bankerseat + 2) % 3
@@ -789,7 +790,7 @@ func (rb *robot) doOut(groupType int) bool {
 			}
 		}
 	}
-	fmt.Println("aaaa", out, " ", groupType)
+	log.Traceln("aaaa", out, " ", groupType)
 	rb.sendOutCardmsg(1, out)
 	return true
 }

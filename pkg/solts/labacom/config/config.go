@@ -9,6 +9,7 @@ import (
 	"strconv"
 
 	"github.com/bitly/go-simplejson"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 	"github.com/sipt/GoJsoner"
 )
 
@@ -77,7 +78,7 @@ var LBConfig LabaConfig
 func (lbcfg *LabaConfig) LoadLabadCfg() {
 	data, err := ioutil.ReadFile("conf/laba.json")
 	if err != nil {
-		fmt.Println("File reading error", err)
+		log.Traceln("File reading error", err)
 		return
 	}
 	//去除配置文件中的注释

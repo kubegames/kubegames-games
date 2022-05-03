@@ -1,7 +1,6 @@
 package game
 
 import (
-	"common/log"
 	"common/rand"
 	"common/score"
 	"fmt"
@@ -9,6 +8,8 @@ import (
 	"game_poker/doudizhu/msg"
 	"game_poker/doudizhu/poker"
 	"time"
+
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 
 	"github.com/kubegames/kubegames-sdk/pkg/player"
 )

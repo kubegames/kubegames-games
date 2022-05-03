@@ -3,15 +3,13 @@ package game
 import (
 	"fmt"
 
-	"github.com/kubegames/kubegames-games/internal/pkg/score"
-
 	"github.com/kubegames/kubegames-games/internal/pkg/rand"
-
-	"github.com/kubegames/kubegames-sdk/pkg/log"
-
+	"github.com/kubegames/kubegames-games/internal/pkg/score"
 	"github.com/kubegames/kubegames-games/pkg/battle/960208/data"
 	"github.com/kubegames/kubegames-games/pkg/battle/960208/msg"
 	"github.com/kubegames/kubegames-games/pkg/battle/960208/poker"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
+	"github.com/kubegames/kubegames-sdk/pkg/platform"
 )
 
 // Start 游戏开始，倒计时开始
@@ -20,9 +18,8 @@ func (game *ThreeDoll) Start() {
 	log.Tracef("游戏 %d 倒计时开始", game.Table.GetID())
 
 	if game.TimerJob != nil {
-		game.TimerJob.Cancel()
+		game.Table.DeleteJob(game.TimerJob)
 	}
-
 	// 匹配机器人
 	game.MatchRobot()
 
@@ -73,7 +70,7 @@ func (game *ThreeDoll) EndCountDown() {
 		game.Control()
 
 		// 发牌
-		for id, _ := range game.UserList {
+		for id := range game.UserList {
 
 			holdCards := poker.HoldCards{
 				Cards:     game.ControlledCards[id].Cards,
@@ -562,6 +559,7 @@ func (game *ThreeDoll) Settle() {
 	log.Debugf("结算列表%v", resultList)
 
 	// 上下分
+	var records []*platform.PlayerRecord
 	for index, settleResult := range resultList {
 		game.UserList[settleResult.UserId].CurAmount += settleResult.Result
 		profit := game.SettleDivision(settleResult.UserId)
@@ -577,9 +575,15 @@ func (game *ThreeDoll) Settle() {
 		}
 
 		// 发送战绩，计算产出
-		game.TableSendRecord(settleResult.UserId, settleResult.Result, profit)
+		if record := game.TableSendRecord(settleResult.UserId, settleResult.Result, profit); record != nil {
+			records = append(records, record)
+		}
 
 		resultList[index].Result = profit
+	}
+
+	if len(records) <= 0 {
+		game.Table.UploadPlayerRecord(records)
 	}
 
 	// 记录战绩
@@ -668,7 +672,9 @@ func (game *ThreeDoll) GameOver() {
 
 	// 所有人退出去
 	for _, user := range game.UserList {
-		game.UserExit(user.User)
+		game.UserLeaveGame(user.User)
 		game.Table.KickOut(user.User)
 	}
+
+	game.Table.Close()
 }

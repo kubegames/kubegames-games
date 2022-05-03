@@ -2,7 +2,6 @@ package game
 
 import (
 	"encoding/json"
-	"fmt"
 	"go-game-sdk/define"
 	"go-game-sdk/example/game_poker/saima/config"
 	"go-game-sdk/example/game_poker/saima/model"
@@ -518,7 +517,7 @@ func (game *Game) getTimeList() []*msg.TimeList {
 	})
 	for k, v := range game.Result {
 		timeList[v-1] = tem[sum[k]]
-		fmt.Println("v = ", v, sum[k])
+		log.Traceln("v = ", v, sum[k])
 	}
 	return timeList
 }
@@ -803,7 +802,7 @@ func (game *Game) GetPayArea(result []int32) map[msg.BetArea]int {
 //结算
 func (game *Game) saveScore() {
 	game.Table.AddTimer(int64(countTime), game.start)
-	fmt.Println("save score")
+	log.Traceln("save score")
 	if len(game.GameInfo) >= 10 {
 		game.GameInfo = append(game.GameInfo[:0], game.GameInfo[1:]...)
 	}

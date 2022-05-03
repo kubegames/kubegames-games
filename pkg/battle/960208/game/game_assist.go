@@ -3,23 +3,27 @@ package game
 import (
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/kubegames/kubegames-games/internal/pkg/rand"
-
-	"github.com/kubegames/kubegames-sdk/pkg/log"
-	"github.com/kubegames/kubegames-sdk/pkg/player"
-
 	"github.com/kubegames/kubegames-games/pkg/battle/960208/data"
 	"github.com/kubegames/kubegames-games/pkg/battle/960208/msg"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
+	"github.com/kubegames/kubegames-sdk/pkg/platform"
+	"github.com/kubegames/kubegames-sdk/pkg/player"
 )
 
 // KickCheck 踢人检测
 func (game *ThreeDoll) KickCheck() {
 	for _, user := range game.UserList {
 		if user.Status == int32(msg.UserStatus_Ready) {
-			game.UserExit(user.User)
+			game.UserLeaveGame(user.User)
 			game.Table.KickOut(user.User)
 		}
+	}
+
+	if game.Table.PlayerCount() <= 0 {
+		game.Table.Close()
 	}
 }
 
@@ -37,16 +41,20 @@ func (game *ThreeDoll) CheckLeftRobot() {
 	if robotCount == len(game.UserList) {
 		// 停掉所有定时器
 		if game.RobotTimer != nil {
-			game.RobotTimer.Cancel()
+			game.Table.DeleteJob(game.RobotTimer)
 		}
 		if game.TimerJob != nil {
-			game.TimerJob.Cancel()
+			game.Table.DeleteJob(game.TimerJob)
 		}
 
 		// 踢开说有机器人
 		for _, user := range game.UserList {
-			game.UserExit(user.User)
+			game.UserLeaveGame(user.User)
 			game.Table.KickOut(user.User)
+		}
+
+		if game.Table.PlayerCount() <= 0 {
+			game.Table.Close()
 		}
 	}
 }
@@ -99,7 +107,7 @@ func (game *ThreeDoll) RobotSit() {
 		return
 	}
 
-	err := game.Table.GetRobot(1)
+	err := game.Table.GetRobot(1, game.Table.GetConfig().RobotMinBalance, game.Table.GetConfig().RobotMaxBalance)
 	if err != nil {
 		log.Errorf("生成机器人失败：%v", err)
 	}
@@ -177,11 +185,7 @@ func (game *ThreeDoll) SettleDivision(userID int64) int64 {
 	// 结果
 	result := user.CurAmount - user.InitAmount
 
-	profit, err := game.UserList[userID].User.SetScore(game.Table.GetGameNum(), result, game.RoomCfg.TaxRate)
-	if err != nil {
-		log.Errorf("用户 %d 上下分失败：%v", user.ID, err.Error())
-		return 0
-	}
+	profit := game.UserList[userID].User.SetScore(game.Table.GetGameNum(), result, game.RoomCfg.TaxRate)
 
 	// 计算打码量
 	chip := profit
@@ -236,25 +240,29 @@ func (game *ThreeDoll) SetChip(userID int64, chip int64) {
 
 // SetExitPermit 设置用户退出权限
 func (game *ThreeDoll) SetExitPermit(permit bool) {
-	for id, _ := range game.UserList {
+	for id := range game.UserList {
 		game.UserList[id].ExitPermit = permit
 	}
 }
 
 // UserSendRecord 发送战绩，计算产出
-func (game *ThreeDoll) TableSendRecord(userID int64, result int64, netProfit int64) {
+func (game *ThreeDoll) TableSendRecord(userID int64, result int64, netProfit int64) *platform.PlayerRecord {
 	user, ok := game.UserList[userID]
 	if !ok {
 		log.Errorf("发送战绩查询用户 %d 失败", userID)
-		return
+		return nil
+	}
+
+	if user.User.IsRobot() {
+		return nil
 	}
 
 	var (
-		profitAmount int64  // 盈利
-		betsAmount   int64  // 总下注
-		drawAmount   int64  // 总抽水
-		outputAmount int64  // 总产出
-		endCards     string // 结算牌
+		profitAmount int64 // 盈利
+		betsAmount   int64 // 总下注
+		drawAmount   int64 // 总抽水
+		outputAmount int64 // 总产出
+		//endCards     string // 结算牌
 	)
 
 	profitAmount = netProfit
@@ -267,7 +275,18 @@ func (game *ThreeDoll) TableSendRecord(userID int64, result int64, netProfit int
 		betsAmount = result
 	}
 
-	user.User.SendRecord(game.Table.GetGameNum(), profitAmount, betsAmount, drawAmount, outputAmount, endCards)
+	//	user.User.SendRecord(game.Table.GetGameNum(), profitAmount, betsAmount, drawAmount, outputAmount, endCards)
+	return &platform.PlayerRecord{
+		PlayerID:     uint32(user.User.GetID()),
+		GameNum:      game.Table.GetGameNum(),
+		ProfitAmount: profitAmount,
+		BetsAmount:   betsAmount,
+		DrawAmount:   drawAmount,
+		OutputAmount: outputAmount,
+		Balance:      user.User.GetScore(),
+		UpdatedAt:    time.Now(),
+		CreatedAt:    time.Now(),
+	}
 }
 
 // GetUserByChairID 通过座位id获取用户

@@ -1,16 +1,12 @@
 package glogic
 
 import (
-	"go-game-sdk/define"
-	"go-game-sdk/example/game_MaJiang/960205/msg"
-	"go-game-sdk/example/game_MaJiang/960205/poker"
-	"go-game-sdk/lib/clock"
-
+	"github.com/gogf/gf/v2/encoding/gjson"
+	"github.com/kubegames/kubegames-games/pkg/battle/960205/msg"
+	"github.com/kubegames/kubegames-games/pkg/battle/960205/poker"
 	"github.com/kubegames/kubegames-sdk/pkg/log"
-	"github.com/kubegames/kubegames-sdk/pkg/table"
-
-	"github.com/gogf/gf/encoding/gjson"
 	"github.com/kubegames/kubegames-sdk/pkg/player"
+	"github.com/kubegames/kubegames-sdk/pkg/table"
 )
 
 type ErBaGangGame struct {
@@ -28,7 +24,7 @@ type ErBaGangGame struct {
 	PaiList               map[int][]int32      // 发给用户的牌的列表 [用户索引] = []牌组数据
 	GamePoker             poker.GamePoker      // 牌
 	BtnCount              int                  // 按钮计数
-	TimerJob              clock.Job            //job
+	TimerJob              *table.Job           //job
 	State                 STATE
 	Cards                 []int32 //所有牌出现的次数
 	Dismiss               bool
@@ -81,12 +77,11 @@ func (game *ErBaGangGame) InitTable(table table.TableInterface) {
 // GameStart 游戏开始
 func (game *ErBaGangGame) GameStart() {
 	log.Tracef("游戏开始")
-	return true
 }
 
 // OnActionUserSitDown 用户坐下
 // 但是没有在桌子上
-func (game *ErBaGangGame) OnActionUserSitDown(userInter player.PlayerInterface, chairId int, config string) int {
+func (game *ErBaGangGame) OnActionUserSitDown(userInter player.PlayerInterface, chairId int, config string) table.MatchKind {
 	log.Tracef("用户坐下")
 	if game.DiZhu == 0 {
 		jsonObj, err := gjson.DecodeToJson([]byte(config))
@@ -94,23 +89,23 @@ func (game *ErBaGangGame) OnActionUserSitDown(userInter player.PlayerInterface, 
 			log.Errorf("获取底注配置出错:%s", err.Error())
 		}
 		// 游戏底注
-		game.DiZhu = jsonObj.GetInt("Bottom_Pouring")
+		game.DiZhu = jsonObj.Get("Bottom_Pouring").Int()
 	}
 
 	entranceRestrictions := game.InterTable.GetEntranceRestrictions()
 	if entranceRestrictions != -1 && userInter.GetScore() < entranceRestrictions {
-		return define.SIT_DOWN_ERROR_OVER
+		return table.SitDownErrorOver
 	}
 
 	if game.checkReline(userInter) {
 		//user.IsDeposit = false
-		return define.SIT_DOWN_OK
+		return table.SitDownOk
 	}
 	if game.Dismiss {
-		return define.SIT_DOWN_ERROR_NORMAL
+		return table.SitDownErrorNomal
 	}
 	if game.checkUser(userInter) {
-		return define.SIT_DOWN_ERROR_OVER
+		return table.SitDownErrorOver
 	}
 
 	if len(game.UserAllList) < 4 {
@@ -121,11 +116,11 @@ func (game *ErBaGangGame) OnActionUserSitDown(userInter player.PlayerInterface, 
 		//game.UserIndex = chairId
 	} else {
 		//game.UserIndex = 0
-		return define.SIT_DOWN_ERROR_NORMAL
+		return table.SitDownErrorNomal
 	}
 
 	log.Tracef("用户列表:%v,用户个数是:%d", game.UserAllList, len(game.UserAllList))
-	return define.SIT_DOWN_OK
+	return table.SitDownOk
 }
 
 func (game *ErBaGangGame) checkUser(userInter player.PlayerInterface) bool {
@@ -145,7 +140,7 @@ func (game *ErBaGangGame) checkReline(userInter player.PlayerInterface) bool {
 	return false
 }
 
-func (game *ErBaGangGame) LeaveGame(userInter player.PlayerInterface) bool {
+func (game *ErBaGangGame) UserLeaveGame(userInter player.PlayerInterface) bool {
 	if game.State != Game_End {
 		return false
 	}
@@ -175,7 +170,7 @@ func (game *ErBaGangGame) BindRobot(ai player.RobotInterface) player.RobotHandle
 }
 
 // SendScene 发送场景消息
-func (game *ErBaGangGame) SendScene(userInter player.PlayerInterface) bool {
+func (game *ErBaGangGame) SendScene(userInter player.PlayerInterface) {
 	log.Tracef("发送场景消息")
 	// if userInter.IsRobot() {
 	// 	robot := new(Robot)
@@ -189,14 +184,14 @@ func (game *ErBaGangGame) SendScene(userInter player.PlayerInterface) bool {
 		game.InterTable.AddTimer(5*1000, func() {
 			if len(game.UserAllList) > 0 && len(game.UserAllList) < 4 {
 				// 匹配机器人
-				if err := game.InterTable.GetRobot(int32(4 - len(game.UserAllList))); err != nil {
+				if err := game.InterTable.GetRobot(uint32(4-len(game.UserAllList)), game.InterTable.GetConfig().RobotMinBalance, game.InterTable.GetConfig().RobotMaxBalance); err != nil {
 					log.Errorf("分配机器人失败:%s", err.Error())
 				}
 				//game.SendMsgUSitSetDown()
 			}
 		})
 	}
-	return true
+	return
 }
 
 // UserReady 用户准备好了
@@ -215,8 +210,8 @@ func (game *ErBaGangGame) CloseTable() {
 
 }
 
-// UserExit 用户退出
-func (game *ErBaGangGame) UserExit(userInter player.PlayerInterface) bool {
+// UserOffline 用户掉线
+func (game *ErBaGangGame) UserOffline(userInter player.PlayerInterface) bool {
 	log.Tracef("用户退出")
 	if game.State != Game_End {
 		user := game.UserAllList[userInter.GetChairID()]

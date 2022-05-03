@@ -13,7 +13,7 @@ type ErBaGangTable struct {
 func (EBGroom *ErBaGangTable) InitTable(table table.TableInterface) {
 	g := new(ErBaGangGame)
 	g.InitTable(table)
-	table.BindGame(g)
+	table.Start(g, nil, nil)
 }
 
 // UserExit 用户退出桌子

@@ -2,7 +2,8 @@ package data
 
 import (
 	"go-game-sdk/example/game_buyu/980301/msg"
-	frameMsg "go-game-sdk/sdk/msg"
+
+	frameMsg "github.com/kubegames/kubegames-sdk/app/message"
 
 	"github.com/kubegames/kubegames-sdk/pkg/player"
 	"github.com/kubegames/kubegames-sdk/pkg/table"

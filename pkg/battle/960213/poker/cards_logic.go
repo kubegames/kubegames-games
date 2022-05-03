@@ -1,11 +1,12 @@
 package poker
 
 import (
-	"common/log"
 	"fmt"
 	"game_poker/ddzall/config"
 	"game_poker/ddzall/data"
 	"game_poker/ddzall/msg"
+
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 )
 
 // GetCardsWeightValue 获取牌组权重值

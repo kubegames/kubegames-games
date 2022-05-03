@@ -184,7 +184,7 @@ func (game *Game) SendScene(user player.PlayerInterface) bool {
 
 	// if game.Status >= baijiale.GameStatus_EndBetMovie {
 	user.SendMsg(int32(baijiale.SendToClientMessageType_PokerInfo), game.PokerMsg)
-	// fmt.Println("进入场景发送PokerMsg =========== ", game.PokerMsg)
+	// log.Traceln("进入场景发送PokerMsg =========== ", game.PokerMsg)
 	if game.Status == baijiale.GameStatus_SettleStatus {
 		if u.SettleMsg != nil {
 			user.SendMsg(int32(baijiale.SendToClientMessageType_UserComeBack), u.SettleMsg)
@@ -373,7 +373,7 @@ func (game *Game) SendStatusMsg(StatusTime int) {
 	msg.Status = int32(game.Status)
 	msg.StatusTime = int32(StatusTime)
 	msg.TotalStatusTime = int32(game.TimerJob.GetIntervalTime() / time.Millisecond)
-	// fmt.Println("状态*******************", msg)
+	// log.Traceln("状态*******************", msg)
 	game.Table.Broadcast(int32(baijiale.SendToClientMessageType_Status), msg)
 }
 

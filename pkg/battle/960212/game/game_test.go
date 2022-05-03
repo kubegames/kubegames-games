@@ -1,9 +1,10 @@
 package game
 
 import (
-	"common/log"
 	"game_poker/doudizhu/msg"
 	"testing"
+
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 
 	"github.com/golang/protobuf/proto"
 )

@@ -1,9 +1,7 @@
 package main
 
 import (
-	"common/log"
 	recover_handle "common/recover"
-	"fmt"
 	game_frame2 "game_frame_v2/game/logic"
 	"game_poker/ddzall/config"
 	"game_poker/ddzall/game"
@@ -12,18 +10,20 @@ import (
 	"os/signal"
 	"syscall"
 	"time"
+
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 )
 
 func main() {
 	defer recover_handle.RecoverHandle()
-	fmt.Println("************************************************")
-	fmt.Println("*                                              *")
-	fmt.Println("*              Dou Di Zhu System !             *")
-	fmt.Println("*                                              *")
-	fmt.Println("**********************************************\n")
+	log.Traceln("************************************************")
+	log.Traceln("*                                              *")
+	log.Traceln("*              Dou Di Zhu System !             *")
+	log.Traceln("*                                              *")
+	log.Traceln("**********************************************\n")
 
-	fmt.Println("### VER: ", "0.0.9")
-	fmt.Println("### PID: ", os.Getpid())
+	log.Traceln("### VER: ", "0.0.9")
+	log.Traceln("### PID: ", os.Getpid())
 
 	//系统中断捕获
 	sigs := make(chan os.Signal, 1)

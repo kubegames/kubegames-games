@@ -2,7 +2,6 @@ package game
 
 import (
 	"encoding/json"
-	"fmt"
 
 	"github.com/kubegames/kubegames-games/pkg/battle/960201/config"
 	"github.com/kubegames/kubegames-games/pkg/battle/960201/data"
@@ -46,16 +45,16 @@ func (game *Game) OnActionUserSitDown(userInter player.PlayerInterface, chairId 
 		return table.SitDownErrorOver
 	}
 	if userInter.GetScore() < tableConfig.Bottom_Pouring {
-		fmt.Println("玩家金币不够底注：", userInter.GetScore(), "  ", tableConfig.Bottom_Pouring)
+		log.Traceln("玩家金币不够底注：", userInter.GetScore(), "  ", tableConfig.Bottom_Pouring)
 		//return define.SIT_DOWN_ERROR_NORMAL
 		return table.SitDownErrorOver
 	}
-	//fmt.Println("user id : ", userInter.GetID(), " 坐下的牌桌：：： ", game.Table.GetID(), "房间人数：", len(game.userListMap))
+	//log.Traceln("user id : ", userInter.GetID(), " 坐下的牌桌：：： ", game.Table.GetID(), "房间人数：", len(game.userListMap))
 	user = data.NewUser(userInter.GetID(), userInter.GetNike(), userInter.IsRobot())
 	user.User = userInter
 	user.Score = userInter.GetScore()
 	if !user.User.IsRobot() {
-		//fmt.Println("用户 ",userInter.GetID(),"钱：",user.Score)
+		//log.Traceln("用户 ",userInter.GetID(),"钱：",user.Score)
 	}
 	user.Table = game.Table
 	game.AddUserIntoTable(user)
@@ -82,14 +81,14 @@ func (game *Game) UserOffline(userInter player.PlayerInterface) bool {
 		game.Table.Broadcast(global.S2C_LEAVE_TABLE, user.GetUserMsgInfo(false))
 		for i, v := range game.userListArr {
 			if v != nil && v.User.GetID() == user.User.GetID() {
-				//fmt.Println("用户在匹配阶段离开")
+				//log.Traceln("用户在匹配阶段离开")
 				game.userListArr[i] = nil
 				return true
 			}
 		}
 	}
 	//if game.timerJob.GetTimeDifference() <= 1000 {
-	//	fmt.Println("倒计时时间 小于 1000 不退出 ")
+	//	log.Traceln("倒计时时间 小于 1000 不退出 ")
 	//	return false
 	//}
 	if game.CurStatus == global.TABLE_CUR_STATUS_ING || game.CurStatus == global.TABLE_CUR_STATUS_START_SEND_CARD || game.CurStatus == global.TABLE_CUR_STATUS_SYSTEM_COMPARE {
@@ -108,40 +107,40 @@ func (game *Game) UserOffline(userInter player.PlayerInterface) bool {
 
 //游戏消息
 func (game *Game) OnGameMessage(subCmd int32, buffer []byte, userInter player.PlayerInterface) {
-	//fmt.Println("on message : ",subCmd)
+	//log.Traceln("on message : ",subCmd)
 	user := game.GetUserListMap(userInter.GetID())
 	if user == nil && subCmd != global.C2S_LEAVE_TABLE {
-		//fmt.Println("OnGameMessage user nil ", userInter.GetID())
+		//log.Traceln("OnGameMessage user nil ", userInter.GetID())
 		return
 	}
 	switch subCmd {
 	case global.C2S_START_GAME:
-		//fmt.Println("玩家点击开始游戏+++")
+		//log.Traceln("玩家点击开始游戏+++")
 		game.ProcUserStartGame(buffer, user)
 	case global.C2S_USER_ACTION:
-		//////fmt.Println("用户发言+++")
+		//////log.Traceln("用户发言+++")
 		game.ProcAction(buffer, user)
 	case global.C2S_COMPARE_CARDS:
-		//fmt.Println("比牌+++")
+		//log.Traceln("比牌+++")
 		game.ProcCompare(buffer, user)
 	case global.C2S_GET_CAN_COMPARE_LIST:
-		//fmt.Println("获取可比牌用户列表+++")
+		//log.Traceln("获取可比牌用户列表+++")
 		game.ProcGetCanCompareList(buffer, user)
 	case global.C2S_SENDCARD_OVER:
-		////fmt.Println("客户端发牌动画结束+++")
+		////log.Traceln("客户端发牌动画结束+++")
 		game.ProcSendCardOver(buffer, user)
 	case global.C2S_SET_CARD_TYPE:
 		return
-		//fmt.Println("------------设置牌型------------")
+		//log.Traceln("------------设置牌型------------")
 		//game.ProcSetCardType(buffer, user)
 	case global.C2S_SEE_OTHTER_CARDS:
 		return
-		//fmt.Println("------------工具，查看其他玩家的牌------------")
+		//log.Traceln("------------工具，查看其他玩家的牌------------")
 		//game.ProcSeeOtherCards(buffer, user)
 	case global.C2S_LEAVE_TABLE:
-		//fmt.Println("客户端离开房间、重开比赛、继续游戏+++")
+		//log.Traceln("客户端离开房间、重开比赛、继续游戏+++")
 		if user == nil {
-			//fmt.Println("房间没在游戏中，不退出 111 ")
+			//log.Traceln("房间没在游戏中，不退出 111 ")
 			userInter.SendMsg(global.ERROR_CODE_GAME_NOT_ING, &msg.C2SIntoGame{})
 			return
 		}

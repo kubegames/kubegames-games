@@ -1,9 +1,10 @@
 package config
 
 import (
-	"go-game-sdk/lib//log"
 	"io/ioutil"
 	"strconv"
+
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 
 	"github.com/bitly/go-simplejson"
 )

@@ -12,28 +12,29 @@ import (
 	"github.com/kubegames/kubegames-games/pkg/battle/960201/global"
 	"github.com/kubegames/kubegames-games/pkg/battle/960201/msg"
 	"github.com/kubegames/kubegames-games/pkg/battle/960201/poker"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 )
 
 //游戏中倒计时触发相关操作
 func (zjh *Game) procTimerEvent() {
 	//defer log.Trace()
-	//fmt.Println("zhixing procTimerEvent")
+	//log.Traceln("zhixing procTimerEvent")
 	if zjh.CurStatus != global.TABLE_CUR_STATUS_ING {
-		//fmt.Println("procTimerEvent 没在游戏中")
+		//log.Traceln("procTimerEvent 没在游戏中")
 		//zjh.GameSignal <- global.GAME_SIGNAL_END
 		//log.Tracef("结束")
 		return
 	}
 	if zjh.CurActionUser == nil {
-		//fmt.Println("zjh.CurActionUser 为 nil ")
+		//log.Traceln("zjh.CurActionUser 为 nil ")
 		//zjh.GameSignal <- global.GAME_SIGNAL_END
 		return
 	}
 	if zjh.CurActionUser.IsActioned {
-		fmt.Println("zjh.CurActionUser 发言过")
+		log.Traceln("zjh.CurActionUser 发言过")
 		return
 	}
-	fmt.Println("时间到，玩家: ", zjh.CurActionUser.Id, "没发言，自动弃牌", time.Now())
+	log.Traceln("时间到，玩家: ", zjh.CurActionUser.Id, "没发言，自动弃牌", time.Now())
 	zjh.CurActionUser.IsActioned = true
 	zjh.CurActionUser.IsTimeOut = true
 	zjh.userActionGiveUp(zjh.CurActionUser)
@@ -43,7 +44,7 @@ func (zjh *Game) procTimerEvent() {
 	}
 	zjh.JudgeAndFinishCurRound()
 	if zjh.CurStatus != global.TABLE_CUR_STATUS_ING {
-		//fmt.Println("游戏没在进行中，退出111")
+		//log.Traceln("游戏没在进行中，退出111")
 		return
 	}
 	if zjh.IsSatisfyEnd() {
@@ -51,7 +52,7 @@ func (zjh *Game) procTimerEvent() {
 		return
 	}
 	if zjh.CurStatus != global.TABLE_CUR_STATUS_ING {
-		//////fmt.Println("游戏没在进行中，退出222")
+		//////log.Traceln("游戏没在进行中，退出222")
 		return
 	}
 	if !zjh.IsAllUserAllIn() {
@@ -72,11 +73,11 @@ func (zjh *Game) procTimerEvent() {
 //弃牌
 func (zjh *Game) userActionGiveUp(user *data.User) {
 	if user == nil || user.IsLeave {
-		////fmt.Println("userActionGiveUp user is nil ")
+		////log.Traceln("userActionGiveUp user is nil ")
 		return
 	}
 	if user.User == nil {
-		////fmt.Println("userActionGiveUp user.User is nil")
+		////log.Traceln("userActionGiveUp user.User is nil")
 		return
 	}
 	user.LoseReason = global.LOSE_REASON_GIVE_UP
@@ -157,11 +158,11 @@ func (zjh *Game) userActionAllIn(user *data.User) int32 {
 //跟注
 func (zjh *Game) userActionFollow(user *data.User) int32 {
 	if user == nil {
-		fmt.Println("user follow  nil ")
+		log.Traceln("user follow  nil ")
 		return global.ERROR_CODE_NIL
 	}
 	if zjh.MinAction == 0 {
-		fmt.Println("当前最低为0，不能跟注")
+		log.Traceln("当前最低为0，不能跟注")
 		return global.ERROR_CODE_ARG
 	}
 	amount := zjh.MinAction
@@ -173,7 +174,7 @@ func (zjh *Game) userActionFollow(user *data.User) int32 {
 		}
 	}
 	if user.Score < amount {
-		fmt.Println("user.User.GetScore() < 111 amount111 ", user.User.GetID(), "  ", user.Score, "  ", amount)
+		log.Traceln("user.User.GetScore() < 111 amount111 ", user.User.GetID(), "  ", user.Score, "  ", amount)
 		return global.ERROR_CODE_LESS_MIN
 	}
 
@@ -183,7 +184,7 @@ func (zjh *Game) userActionFollow(user *data.User) int32 {
 	user.Score -= amount
 	//if _, err := user.User.SetScore(user.Table.GetGameNum(), -amount, "跟注", zjh.Table.GetRoomRate(),
 	//	0, global.SET_SCORE_BET, 100102); err != nil {
-	//	fmt.Println("user follow set score err : ", err)
+	//	log.Traceln("user follow set score err : ", err)
 	//}
 	zjh.Table.Broadcast(global.S2C_USER_ACTION, &msg.S2CUserActionInfo{UserId: user.Id, Option: global.USER_OPTION_FOLLOW,
 		Amount: amount, UserName: user.Name, CurAmount: user.CurAmount, PoolAmount: zjh.PoolAmount, MinAction: zjh.MinAction, Score: user.Score})
@@ -195,17 +196,17 @@ func (zjh *Game) userActionFollow(user *data.User) int32 {
 func (zjh *Game) userActionRaise(user *data.User, amount int64) int32 {
 	originAmount := amount
 	if zjh.IsAllIn {
-		fmt.Println(" is all in ")
+		log.Traceln(" is all in ")
 		return global.ERROR_CODE_CAN_NOT_RAISE
 	}
 	if amount <= 0 {
-		fmt.Println("amount <= 0 ", user.User.GetID(), " ", amount)
+		log.Traceln("amount <= 0 ", user.User.GetID(), " ", amount)
 		return global.ERROR_CODE_ARG
 	}
 	//todo 判断加注金额只能是给定的三个档位
-	fmt.Println("加注的三个档位：", zjh.GameConfig.RaiseAmount)
+	log.Traceln("加注的三个档位：", zjh.GameConfig.RaiseAmount)
 	if amount != zjh.GameConfig.RaiseAmount[0] && amount != zjh.GameConfig.RaiseAmount[1] && amount != zjh.GameConfig.RaiseAmount[2] {
-		fmt.Println("加注金额不符合规则，", amount, zjh.GameConfig.RaiseAmount)
+		log.Traceln("加注金额不符合规则，", amount, zjh.GameConfig.RaiseAmount)
 		return global.ERROR_CODE_ARG
 	}
 
@@ -214,19 +215,19 @@ func (zjh *Game) userActionRaise(user *data.User, amount int64) int32 {
 		amount *= 2
 	}
 	if amount <= zjh.MinAction {
-		fmt.Println("amount <= zjh.MinAction ", user.User.GetID(), " ", amount, " ", zjh.MinAction)
+		log.Traceln("amount <= zjh.MinAction ", user.User.GetID(), " ", amount, " ", zjh.MinAction)
 		return global.ERROR_CODE_ARG
 	}
 
 	if user.Score < amount {
-		fmt.Println("user.User.GetScore() < raise amount ", user.User.GetID(), " ", user.Score, " ", amount)
+		log.Traceln("user.User.GetScore() < raise amount ", user.User.GetID(), " ", user.Score, " ", amount)
 		return global.ERROR_CODE_NOT_ENOUGH
 	}
 
 	//如果加注金额大于当前最小玩家余额也不行
 	maxRaiseAmount := zjh.getMaxRaiseAmount()
 	if originAmount > maxRaiseAmount {
-		fmt.Println("当前加注的最大金额：", maxRaiseAmount, "  ", originAmount)
+		log.Traceln("当前加注的最大金额：", maxRaiseAmount, "  ", originAmount)
 		return global.ERROR_CODE_OVER_USER_MIN_AMOUNT
 	}
 
@@ -285,8 +286,8 @@ func (zjh *Game) setCanAllinValue(user *data.User) {
 				v.FollowAmount += 1
 			}
 		}
-		//fmt.Println("跟注值，玩家：",v.Id," 值：",v.FollowAmount)
-		//fmt.Println("allin值，玩家：",v.Id," 值：",v.AllInAmount,"配置：",zjh.GameConfig.MaxAllIn,"advice: ",zjh.Table.GetAdviceConfig())
+		//log.Traceln("跟注值，玩家：",v.Id," 值：",v.FollowAmount)
+		//log.Traceln("allin值，玩家：",v.Id," 值：",v.AllInAmount,"配置：",zjh.GameConfig.MaxAllIn,"advice: ",zjh.Table.GetAdviceConfig())
 	}
 }
 
@@ -339,13 +340,13 @@ func (zjh *Game) getCanAllInValue(user *data.User) int64 {
 	//if minAmount < 0 {
 	//	for _, v := range zjh.userListArr {
 	//		if v != nil {
-	//			fmt.Println("全押值小于0，panic掉,userId : ", v.Id, " userAmount : ", v.Score, "配置：", zjh.GameConfig.MaxAllIn)
+	//			log.Traceln("全押值小于0，panic掉,userId : ", v.Id, " userAmount : ", v.Score, "配置：", zjh.GameConfig.MaxAllIn)
 	//		}
 	//	}
 	//	panic("getCanAllInValue")
 	//}
 
-	//fmt.Println("玩家可all in ： ",minAmount)
+	//log.Traceln("玩家可all in ： ",minAmount)
 
 	return minAmount
 
@@ -370,11 +371,11 @@ func (zjh *Game) GetNextActionChair() (nextChair uint) {
 		}
 		chairUser := zjh.GetUserByChairId(tmpChairId)
 		if chairUser == nil {
-			////fmt.Println("设置下一个发言时没找到：", tmpChairId)
+			////log.Traceln("设置下一个发言时没找到：", tmpChairId)
 			continue
 		}
 		if chairUser.CurStatus != global.USER_CUR_STATUS_ING {
-			////fmt.Println("下一个 chair ", chairUser.Id, " 状态 为： ", chairUser.CurStatus)
+			////log.Traceln("下一个 chair ", chairUser.Id, " 状态 为： ", chairUser.CurStatus)
 			continue
 		}
 		nextChair = tmpChairId
@@ -411,7 +412,7 @@ func (zjh *Game) getSawRaiseCount() (count int) {
 func (zjh *Game) getMaxSecondUser() (biggestUser, secondUser *data.User, err error) {
 	userList := zjh.GetStatusUserList(global.USER_CUR_STATUS_ING)
 	if len(userList) == 0 {
-		//fmt.Println("getMaxSecondUser wei 0 ")
+		//log.Traceln("getMaxSecondUser wei 0 ")
 		err = errors.New("getMaxSecondUser wei 0 ")
 		return
 	}
@@ -460,7 +461,7 @@ func (zjh *Game) cheatMaxSecond(cardsArr [][]byte, userCount int) {
 				user.CheatRateMax = usercheatRateMapMax[user.CheatRate]
 				totalMaxWinRate += usercheatRateMapMax[user.CheatRate]
 			}
-			fmt.Println("玩家", user.Id, "作弊率：", user.CheatRate)
+			log.Traceln("玩家", user.Id, "作弊率：", user.CheatRate)
 		}
 	}
 	if totalMaxWinRate < 10000 {
@@ -472,7 +473,7 @@ func (zjh *Game) cheatMaxSecond(cardsArr [][]byte, userCount int) {
 		}
 		if maxUserCount <= 0 {
 			maxUserCount = 2
-			fmt.Println("五个真实玩家？？？？？")
+			log.Traceln("五个真实玩家？？？？？")
 		}
 
 		averageMax := (10000 - totalMaxWinRate) / maxUserCount
@@ -485,7 +486,7 @@ func (zjh *Game) cheatMaxSecond(cardsArr [][]byte, userCount int) {
 	}
 	for _, user := range zjh.userListArr {
 		if user != nil {
-			fmt.Println(">>>>>>>>玩家：", user.Id, "最大牌概率：", user.CheatRateMax)
+			log.Traceln(">>>>>>>>玩家：", user.Id, "最大牌概率：", user.CheatRateMax)
 		}
 	}
 	//分配最大的牌
@@ -496,7 +497,7 @@ func (zjh *Game) cheatMaxSecond(cardsArr [][]byte, userCount int) {
 		if user != nil && user.CheatRateMax > 0 {
 			if maxIndex >= tmpMaxRate && maxIndex < tmpMaxRate+user.CheatRateMax {
 				//该user放最大牌
-				//fmt.Println("最大牌玩家：", user.Id)
+				//log.Traceln("最大牌玩家：", user.Id)
 				user.CardType, user.Cards = poker.GetCardTypeJH(cardsArr[0]) //最大的牌发给玩家
 				user.CardEncode = poker.GetEncodeCard(user.CardType, user.Cards)
 				cardsArr = append(cardsArr[:0], cardsArr[1:]...)
@@ -508,7 +509,7 @@ func (zjh *Game) cheatMaxSecond(cardsArr [][]byte, userCount int) {
 			}
 			tmpMaxRate += user.CheatRateMax
 		}
-		//fmt.Println("tmpSendCountRate  +aiSend.SendCountRate[i] ",tmpSendCountRate,tmpSendCountRate+aiSend.SendCountRate[i])
+		//log.Traceln("tmpSendCountRate  +aiSend.SendCountRate[i] ",tmpSendCountRate,tmpSendCountRate+aiSend.SendCountRate[i])
 
 	}
 	if !isDisMax {
@@ -548,22 +549,22 @@ func (zjh *Game) cheatMaxSecond(cardsArr [][]byte, userCount int) {
 		for _, user := range zjh.userListArr {
 			if user != nil && len(user.Cards) == 0 && user.CheatRateSecond != 0 {
 				user.CheatRateSecond += averageSecond
-				//fmt.Println("玩家：", user.Id, "第二大牌概率：", user.CheatRateSecond)
+				//log.Traceln("玩家：", user.Id, "第二大牌概率：", user.CheatRateSecond)
 			}
 		}
 		totalSecondWinRate = 10000
 	}
 	//分配第二大的牌
 	secondIndex := rand.RandInt(0, totalSecondWinRate)
-	fmt.Println("second index : ", secondIndex, totalSecondWinRate)
+	log.Traceln("second index : ", secondIndex, totalSecondWinRate)
 	tmpsecondRate := 0
 	isDissecond := false
 	for _, user := range zjh.userListArr {
 		if user != nil && len(user.Cards) == 0 && user.CheatRateSecond > 0 {
-			//fmt.Println("tmpsecondRate ::::: ", tmpsecondRate, user.Id, user.Cards)
+			//log.Traceln("tmpsecondRate ::::: ", tmpsecondRate, user.Id, user.Cards)
 			if secondIndex >= tmpsecondRate && secondIndex <= tmpsecondRate+user.CheatRateSecond && len(user.Cards) == 0 {
 				//该user放二大牌
-				//fmt.Println("二大牌玩家：", user.Id)
+				//log.Traceln("二大牌玩家：", user.Id)
 				user.CardType, user.Cards = poker.GetCardTypeJH(cardsArr[0]) //最大的牌发给玩家
 				user.CardEncode = poker.GetEncodeCard(user.CardType, user.Cards)
 				cardsArr = append(cardsArr[:0], cardsArr[1:]...)
@@ -575,7 +576,7 @@ func (zjh *Game) cheatMaxSecond(cardsArr [][]byte, userCount int) {
 			}
 			tmpsecondRate += user.CheatRateSecond
 		}
-		//fmt.Println("tmpSendCountRate  +aiSend.SendCountRate[i] ",tmpSendCountRate,tmpSendCountRate+aiSend.SendCountRate[i])
+		//log.Traceln("tmpSendCountRate  +aiSend.SendCountRate[i] ",tmpSendCountRate,tmpSendCountRate+aiSend.SendCountRate[i])
 
 	}
 
@@ -592,10 +593,10 @@ func (zjh *Game) cheatMaxSecond(cardsArr [][]byte, userCount int) {
 	}
 
 	if !isDissecond {
-		fmt.Println("isDissecond := false ======================== +++++++++  ")
+		log.Traceln("isDissecond := false ======================== +++++++++  ")
 		for _, user := range zjh.userListArr {
 			if user != nil {
-				fmt.Println("玩家：", user.Id, "的牌：：：：：：", fmt.Sprintf(`%x`, user.Cards))
+				log.Traceln("玩家：", user.Id, "的牌：：：：：：", fmt.Sprintf(`%x`, user.Cards))
 			}
 		}
 	}

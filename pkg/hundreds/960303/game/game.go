@@ -662,7 +662,7 @@ func (game *Game) sendSettleMsg() {
 			}
 			temp1 += fmt.Sprintf(" 总输赢：%v，用户剩余金额：%v \r\n", score.GetScoreStr(u.User.GetScore()-u.CruenSorce), score.GetScoreStr(u.User.GetScore()))
 			temp += temp1
-			//fmt.Println(temp1)
+			//log.Traceln(temp1)
 			game.Table.WriteLogs(u.User.GetID(), temp)
 
 		}
@@ -742,7 +742,7 @@ func (game *Game) sendSettleMsg() {
 		MaxWinUserID, score.GetScoreStr(MaxWinGold))
 	//log.Debugf(str)
 	totalstr := QingLongStr + BaiHuStr + ZhuQueStr + XuanWuStr + str
-	//fmt.Println(totalstr)
+	//log.Traceln(totalstr)
 	game.Table.WriteLogs(0, totalstr)
 
 	game.Table.Broadcast(int32(BRNN.SendToClientMessageType_SceneSettleInfo), SceneSettleMsg)
@@ -1312,7 +1312,7 @@ func (game *Game) GetRoomconfig() {
 		game.Rule.SingleUserAllSpaceLimit = config.BRNNConfig.Singleuserallspacelimit5times[level-1]
 		game.Rule.AllSpaceLimit = config.BRNNConfig.Allspacelimit5times[level-1]
 		for i := 0; i < 4; i++ {
-			//fmt.Println(config.BRNNConfig.Singleusersinglespacelimit5times[level-1][3],config.BRNNConfig.Allusersinglespacelimit5times[level-1][i])
+			//log.Traceln(config.BRNNConfig.Singleusersinglespacelimit5times[level-1][3],config.BRNNConfig.Allusersinglespacelimit5times[level-1][i])
 			game.Rule.SingleUserSingleSpaceLimit[i] = config.BRNNConfig.Singleusersinglespacelimit5times[level-1][i]
 			game.Rule.AllUserSingleSpaceLimit[i] = config.BRNNConfig.Allusersinglespacelimit5times[level-1][i]
 		}
@@ -1335,7 +1335,7 @@ func (game *Game) GetRoomconfig() {
 		}
 	}
 	game.Rule.UserBetLimit = game.Rule.SingleUserAllSpaceLimit
-	//fmt.Println(game.OddsInfo,":",game.Rule.BetList,":",game.Rule.ZhuangLimit,":",game.Rule.SingleUserSingleSpaceLimit,":",game.Rule.SingleUserAllSpaceLimit,":",game.Rule.AllUserSingleSpaceLimit,":",game.Rule.AllSpaceLimit)
+	//log.Traceln(game.OddsInfo,":",game.Rule.BetList,":",game.Rule.ZhuangLimit,":",game.Rule.SingleUserSingleSpaceLimit,":",game.Rule.SingleUserAllSpaceLimit,":",game.Rule.AllUserSingleSpaceLimit,":",game.Rule.AllSpaceLimit)
 	if Odds <= 0 {
 		panic("房间倍数配置不对")
 	}
@@ -1734,7 +1734,7 @@ func (game *Game) SetIcon() {
 	Millionaireid := int64(0)
 	mastid := int64(0)
 	var user []*model.User
-	//fmt.Println("chushihua ")
+	//log.Traceln("chushihua ")
 	index := 6
 	for k, v := range game.CountUserList {
 		if k >= index {
@@ -1756,7 +1756,7 @@ func (game *Game) SetIcon() {
 	u, ok := game.AllUserList[Millionaireid]
 	if ok {
 		u.Icon = Millionaire
-		//fmt.Println("大赢家", u.User.GetID())
+		//log.Traceln("大赢家", u.User.GetID())
 	}
 	if len(user) == 1 {
 		return
@@ -1773,7 +1773,7 @@ func (game *Game) SetIcon() {
 	u1, ok1 := game.AllUserList[bigWinnerid]
 	if ok1 {
 		u1.Icon = bigWinner
-		//fmt.Println("大富豪",u1.User.GetID())
+		//log.Traceln("大富豪",u1.User.GetID())
 	}
 	//神算子
 	sort.Sort(model.MasterUser(user))
@@ -1786,7 +1786,7 @@ func (game *Game) SetIcon() {
 	u2, ok2 := game.AllUserList[mastid]
 	if ok2 {
 		u2.Icon = Master
-		//fmt.Println("神算子",u2.User.GetID())
+		//log.Traceln("神算子",u2.User.GetID())
 	}
 }
 

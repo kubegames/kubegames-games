@@ -2,11 +2,9 @@ package game
 
 import (
 	"github.com/kubegames/kubegames-games/internal/pkg/rand"
-
-	"github.com/kubegames/kubegames-sdk/pkg/log"
-
 	"github.com/kubegames/kubegames-games/pkg/battle/960208/msg"
 	"github.com/kubegames/kubegames-games/pkg/battle/960208/poker"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 )
 
 // Control 控制牌
@@ -21,7 +19,7 @@ func (game *ThreeDoll) Control() {
 	game.ControlBiggerCards()
 
 	for _, holdCards := range game.CardsSequence {
-		for id, _ := range game.UserList {
+		for id := range game.UserList {
 			if _, ok := game.ControlledCards[id]; !ok {
 				game.ControlledCards[id] = holdCards
 				break

@@ -103,7 +103,7 @@ func (g *Game) OnUserBet(b []byte) {
 		senddata.Line = append(senddata.Line, li)
 	}
 
-	//fmt.Println("下注数据", senddata)
+	//log.Traceln("下注数据", senddata)
 	g.user.SendMsg(int32(shz.ReMsgIDS2C_BetRet), senddata)
 
 	str := fmt.Sprint(time.Now().Format("2006-1-2 15:04:05"), " 用户ID：", g.user.GetID(), g.CheatValue, "作弊率：", cheat, " 常规结果数组：", senddata.IconArr, "，扣钱：", (data.BetMoney*g.Line)/100,
@@ -196,7 +196,7 @@ func (g *Game) XiaoMaLi(b []byte) {
 		break
 	}
 
-	//fmt.Println(iniconarr, iconid, outindex)
+	//log.Traceln(iniconarr, iconid, outindex)
 	if iconid == 8 {
 		g.XiaoMaLiTimes--
 		if g.XiaoMaLiTimes == 0 {
@@ -270,7 +270,7 @@ func (g *Game) GetXiaoMaLiOdds(cheatvalue int64) int {
 			g.SmallGameGetOdds = 0
 		}
 	} else {
-		//fmt.Println("小玛丽内圈 ", iniconarr, iconid, "小玛丽外圈", g.xml.IconAward, CheatCfg.Limit)
+		//log.Traceln("小玛丽内圈 ", iniconarr, iconid, "小玛丽外圈", g.xml.IconAward, CheatCfg.Limit)
 		Odds = xiaomali.GetOdds(int64(iconid), iniconarr, g.xml.IconAward)
 		if Odds != 0 {
 			g.SmallGameGetOdds += Odds

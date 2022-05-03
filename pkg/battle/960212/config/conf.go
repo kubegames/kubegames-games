@@ -1,10 +1,10 @@
 package config
 
 import (
-	"common/log"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
+
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 
 	"github.com/sipt/GoJsoner"
 )
@@ -120,7 +120,7 @@ func (conf *DoudizhuConfig) LoadDoudizhuCfg() {
 func (robotCfg *RobotConfig) LoadRobotCfg() {
 	data, err := ioutil.ReadFile("config/robot.json")
 	if err != nil {
-		fmt.Println("File reading error", err)
+		log.Traceln("File reading error", err)
 		return
 	}
 	//去除配置文件中的注释
@@ -136,7 +136,7 @@ func (robotCfg *RobotConfig) LoadRobotCfg() {
 func (PutScoreCfg *PutScoreConfig) LoadPutScoreCfg() {
 	data, err := ioutil.ReadFile("config/cardsPutScore.json")
 	if err != nil {
-		fmt.Println("File reading error", err)
+		log.Traceln("File reading error", err)
 		return
 	}
 	//去除配置文件中的注释

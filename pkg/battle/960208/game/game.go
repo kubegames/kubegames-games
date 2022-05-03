@@ -1,21 +1,15 @@
 package game
 
 import (
-	"go-game-sdk/define"
-	"go-game-sdk/lib/clock"
-
+	"github.com/bitly/go-simplejson"
 	"github.com/kubegames/kubegames-games/internal/pkg/rand"
-
-	"github.com/kubegames/kubegames-sdk/pkg/log"
-	"github.com/kubegames/kubegames-sdk/pkg/table"
-
 	"github.com/kubegames/kubegames-games/pkg/battle/960208/config"
 	"github.com/kubegames/kubegames-games/pkg/battle/960208/data"
 	"github.com/kubegames/kubegames-games/pkg/battle/960208/msg"
 	"github.com/kubegames/kubegames-games/pkg/battle/960208/poker"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 	"github.com/kubegames/kubegames-sdk/pkg/player"
-
-	"github.com/bitly/go-simplejson"
+	"github.com/kubegames/kubegames-sdk/pkg/table"
 )
 
 // ThreeDollRoom 三公房间
@@ -26,8 +20,8 @@ type ThreeDollRoom struct {
 type ThreeDoll struct {
 	Table           table.TableInterface      // 游戏桌子接口
 	Chairs          map[int32]int64           // 玩家座位号
-	TimerJob        *clock.Job                // 主流程定时器
-	RobotTimer      *clock.Job                // 坐下机器人定时器
+	TimerJob        *table.Job                // 主流程定时器
+	RobotTimer      *table.Job                // 坐下机器人定时器
 	BetSeats        []int64                   // 下注玩家序列
 	Status          int32                     // 游戏的状态
 	UserList        map[int64]*data.User      // 玩家列表
@@ -70,11 +64,6 @@ func (room *ThreeDollRoom) InitTable(table table.TableInterface) {
 	table.Start(game, nil, nil)
 }
 
-// UserExit 用户退出游戏房间
-func (room *ThreeDollRoom) UserExit(userInter player.PlayerInterface) {
-
-}
-
 // InitConfig 加载配置
 func (game *ThreeDoll) InitConfig() {
 
@@ -110,7 +99,7 @@ func (game *ThreeDoll) InitConfig() {
 }
 
 // OnActionUserSitDown 用户坐下
-func (game *ThreeDoll) OnActionUserSitDown(userInter player.PlayerInterface, orderIndex int, config string) int {
+func (game *ThreeDoll) OnActionUserSitDown(userInter player.PlayerInterface, orderIndex int, config string) table.MatchKind {
 	userID := userInter.GetID()
 	log.Tracef("玩家 %d 进入房间 %d", userID, game.Table.GetID())
 
@@ -121,7 +110,7 @@ func (game *ThreeDoll) OnActionUserSitDown(userInter player.PlayerInterface, ord
 		if game.Status >= int32(msg.GameStatus_StartGame) ||
 			(game.TimerJob != nil && game.Status == int32(msg.GameStatus_CountDown) && game.TimerJob.GetTimeDifference() < 500) {
 			log.Tracef("游戏中不能进入")
-			return define.SIT_DOWN_ERROR_NORMAL
+			return table.SitDownErrorNomal
 		}
 
 		////// 随机一个无人座位
@@ -135,7 +124,7 @@ func (game *ThreeDoll) OnActionUserSitDown(userInter player.PlayerInterface, ord
 
 		i := 0
 
-		for k, _ := range game.Chairs {
+		for k := range game.Chairs {
 			if i == randChair {
 				chairID = k
 				break
@@ -165,7 +154,7 @@ func (game *ThreeDoll) OnActionUserSitDown(userInter player.PlayerInterface, ord
 		game.UserList[userID].ReConnect = true
 	}
 
-	return define.SIT_DOWN_OK
+	return table.SitDownOk
 }
 
 func (game *ThreeDoll) BindRobot(ai player.RobotInterface) player.RobotHandler {
@@ -186,12 +175,12 @@ func (game *ThreeDoll) BindRobot(ai player.RobotInterface) player.RobotHandler {
 }
 
 // SendScene 玩家匹配之后调用这个发送场景消息
-func (game *ThreeDoll) SendScene(userInter player.PlayerInterface) bool {
+func (game *ThreeDoll) SendScene(userInter player.PlayerInterface) {
 	userID := userInter.GetID()
 	user, ok := game.UserList[userID]
 	if !ok {
 		log.Errorf("获取玩家异常！！！！")
-		return false
+		return
 	}
 
 	// 首个玩家坐下，加载配置文件
@@ -224,7 +213,7 @@ func (game *ThreeDoll) SendScene(userInter player.PlayerInterface) bool {
 	// 发送场景消息
 	game.SendSceneInfo(userInter, game.UserList[userID].ReConnect)
 
-	return true
+	return
 }
 
 // UserReady 用户准备
@@ -278,14 +267,14 @@ func (game *ThreeDoll) GameStart() {
 		// 准备人数至少有两人就开始游戏
 		if readyUserCount >= 2 {
 			game.Start()
-			return true
+			return
 		}
 	}
-	return false
+	return
 }
 
-// UserExit 用户离线
-func (game *ThreeDoll) UserExit(userInter player.PlayerInterface) bool {
+// UserOffline 用户离线
+func (game *ThreeDoll) UserOffline(userInter player.PlayerInterface) bool {
 
 	userID := userInter.GetID()
 
@@ -327,8 +316,8 @@ func (game *ThreeDoll) UserExit(userInter player.PlayerInterface) bool {
 	return exitPermit
 }
 
-// LeaveGame 用户正常申请离开
-func (game *ThreeDoll) LeaveGame(userInter player.PlayerInterface) bool {
+// UserLeaveGame 用户正常申请离开
+func (game *ThreeDoll) UserLeaveGame(userInter player.PlayerInterface) bool {
 
 	userID := userInter.GetID()
 
@@ -400,6 +389,10 @@ func (game *ThreeDoll) OnGameMessage(subCmd int32, buffer []byte, userInter play
 }
 
 // ResetTable 重置桌子
-func (game *ThreeDoll) ResetTable() {}
+func (game *ThreeDoll) ResetTable() {
 
-func (game *ThreeDoll) CloseTable() {}
+}
+
+func (game *ThreeDoll) CloseTable() {
+
+}

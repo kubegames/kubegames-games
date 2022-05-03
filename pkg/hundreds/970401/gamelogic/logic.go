@@ -1,7 +1,6 @@
 package gamelogic
 
 import (
-	"common/log"
 	"common/score"
 	"fmt"
 	"game_LaBa/benzbmw/config"
@@ -12,6 +11,8 @@ import (
 	"sort"
 	"sync"
 	"time"
+
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 
 	"github.com/bitly/go-simplejson"
 	protocol "github.com/golang/protobuf/proto"
@@ -249,7 +250,7 @@ func (game *Game) EndBetMovie() {
 
 // 此阶段同步中奖历史和玩家的输赢金额
 func (game *Game) AfterSettle(_ []byte) {
-	// fmt.Println("游戏转圈结束")
+	// log.Traceln("游戏转圈结束")
 	// game.hasAfterSettleMux.Lock()
 	// defer game.hasAfterSettleMux.Unlock()
 	// if game.hasAfterSettle {
@@ -481,7 +482,7 @@ func (game *Game) SendTopUserMsg() {
 		})
 	}
 
-	fmt.Println("发送6位上座玩家的结算信息=======================", msg)
+	log.Traceln("发送6位上座玩家的结算信息=======================", msg)
 	game.table.Broadcast(int32(proto.SendToClientMessageType_TopUserList), msg)
 }
 
@@ -733,7 +734,7 @@ func (game *Game) loopBroadcastBetInfo() {
 		// game.BetInfoTemp[index] = v + game.AIBetInfo[index]
 	}
 
-	// fmt.Println("循环广播 ===========  ", msg)
+	// log.Traceln("循环广播 ===========  ", msg)
 
 	game.table.Broadcast(int32(proto.SendToClientMessageType_LoopBetNotice), msg)
 }
@@ -756,7 +757,7 @@ func (game *Game) DoTest(bts []byte) {
 		return
 	}
 
-	fmt.Println("测试消息 ====== ", msg)
+	log.Traceln("测试消息 ====== ", msg)
 	game.testIn = &msg
 
 }
@@ -812,7 +813,7 @@ func (game *Game) TestPreSettle() {
 		game.settleElems, game.specType = config.BenzBMWConf.Cars.FindWithType(eleIndex)
 		game.settleMsg.ShakeResult = append(game.settleMsg.ShakeResult, game.testIn.OutID)
 	}
-	fmt.Println("处理测试消息得结果 =====", game.settleMsg.ShakeResult)
+	log.Traceln("处理测试消息得结果 =====", game.settleMsg.ShakeResult)
 }
 
 // 结算规则
@@ -923,7 +924,7 @@ func (game *Game) getEndGameResult(winCtrl *config.WinControl) (element model.El
 }
 
 func (game *Game) settle4UserAfterGame() {
-	fmt.Println("为每个用户进行结算")
+	log.Traceln("为每个用户进行结算")
 	for _, v := range game.UserMap {
 		if v.LastWinGold > 0 {
 			game.PaoMaDeng(v.LastWinGold, v.user)
@@ -945,7 +946,7 @@ func (game *Game) settle4UserAfterGame() {
 			v.SyncWinData(0)
 		}
 	}
-	fmt.Println("为每个用户进行结算结束")
+	log.Traceln("为每个用户进行结算结束")
 	game.writeLog()
 }
 

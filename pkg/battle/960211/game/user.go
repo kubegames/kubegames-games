@@ -1,10 +1,10 @@
 package game
 
 import (
-	"fmt"
-	"game_poker/pai9/model"
-	pai9 "game_poker/pai9/msg"
+	"github.com/kubegames/kubegames-games/pkg/battle/960211/model"
+	pai9 "github.com/kubegames/kubegames-games/pkg/battle/960211/msg"
 
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 	"github.com/kubegames/kubegames-sdk/pkg/player"
 )
 
@@ -18,11 +18,9 @@ type User struct {
 	WinGold       int64                       // 当前局赢的钱
 	WinGoldActual int64                       // 实际应该赢/输的钱，用作防以小博大机制
 	Cards         model.Cards                 // 当前局的牌
-
-	HasQiang bool
-	HasBet   bool
-
-	testMsg *pai9.TestReqMsg // 作弊消息
+	HasQiang      bool
+	HasBet        bool
+	testMsg       *pai9.TestReqMsg // 作弊消息
 	// BetMultiList []int32 // 下注倍数列表
 }
 
@@ -76,26 +74,26 @@ func (user *User) GetInfo(chairID int32) *pai9.UserInfo {
 		Avatar:  user.user.GetHead(),
 		Name:    user.user.GetNike(),
 		GoldNow: user.user.GetScore(),
-		UserID:  user.user.GetId(),
-		IP:      user.user.GetIp(),
+		UserID:  user.user.GetID(),
+		IP:      user.user.GetIP(),
 	}
 }
 
-// 游戏结束时结算
-func (user *User) EndSettle(gameNum string, tax int64, bottom int64, setNum int) {
-	before := user.settle[setNum-1].GoldChange
-	output, _ := user.user.SetScore(gameNum, before, tax)
+// // 游戏结束时结算
+// func (user *User) EndSettle(gameNum string, tax int64, bottom int64, setNum int) {
+// 	before := user.settle[setNum-1].GoldChange
+// 	output := user.user.SetScore(gameNum, before, tax)
 
-	bet := int64(user.settle[setNum-1].BetMulti)
-	user.user.SendRecord(gameNum,
-		user.user.GetScore()-user.settle[setNum-1].GoldBegin,
-		bet*bottom,
-		before-output,
-		output,
-		"",
-	)
-	user.user.SendChip(bet)
-}
+// 	bet := int64(user.settle[setNum-1].BetMulti)
+// 	user.user.SendRecord(gameNum,
+// 		user.user.GetScore()-user.settle[setNum-1].GoldBegin,
+// 		bet*bottom,
+// 		before-output,
+// 		output,
+// 		"",
+// 	)
+// 	user.user.SendChip(bet)
+// }
 
 func (user *User) GetUser() player.PlayerInterface {
 	return user.user
@@ -143,7 +141,7 @@ func (user *User) calcTestCard(cards model.Cards) {
 	if len(user.Cards) != 2 {
 		panic(user.Cards)
 	}
-	fmt.Println("配牌之后的牌 =====", user.Cards)
+	log.Traceln("配牌之后的牌 =====", user.Cards)
 }
 
 func (user *User) handleTestMsg(msg *pai9.TestReqMsg) {

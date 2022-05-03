@@ -52,8 +52,8 @@ func getLastResult(winCtrl *config.WinControl, tr *result) (element model.ElemBa
 	allBet := getAllBet()
 	oddsList := model.GetOdds()
 	model.ReverseOdds(oddsList)
-	// fmt.Println("oddsList = ", oddsList)
-	// fmt.Println("config.BenzBMWConf.Cars = ", config.BenzBMWConf.Cars)
+	// log.Traceln("oddsList = ", oddsList)
+	// log.Traceln("config.BenzBMWConf.Cars = ", config.BenzBMWConf.Cars)
 	var waitCheck []int
 	var backProb = [12]int64{} // 返奖率
 	waitCheck = nil
@@ -64,8 +64,8 @@ func getLastResult(winCtrl *config.WinControl, tr *result) (element model.ElemBa
 		}
 	}
 
-	// fmt.Println("BetArr = ", BetArr)
-	// fmt.Println("backProb = ", backProb)
+	// log.Traceln("BetArr = ", BetArr)
+	// log.Traceln("backProb = ", backProb)
 	back := winCtrl.Back.Rand()
 	backMin, backMax := int64(back.Min), int64(back.Max)
 	// fmt.Printf("backMin = %v ,backMax  = %v \n", backMin, backMax)
@@ -78,8 +78,8 @@ func getLastResult(winCtrl *config.WinControl, tr *result) (element model.ElemBa
 		// 这里随机选择一个进行返回
 		index := waitCheck[rand.Intn(len(waitCheck))]
 		element = model.ElemBases{config.BenzBMWConf.Cars.GetByID(12 - index - 1)}
-		// fmt.Println("waitCheck = ", waitCheck)
-		// fmt.Println()
+		// log.Traceln("waitCheck = ", waitCheck)
+		// log.Traceln()
 		tr.notInWaitTimes++
 		return
 	}

@@ -140,7 +140,7 @@ func (g *Game) SendScene(user player.PlayerInterface) bool {
 		senddata.BetValue = append(senddata.BetValue, int64(v))
 	}
 
-	fmt.Println("senddata.BetValue = ", senddata.BetValue)
+	log.Traceln("senddata.BetValue = ", senddata.BetValue)
 
 	senddata.Gold = user.GetScore()
 	if g.FreeGameTimes != 0 || g.XiaoMaLiTimes != 0 {

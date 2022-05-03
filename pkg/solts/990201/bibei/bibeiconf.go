@@ -35,7 +35,7 @@ var BBConfig BiBeiConf
 func (bbc *BiBeiConf) LoadBiBeiCfg() {
 	data, err := ioutil.ReadFile("conf/bibei.json")
 	if err != nil {
-		fmt.Println("File reading error", err)
+		log.Traceln("File reading error", err)
 		return
 	}
 	//去除配置文件中的注释

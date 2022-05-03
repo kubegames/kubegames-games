@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	game_frame "go-game-sdk"
 	"go-game-sdk/example/game_LaBa/970601/config"
 	"go-game-sdk/example/game_LaBa/970601/game"
@@ -23,7 +22,7 @@ import (
 
 func main() {
 	defer recover_handle.Recover("main recover ")
-	fmt.Println("### VER:  1.0.38 ")
+	log.Traceln("### VER:  1.0.38 ")
 	sigs := make(chan os.Signal, 1)
 	signal.Notify(sigs, syscall.SIGINT, syscall.SIGKILL, syscall.SIGTERM, syscall.SIGQUIT)
 	//可修改部分---开始
@@ -37,8 +36,8 @@ func main() {
 
 	//开启pprof
 	go func() {
-		fmt.Println("pprof start at :9766")
-		fmt.Println(http.ListenAndServe(":9766", nil))
+		log.Traceln("pprof start at :9766")
+		log.Traceln(http.ListenAndServe(":9766", nil))
 	}()
 
 	sig := <-sigs
@@ -51,7 +50,7 @@ func initConfig() {
 	//去除配置文件中的注释
 	gameFrameData, err := ioutil.ReadFile("./config/game_frame.json")
 	if err != nil {
-		fmt.Println("gameFrameData reading error", err)
+		log.Traceln("gameFrameData reading error", err)
 		panic("")
 	}
 	gameFrameResult, _ := GoJsoner.Discard(string(gameFrameData))

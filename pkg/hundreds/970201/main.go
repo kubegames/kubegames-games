@@ -1,7 +1,6 @@
 package main
 
 import (
-	"common/log"
 	recover_handle "common/recover"
 	"encoding/json"
 	"fmt"
@@ -17,13 +16,15 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/kubegames/kubegames-sdk/pkg/log"
+
 	"github.com/sipt/GoJsoner"
 )
 
 func main() {
 
 	defer recover_handle.RecoverHandle("main recover ")
-	fmt.Println("### VER:  2.0.13  ")
+	log.Traceln("### VER:  2.0.13  ")
 	sigs := make(chan os.Signal, 1)
 	signal.Notify(sigs, syscall.SIGINT, syscall.SIGKILL, syscall.SIGTERM, syscall.SIGQUIT)
 	//可修改部分---开始
@@ -37,8 +38,8 @@ func main() {
 
 	//开启pprof
 	go func() {
-		fmt.Println("pprof start at :9776")
-		fmt.Println(http.ListenAndServe(":9876", nil))
+		log.Traceln("pprof start at :9776")
+		log.Traceln(http.ListenAndServe(":9876", nil))
 	}()
 
 	sig := <-sigs
@@ -70,7 +71,7 @@ func initConfig() {
 		log.Errorf("Load aiRobConfigResult.go file err:%s ", err.Error())
 		panic("")
 	}
-	fmt.Println(" ai rob config data : ", fmt.Sprintf(`%v`, config.AiRobConfigArr[1]))
+	log.Traceln(" ai rob config data : ", fmt.Sprintf(`%v`, config.AiRobConfigArr[1]))
 	for _, arr := range config.AiRobConfigArr {
 		config.AiRobConfigMap[arr.Cheat] = arr
 	}
@@ -78,7 +79,7 @@ func initConfig() {
 	//去除配置文件中的注释
 	gameFrameData, err := ioutil.ReadFile("./config/game_frame.json")
 	if err != nil {
-		fmt.Println("gameFrameData reading error", err)
+		log.Traceln("gameFrameData reading error", err)
 		panic("")
 	}
 	gameFrameResult, _ := GoJsoner.Discard(string(gameFrameData))
@@ -91,7 +92,7 @@ func initConfig() {
 	//游戏配置文件
 	redConfigData, err := ioutil.ReadFile("./config/red.json")
 	if err != nil {
-		fmt.Println("redConfigData reading error", err)
+		log.Traceln("redConfigData reading error", err)
 		panic("")
 	}
 	//去除配置文件中的注释
@@ -104,23 +105,23 @@ func initConfig() {
 
 	aiNewConfigResult, err := ioutil.ReadFile("./config/ai_config.json")
 	if err != nil {
-		fmt.Println("aiNewConfigResult reading error", err)
+		log.Traceln("aiNewConfigResult reading error", err)
 		panic("")
 	}
 	//去除配置文件中的注释
 	aiNewRes, _ := GoJsoner.Discard(string(aiNewConfigResult))
-	fmt.Println(">>>", aiNewRes)
+	log.Traceln(">>>", aiNewRes)
 	err = json.Unmarshal([]byte(aiNewRes), &config.AiConfig)
 	if err != nil {
 		log.Errorf("Load AiConfig.go file err:%s ", err.Error())
 		panic("")
 	}
-	fmt.Println("AiConfig config ： ", fmt.Sprintf(`%+v`, config.AiConfig))
+	log.Traceln("AiConfig config ： ", fmt.Sprintf(`%+v`, config.AiConfig))
 
 	//新增配置文件
 	sendNewConfigData, err := ioutil.ReadFile("./config/send_new.json")
 	if err != nil {
-		fmt.Println("redConfigData reading error", err)
+		log.Traceln("redConfigData reading error", err)
 		panic("")
 	}
 	//去除配置文件中的注释
@@ -130,11 +131,11 @@ func initConfig() {
 		log.Errorf("Load send_new.json file err:%s ", err.Error())
 		panic("")
 	}
-	fmt.Println("red config.json ： ", fmt.Sprintf(`%+v`, config.AiSendNewArr[0]))
+	log.Traceln("red config.json ： ", fmt.Sprintf(`%+v`, config.AiSendNewArr[0]))
 
 	robNewConfigData, err := ioutil.ReadFile("./config/rob_new.json")
 	if err != nil {
-		fmt.Println("redConfigData rob_new error", err)
+		log.Traceln("redConfigData rob_new error", err)
 		panic("")
 	}
 	//去除配置文件中的注释
@@ -144,7 +145,7 @@ func initConfig() {
 		log.Errorf("Load send_new.json file err:%s ", err.Error())
 		panic("")
 	}
-	fmt.Println("red rob_new.json ： ", fmt.Sprintf(`%+v`, config.AiRobNewArr[0]))
+	log.Traceln("red rob_new.json ： ", fmt.Sprintf(`%+v`, config.AiRobNewArr[0]))
 
 	//game.InitTable()
 	config.LoadCrazyRedConfig()

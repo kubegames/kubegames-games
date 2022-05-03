@@ -1,9 +1,10 @@
 package poker_test
 
 import (
-	"fmt"
 	"testing"
 	"time"
+
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 )
 
 func Test10Base(t *testing.T) {
@@ -14,22 +15,22 @@ func Test10Base(t *testing.T) {
 	indexs := zuheResult(len(nums), m)
 	result := findNumsByIndexs(nums, indexs)
 	timeEnd := time.Now()
-	fmt.Println("count:", len(result))
-	fmt.Println("result:", result)
-	fmt.Println("time consume:", timeEnd.Sub(timeStart))
+	log.Traceln("count:", len(result))
+	log.Traceln("result:", result)
+	log.Traceln("time consume:", timeEnd.Sub(timeStart))
 	//结果是否正确
 	//rightCount := mathZuhe(n, m)
 	//if rightCount == len(result) {
-	//	fmt.Println("结果正确")
+	//	log.Traceln("结果正确")
 	//} else {
-	//	fmt.Println("结果错误，正确结果是：", rightCount)
+	//	log.Traceln("结果错误，正确结果是：", rightCount)
 	//}
 }
 
 //组合算法(从nums中取出m个数)
 func zuheResult(n int, m int) [][]int {
 	if m < 1 || m > n {
-		fmt.Println("Illegal argument. Param m must between 1 and len(nums).")
+		log.Traceln("Illegal argument. Param m must between 1 and len(nums).")
 		return [][]int{}
 	}
 	//保存最终结果的数组，总数直接通过数学公式计算

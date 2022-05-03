@@ -544,11 +544,11 @@ func (zjh *Game) EndGame(isAutoCompare bool) {
 
 	//玩家赢钱金额加上
 	tax := zjh.Table.GetRoomRate()
-	winnerOldScofre := winner.User.GetScore()
+	//winnerOldScofre := winner.User.GetScore()
 	//winnerOldScore := winner.Score
-	winner.User.SetScore(winner.Table.GetGameNum(), zjh.PoolAmount-winner.CurAmount, tax)
-	winAmount := winner.User.GetScore() - winnerOldScofre
-	taxScore := (zjh.PoolAmount - winner.CurAmount) * tax / 10000
+	winAmount := winner.User.SetScore(winner.Table.GetGameNum(), zjh.PoolAmount-winner.CurAmount, tax)
+	//winAmount := winner.User.GetScore() - winnerOldScofre
+	taxScore := (zjh.PoolAmount - winner.CurAmount) - winAmount
 	log.Traceln("赢家税收：", taxScore, "产出：", zjh.PoolAmount-taxScore, "总投注：", winner.Amount, winner.CurAmount)
 	//winner.User.SetBetsAmount(winner.Amount)
 	//winner.User.SendRecord(zjh.Table.GetGameNum(), zjh.PoolAmount-taxScore)
