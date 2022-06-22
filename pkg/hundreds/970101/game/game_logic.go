@@ -2,7 +2,6 @@ package game
 
 import (
 	"common/page"
-	"common/rand"
 	"fmt"
 	"game_buyu/crazy_red/config"
 	"game_buyu/crazy_red/data"
@@ -10,13 +9,15 @@ import (
 	"game_buyu/crazy_red/msg"
 	"strings"
 
+	"github.com/kubegames/kubegames-games/internal/pkg/rand"
+
 	"github.com/kubegames/kubegames-sdk/pkg/log"
 )
 
 //抢红包
 func (game *Game) robRed(user *data.User, red *Red) {
 	red.Lock.Lock()
-	if game.isUserRobbed(user.User.GetId()) {
+	if game.isUserRobbed(user.User.GetID()) {
 		//log.Traceln("玩家已经抢过该红包")
 		user.User.SendMsg(global.ERROR_CODE_USER_ROBBED, user.GetUserMsgInfo())
 		red.Lock.Unlock()
@@ -34,7 +35,7 @@ func (game *Game) robRed(user *data.User, red *Red) {
 		isMine = false
 	}
 
-	if user.User.GetId() == red.sender.User.GetId() {
+	if user.User.GetID() == red.sender.User.GetID() {
 		red.SelfRobbedAmount += robbedAmount
 	}
 
@@ -71,7 +72,7 @@ func (game *Game) robRed(user *data.User, red *Red) {
 
 func (game *Game) isUserRobbed(uid int64) bool {
 	for _, v := range game.UserRobbedArr {
-		if v.User.User.GetId() == uid {
+		if v.User.User.GetID() == uid {
 			return true
 		}
 	}
@@ -115,7 +116,7 @@ func isUserMine(user *data.User, prob int32, red *Red) bool {
 	//log.Traceln("作弊率下中雷概率：",userMine)
 	randInt := user.RandInt(1, global.WAN_RATE_TOTAL)
 	//if user.User.IsRobot() {
-	log.Traceln("玩家id:", user.User.GetId(), "作弊率：", user.Cheat, " 产生的随机值：", randInt, "中雷的配置参数：", userMine, "系统作弊率：", prob)
+	log.Traceln("玩家id:", user.User.GetID(), "作弊率：", user.Cheat, " 产生的随机值：", randInt, "中雷的配置参数：", userMine, "系统作弊率：", prob)
 	//}
 	if randInt <= userMine {
 		return true
@@ -149,7 +150,7 @@ func (game *Game) GetCurRedList(user *data.User, pageIndex, pageSize int) *msg.S
 	res.Current = int32(pager.Current)
 	res.Total = int64(pager.Total)
 	res.Pages = int32(pager.Pages)
-	res.SelfRedPos = game.GetUserRedPos(user.User.GetId())
+	res.SelfRedPos = game.GetUserRedPos(user.User.GetID())
 	return res
 }
 
@@ -173,7 +174,7 @@ func (game *Game) GetUserRedPos(uid int64) (pos int32) {
 	for e := game.redList.Front(); e != nil; e = e.Next() {
 		pos++
 		red := e.Value.(*Red)
-		if red.sender.User.GetId() == uid {
+		if red.sender.User.GetID() == uid {
 			hasSelf = true
 			return
 		}

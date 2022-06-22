@@ -2,11 +2,11 @@ package model
 
 import (
 	"fmt"
-	"game_poker/longhu/config"
 	"math"
 
+	"github.com/kubegames/kubegames-games/pkg/hundreds/960302/config"
+	longhu "github.com/kubegames/kubegames-games/pkg/hundreds/960302/msg"
 	"github.com/kubegames/kubegames-sdk/pkg/log"
-
 	"github.com/kubegames/kubegames-sdk/pkg/player"
 	"github.com/kubegames/kubegames-sdk/pkg/table"
 )
@@ -56,7 +56,7 @@ func (user *User) SendBetSuccessMessage(bet *longhu.Bet) {
 	SendSuccessMessage.BetIndex = bet.BetIndex
 	SendSuccessMessage.BetType = bet.BetType
 	SendSuccessMessage.SeatId = int32(user.SceneChairId)
-	SendSuccessMessage.UserID = int64(user.User.GetId())
+	SendSuccessMessage.UserID = int64(user.User.GetID())
 
 	user.Table.Broadcast(int32(longhu.SendToClientMessageType_BetSuccessMessageID), SendSuccessMessage)
 

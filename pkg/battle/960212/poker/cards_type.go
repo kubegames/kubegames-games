@@ -1,6 +1,6 @@
 package poker
 
-import "game_poker/doudizhu/msg"
+import "github.com/kubegames/kubegames-games/pkg/battle/960212/msg"
 
 // GetCardsType 获取牌型
 func GetCardsType(cards []byte) (cardsType msg.CardsType) {

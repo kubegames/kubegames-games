@@ -1,16 +1,16 @@
 package game
 
 import (
-	"common/rand"
-	"common/score"
 	"fmt"
-	"game_poker/doudizhu/data"
-	"game_poker/doudizhu/msg"
-	"game_poker/doudizhu/poker"
 	"time"
 
+	"github.com/kubegames/kubegames-games/internal/pkg/rand"
+	"github.com/kubegames/kubegames-games/internal/pkg/score"
+	"github.com/kubegames/kubegames-games/pkg/battle/960212/data"
+	"github.com/kubegames/kubegames-games/pkg/battle/960212/msg"
+	"github.com/kubegames/kubegames-games/pkg/battle/960212/poker"
 	"github.com/kubegames/kubegames-sdk/pkg/log"
-
+	"github.com/kubegames/kubegames-sdk/pkg/platform"
 	"github.com/kubegames/kubegames-sdk/pkg/player"
 )
 
@@ -49,7 +49,7 @@ func (game *DouDizhu) GetEmptyChair() (chairID int) {
 
 	// 没有空座位
 	if len(emptySeats) == 0 {
-		log.Warnf("游戏 %d 申请空座位失败，已经满员, 游戏座位: %v", game.Table.GetId(), game.Chairs)
+		log.Warnf("游戏 %d 申请空座位失败，已经满员, 游戏座位: %v", game.Table.GetID(), game.Chairs)
 		return -1
 	}
 
@@ -117,7 +117,7 @@ func (game *DouDizhu) FindNextPlayer() {
 	game.SendCurrentPlayer()
 
 	// 定时检查
-	game.TimerJob, _ = game.Table.AddTimer(time.Duration(game.CurrentPlayer.ActionTime), game.CheckAction)
+	game.TimerJob, _ = game.Table.AddTimer(int64(game.CurrentPlayer.ActionTime), game.CheckAction)
 }
 
 // GetUserActionPermission 获取用户的权限
@@ -220,21 +220,21 @@ func (game *DouDizhu) RobotSitCheck() {
 
 	// 游戏状态检测
 	if game.Status != int32(msg.GameStatus_GameInitStatus) {
-		log.Errorf("游戏 %d 在状态为 %d 请求机器人", game.Table.GetId(), game.Status)
+		log.Errorf("游戏 %d 在状态为 %d 请求机器人", game.Table.GetID(), game.Status)
 		return
 	}
 
 	if 3-count > 0 {
-		err := game.Table.GetRobot(int32(3 - count))
+		err := game.Table.GetRobot(uint32(3-count), game.Table.GetConfig().RobotMinBalance, game.Table.GetConfig().RobotMaxBalance)
 		if err != nil {
-			log.Errorf("游戏 %d 请求机器人失败：%v", game.Table.GetId(), err)
+			log.Errorf("游戏 %d 请求机器人失败：%v", game.Table.GetID(), err)
 		}
 	}
 }
 
 // SetExitPermit 设置用户退出权限
 func (game *DouDizhu) SetExitPermit(permit bool) {
-	for id, _ := range game.UserList {
+	for id := range game.UserList {
 		game.UserList[id].ExitPermit = permit
 	}
 }
@@ -369,13 +369,10 @@ func (game *DouDizhu) SettleDetail() {
 
 // SettleDivision 结算上下分
 func (game *DouDizhu) SettleDivision() {
+	var records []*platform.PlayerRecord
 	for ID, user := range game.UserList {
 
-		profit, err := user.User.SetScore(game.Table.GetGameNum(), user.SettleResult, game.RoomCfg.TaxRate)
-		if err != nil {
-			log.Errorf("用户 %d 上下分失败：%v", user.ID, err.Error())
-			return
-		}
+		profit := user.User.SetScore(game.Table.GetGameNum(), user.SettleResult, game.RoomCfg.TaxRate)
 
 		user.SettleResult = profit
 
@@ -397,10 +394,18 @@ func (game *DouDizhu) SettleDivision() {
 		game.SetChip(ID, chip)
 
 		// 发送战绩，计算产出
-		game.TableSendRecord(ID, user.SettleResult, profit)
+		if !user.User.IsRobot() {
+			if record := game.TableSendRecord(ID, user.SettleResult, profit); record != nil {
+				records = append(records, record)
+			}
+		}
 
 		// 更新user数据
 		game.UserList[ID] = user
+	}
+
+	if len(records) > 0 {
+		game.Table.UploadPlayerRecord(records)
 	}
 }
 
@@ -413,18 +418,18 @@ func (game *DouDizhu) SetChip(userID int64, chip int64) {
 }
 
 // UserSendRecord 发送战绩，计算产出
-func (game *DouDizhu) TableSendRecord(userID int64, result int64, netProfit int64) {
+func (game *DouDizhu) TableSendRecord(userID int64, result int64, netProfit int64) *platform.PlayerRecord {
 	user, ok := game.UserList[userID]
 	if !ok {
 		log.Errorf("发送战绩查询用户 %d 失败", userID)
-		return
+		return nil
 	}
 	var (
-		profitAmount int64  // 盈利
-		betsAmount   int64  // 总下注
-		drawAmount   int64  // 总抽水
-		outputAmount int64  // 总产出
-		endCards     string // 结算牌
+		profitAmount int64 // 盈利
+		betsAmount   int64 // 总下注
+		drawAmount   int64 // 总抽水
+		outputAmount int64 // 总产出
+		//endCards     string // 结算牌
 	)
 
 	profitAmount = netProfit
@@ -437,7 +442,17 @@ func (game *DouDizhu) TableSendRecord(userID int64, result int64, netProfit int6
 		betsAmount = result
 	}
 
-	user.User.SendRecord(game.Table.GetGameNum(), profitAmount, betsAmount, drawAmount, outputAmount, endCards)
+	//user.User.SendRecord(game.Table.GetGameNum(), profitAmount, betsAmount, drawAmount, outputAmount, endCards)
+	return &platform.PlayerRecord{
+		PlayerID:     uint32(user.User.GetID()),
+		GameNum:      game.Table.GetGameNum(),
+		ProfitAmount: profitAmount,
+		BetsAmount:   betsAmount,
+		DrawAmount:   drawAmount,
+		OutputAmount: outputAmount,
+		UpdatedAt:    time.Now(),
+		CreatedAt:    time.Now(),
+	}
 }
 
 // RecordLogOne 记录第一部分日志
@@ -508,7 +523,7 @@ func (game *DouDizhu) RecordLogThree() {
 		// 生效作弊值
 		effectProb := user.User.GetProb()
 		if effectProb == 0 {
-			effectProb, _ = game.Table.GetRoomProb()
+			effectProb = game.Table.GetRoomProb()
 
 			probSource = ProbSourceRoom
 		}

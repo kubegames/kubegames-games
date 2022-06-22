@@ -1,7 +1,6 @@
 package model
 
 import (
-	"game_frame_v2/game/inter"
 	"math/rand"
 
 	"github.com/kubegames/kubegames-sdk/pkg/player"
@@ -34,7 +33,7 @@ func (si *SceneInfo) Init() {
 // 坐下或换座
 func (si *SceneInfo) SitScene(user *User, SeatNum int) bool {
 	_, ok1 := si.SenceSeat[SeatNum]
-	us, ok := si.UserSeat[user.User.GetId()]
+	us, ok := si.UserSeat[user.User.GetID()]
 	//原来位置上有人,换位置
 	if ok1 {
 		//发送坐下位置失败
@@ -64,7 +63,7 @@ func (si *SceneInfo) SitScene(user *User, SeatNum int) bool {
 		newuser.User = user
 		newuser.SeatNo = SeatNum
 		si.SenceSeat[SeatNum] = newuser
-		si.UserSeat[user.User.GetId()] = newuser
+		si.UserSeat[user.User.GetID()] = newuser
 		//广播
 	}
 
@@ -80,7 +79,7 @@ func (si *SceneInfo) GetBigWinner() int {
 			money = v.User.AllBet
 			id = v.User.SceneChairId
 			u = v
-		} else if money == v.User.AllBet && v.User.User.GetId() > u.User.User.GetId() {
+		} else if money == v.User.AllBet && v.User.User.GetID() > u.User.User.GetID() {
 			money = v.User.AllBet
 			id = v.User.SceneChairId
 			u = v
@@ -99,7 +98,7 @@ func (si *SceneInfo) GetMaster() int {
 			count = v.User.WinCount
 			id = v.User.SceneChairId
 			u = v
-		} else if count == v.User.WinCount && v.User.User.GetId() > u.User.User.GetId() {
+		} else if count == v.User.WinCount && v.User.User.GetID() > u.User.User.GetID() {
 			count = v.User.WinCount
 			id = v.User.SceneChairId
 			u = v
@@ -110,14 +109,14 @@ func (si *SceneInfo) GetMaster() int {
 }
 
 func (si *SceneInfo) UserStandUp(user player.PlayerInterface) {
-	v, ok := si.UserSeat[user.GetId()]
+	v, ok := si.UserSeat[user.GetID()]
 	if ok {
 		delete(si.SenceSeat, v.SeatNo)
-		delete(si.UserSeat, user.GetId())
+		delete(si.UserSeat, user.GetID())
 
 		betmaxgold := int64(0)
 		betmaxid := int64(0)
-		if user.GetId() == si.BetZhuangMaxID {
+		if user.GetID() == si.BetZhuangMaxID {
 			for id, u := range si.UserSeat {
 				if u.User.BetArea[0] > betmaxgold {
 					betmaxgold = u.User.BetArea[0]
@@ -129,7 +128,7 @@ func (si *SceneInfo) UserStandUp(user player.PlayerInterface) {
 		}
 
 		betmaxgold = 0
-		if user.GetId() == si.BetXianMaxID {
+		if user.GetID() == si.BetXianMaxID {
 			for id, u := range si.UserSeat {
 				if u.User.BetArea[1] > betmaxgold {
 					betmaxgold = u.User.BetArea[1]
@@ -182,13 +181,13 @@ func (si *SceneInfo) GetAiUser() player.PlayerInterface {
 	return nil
 }
 
-func (si *SceneInfo) IsSitDown(user inter.AIUserInter) bool {
-	_, ok := si.UserSeat[user.GetId()]
+func (si *SceneInfo) IsSitDown(user player.RobotInterface) bool {
+	_, ok := si.UserSeat[user.GetID()]
 	return ok
 }
 
 func (si *SceneInfo) UserBet(user *User) bool {
-	SceneUser, ok := si.UserSeat[user.User.GetId()]
+	SceneUser, ok := si.UserSeat[user.User.GetID()]
 
 	if !ok {
 		return false
@@ -203,7 +202,7 @@ func (si *SceneInfo) UserBet(user *User) bool {
 
 	if si.BetZhuangMaxID == 0 {
 		if SceneUser.BetMaxArea == 0 {
-			si.BetZhuangMaxID = user.User.GetId()
+			si.BetZhuangMaxID = user.User.GetID()
 			IsChange = true
 			return IsChange
 		}
@@ -211,7 +210,7 @@ func (si *SceneInfo) UserBet(user *User) bool {
 
 	if si.BetXianMaxID == 0 {
 		if SceneUser.BetMaxArea == 1 {
-			si.BetXianMaxID = user.User.GetId()
+			si.BetXianMaxID = user.User.GetID()
 			IsChange = true
 			return IsChange
 		}
@@ -221,7 +220,7 @@ func (si *SceneInfo) UserBet(user *User) bool {
 
 	if ok {
 		if zhuangbet.User.BetArea[0] < user.BetArea[0] {
-			si.BetZhuangMaxID = user.User.GetId()
+			si.BetZhuangMaxID = user.User.GetID()
 			IsChange = true
 		}
 	}
@@ -230,7 +229,7 @@ func (si *SceneInfo) UserBet(user *User) bool {
 
 	if ok1 {
 		if xianbet.User.BetArea[1] < user.BetArea[1] {
-			si.BetXianMaxID = user.User.GetId()
+			si.BetXianMaxID = user.User.GetID()
 			IsChange = true
 		}
 	}

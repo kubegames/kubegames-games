@@ -178,9 +178,6 @@ func (game *Game) Start() {
 	//通知框架游戏开始
 	game.Table.StartGame()
 
-	//检测下注情况
-	game.checkUserBet()
-
 	//选择列表中前6个用户上座
 	game.SelectUserListInfoBefore6SitDownChair()
 
@@ -223,6 +220,17 @@ func (game *Game) Settle() {
 	game.SendStatusMsg(config.RBWarConfig.Taketimes.Endpay)
 	//结束游戏
 	game.Table.EndGame()
+
+	//踢出离线用户
+	for _, u := range game.AllUserList {
+		if u.User.IsOnline() == false {
+			game.Table.KickOut(u.User)
+		}
+	}
+
+	//检测下注情况
+	game.checkUserBet()
+
 	//桌子是否需要关闭
 	if game.Table.IsClose() {
 		//踢人
@@ -508,8 +516,8 @@ func (game *Game) sendSettleMsg() {
 				SceneUserInfo.RedWin = msg.UserWinRed
 				SceneUserInfo.BlackWin = -u.BetBlack
 				msg.UserWinBlack = -u.BetBlack
-				_, Gold := u.User.SetScore(game.Table.GetGameNum(), u.BetRed, u.Table.GetRoomRate())
-				_, capital := u.User.SetScore(game.Table.GetGameNum(), u.BetRed, 0)
+				Gold := u.User.SetScore(game.Table.GetGameNum(), u.BetRed, u.Table.GetRoomRate())
+				capital := u.User.SetScore(game.Table.GetGameNum(), u.BetRed, 0)
 				Gold += capital
 				totalTax += win - Gold
 				msg.UserTotalWin += Gold
@@ -520,8 +528,8 @@ func (game *Game) sendSettleMsg() {
 				SceneUserInfo.RedWin -= u.BetRed
 				SceneUserInfo.BlackWin = msg.UserWinBlack
 				msg.UserWinRed = -u.BetRed
-				_, Gold := u.User.SetScore(game.Table.GetGameNum(), u.BetBlack, u.Table.GetRoomRate())
-				_, capital := u.User.SetScore(game.Table.GetGameNum(), u.BetBlack, 0)
+				Gold := u.User.SetScore(game.Table.GetGameNum(), u.BetBlack, u.Table.GetRoomRate())
+				capital := u.User.SetScore(game.Table.GetGameNum(), u.BetBlack, 0)
 				Gold += capital
 				totalTax += win - Gold
 				msg.UserTotalWin += Gold
@@ -531,8 +539,8 @@ func (game *Game) sendSettleMsg() {
 			msg.LuckWin = u.BetLuck * int64(odds)
 			if odds > 0 {
 				win += u.BetLuck * int64(odds+1)
-				_, Gold := u.User.SetScore(game.Table.GetGameNum(), u.BetLuck*int64(odds), u.Table.GetRoomRate())
-				_, capital := u.User.SetScore(game.Table.GetGameNum(), u.BetLuck, 0)
+				Gold := u.User.SetScore(game.Table.GetGameNum(), u.BetLuck*int64(odds), u.Table.GetRoomRate())
+				capital := u.User.SetScore(game.Table.GetGameNum(), u.BetLuck, 0)
 				Gold += capital
 				totalTax += u.BetLuck*int64(odds+1) - Gold
 				msg.UserTotalWin += Gold

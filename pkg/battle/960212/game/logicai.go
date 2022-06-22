@@ -2,9 +2,10 @@ package game
 
 import (
 	"fmt"
-	"game_poker/doudizhu/msg"
-	"game_poker/doudizhu/poker"
 	"sort"
+
+	"github.com/kubegames/kubegames-games/pkg/battle/960212/msg"
+	"github.com/kubegames/kubegames-games/pkg/battle/960212/poker"
 
 	"github.com/kubegames/kubegames-sdk/pkg/log"
 )

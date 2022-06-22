@@ -1,11 +1,12 @@
 package game
 
 import (
-	"game_poker/doudizhu/msg"
-	"game_poker/doudizhu/poker"
 	"math/rand"
 	"strings"
 	"time"
+
+	"github.com/kubegames/kubegames-games/pkg/battle/960212/msg"
+	"github.com/kubegames/kubegames-games/pkg/battle/960212/poker"
 
 	"github.com/kubegames/kubegames-sdk/pkg/log"
 )

@@ -1,14 +1,15 @@
 package gamelogic
 
 import (
-	"go-game-sdk/example/game_LaBa/990601/config"
-	bridanimal "go-game-sdk/example/game_LaBa/990601/msg"
-	"go-game-sdk/inter"
 	"go-game-sdk/lib/clock"
 	"math/rand"
 	"sort"
 
+	"github.com/kubegames/kubegames-games/pkg/slots/990601/config"
+	bridanimal "github.com/kubegames/kubegames-games/pkg/slots/990601/msg"
+
 	"github.com/golang/protobuf/proto"
+	"github.com/kubegames/kubegames-sdk/pkg/player"
 	"github.com/kubegames/kubegames-sdk/pkg/table"
 	"github.com/mohae/deepcopy"
 )
@@ -16,7 +17,7 @@ import (
 type Robot struct {
 	game           *Game
 	Table          table.TableInterface //桌子
-	User           inter.AIUserInter
+	User           player.RobotInterface
 	BetGoldThisSet int64 // 本局下注金额
 
 	BetArrNum  int                    // 下注区域数目 (1-12之间随机)
@@ -39,7 +40,7 @@ func NewRobot(game *Game) *Robot {
 	}
 }
 
-func (r *Robot) BindUser(user inter.AIUserInter) {
+func (r *Robot) BindUser(user player.RobotInterface) {
 	r.User = user
 }
 

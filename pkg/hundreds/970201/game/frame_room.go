@@ -26,7 +26,7 @@ func (game *Game) Init(table table.TableInterface) {
 
 //初始化桌子
 func (redRoom *RedRoom) InitTable(table table.TableInterface) {
-	g := NewGame(int64(table.GetId()), redRoom)
+	g := NewGame(int64(table.GetID()), redRoom)
 	g.Init(table)
 	table.BindGame(g)
 }

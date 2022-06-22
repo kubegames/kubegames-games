@@ -3,10 +3,11 @@ package main
 
 import (
 	game_frame "go-game-sdk"
-	"go-game-sdk/example/game_LaBa/970501/config"
-	"go-game-sdk/example/game_LaBa/970501/gamelogic"
 	"math/rand"
 	"time"
+
+	"github.com/kubegames/kubegames-games/pkg/slots/970501/config"
+	"github.com/kubegames/kubegames-games/pkg/slots/970501/gamelogic"
 )
 
 func main() {

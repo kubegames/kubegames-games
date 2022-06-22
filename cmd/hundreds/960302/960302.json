@@ -1,0 +1,496 @@
+[
+  {
+    "gameID": 960302,
+    "name": "龙虎斗",
+    "config": {
+      "platform": "platform.kubegames.svc:8433",
+      "maxPeople": 1000,
+      "runmode": "dev"
+    }
+  },
+  {
+    "gameID": 960302,
+    "image": "kubegames/960302:latest",
+    "replicas": 1,
+    "port": 8433,
+    "commonds": [],
+    "cpu": 0,
+    "memory": 0
+  },
+  {
+    "platformID": 1,
+    "roomID": 96030211,
+    "gameID": 960302,
+    "level": 1,
+    "name": "龙虎斗-初级场",
+    "rate": 500,
+    "entranceRestrictions": 0,
+    "bottomNote": 100,
+    "adviceConfig": "{\"Bottom_Pouring\":100}",
+    "pointStatus": 0,
+    "maxPeople": 100,
+    "minPeople": 0,
+    "isAllowClose": false,
+    "isOpenAiRobot": true,
+    "isOpenCrossPlatformMatch": false,
+    "allowPlatformID": [],
+    "isAllowAutoCreateTable": false,
+    "robot": [
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      }
+    ],
+    "robotMaxBalance": 200000,
+    "robotMinBalance": 2000
+  },
+  {
+    "platformID": 1,
+    "roomID": 96030212,
+    "gameID": 960302,
+    "level": 2,
+    "name": "龙虎斗-中级场",
+    "rate": 500,
+    "entranceRestrictions": 0,
+    "bottomNote": 1000,
+    "adviceConfig": "{\"Bottom_Pouring\":1000}",
+    "pointStatus": 0,
+    "maxPeople": 100,
+    "minPeople": 0,
+    "isAllowClose": false,
+    "isOpenAiRobot": true,
+    "isOpenCrossPlatformMatch": false,
+    "allowPlatformID": [],
+    "isAllowAutoCreateTable": false,
+    "robot": [
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      }
+    ],
+    "robotMaxBalance": 500000,
+    "robotMinBalance": 5000
+  },
+  {
+    "platformID": 1,
+    "roomID": 96030213,
+    "gameID": 960302,
+    "level": 3,
+    "name": "龙虎斗-高级场",
+    "rate": 500,
+    "entranceRestrictions": 0,
+    "bottomNote": 10000,
+    "adviceConfig": "{\"Bottom_Pouring\":10000}",
+    "pointStatus": 0,
+    "maxPeople": 100,
+    "minPeople": 0,
+    "isAllowClose": false,
+    "isOpenAiRobot": true,
+    "isOpenCrossPlatformMatch": false,
+    "allowPlatformID": [],
+    "isAllowAutoCreateTable": false,
+    "robot": [
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      }
+    ],
+    "robotMaxBalance": 1000000,
+    "robotMinBalance": 20000
+  },
+  {
+    "platformID": 1,
+    "roomID": 96030214,
+    "gameID": 960302,
+    "level": 4,
+    "name": "龙虎斗-大师场",
+    "rate": 500,
+    "entranceRestrictions": 0,
+    "bottomNote": 50000,
+    "adviceConfig": "{\"Bottom_Pouring\":50000}",
+    "pointStatus": 0,
+    "maxPeople": 100,
+    "minPeople": 0,
+    "isAllowClose": false,
+    "isOpenAiRobot": true,
+    "isOpenCrossPlatformMatch": false,
+    "allowPlatformID": [],
+    "isAllowAutoCreateTable": false,
+    "robot": [
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      },
+      {
+        "Min": 10,
+        "Max": 20
+      }
+    ],
+    "robotMaxBalance": 2000000,
+    "robotMinBalance": 50000
+  }
+]

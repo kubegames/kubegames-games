@@ -1,15 +1,14 @@
 package game
 
 import (
-	"game_poker/ddzall/msg"
-	"game_poker/ddzall/poker"
 	"strconv"
 	"strings"
 	"testing"
 
-	"github.com/kubegames/kubegames-sdk/pkg/log"
-
 	"github.com/golang/protobuf/proto"
+	"github.com/kubegames/kubegames-games/pkg/battle/960213/msg"
+	"github.com/kubegames/kubegames-games/pkg/battle/960213/poker"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 )
 
 func TestDouDizhu_GameStart(t *testing.T) {

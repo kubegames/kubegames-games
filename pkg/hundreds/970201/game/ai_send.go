@@ -1,11 +1,12 @@
 package game
 
 import (
-	"common/rand"
 	"game_buyu/rob_red/config"
 	"game_buyu/rob_red/data"
 	"game_buyu/rob_red/msg"
 	"time"
+
+	"github.com/kubegames/kubegames-games/internal/pkg/rand"
 
 	"github.com/golang/protobuf/proto"
 	"github.com/kubegames/kubegames-sdk/pkg/log"

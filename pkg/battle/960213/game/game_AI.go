@@ -8,19 +8,16 @@ package game
 import "C"
 
 import (
-	"common/rand"
-	"game_frame_v2/game/clock"
-	"game_poker/ddzall/config"
-	"game_poker/ddzall/data"
-	"game_poker/ddzall/msg"
-	"game_poker/ddzall/poker"
 	"strconv"
 	"strings"
-	"time"
-
-	"github.com/kubegames/kubegames-sdk/pkg/log"
 
 	"github.com/golang/protobuf/proto"
+	"github.com/kubegames/kubegames-games/internal/pkg/rand"
+	"github.com/kubegames/kubegames-games/pkg/battle/960213/config"
+	"github.com/kubegames/kubegames-games/pkg/battle/960213/data"
+	"github.com/kubegames/kubegames-games/pkg/battle/960213/msg"
+	"github.com/kubegames/kubegames-games/pkg/battle/960213/poker"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 	"github.com/kubegames/kubegames-sdk/pkg/player"
 	"github.com/kubegames/kubegames-sdk/pkg/table"
 )
@@ -28,7 +25,7 @@ import (
 // Robot 机器人结构体
 type Robot struct {
 	UserInter    player.RobotInterface
-	TimerJob     *clock.Job
+	TimerJob     *player.Job
 	User         *data.User            // 用户
 	cards        []byte                // 手牌
 	Cfg          config.RobotConfig    // 机器人配置
@@ -42,7 +39,7 @@ type Robot struct {
 func (robot *Robot) Init(userInter player.RobotInterface, game table.TableHandler, robotCfg config.RobotConfig) {
 	robot.UserInter = userInter
 	robot.GameLogic = game.(*DouDizhu)
-	robot.User = game.(*DouDizhu).UserList[userInter.GetId()]
+	robot.User = game.(*DouDizhu).UserList[userInter.GetID()]
 	robot.Cfg = robotCfg
 	robot.playNum = 5000
 }
@@ -129,7 +126,7 @@ func (robot *Robot) DealGameStatus(buffer []byte) {
 		delayTime := rand.RandInt(1000, 5001)
 
 		// 延迟发送消息
-		robot.TimerJob, _ = robot.UserInter.AddTimer(time.Duration(delayTime), func() {
+		robot.TimerJob, _ = robot.UserInter.AddTimer(int64(delayTime), func() {
 			// 请求server加倍
 			err := robot.UserInter.SendMsgToServer(int32(msg.ReceiveMessageType_C2SRedouble), &req)
 			if err != nil {
@@ -216,7 +213,7 @@ func (robot *Robot) DealCurrentRobber(buffer []byte) {
 	delayTime := rand.RandInt(1000, 5001)
 
 	// 延迟发送消息
-	robot.TimerJob, _ = robot.UserInter.AddTimer(time.Duration(delayTime), func() {
+	robot.TimerJob, _ = robot.UserInter.AddTimer(int64(delayTime), func() {
 		// 请求server抢分
 		err := robot.UserInter.SendMsgToServer(int32(msg.ReceiveMessageType_C2SRob), &req)
 		if err != nil {

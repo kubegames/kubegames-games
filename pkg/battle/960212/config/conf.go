@@ -5,7 +5,6 @@ import (
 	"io/ioutil"
 
 	"github.com/kubegames/kubegames-sdk/pkg/log"
-
 	"github.com/sipt/GoJsoner"
 )
 
@@ -102,7 +101,7 @@ var PutScoreConf PutScoreConfig
 
 // LoadBlackjackCfg 读取配置文件
 func (conf *DoudizhuConfig) LoadDoudizhuCfg() {
-	data, err := ioutil.ReadFile("config/doudizhu.json")
+	data, err := ioutil.ReadFile("./conf/doudizhu.json")
 	if err != nil {
 		log.Errorf("File reading error : %v", err)
 		return
@@ -118,7 +117,7 @@ func (conf *DoudizhuConfig) LoadDoudizhuCfg() {
 
 // LoadRobotCfg 读取机器人配置文件
 func (robotCfg *RobotConfig) LoadRobotCfg() {
-	data, err := ioutil.ReadFile("config/robot.json")
+	data, err := ioutil.ReadFile("./conf/robot.json")
 	if err != nil {
 		log.Traceln("File reading error", err)
 		return
@@ -134,7 +133,7 @@ func (robotCfg *RobotConfig) LoadRobotCfg() {
 
 // CardsPutScoreCfg 读取出牌权值配置
 func (PutScoreCfg *PutScoreConfig) LoadPutScoreCfg() {
-	data, err := ioutil.ReadFile("config/cardsPutScore.json")
+	data, err := ioutil.ReadFile("./conf/cardsPutScore.json")
 	if err != nil {
 		log.Traceln("File reading error", err)
 		return

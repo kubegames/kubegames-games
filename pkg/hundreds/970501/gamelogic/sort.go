@@ -1,10 +1,11 @@
 package gamelogic
 
 import (
-	"go-game-sdk/example/game_LaBa/970501/model"
-	proto "go-game-sdk/example/game_LaBa/970501/msg"
 	"math/rand"
 	"sort"
+
+	"github.com/kubegames/kubegames-games/pkg/slots/970501/model"
+	proto "github.com/kubegames/kubegames-games/pkg/slots/970501/msg"
 )
 
 type UserSettleInfos []*proto.UserSettleInfo

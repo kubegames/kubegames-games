@@ -2,10 +2,10 @@ package poker
 
 import (
 	"fmt"
-	"game_poker/doudizhu/config"
-	"game_poker/doudizhu/data"
-	"game_poker/doudizhu/msg"
 
+	"github.com/kubegames/kubegames-games/pkg/battle/960212/config"
+	"github.com/kubegames/kubegames-games/pkg/battle/960212/data"
+	"github.com/kubegames/kubegames-games/pkg/battle/960212/msg"
 	"github.com/kubegames/kubegames-sdk/pkg/log"
 )
 

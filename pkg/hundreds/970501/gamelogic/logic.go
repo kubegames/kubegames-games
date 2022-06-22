@@ -2,15 +2,15 @@ package gamelogic
 
 import (
 	"fmt"
-	"go-game-sdk/example/game_LaBa/970501/config"
-	"go-game-sdk/example/game_LaBa/970501/model"
-	proto "go-game-sdk/example/game_LaBa/970501/msg"
-	"go-game-sdk/inter"
 	"go-game-sdk/lib/clock"
 	"math/rand"
 	"sort"
 	"sync"
 	"time"
+
+	"github.com/kubegames/kubegames-games/pkg/slots/970501/config"
+	"github.com/kubegames/kubegames-games/pkg/slots/970501/model"
+	proto "github.com/kubegames/kubegames-games/pkg/slots/970501/msg"
 
 	"github.com/kubegames/kubegames-games/internal/pkg/score"
 
@@ -67,7 +67,7 @@ func NewGame(table table.TableInterface) *Game {
 	}
 }
 
-func (game *Game) BindRobot(ai inter.AIUserInter) player.RobotHandler {
+func (game *Game) BindRobot(ai player.RobotInterface) player.RobotHandler {
 	rb := NewRobot(game)
 	rb.BindUser(ai)
 	return rb

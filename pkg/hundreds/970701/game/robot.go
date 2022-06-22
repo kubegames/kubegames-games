@@ -3,20 +3,20 @@ package game
 import (
 	"go-game-sdk/example/game_poker/saima/config"
 	"go-game-sdk/example/game_poker/saima/msg"
-	"go-game-sdk/inter"
 	"math/rand"
 
 	"github.com/golang/protobuf/proto"
+	"github.com/kubegames/kubegames-sdk/pkg/player"
 	"github.com/kubegames/kubegames-sdk/pkg/table"
 )
 
 type Robot struct {
-	User    inter.AIUserInter
+	User    player.RobotInterface
 	Table   table.TableInterface
 	Isleave bool
 }
 
-func (robot *Robot) Init(user inter.AIUserInter, table table.TableInterface) {
+func (robot *Robot) Init(user player.RobotInterface, table table.TableInterface) {
 	robot.User = user
 	robot.Table = table
 }

@@ -2,20 +2,18 @@ package game
 
 import (
 	"fmt"
-	"game_poker/doudizhu/msg"
-	"game_poker/doudizhu/poker"
-	"time"
-
-	"github.com/kubegames/kubegames-sdk/pkg/log"
 
 	"github.com/golang/protobuf/proto"
+	"github.com/kubegames/kubegames-games/pkg/battle/960212/msg"
+	"github.com/kubegames/kubegames-games/pkg/battle/960212/poker"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 )
 
 // Start 开始游戏逻辑
 func (game *DouDizhu) Start() {
 
 	game.Status = int32(msg.GameStatus_ReadyStatus)
-	log.Tracef("游戏 %d 开始", game.Table.GetId())
+	log.Tracef("游戏 %d 开始", game.Table.GetID())
 
 	// 更改用户退出权限
 	game.SetExitPermit(false)
@@ -36,7 +34,7 @@ func (game *DouDizhu) Start() {
 func (game *DouDizhu) DealCards() {
 
 	game.Status = int32(msg.GameStatus_DealStatus)
-	log.Tracef("游戏 %d 开始发牌", game.Table.GetId())
+	log.Tracef("游戏 %d 开始发牌", game.Table.GetID())
 
 	// 初始化牌组
 	game.Poker = new(poker.GamePoker)
@@ -107,9 +105,9 @@ func (game *DouDizhu) DealCards() {
 	if game.RobCount >= 2 {
 		game.Dizhu = game.Chairs[game.RobChairList[0]]
 		game.CurRobNum = 1
-		game.TimerJob, _ = game.Table.AddTimer(time.Duration(game.TimeCfg.DealAnimation), game.confirmDizhu)
+		game.TimerJob, _ = game.Table.AddTimer(int64(game.TimeCfg.DealAnimation), game.confirmDizhu)
 	} else {
-		game.TimerJob, _ = game.Table.AddTimer(time.Duration(game.TimeCfg.DealAnimation), game.RobDizhu)
+		game.TimerJob, _ = game.Table.AddTimer(int64(game.TimeCfg.DealAnimation), game.RobDizhu)
 	}
 
 }
@@ -118,13 +116,13 @@ func (game *DouDizhu) DealCards() {
 func (game *DouDizhu) RobDizhu() {
 
 	game.Status = int32(msg.GameStatus_RobStatus)
-	log.Tracef("游戏 %d 开始抢地主", game.Table.GetId())
+	log.Tracef("游戏 %d 开始抢地主", game.Table.GetID())
 
 	// 广播抢地主状态
 	game.SendGameStatus(game.Status, 0, nil)
 
 	// 重置玩家抢地主数值
-	for ID, _ := range game.UserList {
+	for ID := range game.UserList {
 		game.UserList[ID].RobNum = -1
 	}
 
@@ -139,7 +137,7 @@ func (game *DouDizhu) RobDizhu() {
 	game.SendCurrentRobber(int32(game.RobChairList[0]))
 
 	// 定时进入抢庄检查
-	game.TimerJob, _ = game.Table.AddTimer(time.Duration(game.TimeCfg.RobTime), game.CheckRob)
+	game.TimerJob, _ = game.Table.AddTimer(int64(game.TimeCfg.RobTime), game.CheckRob)
 }
 
 // turnRob 抢庄检查
@@ -169,7 +167,7 @@ func (game *DouDizhu) CheckRob() {
 func (game *DouDizhu) confirmDizhu() {
 
 	game.Status = int32(msg.GameStatus_confirmDizhuStatus)
-	log.Tracef("游戏 %d 确认地主", game.Table.GetId())
+	log.Tracef("游戏 %d 确认地主", game.Table.GetID())
 
 	// 底牌加入地主手牌
 	game.Dizhu.Cards = append(game.Dizhu.Cards, game.bottomCards...)
@@ -199,7 +197,7 @@ func (game *DouDizhu) confirmDizhu() {
 	game.RecordLogOne()
 
 	// 确认地主动画后进入加倍阶段
-	game.TimerJob, _ = game.Table.AddTimer(time.Duration(game.TimeCfg.ConfirmDizhuTime), game.Redouble)
+	game.TimerJob, _ = game.Table.AddTimer(int64(game.TimeCfg.ConfirmDizhuTime), game.Redouble)
 
 }
 
@@ -207,13 +205,13 @@ func (game *DouDizhu) confirmDizhu() {
 func (game *DouDizhu) Redouble() {
 
 	game.Status = int32(msg.GameStatus_RedoubleStatus)
-	log.Tracef("游戏 %d 进入加倍阶段", game.Table.GetId())
+	log.Tracef("游戏 %d 进入加倍阶段", game.Table.GetID())
 
 	// 广播加倍状态
 	game.SendGameStatus(game.Status, int32(game.TimeCfg.RedoubleTime)/1000, nil)
 
 	// 加倍时间后进入加倍结束
-	game.TimerJob, _ = game.Table.AddTimer(time.Duration(game.TimeCfg.RedoubleTime), game.EndRedouble)
+	game.TimerJob, _ = game.Table.AddTimer(int64(game.TimeCfg.RedoubleTime), game.EndRedouble)
 }
 
 // EndRedouble 结束加倍阶段
@@ -242,7 +240,7 @@ func (game *DouDizhu) EndRedouble() {
 func (game *DouDizhu) PutCards() {
 
 	game.Status = int32(msg.GameStatus_PutCardStatus)
-	log.Tracef("游戏 %d 进入出牌阶段", game.Table.GetId())
+	log.Tracef("游戏 %d 进入出牌阶段", game.Table.GetID())
 
 	game.SendGameStatus(game.Status, 0, nil)
 
@@ -263,7 +261,7 @@ func (game *DouDizhu) PutCards() {
 	game.SendCurrentPlayer()
 
 	// 定时检查
-	game.TimerJob, _ = game.Table.AddTimer(time.Duration(game.TimeCfg.OperationTime), game.CheckAction)
+	game.TimerJob, _ = game.Table.AddTimer(int64(game.TimeCfg.OperationTime), game.CheckAction)
 }
 
 // CheckAction 检查操作
@@ -320,7 +318,7 @@ func (game *DouDizhu) CheckAction() {
 // Settle 结算阶段
 func (game *DouDizhu) Settle() {
 	game.Status = int32(msg.GameStatus_SettleStatus)
-	log.Tracef("游戏 %d 进入结算阶段", game.Table.GetId())
+	log.Tracef("游戏 %d 进入结算阶段", game.Table.GetID())
 
 	// 记录第二部分游戏日志
 	game.RecordLogTwo()
@@ -403,7 +401,7 @@ func (game *DouDizhu) Settle() {
 	game.SendSettleInfo()
 
 	// 结算时间后游戏结束
-	game.TimerJob, _ = game.Table.AddTimer(time.Duration(game.TimeCfg.SettleTime), game.GameOver)
+	game.TimerJob, _ = game.Table.AddTimer(int64(game.TimeCfg.SettleTime), game.GameOver)
 }
 
 // GameOver 游戏结束
@@ -411,7 +409,7 @@ func (game *DouDizhu) GameOver() {
 
 	// 重置桌面属性
 	game.Status = int32(msg.GameStatus_GameOver)
-	log.Tracef("游戏 %d 结束", game.Table.GetId())
+	log.Tracef("游戏 %d 结束", game.Table.GetID())
 
 	// 更改用户退出权限
 	game.SetExitPermit(true)
@@ -434,8 +432,9 @@ func (game *DouDizhu) GameOver() {
 
 	// 所有人退出去
 	for _, user := range game.UserList {
-
-		game.UserExit(user.User)
+		game.UserOffline(user.User)
 		game.Table.KickOut(user.User)
 	}
+
+	game.Table.Close()
 }

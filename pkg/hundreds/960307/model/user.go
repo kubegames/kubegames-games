@@ -54,7 +54,7 @@ func (user *User) SendBetSuccessMessage(bet *BRZJH.Bet) {
 	SendSuccessMessage.BetIndex = bet.BetIndex
 	SendSuccessMessage.BetType = bet.BetType
 	SendSuccessMessage.SeatId = int32(user.SceneChairId)
-	SendSuccessMessage.UserID = int64(user.User.GetId())
+	SendSuccessMessage.UserID = int64(user.User.GetID())
 	//user.User.SendMsg(int32(BRZJH.SendToClientMessageType_BetSuccessMessageID), SendSuccessMessage)
 	user.Table.Broadcast(int32(BRZJH.SendToClientMessageType_BetSuccessMessageID), SendSuccessMessage)
 

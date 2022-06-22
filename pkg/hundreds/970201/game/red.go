@@ -1,13 +1,14 @@
 package game
 
 import (
-	"common/rand"
 	"game_buyu/rob_red/config"
 	"game_buyu/rob_red/data"
 	"game_buyu/rob_red/global"
 	"game_buyu/rob_red/msg"
 	"sync"
 	"time"
+
+	"github.com/kubegames/kubegames-games/internal/pkg/rand"
 )
 
 type Red struct {
@@ -128,7 +129,7 @@ func (red *Red) GetRobAmount(robUser *data.User, isMine bool) int64 {
 	}
 	amount := rand.RandInt(1, int(max))
 	if !robUser.User.IsRobot() && !red.sender.User.IsRobot() {
-		//log.Traceln("抢包人和发包人都是真实玩家，不做控制",robUser.User.GetId(),red.sender.User.GetId())
+		//log.Traceln("抢包人和发包人都是真实玩家，不做控制",robUser.User.GetID(),red.sender.User.GetID())
 		return int64(amount)
 	}
 	if isMine {

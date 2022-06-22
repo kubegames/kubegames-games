@@ -1,8 +1,9 @@
 package game
 
 import (
-	"common/rand"
 	"game_buyu/crazy_red/config"
+
+	"github.com/kubegames/kubegames-games/internal/pkg/rand"
 
 	"github.com/kubegames/kubegames-sdk/pkg/log"
 )

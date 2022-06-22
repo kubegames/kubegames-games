@@ -3,8 +3,8 @@ package config
 import (
 	"fmt"
 	"io/ioutil"
-	"log"
 
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 	"github.com/tidwall/gjson"
 )
 
@@ -59,7 +59,7 @@ var RBWarConfig InitRBConfig
 func LoadRBWarConfig() {
 	data, err := ioutil.ReadFile("./conf/rbwarconfig.json")
 	if err != nil {
-		log.Println("LoadWBWarConfig Error ", err.Error())
+		log.Errorf("LoadWBWarConfig Error %s", err.Error())
 		return
 	}
 	result := gjson.Parse(string(data))

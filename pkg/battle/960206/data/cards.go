@@ -37,14 +37,14 @@ func (user *User) SplitCards() {
 	}
 
 	if hasFour, resCards, cardType := user.cardsHasOverFour(cardsArr); hasFour {
-		//log.Traceln("走手牌中有四条同花顺逻辑线···,用户id：",user.User.GetId())
+		//log.Traceln("走手牌中有四条同花顺逻辑线···,用户id：",user.User.GetID())
 		user.splitFourOrThs(cards, resCards, cardType)
 	} else {
 		//log.Traceln("按照普通的牌型来处理")
 		user.splitNormalCards(cards)
 	}
 
-	//log.Traceln("作弊前玩家的牌 ： ", user.User.GetId(), fmt.Sprintf(`%x,%x,%x`, user.HeadCards, user.MiddleCards, user.TailCards))
+	//log.Traceln("作弊前玩家的牌 ： ", user.User.GetID(), fmt.Sprintf(`%x,%x,%x`, user.HeadCards, user.MiddleCards, user.TailCards))
 	//log.Traceln("玩家的牌型：", "  ", user.HeadCardType, user.MidCardType, user.TailCardType)
 
 }

@@ -1,10 +1,8 @@
 package poker
 
 import (
-	"game_poker/ddzall/msg"
-	"math/rand"
-	"time"
-
+	"github.com/kubegames/kubegames-games/internal/pkg/rand"
+	"github.com/kubegames/kubegames-games/pkg/battle/960213/msg"
 	"github.com/kubegames/kubegames-sdk/pkg/log"
 )
 
@@ -51,7 +49,6 @@ func (gamePoker *GamePoker) InitPoker() {
 
 // ShuffleCards 洗牌
 func (gamePoker *GamePoker) ShuffleCards() {
-	rand.Seed(time.Now().UnixNano())
 	rand.Shuffle(len(gamePoker.Cards), func(i, j int) {
 		gamePoker.Cards[i], gamePoker.Cards[j] = gamePoker.Cards[j], gamePoker.Cards[i]
 	})

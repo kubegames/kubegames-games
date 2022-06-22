@@ -1,15 +1,14 @@
 package game
 
 import (
-	"common/rand"
 	"fmt"
 	"reflect"
 	"strings"
 	"time"
 
-	"github.com/kubegames/kubegames-sdk/pkg/log"
-
 	"github.com/antonmedv/expr"
+	"github.com/kubegames/kubegames-games/internal/pkg/rand"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 	b3 "github.com/magicsea/behavior3go"
 	b3cfg "github.com/magicsea/behavior3go/config"
 	b3core "github.com/magicsea/behavior3go/core"

@@ -2,7 +2,6 @@ package model
 
 import (
 	baijiale "go-game-sdk/example/game_poker/960304/msg"
-	"go-game-sdk/inter"
 	"math/rand"
 
 	"github.com/kubegames/kubegames-sdk/pkg/player"
@@ -183,7 +182,7 @@ func (si *SceneInfo) GetAiUser() player.PlayerInterface {
 	return nil
 }
 
-func (si *SceneInfo) IsSitDown(user inter.AIUserInter) bool {
+func (si *SceneInfo) IsSitDown(user player.RobotInterface) bool {
 	_, ok := si.UserSeat[user.GetID()]
 	return ok
 }

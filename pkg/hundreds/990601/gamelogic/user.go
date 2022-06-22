@@ -2,11 +2,12 @@ package gamelogic
 
 import (
 	"fmt"
-	"go-game-sdk/example/game_LaBa/990601/config"
-	bridanimal "go-game-sdk/example/game_LaBa/990601/msg"
 	"math"
 	"sort"
 	"sync"
+
+	"github.com/kubegames/kubegames-games/pkg/slots/990601/config"
+	bridanimal "github.com/kubegames/kubegames-games/pkg/slots/990601/msg"
 
 	"github.com/kubegames/kubegames-sdk/pkg/player"
 )

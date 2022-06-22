@@ -1,7 +1,7 @@
 package game
 
 import (
-	"game_poker/doudizhu/msg"
+	"github.com/kubegames/kubegames-games/pkg/battle/960212/msg"
 )
 
 type FlowerType int
@@ -56,7 +56,7 @@ func Sort111(c []byte, cardsType msg.CardsType) []byte {
 		fallthrough
 	case msg.CardsType_SerialTripletWithWing:
 		threeIdx := 0
-		for i, _ := range c {
+		for i := range c {
 			if c[i]>>4 == c[i+1]>>4 && c[i+1]>>4 == c[i+2]>>4 {
 				threeIdx = i
 				break
@@ -85,7 +85,7 @@ func Sort111(c []byte, cardsType msg.CardsType) []byte {
 		}
 	case msg.CardsType_QuartetWithTwo:
 		fourIdx := 0
-		for i, _ := range c {
+		for i := range c {
 			if c[i]>>4 == c[i+1]>>4 && c[i+1]>>4 == c[i+2]>>4 && c[i+2]>>4 == c[i+3]>>4 {
 				fourIdx = i
 				break

@@ -1,23 +1,15 @@
 package game
 
 import (
-	"common/rand"
-	"time"
-
-	"github.com/kubegames/kubegames-sdk/pkg/log"
-
-	//"github.com/kubegames/kubegames-sdk/pkg/log"
-	//"common/rand"
-
-	"game_frame_v2/game/clock"
-	"game_poker/doudizhu/config"
-	"game_poker/doudizhu/data"
-
-	"game_poker/doudizhu/msg"
-	"game_poker/doudizhu/poker"
 	"runtime"
 
 	"github.com/golang/protobuf/proto"
+	"github.com/kubegames/kubegames-games/internal/pkg/rand"
+	"github.com/kubegames/kubegames-games/pkg/battle/960212/config"
+	"github.com/kubegames/kubegames-games/pkg/battle/960212/data"
+	"github.com/kubegames/kubegames-games/pkg/battle/960212/msg"
+	"github.com/kubegames/kubegames-games/pkg/battle/960212/poker"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 	"github.com/kubegames/kubegames-sdk/pkg/player"
 	"github.com/kubegames/kubegames-sdk/pkg/table"
 	b3 "github.com/magicsea/behavior3go"
@@ -36,7 +28,7 @@ type outData struct {
 
 type robot struct {
 	UserInter    player.RobotInterface
-	TimerJob     *clock.Job
+	TimerJob     *player.Job
 	GameLogic    *DouDizhu             // 游戏逻辑，只能查看数据，不能修改数据
 	BestSolution []poker.SolutionCards // 最优牌解
 	RobScore     int                   // 抢庄分值
@@ -117,7 +109,7 @@ func (rb *robot) getCard(n byte) []byte {
 func (robot *robot) Init(userInter player.RobotInterface, game table.TableHandler, robotCfg config.RobotConfig, tree *b3core.BehaviorTree) {
 	robot.UserInter = userInter
 	robot.GameLogic = game.(*DouDizhu)
-	robot.User = game.(*DouDizhu).UserList[userInter.GetId()]
+	robot.User = game.(*DouDizhu).UserList[userInter.GetID()]
 	robot.robotCfg = robotCfg
 	robot.tree = tree
 	robot.mySeat = robot.User.ChairID
@@ -207,7 +199,7 @@ func (rb *robot) updateExportData() {
 		} else {
 			bankerprev := (rb.GameLogic.Dizhu.ChairID + 2) % 3
 			bankernext := (rb.GameLogic.Dizhu.ChairID + 1) % 3
-			rb.exportData.IsBankeOut = rb.GameLogic.Dizhu.User.GetId() == rb.GameLogic.CurrentCards.UserID
+			rb.exportData.IsBankeOut = rb.GameLogic.Dizhu.User.GetID() == rb.GameLogic.CurrentCards.UserID
 			maxOutSeat := rb.GameLogic.UserList[rb.GameLogic.CurrentCards.UserID]
 			rb.exportData.IsBankePrevOut = bankerprev == maxOutSeat.ChairID
 			rb.exportData.IsBankeNextOut = bankernext == maxOutSeat.ChairID
@@ -230,7 +222,7 @@ func (rb *robot) updateExportData() {
 
 		rb.exportData.IsOutNotSigleAndDouble = false
 		outType := GetCardsType(rb.GameLogic.CurrentCards.Cards)
-		if rb.GameLogic.CurrentCards.UserID == rb.UserInter.GetId() {
+		if rb.GameLogic.CurrentCards.UserID == rb.UserInter.GetID() {
 			outType = msg.CardsType_Normal
 			rb.exportData.IsFirstOut = true
 		} else {
@@ -584,7 +576,7 @@ func (rb *robot) killRobotTimer() {
 
 func (rb *robot) setRobotTimer(ms int, f func()) {
 	rb.killRobotTimer()
-	rb.TimerJob, _ = rb.UserInter.AddTimer(time.Duration(ms), f)
+	rb.TimerJob, _ = rb.UserInter.AddTimer(int64(ms), f)
 	//rb.timerID = rb.mgr.OnceTimer(gameframe.UserData{Obj: rb, UserData: f}, ms)
 }
 
@@ -605,7 +597,7 @@ func (rb *robot) checkRunTree() {
 			return
 		}
 
-		if rb.GameLogic.CurrentCards.UserID == rb.UserInter.GetId() {
+		if rb.GameLogic.CurrentCards.UserID == rb.UserInter.GetID() {
 			//主动出牌且手上只剩一张牌
 			if len(rb.User.Cards) == 1 {
 				rb.sendOutCardmsgEx(rand.RandInt(300, 600), 1, []byte{rb.User.Cards[0]})
@@ -854,7 +846,7 @@ func (rb *robot) DealGameStatus(buffer []byte) {
 		delayTime := rand.RandInt(1000, 5001)
 
 		// 延迟发送消息
-		rb.TimerJob, _ = rb.UserInter.AddTimer(time.Duration(delayTime), func() {
+		rb.TimerJob, _ = rb.UserInter.AddTimer(int64(delayTime), func() {
 			// 请求server加倍
 			err := rb.UserInter.SendMsgToServer(int32(msg.ReceiveMessageType_C2SRedouble), &req)
 			if err != nil {
@@ -941,7 +933,7 @@ func (robot *robot) DealCurrentRobber(buffer []byte) {
 	delayTime := rand.RandInt(1000, 5001)
 
 	// 延迟发送消息
-	robot.TimerJob, _ = robot.UserInter.AddTimer(time.Duration(delayTime), func() {
+	robot.TimerJob, _ = robot.UserInter.AddTimer(int64(delayTime), func() {
 		// 请求server抢分
 		err := robot.UserInter.SendMsgToServer(int32(msg.ReceiveMessageType_C2SRob), &req)
 		if err != nil {

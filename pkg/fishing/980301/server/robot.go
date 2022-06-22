@@ -1,23 +1,22 @@
 package server
 
 import (
-	"go-game-sdk/example/game_buyu/980301/config"
-	"go-game-sdk/example/game_buyu/980301/msg"
-	"go-game-sdk/example/game_buyu/980301/tools"
-	"go-game-sdk/inter"
 	"sync"
 	"time"
 
-	"github.com/kubegames/kubegames-games/internal/pkg/rand"
-
 	"github.com/golang/protobuf/proto"
+	"github.com/kubegames/kubegames-games/internal/pkg/rand"
+	"github.com/kubegames/kubegames-games/pkg/fishing/980301/config"
+	"github.com/kubegames/kubegames-games/pkg/fishing/980301/msg"
+	"github.com/kubegames/kubegames-games/pkg/fishing/980301/tools"
+	"github.com/kubegames/kubegames-sdk/pkg/player"
 	"github.com/kubegames/kubegames-sdk/pkg/table"
 )
 
 type Robot struct {
 	BulletNum    int32
 	Table        table.TableInterface
-	AI           inter.AIUserInter
+	AI           player.RobotInterface
 	TargetFishId int32
 	ShootTime    int32
 	FixBulletLv  bool
@@ -427,7 +426,7 @@ func (robot *Robot) checkSkillFrozen() {
 		req := &msg.SkillReq{}
 		fishes := make([]int32, 0)
 		//robot.Lock.Lock()
-		//for k, _ := range robot.Fishes {
+		//for k:= range robot.Fishes {
 		//	fishes = append(fishes, k)
 		//}
 		robot.Fishes.Range(func(key, value interface{}) bool {

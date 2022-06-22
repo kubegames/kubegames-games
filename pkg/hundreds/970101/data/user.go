@@ -177,7 +177,7 @@ func (user *User) GetRobRedRecord(pageIndex, pageSize int) *msg.S2CRobbedRedInfo
 
 func (user *User) NewCurRobUser(isMine bool, mineAmount, robbedAmount int64) *msg.S2CCurRobUser {
 	return &msg.S2CCurRobUser{
-		UserId: user.User.GetId(), UserName: user.User.GetNike(), Head: user.User.GetHead(), RobbedAmount: robbedAmount,
+		UserId: user.User.GetID(), UserName: user.User.GetNike(), Head: user.User.GetHead(), RobbedAmount: robbedAmount,
 		IsMine: isMine, Score: user.User.GetScore(), MineAmount: mineAmount,
 	}
 }

@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	BRNN "go-game-sdk/example/game_poker/960303/msg"
-	"go-game-sdk/inter"
 	"go-game-sdk/lib/clock"
 	"io/ioutil"
 	"math/rand"
@@ -13,6 +12,7 @@ import (
 	"github.com/bitly/go-simplejson"
 	"github.com/golang/protobuf/proto"
 	"github.com/kubegames/kubegames-sdk/pkg/log"
+	"github.com/kubegames/kubegames-sdk/pkg/player"
 	"github.com/kubegames/kubegames-sdk/pkg/table"
 	"github.com/sipt/GoJsoner"
 )
@@ -48,7 +48,7 @@ type RobotBetConfig struct {
 }
 
 type Robot struct {
-	User         inter.AIUserInter
+	User         player.RobotInterface
 	GameLogic    *Game
 	BetCount     int        //下注限制
 	TimerJob     *clock.Job //job
@@ -228,7 +228,7 @@ func (r *Robot) OnGameMessage(subCmd int32, buffer []byte) {
 	}
 }
 
-func (r *Robot) Init(User inter.AIUserInter, g table.TableHandler) {
+func (r *Robot) Init(User player.RobotInterface, g table.TableHandler) {
 	r.User = User
 	r.GameLogic = g.(*Game)
 }

@@ -1,8 +1,9 @@
 package model
 
 import (
-	proto "go-game-sdk/example/game_LaBa/970501/msg"
 	"math/rand"
+
+	proto "github.com/kubegames/kubegames-games/pkg/slots/970501/msg"
 )
 
 type GoodluckType int

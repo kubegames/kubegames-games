@@ -5,7 +5,6 @@ import (
 	"go-game-sdk/example/game_poker/960304/config"
 	"go-game-sdk/example/game_poker/960304/model"
 	baijiale "go-game-sdk/example/game_poker/960304/msg"
-	"go-game-sdk/inter"
 	"go-game-sdk/lib/clock"
 	"math/rand"
 	"sort"
@@ -138,7 +137,7 @@ func (game *Game) OnGameMessage(subCmd int32, buffer []byte, user player.PlayerI
 	}
 }
 
-func (game *Game) BindRobot(ai inter.AIUserInter) player.RobotHandler {
+func (game *Game) BindRobot(ai player.RobotInterface) player.RobotHandler {
 	robot := new(Robot)
 	robot.Init(ai, game)
 	return robot

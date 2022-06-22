@@ -2,29 +2,24 @@ package server
 
 import (
 	"encoding/json"
-	"go-game-sdk/define"
-	"go-game-sdk/example/game_buyu/980201/config"
-	"go-game-sdk/example/game_buyu/980201/data"
-	"go-game-sdk/example/game_buyu/980201/msg"
-	"go-game-sdk/example/game_buyu/980201/tools"
-	"go-game-sdk/inter"
-	"go-game-sdk/lib/clock"
-	"go-game-sdk/sdk/global"
+	"fmt"
 	"math"
 	"sort"
 	"strconv"
 	"sync"
 	"time"
 
-	frameMsg "github.com/kubegames/kubegames-sdk/app/message"
-
-	"github.com/kubegames/kubegames-games/internal/pkg/score"
-
-	"github.com/kubegames/kubegames-sdk/pkg/log"
-	"github.com/kubegames/kubegames-sdk/pkg/player"
-	"github.com/kubegames/kubegames-sdk/pkg/table"
-
 	"github.com/golang/protobuf/proto"
+	"github.com/kubegames/kubegames-games/internal/pkg/score"
+	"github.com/kubegames/kubegames-games/pkg/fishing/980201/config"
+	"github.com/kubegames/kubegames-games/pkg/fishing/980201/data"
+	"github.com/kubegames/kubegames-games/pkg/fishing/980201/msg"
+	"github.com/kubegames/kubegames-games/pkg/fishing/980201/tools"
+	frameMsg "github.com/kubegames/kubegames-sdk/app/message"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
+	"github.com/kubegames/kubegames-sdk/pkg/platform"
+	"github.com/kubegames/kubegames-sdk/pkg/player"
+	tableInterface "github.com/kubegames/kubegames-sdk/pkg/table"
 )
 
 var (
@@ -43,7 +38,7 @@ var (
 type TableLogic struct {
 	Users           map[int64]*data.User
 	Pool            int32 //资金池
-	Table           table.TableInterface
+	Table           tableInterface.TableInterface
 	Fishes          map[int32]*Fish
 	FishNum         map[msg.Type]int
 	FishCap         map[msg.Type]int
@@ -59,7 +54,7 @@ type TableLogic struct {
 	TimeFish        map[string]*TimeFish
 	M               sync.Mutex
 	LastDismissTime int64
-	timer           map[string]*clock.Job
+	timer           map[string]*tableInterface.Job
 	start           bool
 	//AddedChance  int32
 	uniqueId     int32
@@ -114,7 +109,7 @@ func (timeFish *TimeFish) startTimer(table *TableLogic) {
 	table.timer["timefish"+timeFish.id+strconv.Itoa(timeFish.timeSpace)] = job
 }
 
-func (table *TableLogic) init(table2 table.TableInterface) {
+func (table *TableLogic) init(table2 tableInterface.TableInterface) {
 	table.Table = table2
 	table.reset()
 }
@@ -122,7 +117,7 @@ func (table *TableLogic) init(table2 table.TableInterface) {
 func (table *TableLogic) reset() {
 	table.Users = make(map[int64]*data.User, 0)
 	table.Robots = make(map[int64]*Robot, 0)
-	table.timer = make(map[string]*clock.Job, 0)
+	table.timer = make(map[string]*tableInterface.Job, 0)
 	table.cap = make(map[msg.Type]int, 0)
 	table.userExist = make(map[int64]int64, 0)
 	table.Pool = 10000000
@@ -170,9 +165,9 @@ func (table *TableLogic) changeFishCapByDivide(divider int) {
 func (table *TableLogic) createTimeFish() map[string]*TimeFish {
 	timeFish := make(map[string]*TimeFish, 0)
 	seed := int64(0)
-	for k, _ := range config.GetTimeFish() {
+	for k := range config.GetTimeFish() {
 		fishId, start, space, num := config.GetTimeFishInfo(k)
-		timeFish[fishId+string(space)] = &TimeFish{
+		timeFish[fmt.Sprintf("%s%d", fishId, space)] = &TimeFish{
 			id:        fishId,
 			timeSpace: space,
 			startTime: start,
@@ -184,30 +179,30 @@ func (table *TableLogic) createTimeFish() map[string]*TimeFish {
 }
 
 //用户坐下
-func (table *TableLogic) OnActionUserSitDown(user player.PlayerInterface, chairId int, cfg string) int {
+func (table *TableLogic) OnActionUserSitDown(user player.PlayerInterface, chairId int, cfg string) tableInterface.MatchKind {
 	//if len(table.Users) > 0 {
 	//	return false
 	//}
 	if config.GetFishBet(cfg, 1) <= 0 {
-		return define.SIT_DOWN_ERROR_OVER
+		return tableInterface.SitDownErrorOver
 	}
 	if len(table.Users) == 0 && user.IsRobot() {
-		return define.SIT_DOWN_ERROR_OVER
+		return tableInterface.SitDownErrorOver
 	}
 	if table.bossTime && !user.IsRobot() {
-		return define.SIT_DOWN_ERROR_NORMAL
+		return tableInterface.SitDownErrorNomal
 	}
 	if len(table.Users) > 3 {
-		return define.SIT_DOWN_ERROR_NORMAL
+		return tableInterface.SitDownErrorNomal
 	}
 	now := time.Now().UnixNano() / 1e6
 	if now-table.LastDismissTime < 10000 {
-		return define.SIT_DOWN_ERROR_NORMAL
+		return tableInterface.SitDownErrorNomal
 	}
 	if now-table.userExist[user.GetID()] < 60000 {
-		return define.SIT_DOWN_ERROR_NORMAL
+		return tableInterface.SitDownErrorNomal
 	}
-	return define.SIT_DOWN_OK
+	return tableInterface.SitDownOk
 }
 
 func (table *TableLogic) ResetTable() {
@@ -219,26 +214,25 @@ func (table *TableLogic) CloseTable() {
 
 }
 
-func (table *TableLogic) UserExit(user player.PlayerInterface) bool {
+func (table *TableLogic) UserOffline(user player.PlayerInterface) bool {
 	table.userLeave(user)
 	return true
 }
 
-func (table *TableLogic) LeaveGame(user player.PlayerInterface) bool {
+func (table *TableLogic) UserLeaveGame(user player.PlayerInterface) bool {
 	table.userLeave(user)
 	return true
 }
 
-func (table *TableLogic) SendScene(user player.PlayerInterface) bool {
+func (table *TableLogic) SendScene(user player.PlayerInterface) {
 	user.SendMsg(int32(msg.MsgId_ZERO), &msg.Fish{})
-	return true
 }
 
-func (table *TableLogic) GameStart(user player.PlayerInterface) bool {
-	if user.IsRobot() {
-		user.SendMsg(int32(msg.MsgId_ZERO), &msg.Fish{})
-	}
-	return true
+func (table *TableLogic) GameStart() {
+	// if user.IsRobot() {
+	//	user.SendMsg(int32(msg.MsgId_ZERO), &msg.Fish{})
+	// }
+	// return true
 }
 
 func (table *TableLogic) userLeave(user player.PlayerInterface) {
@@ -247,8 +241,23 @@ func (table *TableLogic) userLeave(user player.PlayerInterface) {
 	if u != nil {
 		table.saveUserScore(u)
 		u.WriteLog()
-		gameNum := u.GameNum
-		user.SendRecord(gameNum, u.OutputAmount+u.Bet, -u.Bet, u.Win-u.OutputAmount, u.OutputAmount, "")
+		//gameNum := u.GameNum
+		//user.SendRecord(gameNum, u.OutputAmount+u.Bet, -u.Bet, u.Win-u.OutputAmount, u.OutputAmount, "")
+		if !user.IsRobot() {
+			table.Table.UploadPlayerRecord([]*platform.PlayerRecord{
+				{
+					PlayerID:     uint32(user.GetID()),
+					GameNum:      u.GameNum,
+					ProfitAmount: u.OutputAmount + u.Bet,
+					BetsAmount:   -u.Bet,
+					DrawAmount:   u.Win - u.OutputAmount,
+					OutputAmount: u.OutputAmount,
+					Balance:      user.GetScore(),
+					UpdatedAt:    time.Now(),
+					CreatedAt:    time.Now(),
+				},
+			})
+		}
 	}
 	delete(table.Users, user.GetID())
 	if !user.IsRobot() {
@@ -281,7 +290,7 @@ func (table *TableLogic) OnGameMessage(subCmd int32, buffer []byte, user player.
 		table.dead(buffer, user)
 		break
 	case int32(msg.MsgId_EXIST_ROOM_Req):
-		table.UserExit(user)
+		table.UserOffline(user)
 		table.Table.KickOut(user)
 		break
 	case int32(msg.MsgId_CHANGEMODEL_Req):
@@ -374,6 +383,7 @@ func (table *TableLogic) kickOutAllUser() {
 	}
 	table.dismiss()
 	table.Table.EndGame()
+	table.Table.Close()
 }
 
 func (table *TableLogic) dismiss() {
@@ -383,9 +393,10 @@ func (table *TableLogic) dismiss() {
 }
 
 func (table *TableLogic) stopTimer() {
-	for _, v := range table.timer {
+	for k, v := range table.timer {
 		if v != nil {
-			v.Cancel()
+			table.Table.DeleteJob(v)
+			delete(table.timer, k)
 		}
 	}
 }
@@ -1011,9 +1022,9 @@ func (table *TableLogic) frozen(target []int32) []int32 {
 		}
 		table.FrozenTime = now
 	}
-	timer := table.timer["Frozen"]
-	if timer != nil {
-		timer.Cancel()
+	if timer, ok := table.timer["Frozen"]; ok {
+		table.Table.DeleteJob(timer)
+		delete(table.timer, "Frozen")
 	}
 	job, _ := table.Table.AddTimer(int64(t), func() {
 		for _, v := range fishes {
@@ -1114,7 +1125,7 @@ func (table *TableLogic) createFormation() {
 	fishTideWaitTime = config.GetFishTideSustainTime(key)
 	info := config.GetFormation(file, key)
 	fishes := make([]*msg.Fish, 0)
-	for k, _ := range info {
+	for k := range info {
 		//if key != "3" {
 		//	table.refreshSomeFishes(file, key, k)
 		//}
@@ -1129,7 +1140,7 @@ func (table *TableLogic) createFormation() {
 
 func (table *TableLogic) refreshManyFishes(formationKey, key, k string) *msg.RefreshFishReq {
 	fishId, speed, _, num, lines := config.GetFormationFishInfo(formationKey, key, k)
-	line, _, _ := table.getConfLine(lines, make([]interface{}, 0), json.Number(0))
+	line, _, _ := table.getConfLine(lines, make([]interface{}, 0), "0")
 	speeds := make([]int32, 0)
 	speeds = append(speeds, speed)
 	skillId := config.GetSkillId(fishId)
@@ -1137,7 +1148,7 @@ func (table *TableLogic) refreshManyFishes(formationKey, key, k string) *msg.Ref
 	//fishes := res.GetFish()
 	//for i := 0; i < num; i++ {
 	//	fishes[i].BornTime = fishes[i].BornTime + int64(t)
-	//	table.Fishes[fishes[i].GetId()].deadTime = table.Fishes[fishes[i].GetId()].deadTime + int64(t)
+	//	table.Fishes[fishes[i].GetID()].deadTime = table.Fishes[fishes[i].GetID()].deadTime + int64(t)
 	//}
 	return res
 }
@@ -1160,7 +1171,7 @@ func (table *TableLogic) formationTick(file, key string) {
 
 func (table *TableLogic) refreshSomeFishes(formationKey, key, k string) {
 	fishId, speed, t, num, lines := config.GetFormationFishInfo(formationKey, key, k)
-	line, _, _ := table.getConfLine(lines, make([]interface{}, 0), json.Number(0))
+	line, _, _ := table.getConfLine(lines, make([]interface{}, 0), "0")
 	speeds := make([]int32, 0)
 	speeds = append(speeds, speed)
 	skillId := config.GetSkillId(fishId)
@@ -1171,7 +1182,7 @@ func (table *TableLogic) refreshSomeFishes(formationKey, key, k string) {
 
 func (table *TableLogic) refreshSomeCircleFishes(formationKey, key string) { //survival
 	fishId, speed, t, num, lines, radius, overlying, angle, _ := config.GetCircleFormationFishInfo(formationKey, key)
-	line, _, _ := table.getConfLine(lines, make([]interface{}, 0), json.Number(0))
+	line, _, _ := table.getConfLine(lines, make([]interface{}, 0), "0")
 	speeds := make([]int32, 0)
 	speeds = append(speeds, speed)
 	skillId := config.GetSkillId(fishId)
@@ -1200,7 +1211,7 @@ func (table *TableLogic) refreshFishes(num, space int, fishId string, line []*ms
 			res := table.createFish(fishId, line, speed, 1, skillId, formationInfo, t, "")
 			table.Table.Broadcast(int32(msg.MsgId_REFRESHFISH_Req), res)
 		})
-		table.timer[fishId+string(i)] = job
+		table.timer[fmt.Sprintf("%s%d", fishId, i)] = job
 	}
 }
 
@@ -1323,19 +1334,19 @@ func (table *TableLogic) getSkillNum() {
 }
 
 func (table *TableLogic) test(buffer []byte, user player.PlayerInterface) {
-	if global.GConfig.Runmode != "dev" {
-		return
-	}
-	req := &msg.TestReq{}
-	proto.Unmarshal(buffer, req)
-	if req.GetFunc() == 1 && !table.FishTide {
-		//table.timer["fishTide"].Cancel()
-		table.fishTideForecast()
-	}
-	fishId := req.GetFishId()
-	if fishId != "" {
-		table.refreshFish(fishId, false, true)
-	}
+	// if global.GConfig.Runmode != "dev" {
+	// 	return
+	// }
+	// req := &msg.TestReq{}
+	// proto.Unmarshal(buffer, req)
+	// if req.GetFunc() == 1 && !table.FishTide {
+	// 	//table.timer["fishTide"].Cancel()
+	// 	table.fishTideForecast()
+	// }
+	// fishId := req.GetFishId()
+	// if fishId != "" {
+	// 	table.refreshFish(fishId, false, true)
+	// }
 }
 
 func (table *TableLogic) getLine(fishId string, isSummon bool) ([]*msg.Point, []int32, int32, string, int) {
@@ -1711,7 +1722,7 @@ func (table *TableLogic) bossTick() {
 		loc, _ := strconv.Atoi(info[1].(json.Number).String())
 		loc1, _ := strconv.Atoi(info[2].(json.Number).String())
 		turnInfos := make([]*msg.TurnInfo, 0)
-		//for k, _ := range table.boss {
+		//for k:= range table.boss {
 		for i := 0; i < 2; i++ {
 			turnInfo := &msg.TurnInfo{
 				//FishId:   k,
@@ -1728,12 +1739,12 @@ func (table *TableLogic) bossTick() {
 	}
 	if len(info) != 3 {
 		bossId := make([]int32, 0)
-		for k, _ := range table.boss {
+		for k := range table.boss {
 			bossId = append(bossId, k)
 		}
 		if len(bossId) > 0 {
 			req.TurnInfo = []*msg.TurnInfo{
-				&msg.TurnInfo{
+				{
 					FishId: bossId[tools.RandInt(0, len(bossId), 0)],
 				},
 			}
@@ -1801,7 +1812,7 @@ func (table *TableLogic) shotOffGame(user *data.User) {
 	table.Table.KickOut(user.InnerUser)
 	if user.IsRobot {
 		//for i, robot := range table.Robots {
-		//	if robot.AI.GetId() == user.UserInfo.GetUserId() {
+		//	if robot.AI.GetID() == user.UserInfo.GetUserId() {
 		//		table.Robots = append(table.Robots[:i], table.Robots[i + 1:]...)
 		//		break
 		//	}
@@ -1883,9 +1894,9 @@ func (table *TableLogic) fishTideEnd() {
 		table.timer["fishTide"] = job
 		return
 	}
-	j := table.timer["formationTick"]
-	if j != nil {
-		j.Cancel()
+	if j, ok := table.timer["formationTick"]; ok {
+		table.Table.DeleteJob(j)
+		delete(table.timer, "formationTick")
 	}
 	table.FishTide = false
 	//table.allFishDead()
@@ -1938,7 +1949,7 @@ func (table *TableLogic) dead(buffer []byte, user player.PlayerInterface) {
 		Id: req.GetId(),
 	}
 	table.Table.Broadcast(int32(msg.MsgId_DEAD_Res), res)
-	//table.checkLockFishId(req.GetId(), user)
+	//table.checkLockFishId(req.GetID(), user)
 }
 
 func (table *TableLogic) changeModel(buffer []byte, user player.PlayerInterface) {
@@ -2067,7 +2078,7 @@ func (table *TableLogic) addRobot() {
 	if len(table.Users) > 3 || len(table.Robots) > 1 {
 		return
 	}
-	err := table.Table.GetRobot(1)
+	err := table.Table.GetRobot(1, table.Table.GetConfig().RobotMinBalance, table.Table.GetConfig().RobotMaxBalance)
 	if err != nil {
 		log.Traceln("GET robot err", err)
 	}
@@ -2092,7 +2103,7 @@ func (table *TableLogic) changeRobotBehaviour(fishId int32) {
 	}
 }
 
-func (table *TableLogic) BindRobot(user inter.AIUserInter) player.RobotHandler {
+func (table *TableLogic) BindRobot(user player.RobotInterface) player.RobotHandler {
 	robot := NewRobot(table.Table)
 	robot.AI = user
 	return robot
@@ -2125,7 +2136,7 @@ func (table *TableLogic) BindRobot(user inter.AIUserInter) player.RobotHandler {
 // 	}
 // 	robot.AI = user.BindRobot(robot)
 // 	user.SendMsg(int32(msg.MsgId_ZERO), &msg.Fish{})
-// 	//table.Robots[robot.AI.GetId()] = robot
+// 	//table.Robots[robot.AI.GetID()] = robot
 // 	//robot.init()
 // 	//robot.enterRoom()
 // 	//table.getLimitPoint(robot.LastShoot, int(config.GetRobotLimit()))
@@ -2151,7 +2162,7 @@ func (table *TableLogic) BindRobot(user inter.AIUserInter) player.RobotHandler {
 // 	//})
 
 // 	//table.Table.AddTimer(int64(config.GetRobotQuitTime()), func() {
-// 	//	table.robotQuit(robot.AI.GetId())
+// 	//	table.robotQuit(robot.AI.GetID())
 // 	//})
 
 // 	//table.Table.AddTimerRepeat(int64(5000), 0, func() {

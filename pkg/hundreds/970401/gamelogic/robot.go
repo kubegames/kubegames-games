@@ -1,14 +1,13 @@
 package gamelogic
 
 import (
-	"game_frame_v2/game/inter"
-
 	"game_LaBa/benzbmw/config"
 	"game_LaBa/benzbmw/model"
 	proto "game_LaBa/benzbmw/msg"
 	"game_frame_v2/game/clock"
 
 	protocol "github.com/golang/protobuf/proto"
+	"github.com/kubegames/kubegames-sdk/pkg/player"
 	"github.com/kubegames/kubegames-sdk/pkg/table"
 
 	"time"
@@ -19,7 +18,7 @@ var count = [12]int{}
 type Robot struct {
 	game  *Game
 	table table.TableInterface //桌子
-	user  inter.AIUserInter
+	user  player.RobotInterface
 
 	BetGoldThisSet int64 // 本局下注金额
 
@@ -44,7 +43,7 @@ func NewRobot(game *Game) *Robot {
 	}
 }
 
-func (robot *Robot) BindUser(user inter.AIUserInter) {
+func (robot *Robot) BindUser(user player.RobotInterface) {
 	robot.user = user
 }
 
@@ -140,7 +139,7 @@ func (robot *Robot) DoBet() {
 	if robot.BetArrGold[betAreaIndex]+betGold > robot.game.BetLimitInfo.LimitPerUser ||
 		robot.BetGoldThisSet+betGold > robot.game.BetLimitInfo.AllLimitPerUser ||
 		robot.game.UserBetInfo[betAreaIndex]+robot.game.AIBetInfo[betAreaIndex]+betGold > robot.game.BetLimitInfo.AllLimitPerArea {
-		// fmt.Printf("机器人[%v]达到下注上限，不进行下注==========================\n", robot.user.GetId())
+		// fmt.Printf("机器人[%v]达到下注上限，不进行下注==========================\n", robot.user.GetID())
 		if robot.TimerJob != nil {
 			robot.TimerJob.Cancel()
 			robot.TimerJob = nil
@@ -148,29 +147,29 @@ func (robot *Robot) DoBet() {
 		return
 	}
 	if robot.user.GetScore() < robot.game.BetArr[0] {
-		// fmt.Printf("机器人【%v】携带金币不足，不进行下注==========================\n", robot.user.GetId())
+		// fmt.Printf("机器人【%v】携带金币不足，不进行下注==========================\n", robot.user.GetID())
 		return
 	}
 
 	robot.BetArrGold[betAreaIndex] += betGold
 
 	// 给user下注
-	if u, ok := robot.game.UserMap[robot.user.GetId()]; ok {
+	if u, ok := robot.game.UserMap[robot.user.GetID()]; ok {
 
 		u.NotBetCount = 0
 		u.BetGoldNow += betGold
 		// for _, v := range robot.game.topUser {
-		// 	if v.user.GetId() == robot.user.GetId() {
+		// 	if v.user.GetID() == robot.user.GetID() {
 		// 		// 如果该机器人是上座机器人，则发送下注消息
 		// 		msg := new(proto.UserBet)
 		// 		msg.BetType = int32(betAreaIndex)
 		// 		msg.BetIndex = int32(betType)
-		// 		msg.UserID = u.user.GetId()
+		// 		msg.UserID = u.user.GetID()
 		// 		robot.game.table.Broadcast(int32(proto.SendToClientMessageType_BetRet), msg)
 		// 	}
 		// }
 
-		robot.sendMsg(u.user.GetId(), betAreaIndex, betType)
+		robot.sendMsg(u.user.GetID(), betAreaIndex, betType)
 	}
 	robot.BetCount++
 	robot.NotBetCount = 0

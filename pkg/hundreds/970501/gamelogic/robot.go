@@ -1,20 +1,21 @@
 package gamelogic
 
 import (
-	"go-game-sdk/example/game_LaBa/970501/config"
-	proto "go-game-sdk/example/game_LaBa/970501/msg"
-	"go-game-sdk/inter"
 	"go-game-sdk/lib/clock"
 	"math/rand"
 
+	"github.com/kubegames/kubegames-games/pkg/slots/970501/config"
+	proto "github.com/kubegames/kubegames-games/pkg/slots/970501/msg"
+
 	protocol "github.com/golang/protobuf/proto"
+	"github.com/kubegames/kubegames-sdk/pkg/player"
 	"github.com/kubegames/kubegames-sdk/pkg/table"
 )
 
 type Robot struct {
 	game  *Game
 	table table.TableInterface //桌子
-	user  inter.AIUserInter
+	user  player.RobotInterface
 
 	BetGoldThisSet int64 // 本局下注金额
 
@@ -40,7 +41,7 @@ func NewRobot(game *Game) *Robot {
 	}
 }
 
-func (robot *Robot) BindUser(user inter.AIUserInter) {
+func (robot *Robot) BindUser(user player.RobotInterface) {
 	robot.user = user
 }
 

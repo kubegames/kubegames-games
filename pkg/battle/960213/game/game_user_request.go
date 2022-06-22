@@ -2,13 +2,11 @@ package game
 
 import (
 	"fmt"
-	"game_poker/ddzall/msg"
-	"game_poker/ddzall/poker"
-	"time"
-
-	"github.com/kubegames/kubegames-sdk/pkg/log"
 
 	"github.com/golang/protobuf/proto"
+	"github.com/kubegames/kubegames-games/pkg/battle/960213/msg"
+	"github.com/kubegames/kubegames-games/pkg/battle/960213/poker"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 	"github.com/kubegames/kubegames-sdk/pkg/player"
 )
 
@@ -16,7 +14,7 @@ import (
 func (game *DouDizhu) UserRobDizhu(buffer []byte, userInter player.PlayerInterface) {
 
 	// 用户ID
-	userID := userInter.GetId()
+	userID := userInter.GetID()
 	user, ok := game.UserList[userID]
 	if !ok {
 		log.Errorf("获取玩家 %d 异常", userID)
@@ -72,7 +70,7 @@ func (game *DouDizhu) UserRobDizhu(buffer []byte, userInter player.PlayerInterfa
 		game.Dizhu = user
 
 		// 间隔时间后进入确认地主阶段
-		game.TimerJob, _ = game.Table.AddTimer(time.Duration(game.TimeCfg.DefaultTime), game.confirmDizhu)
+		game.TimerJob, _ = game.Table.AddTimer(int64(game.TimeCfg.DefaultTime), game.confirmDizhu)
 		return
 	}
 
@@ -89,7 +87,7 @@ func (game *DouDizhu) UserRobDizhu(buffer []byte, userInter player.PlayerInterfa
 		game.SendCurrentRobber(int32(game.curRobberChairID))
 
 		// 定时进入轮询抢庄
-		game.TimerJob, _ = game.Table.AddTimer(time.Duration(game.TimeCfg.RobTime), game.CheckRob)
+		game.TimerJob, _ = game.Table.AddTimer(int64(game.TimeCfg.RobTime), game.CheckRob)
 		return
 	}
 
@@ -97,7 +95,7 @@ func (game *DouDizhu) UserRobDizhu(buffer []byte, userInter player.PlayerInterfa
 	if game.CurRobNum == 0 {
 
 		// 清空玩家手牌 todo 等待控牌流程写入
-		for ID, _ := range game.UserList {
+		for ID := range game.UserList {
 			game.UserList[ID].Cards = []byte{}
 		}
 
@@ -111,7 +109,7 @@ func (game *DouDizhu) UserRobDizhu(buffer []byte, userInter player.PlayerInterfa
 			game.Dizhu = player
 
 			// 间隔时间后进入确认地主阶段
-			game.TimerJob, _ = game.Table.AddTimer(time.Duration(game.TimeCfg.DefaultTime), game.confirmDizhu)
+			game.TimerJob, _ = game.Table.AddTimer(int64(game.TimeCfg.DefaultTime), game.confirmDizhu)
 			return
 		}
 	}
@@ -122,7 +120,7 @@ func (game *DouDizhu) UserRobDizhu(buffer []byte, userInter player.PlayerInterfa
 func (game *DouDizhu) UserRedouble(buffer []byte, userInter player.PlayerInterface) {
 
 	// 用户ID
-	userID := userInter.GetId()
+	userID := userInter.GetID()
 	user, ok := game.UserList[userID]
 	if !ok {
 		log.Errorf("获取玩家 %d 异常", userID)
@@ -179,7 +177,7 @@ func (game *DouDizhu) UserRedouble(buffer []byte, userInter player.PlayerInterfa
 		game.TimerJob.Cancel()
 
 		// 间隔时间后进入打牌阶段
-		game.TimerJob, _ = game.Table.AddTimer(time.Duration(game.TimeCfg.DefaultTime), game.PutCards)
+		game.TimerJob, _ = game.Table.AddTimer(int64(game.TimeCfg.DefaultTime), game.PutCards)
 
 	}
 
@@ -189,7 +187,7 @@ func (game *DouDizhu) UserRedouble(buffer []byte, userInter player.PlayerInterfa
 func (game *DouDizhu) UserPutCards(buffer []byte, userInter player.PlayerInterface) {
 
 	// 用户ID
-	userID := userInter.GetId()
+	userID := userInter.GetID()
 	user, ok := game.UserList[userID]
 	if !ok {
 		log.Errorf("获取玩家 %d 异常", userID)
@@ -398,7 +396,7 @@ func (game *DouDizhu) UserPutCards(buffer []byte, userInter player.PlayerInterfa
 		game.InAnimation = false
 
 		// 牌型时间后进入结算
-		game.TimerJob, _ = game.Table.AddTimer(time.Duration(cardsTypeTime), game.Settle)
+		game.TimerJob, _ = game.Table.AddTimer(int64(cardsTypeTime), game.Settle)
 		return
 	}
 
@@ -413,14 +411,14 @@ func (game *DouDizhu) UserPutCards(buffer []byte, userInter player.PlayerInterfa
 	}
 
 	// 牌型时间后 指定下一个当前操作玩家
-	game.TimerJob, _ = game.Table.AddTimer(time.Duration(cardsTypeTime), game.FindNextPlayer)
+	game.TimerJob, _ = game.Table.AddTimer(int64(cardsTypeTime), game.FindNextPlayer)
 }
 
 // UserHangUp 用户托管请求
 func (game *DouDizhu) UserHangUp(buffer []byte, userInter player.PlayerInterface) {
 
 	// 用户ID
-	userID := userInter.GetId()
+	userID := userInter.GetID()
 	user, ok := game.UserList[userID]
 	if !ok {
 		log.Errorf("获取玩家 %d 异常", userID)
@@ -468,7 +466,7 @@ func (game *DouDizhu) UserHangUp(buffer []byte, userInter player.PlayerInterface
 // UserGetTips 用户提示请求
 func (game *DouDizhu) UserGetTips(buffer []byte, userInter player.PlayerInterface) {
 	// 用户ID
-	userID := userInter.GetId()
+	userID := userInter.GetID()
 	user, ok := game.UserList[userID]
 	if !ok {
 		log.Errorf("获取玩家 %d 异常", userID)
@@ -477,7 +475,7 @@ func (game *DouDizhu) UserGetTips(buffer []byte, userInter player.PlayerInterfac
 
 	// 游戏状态不是出牌阶段
 	if game.Status != int32(msg.GameStatus_PutCardStatus) {
-		log.Tracef("玩家 %d 在游戏 %d 非出牌阶段请求提示", userID, game.Table.GetId())
+		log.Tracef("玩家 %d 在游戏 %d 非出牌阶段请求提示", userID, game.Table.GetID())
 		return
 	}
 
@@ -551,18 +549,18 @@ func (game *DouDizhu) UserGetTips(buffer []byte, userInter player.PlayerInterfac
 // UserDemandCards 配牌请求
 func (game *DouDizhu) UserDemandCards(buffer []byte, userInter player.PlayerInterface) {
 	for id, user := range game.UserList {
-		if id == userInter.GetId() {
+		if id == userInter.GetID() {
 			continue
 		}
 
 		if len(user.Cards) != 0 {
-			log.Tracef("其他玩家 %d 已经配牌，不允许用户 %d 配牌", user.ID, userInter.GetId())
+			log.Tracef("其他玩家 %d 已经配牌，不允许用户 %d 配牌", user.ID, userInter.GetID())
 			return
 		}
 	}
 
 	// 用户ID
-	userID := userInter.GetId()
+	userID := userInter.GetID()
 	_, ok := game.UserList[userID]
 	if !ok {
 		log.Errorf("获取玩家 %d 异常", userID)
@@ -570,7 +568,7 @@ func (game *DouDizhu) UserDemandCards(buffer []byte, userInter player.PlayerInte
 	}
 
 	if game.Status != int32(msg.GameStatus_GameInitStatus) {
-		log.Tracef("在桌子 %d 非初始化时，不允许用户 %d 配牌", game.Table.GetId(), userID)
+		log.Tracef("在桌子 %d 非初始化时，不允许用户 %d 配牌", game.Table.GetID(), userID)
 		return
 	}
 

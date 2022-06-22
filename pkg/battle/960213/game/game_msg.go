@@ -2,11 +2,10 @@ package game
 
 import (
 	"fmt"
-	"game_poker/ddzall/msg"
-	"game_poker/ddzall/poker"
 
+	"github.com/kubegames/kubegames-games/pkg/battle/960213/msg"
+	"github.com/kubegames/kubegames-games/pkg/battle/960213/poker"
 	"github.com/kubegames/kubegames-sdk/pkg/log"
-
 	"github.com/kubegames/kubegames-sdk/pkg/player"
 )
 
@@ -19,7 +18,7 @@ func (game *DouDizhu) SendGameStatus(gameStatus int32, durationTime int32, userI
 
 	if userInter != nil {
 		// 发给单个人
-		log.Tracef("游戏 %d 发送玩家 %d 状态消息：%v", game.Table.GetId(), userInter.GetId(), fmt.Sprintf("%+v\n", resp))
+		log.Tracef("游戏 %d 发送玩家 %d 状态消息：%v", game.Table.GetID(), userInter.GetID(), fmt.Sprintf("%+v\n", resp))
 		err := userInter.SendMsg(int32(msg.SendToClientMessageType_S2CGameStatus), &resp)
 
 		if err != nil {
@@ -27,7 +26,7 @@ func (game *DouDizhu) SendGameStatus(gameStatus int32, durationTime int32, userI
 		}
 	} else {
 		// 广播
-		log.Tracef("游戏 %d 广播状态消息：%v", game.Table.GetId(), fmt.Sprintf("%+v\n", resp))
+		log.Tracef("游戏 %d 广播状态消息：%v", game.Table.GetID(), fmt.Sprintf("%+v\n", resp))
 		game.Table.Broadcast(int32(msg.SendToClientMessageType_S2CGameStatus), &resp)
 	}
 }
@@ -52,7 +51,7 @@ func (game *DouDizhu) SendSceneInfo(userInter player.PlayerInterface, reConnect 
 			AddNum:   user.AddNum,
 			CardsLen: int64(len(user.Cards)),
 		}
-		if userInter != nil && userInter.GetId() == id {
+		if userInter != nil && userInter.GetID() == id {
 			SeatUserInfo.Cards = user.Cards
 		}
 
@@ -79,7 +78,7 @@ func (game *DouDizhu) SendSceneInfo(userInter player.PlayerInterface, reConnect 
 		RoomCost:       game.RoomCfg.RoomCost,
 		MinLimit:       game.RoomCfg.MinLimit,
 		Reconnect:      reConnect,
-		RoomID:         game.Table.GetRoomID(),
+		RoomID:         int64(game.Table.GetRoomID()),
 		RoomLevel:      game.RoomCfg.Level,
 		CommonMultiple: commonMultiple,
 		CurrentPlayer: &msg.CurrentPlayerRes{
@@ -125,14 +124,14 @@ func (game *DouDizhu) SendSceneInfo(userInter player.PlayerInterface, reConnect 
 		resp.LeftCards = leftCards
 
 		// 发给单个人
-		log.Tracef("游戏 %d 发送玩家 %d 场景消息：%v", game.Table.GetId(), userInter.GetId(), fmt.Sprintf("%+v\n", resp))
+		log.Tracef("游戏 %d 发送玩家 %d 场景消息：%v", game.Table.GetID(), userInter.GetID(), fmt.Sprintf("%+v\n", resp))
 		err := userInter.SendMsg(int32(msg.SendToClientMessageType_S2CSceneMessage), &resp)
 		if err != nil {
 			log.Errorf("发送场景消息失败， %v", err.Error())
 		}
 	} else {
 		// 广播
-		log.Tracef("游戏 %d 广播场景消息：%v", game.Table.GetId(), fmt.Sprintf("%+v\n", resp))
+		log.Tracef("游戏 %d 广播场景消息：%v", game.Table.GetID(), fmt.Sprintf("%+v\n", resp))
 		game.Table.Broadcast(int32(msg.SendToClientMessageType_S2CSceneMessage), &resp)
 	}
 }
@@ -148,41 +147,41 @@ func (game *DouDizhu) SendCurrentRobber(chairID int32) {
 		CurrentNum: game.CurRobNum,
 	}
 
-	log.Tracef("游戏 %d 广播当前抢庄玩家：%v", game.Table.GetId(), fmt.Sprintf("%+v\n", resp))
+	log.Tracef("游戏 %d 广播当前抢庄玩家：%v", game.Table.GetID(), fmt.Sprintf("%+v\n", resp))
 	game.Table.Broadcast(int32(msg.SendToClientMessageType_S2CCurrentRobber), &resp)
 }
 
 // SendRobResult 广播抢地主请求响应
 func (game *DouDizhu) SendRobResult(resp msg.RobResultRes) {
 
-	log.Tracef("游戏 %d 广播玩家抢地主反馈：%v", game.Table.GetId(), fmt.Sprintf("%+v\n", resp))
+	log.Tracef("游戏 %d 广播玩家抢地主反馈：%v", game.Table.GetID(), fmt.Sprintf("%+v\n", resp))
 	game.Table.Broadcast(int32(msg.SendToClientMessageType_S2CRobResult), &resp)
 }
 
 // SendConfirmDizhu 广播确认地主消息
 func (game *DouDizhu) SendConfirmDizhu(resp msg.ConfirmDizhuRes) {
 
-	log.Tracef("游戏 %d 广播确认地主消息：%v", game.Table.GetId(), fmt.Sprintf("%+v\n", resp))
+	log.Tracef("游戏 %d 广播确认地主消息：%v", game.Table.GetID(), fmt.Sprintf("%+v\n", resp))
 	game.Table.Broadcast(int32(msg.SendToClientMessageType_S2CConfirmDizhu), &resp)
 }
 
 // SendRedoubleResult 广播加倍结果
 func (game *DouDizhu) SendRedoubleResult(resp msg.RedoubleResultRes) {
 
-	log.Tracef("游戏 %d 广播加倍结果消息：%v", game.Table.GetId(), fmt.Sprintf("%+v\n", resp))
+	log.Tracef("游戏 %d 广播加倍结果消息：%v", game.Table.GetID(), fmt.Sprintf("%+v\n", resp))
 	game.Table.Broadcast(int32(msg.SendToClientMessageType_S2CRedoubleResult), &resp)
 }
 
 // SendSceneInfo 发送发牌消息
 func (game *DouDizhu) SendDealInfo(dealResp msg.DealRes, userInter player.PlayerInterface) {
 
-	log.Tracef("游戏 %d 发送玩家 %d 发牌信息：%v", game.Table.GetId(), userInter.GetId(), dealResp)
+	log.Tracef("游戏 %d 发送玩家 %d 发牌信息：%v", game.Table.GetID(), userInter.GetID(), dealResp)
 	err := userInter.SendMsg(int32(msg.SendToClientMessageType_S2CDeal), &dealResp)
 	if err != nil {
 		log.Errorf("发送发牌消息失败， %v", err.Error())
 	}
 
-	//log.Tracef("游戏 %d 广播玩家 %d 发牌信息：%v", game.Table.GetId(), userInter.GetId(), dealResp)
+	//log.Tracef("游戏 %d 广播玩家 %d 发牌信息：%v", game.Table.GetID(), userInter.GetID(), dealResp)
 	//game.Table.Broadcast(int32(msg.SendToClientMessageType_S2CDeal), &dealResp)
 }
 
@@ -197,14 +196,14 @@ func (game *DouDizhu) SendCurrentPlayer() {
 		ActionType: game.CurrentPlayer.ActionType,
 	}
 
-	log.Tracef("游戏 %d 广播当前操作玩家：%s", game.Table.GetId(), fmt.Sprintf("%+v\n", resp))
+	log.Tracef("游戏 %d 广播当前操作玩家：%s", game.Table.GetID(), fmt.Sprintf("%+v\n", resp))
 	game.Table.Broadcast(int32(msg.SendToClientMessageType_S2CCurrentPlayer), &resp)
 }
 
 // SendPutInfo 广播出牌结果信息
 func (game *DouDizhu) SendPutInfo(resp msg.PutInfoRes) {
 
-	log.Tracef("游戏 %d 广播出牌结果信息：%v", game.Table.GetId(), fmt.Sprintf("%+v\n", resp))
+	log.Tracef("游戏 %d 广播出牌结果信息：%v", game.Table.GetID(), fmt.Sprintf("%+v\n", resp))
 	game.Table.Broadcast(int32(msg.SendToClientMessageType_S2CPutInfo), &resp)
 }
 
@@ -228,14 +227,14 @@ func (game *DouDizhu) SendHangUpInfo(userID int64) {
 		IsHangUp: isHangUp,
 	}
 
-	log.Tracef("游戏 %d 广播玩家托管操作信息：%v", game.Table.GetId(), fmt.Sprintf("%+v\n", resp))
+	log.Tracef("游戏 %d 广播玩家托管操作信息：%v", game.Table.GetID(), fmt.Sprintf("%+v\n", resp))
 	game.Table.Broadcast(int32(msg.SendToClientMessageType_S2CHangUpInfo), &resp)
 }
 
 // SendTipsInfo 发送提示信息
 func (game *DouDizhu) SendTipsInfo(resp msg.TipsRes, userInter player.PlayerInterface) {
 
-	log.Tracef("游戏 %d 发送玩家 %d 提示信息：%v", game.Table.GetId(), userInter.GetId(), fmt.Sprintf("%+v\n", resp))
+	log.Tracef("游戏 %d 发送玩家 %d 提示信息：%v", game.Table.GetID(), userInter.GetID(), fmt.Sprintf("%+v\n", resp))
 	err := userInter.SendMsg(int32(msg.SendToClientMessageType_S2CTips), &resp)
 	if err != nil {
 		log.Errorf("发送提示消息失败， %v", err.Error())
@@ -286,6 +285,6 @@ func (game *DouDizhu) SendSettleInfo() {
 		ResultList:       settleList,
 	}
 
-	log.Tracef("游戏 %d 广播结算信息：%v", game.Table.GetId(), fmt.Sprintf("%+v\n", SettleInfoResp))
+	log.Tracef("游戏 %d 广播结算信息：%v", game.Table.GetID(), fmt.Sprintf("%+v\n", SettleInfoResp))
 	game.Table.Broadcast(int32(msg.SendToClientMessageType_S2CSettleInfo), &SettleInfoResp)
 }

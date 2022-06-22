@@ -1,21 +1,22 @@
 package game
 
 import (
-	"common/rand"
 	"game_buyu/crazy_red/config"
 	"game_buyu/crazy_red/data"
 	"game_buyu/crazy_red/global"
 	"game_buyu/crazy_red/msg"
-	"game_frame_v2/game/inter"
 	"time"
+
+	"github.com/kubegames/kubegames-games/internal/pkg/rand"
 
 	"github.com/golang/protobuf/proto"
 	"github.com/kubegames/kubegames-sdk/pkg/log"
+	"github.com/kubegames/kubegames-sdk/pkg/player"
 )
 
 type Robot struct {
 	game   *Game
-	AiUser inter.AIUserInter
+	AiUser player.RobotInterface
 	user   *data.User
 }
 

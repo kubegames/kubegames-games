@@ -23,6 +23,10 @@ func Int63n(n int64) int64 {
 	return rand.Int63n(n)
 }
 
+func Intn(n int) int {
+	return rand.Intn(n)
+}
+
 /*
 *产生6位随机数
  */

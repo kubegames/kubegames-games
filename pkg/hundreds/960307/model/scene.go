@@ -1,7 +1,6 @@
 package model
 
 import (
-	"game_frame_v2/game/inter"
 	"math/rand"
 
 	"github.com/kubegames/kubegames-sdk/pkg/player"
@@ -31,7 +30,7 @@ func (si *SceneInfo) Init() {
 // 坐下或换座
 func (si *SceneInfo) SitScene(user *User, SeatNum int) bool {
 	_, ok1 := si.SenceSeat[SeatNum]
-	us, ok := si.UserSeat[user.User.GetId()]
+	us, ok := si.UserSeat[user.User.GetID()]
 	//原来位置上有人,换位置
 	if ok1 {
 		//发送坐下位置失败
@@ -61,7 +60,7 @@ func (si *SceneInfo) SitScene(user *User, SeatNum int) bool {
 		newuser.User = user
 		newuser.SeatNo = SeatNum
 		si.SenceSeat[SeatNum] = newuser
-		si.UserSeat[user.User.GetId()] = newuser
+		si.UserSeat[user.User.GetID()] = newuser
 		//广播
 	}
 
@@ -77,7 +76,7 @@ func (si *SceneInfo) GetBigWinner() int {
 			money = v.User.RetBet
 			id = v.User.SceneChairId
 			u = v
-		} else if money == v.User.RetBet && v.User.User.GetId() > u.User.User.GetId() {
+		} else if money == v.User.RetBet && v.User.User.GetID() > u.User.User.GetID() {
 			money = v.User.RetBet
 			id = v.User.SceneChairId
 			u = v
@@ -96,7 +95,7 @@ func (si *SceneInfo) GetMaster() int {
 			count = v.User.RetWin
 			id = v.User.SceneChairId
 			u = v
-		} else if count == v.User.RetWin && v.User.User.GetId() > u.User.User.GetId() {
+		} else if count == v.User.RetWin && v.User.User.GetID() > u.User.User.GetID() {
 			count = v.User.RetWin
 			id = v.User.SceneChairId
 			u = v
@@ -107,10 +106,10 @@ func (si *SceneInfo) GetMaster() int {
 }
 
 func (si *SceneInfo) UserStandUp(user player.PlayerInterface) bool {
-	v, ok := si.UserSeat[user.GetId()]
+	v, ok := si.UserSeat[user.GetID()]
 	if ok {
 		delete(si.SenceSeat, v.SeatNo)
-		delete(si.UserSeat, user.GetId())
+		delete(si.UserSeat, user.GetID())
 	}
 
 	return ok
@@ -155,13 +154,13 @@ func (si *SceneInfo) GetAiUser() player.PlayerInterface {
 	return nil
 }
 
-func (si *SceneInfo) IsSitDown(user inter.AIUserInter) bool {
-	_, ok := si.UserSeat[user.GetId()]
+func (si *SceneInfo) IsSitDown(user player.RobotInterface) bool {
+	_, ok := si.UserSeat[user.GetID()]
 	return ok
 }
 
 func (si *SceneInfo) IsUserSitDown(user player.PlayerInterface) bool {
-	_, ok := si.UserSeat[user.GetId()]
+	_, ok := si.UserSeat[user.GetID()]
 	return ok
 }
 

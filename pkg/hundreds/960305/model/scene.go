@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"go-game-sdk/example/game_poker/960305/config"
 	baijiale "go-game-sdk/example/game_poker/960305/msg"
-	"go-game-sdk/inter"
 	"math/rand"
 	"sort"
 
@@ -230,7 +229,7 @@ func (si *SceneInfo) GetAiUser() player.PlayerInterface {
 	return nil
 }
 
-func (si *SceneInfo) IsSitDown(user inter.AIUserInter) bool {
+func (si *SceneInfo) IsSitDown(user player.RobotInterface) bool {
 	_, ok := si.UserSeat[user.GetID()]
 	return ok
 }

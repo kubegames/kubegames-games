@@ -45,7 +45,7 @@ func initConfig() {
 	}
 
 	//作弊率配置文件
-	cheatConfigData, err := ioutil.ReadFile("./config/cheat.json")
+	cheatConfigData, err := ioutil.ReadFile("./conf/cheat.json")
 	if err != nil {
 		log.Traceln("gameConfigData reading error", err)
 		panic(err)
@@ -58,7 +58,7 @@ func initConfig() {
 	}
 
 	//作弊率配置文件
-	robotConfigData, err := ioutil.ReadFile("./config/robot.json")
+	robotConfigData, err := ioutil.ReadFile("./conf/robot.json")
 	if err != nil {
 		log.Traceln("gameConfigData reading error", err)
 		panic(err)

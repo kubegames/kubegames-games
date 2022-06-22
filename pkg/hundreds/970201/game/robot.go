@@ -1,22 +1,23 @@
 package game
 
 import (
-	"common/rand"
 	"game_buyu/rob_red/config"
 	"game_buyu/rob_red/data"
 	"game_buyu/rob_red/global"
 	"game_buyu/rob_red/msg"
-	"game_frame_v2/game/inter"
 	"sync"
 	"time"
 
+	"github.com/kubegames/kubegames-games/internal/pkg/rand"
+
 	"github.com/golang/protobuf/proto"
 	"github.com/kubegames/kubegames-sdk/pkg/log"
+	"github.com/kubegames/kubegames-sdk/pkg/player"
 )
 
 type Robot struct {
 	game   *Game
-	AiUser inter.AIUserInter
+	AiUser player.RobotInterface
 	user   *data.User
 }
 
@@ -97,7 +98,7 @@ func (robot *Robot) procAiRobRed(buffer []byte) {
 	redRobCount := redRobCountMap[red.Id]
 	redRobCountLock.Unlock()
 
-	if config.AiConfig.IsRobotRobOn && redRobCount == 0 && robot.user.User.GetId() != red.sender.User.GetId() {
+	if config.AiConfig.IsRobotRobOn && redRobCount == 0 && robot.user.User.GetID() != red.sender.User.GetID() {
 		SetRedRobCountMap(red.Id)
 		robot.robRed(red, 0)
 

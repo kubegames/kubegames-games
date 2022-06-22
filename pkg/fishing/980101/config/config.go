@@ -2,16 +2,14 @@ package config
 
 import (
 	"encoding/json"
-	"go-game-sdk/example/game_buyu/980101/msg"
 	"io/ioutil"
 	"os"
 	"strconv"
 
-	"github.com/kubegames/kubegames-games/internal/pkg/rand"
-
-	"github.com/kubegames/kubegames-sdk/pkg/log"
-
 	"github.com/bitly/go-simplejson"
+	"github.com/kubegames/kubegames-games/internal/pkg/rand"
+	"github.com/kubegames/kubegames-games/pkg/fishing/980101/msg"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 )
 
 type config struct {
@@ -58,7 +56,7 @@ func LoadJsonConfig(_filename string, _config interface{}) (err error) {
 }
 
 func Load() { //(/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/|[ \t]*//.*)  去掉注释的正则
-	f, err := ioutil.ReadFile("config/yu.json")
+	f, err := ioutil.ReadFile("./conf/yu.json")
 	if err == nil {
 		YuConf, err = simplejson.NewJson(f)
 		if err != nil {
@@ -66,7 +64,7 @@ func Load() { //(/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/|[ \t]*//.*)  去掉�
 			return
 		}
 	}
-	f, err = ioutil.ReadFile("config/shuaxin.json")
+	f, err = ioutil.ReadFile("./conf/shuaxin.json")
 	if err == nil {
 		shuaxin, err := simplejson.NewJson(f)
 		if err != nil {
@@ -76,7 +74,7 @@ func Load() { //(/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/|[ \t]*//.*)  去掉�
 		s, _ := shuaxin.Map()
 		YuConf.Set("2", s)
 	}
-	f, err = ioutil.ReadFile("config/changjin.json")
+	f, err = ioutil.ReadFile("./conf/changjin.json")
 	if err == nil {
 		ChangJingConf, err = simplejson.NewJson(f)
 		if err != nil {
@@ -84,7 +82,7 @@ func Load() { //(/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/|[ \t]*//.*)  去掉�
 			return
 		}
 	}
-	f, err = ioutil.ReadFile("config/pao.json")
+	f, err = ioutil.ReadFile("./conf/pao.json")
 	if err == nil {
 		PaoConf, err = simplejson.NewJson(f)
 		if err != nil {
@@ -92,7 +90,7 @@ func Load() { //(/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/|[ \t]*//.*)  去掉�
 			return
 		}
 	}
-	f, err = ioutil.ReadFile("config/paodan.json")
+	f, err = ioutil.ReadFile("./conf/paodan.json")
 	if err == nil {
 		PaoDanConf, err = simplejson.NewJson(f)
 		if err != nil {
@@ -100,7 +98,7 @@ func Load() { //(/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/|[ \t]*//.*)  去掉�
 			return
 		}
 	}
-	f, err = ioutil.ReadFile("config/jiqirAI.json")
+	f, err = ioutil.ReadFile("./conf/jiqirAI.json")
 	if err == nil {
 		RobotConf, err = simplejson.NewJson(f)
 		if err != nil {
@@ -108,7 +106,7 @@ func Load() { //(/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/|[ \t]*//.*)  去掉�
 			return
 		}
 	}
-	f, err = ioutil.ReadFile("config/yuzhen.json")
+	f, err = ioutil.ReadFile("./conf/yuzhen.json")
 	if err == nil {
 		FormationConf, err = simplejson.NewJson(f)
 		if err != nil {
@@ -116,7 +114,7 @@ func Load() { //(/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/|[ \t]*//.*)  去掉�
 			return
 		}
 	}
-	f, err = ioutil.ReadFile("config/xuechi.json")
+	f, err = ioutil.ReadFile("./conf/xuechi.json")
 	if err == nil {
 		PoolConf, err = simplejson.NewJson(f)
 		if err != nil {
@@ -130,7 +128,7 @@ func Load() { //(/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/|[ \t]*//.*)  去掉�
 }
 
 func loadFishLine() {
-	f, err := ioutil.ReadFile("config/dayu01.json")
+	f, err := ioutil.ReadFile("./conf/dayu01.json")
 	if err == nil {
 		//LineConf, err = simplejson.NewJson(f)
 		dayu01, err := simplejson.NewJson(f)
@@ -145,7 +143,7 @@ func loadFishLine() {
 		}
 		LineConf.Set("dayu01", dayu02)
 	}
-	f, err = ioutil.ReadFile("config/BOSS01.json")
+	f, err = ioutil.ReadFile("./conf/BOSS01.json")
 	if err == nil {
 		//LineConf, err = simplejson.NewJson(f)
 		dayu01, err := simplejson.NewJson(f)
@@ -160,7 +158,7 @@ func loadFishLine() {
 		}
 		LineConf.Set("BOSS01", dayu02)
 	}
-	f, err = ioutil.ReadFile("config/zy01.json")
+	f, err = ioutil.ReadFile("./conf/zy01.json")
 	if err == nil {
 		//LineConf, err = simplejson.NewJson(f)
 		dayu01, err := simplejson.NewJson(f)
@@ -175,7 +173,7 @@ func loadFishLine() {
 		}
 		LineConf.Set("zy01", dayu02)
 	}
-	f, err = ioutil.ReadFile("config/zy02.json")
+	f, err = ioutil.ReadFile("./conf/zy02.json")
 	if err == nil {
 		//LineConf, err = simplejson.NewJson(f)
 		dayu01, err := simplejson.NewJson(f)
@@ -190,7 +188,7 @@ func loadFishLine() {
 		}
 		LineConf.Set("zy02", dayu02)
 	}
-	f, err = ioutil.ReadFile("config/BOSS1.json")
+	f, err = ioutil.ReadFile("./conf/BOSS1.json")
 	if err == nil {
 		//LineConf, err = simplejson.NewJson(f)
 		dayu01, err := simplejson.NewJson(f)
@@ -205,7 +203,7 @@ func loadFishLine() {
 		}
 		LineConf.Set("BOSS1", dayu02)
 	}
-	f, err = ioutil.ReadFile("config/34.json")
+	f, err = ioutil.ReadFile("./conf/34.json")
 	if err == nil {
 		//LineConf, err = simplejson.NewJson(f)
 		dayu01, err := simplejson.NewJson(f)
@@ -220,7 +218,7 @@ func loadFishLine() {
 		}
 		LineConf.Set("34", dayu02)
 	}
-	f, err = ioutil.ReadFile("config/dy1.json")
+	f, err = ioutil.ReadFile("./conf/dy1.json")
 	if err == nil {
 		//LineConf, err = simplejson.NewJson(f)
 		dayu01, err := simplejson.NewJson(f)
@@ -235,7 +233,7 @@ func loadFishLine() {
 		}
 		LineConf.Set("dy1", dayu02)
 	}
-	f, err = ioutil.ReadFile("config/zy1.json")
+	f, err = ioutil.ReadFile("./conf/zy1.json")
 	if err == nil {
 		//LineConf, err = simplejson.NewJson(f)
 		dayu01, err := simplejson.NewJson(f)
@@ -250,7 +248,7 @@ func loadFishLine() {
 		}
 		LineConf.Set("zy1", dayu02)
 	}
-	f, err = ioutil.ReadFile("config/02.json")
+	f, err = ioutil.ReadFile("./conf/02.json")
 	if err == nil {
 		//LineConf, err = simplejson.NewJson(f)
 		dayu01, err := simplejson.NewJson(f)
@@ -265,7 +263,7 @@ func loadFishLine() {
 		}
 		LineConf.Set("02", dayu02)
 	}
-	f, err = ioutil.ReadFile("config/04.json")
+	f, err = ioutil.ReadFile("./conf/04.json")
 	if err == nil {
 		//LineConf, err = simplejson.NewJson(f)
 		dayu01, err := simplejson.NewJson(f)
@@ -280,7 +278,7 @@ func loadFishLine() {
 		}
 		LineConf.Set("04", dayu02)
 	}
-	f, err = ioutil.ReadFile("config/10.json")
+	f, err = ioutil.ReadFile("./conf/10.json")
 	if err == nil {
 		//LineConf, err = simplejson.NewJson(f)
 		dayu01, err := simplejson.NewJson(f)
@@ -295,7 +293,7 @@ func loadFishLine() {
 		}
 		LineConf.Set("10", dayu02)
 	}
-	f, err = ioutil.ReadFile("config/11.json")
+	f, err = ioutil.ReadFile("./conf/11.json")
 	if err == nil {
 		//LineConf, err = simplejson.NewJson(f)
 		dayu01, err := simplejson.NewJson(f)
@@ -310,7 +308,7 @@ func loadFishLine() {
 		}
 		LineConf.Set("11", dayu02)
 	}
-	f, err = ioutil.ReadFile("config/12.json")
+	f, err = ioutil.ReadFile("./conf/12.json")
 	if err == nil {
 		//LineConf, err = simplejson.NewJson(f)
 		dayu01, err := simplejson.NewJson(f)
@@ -325,7 +323,7 @@ func loadFishLine() {
 		}
 		LineConf.Set("12", dayu02)
 	}
-	f, err = ioutil.ReadFile("config/13.json")
+	f, err = ioutil.ReadFile("./conf/13.json")
 	if err == nil {
 		//LineConf, err = simplejson.NewJson(f)
 		dayu01, err := simplejson.NewJson(f)
@@ -340,7 +338,7 @@ func loadFishLine() {
 		}
 		LineConf.Set("13", dayu02)
 	}
-	f, err = ioutil.ReadFile("config/14.json")
+	f, err = ioutil.ReadFile("./conf/14.json")
 	if err == nil {
 		//LineConf, err = simplejson.NewJson(f)
 		dayu01, err := simplejson.NewJson(f)
@@ -355,7 +353,7 @@ func loadFishLine() {
 		}
 		LineConf.Set("14", dayu02)
 	}
-	f, err = ioutil.ReadFile("config/hdc1.json")
+	f, err = ioutil.ReadFile("./conf/hdc1.json")
 	if err == nil {
 		//LineConf, err = simplejson.NewJson(f)
 		dayu01, err := simplejson.NewJson(f)
@@ -370,7 +368,7 @@ func loadFishLine() {
 		}
 		LineConf.Set("hdc1", dayu02)
 	}
-	f, err = ioutil.ReadFile("config/yx1.json")
+	f, err = ioutil.ReadFile("./conf/yx1.json")
 	if err == nil {
 		//LineConf, err = simplejson.NewJson(f)
 		dayu01, err := simplejson.NewJson(f)
@@ -385,7 +383,7 @@ func loadFishLine() {
 		}
 		LineConf.Set("yx1", dayu02)
 	}
-	f, err = ioutil.ReadFile("config/HJSY1.json")
+	f, err = ioutil.ReadFile("./conf/HJSY1.json")
 	if err == nil {
 		//LineConf, err = simplejson.NewJson(f)
 		dayu01, err := simplejson.NewJson(f)
@@ -400,7 +398,7 @@ func loadFishLine() {
 		}
 		LineConf.Set("HJSY1", dayu02)
 	}
-	f, err = ioutil.ReadFile("config/hjwg1.json")
+	f, err = ioutil.ReadFile("./conf/hjwg1.json")
 	if err == nil {
 		//LineConf, err = simplejson.NewJson(f)
 		dayu01, err := simplejson.NewJson(f)
@@ -415,7 +413,7 @@ func loadFishLine() {
 		}
 		LineConf.Set("hjwg1", dayu02)
 	}
-	f, err = ioutil.ReadFile("config/hjwg2.json")
+	f, err = ioutil.ReadFile("./conf/hjwg2.json")
 	if err == nil {
 		//LineConf, err = simplejson.NewJson(f)
 		dayu01, err := simplejson.NewJson(f)
@@ -430,7 +428,7 @@ func loadFishLine() {
 		}
 		LineConf.Set("hjwg2", dayu02)
 	}
-	f, err = ioutil.ReadFile("config/hjwg3.json")
+	f, err = ioutil.ReadFile("./conf/hjwg3.json")
 	if err == nil {
 		//LineConf, err = simplejson.NewJson(f)
 		dayu01, err := simplejson.NewJson(f)
@@ -445,7 +443,7 @@ func loadFishLine() {
 		}
 		LineConf.Set("hjwg3", dayu02)
 	}
-	f, err = ioutil.ReadFile("config/JJXJ1.json")
+	f, err = ioutil.ReadFile("./conf/JJXJ1.json")
 	if err == nil {
 		//LineConf, err = simplejson.NewJson(f)
 		dayu01, err := simplejson.NewJson(f)
@@ -460,7 +458,7 @@ func loadFishLine() {
 		}
 		LineConf.Set("JJXJ1", dayu02)
 	}
-	f, err = ioutil.ReadFile("config/jly2.json")
+	f, err = ioutil.ReadFile("./conf/jly2.json")
 	if err == nil {
 		//LineConf, err = simplejson.NewJson(f)
 		dayu01, err := simplejson.NewJson(f)
@@ -475,7 +473,7 @@ func loadFishLine() {
 		}
 		LineConf.Set("jly2", dayu02)
 	}
-	f, err = ioutil.ReadFile("config/jly3.json")
+	f, err = ioutil.ReadFile("./conf/jly3.json")
 	if err == nil {
 		//LineConf, err = simplejson.NewJson(f)
 		dayu01, err := simplejson.NewJson(f)
@@ -490,7 +488,7 @@ func loadFishLine() {
 		}
 		LineConf.Set("jly3", dayu02)
 	}
-	f, err = ioutil.ReadFile("config/jly4.json")
+	f, err = ioutil.ReadFile("./conf/jly4.json")
 	if err == nil {
 		//LineConf, err = simplejson.NewJson(f)
 		dayu01, err := simplejson.NewJson(f)
@@ -505,7 +503,7 @@ func loadFishLine() {
 		}
 		LineConf.Set("jly4", dayu02)
 	}
-	f, err = ioutil.ReadFile("config/yq1.json")
+	f, err = ioutil.ReadFile("./conf/yq1.json")
 	if err == nil {
 		//LineConf, err = simplejson.NewJson(f)
 		dayu01, err := simplejson.NewJson(f)
@@ -520,7 +518,7 @@ func loadFishLine() {
 		}
 		LineConf.Set("yq1", dayu02)
 	}
-	f, err = ioutil.ReadFile("config/xy1.json")
+	f, err = ioutil.ReadFile("./conf/xy1.json")
 	if err == nil {
 		//LineConf, err = simplejson.NewJson(f)
 		dayu01, err := simplejson.NewJson(f)
@@ -535,7 +533,7 @@ func loadFishLine() {
 		}
 		LineConf.Set("xy1", dayu02)
 	}
-	f, err = ioutil.ReadFile("config/20.json")
+	f, err = ioutil.ReadFile("./conf/20.json")
 	if err == nil {
 		//LineConf, err = simplejson.NewJson(f)
 		dayu01, err := simplejson.NewJson(f)
@@ -550,7 +548,7 @@ func loadFishLine() {
 		}
 		LineConf.Set("20", dayu02)
 	}
-	f, err = ioutil.ReadFile("config/21.json")
+	f, err = ioutil.ReadFile("./conf/21.json")
 	if err == nil {
 		//LineConf, err = simplejson.NewJson(f)
 		dayu01, err := simplejson.NewJson(f)
@@ -565,7 +563,7 @@ func loadFishLine() {
 		}
 		LineConf.Set("21", dayu02)
 	}
-	f, err = ioutil.ReadFile("config/22.json")
+	f, err = ioutil.ReadFile("./conf/22.json")
 	if err == nil {
 		//LineConf, err = simplejson.NewJson(f)
 		dayu01, err := simplejson.NewJson(f)
@@ -580,7 +578,7 @@ func loadFishLine() {
 		}
 		LineConf.Set("22", dayu02)
 	}
-	f, err = ioutil.ReadFile("config/23.json")
+	f, err = ioutil.ReadFile("./conf/23.json")
 	if err == nil {
 		//LineConf, err = simplejson.NewJson(f)
 		dayu01, err := simplejson.NewJson(f)
@@ -595,7 +593,7 @@ func loadFishLine() {
 		}
 		LineConf.Set("23", dayu02)
 	}
-	f, err = ioutil.ReadFile("config/24.json")
+	f, err = ioutil.ReadFile("./conf/24.json")
 	if err == nil {
 		//LineConf, err = simplejson.NewJson(f)
 		dayu01, err := simplejson.NewJson(f)
@@ -610,7 +608,7 @@ func loadFishLine() {
 		}
 		LineConf.Set("24", dayu02)
 	}
-	f, err = ioutil.ReadFile("config/25.json")
+	f, err = ioutil.ReadFile("./conf/25.json")
 	if err == nil {
 		//LineConf, err = simplejson.NewJson(f)
 		dayu01, err := simplejson.NewJson(f)
@@ -640,7 +638,7 @@ func loadFishType() {
 		log.Errorf("", err)
 		return
 	}
-	for k, _ := range all {
+	for k := range all {
 		keys = append(keys, k)
 	}
 	for _, k := range keys {
@@ -1171,7 +1169,7 @@ func GetAFormationKey() string {
 		log.Errorf("formations err", err)
 	}
 	keys := make([]string, 0)
-	for k, _ := range formation {
+	for k := range formation {
 		keys = append(keys, k)
 	}
 	return keys[rand.RandInt(0, len(keys))]

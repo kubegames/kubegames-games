@@ -2,23 +2,22 @@ package server
 
 import (
 	"encoding/json"
-	"go-game-sdk/example/game_buyu/980101/config"
-	"go-game-sdk/example/game_buyu/980101/msg"
-	"go-game-sdk/inter"
 	"strconv"
 	"sync"
 	"time"
 
-	"github.com/kubegames/kubegames-games/internal/pkg/rand"
-
 	"github.com/golang/protobuf/proto"
+	"github.com/kubegames/kubegames-games/internal/pkg/rand"
+	"github.com/kubegames/kubegames-games/pkg/fishing/980101/config"
+	"github.com/kubegames/kubegames-games/pkg/fishing/980101/msg"
+	"github.com/kubegames/kubegames-sdk/pkg/player"
 	"github.com/kubegames/kubegames-sdk/pkg/table"
 )
 
 type Robot struct {
 	BulletNum    int32
 	Table        table.TableInterface
-	AI           inter.AIUserInter
+	AI           player.RobotInterface
 	TargetFishId int32
 	ShootTime    int32
 	FixBulletLv  bool
@@ -31,7 +30,6 @@ type Robot struct {
 	Speed        bool
 	Fishes       sync.Map
 	FisheIds     sync.Map
-	//Lock         *sync.RWMutex
 }
 
 func NewRobot(table table.TableInterface) *Robot {
@@ -483,7 +481,7 @@ func (robot *Robot) refresh(buffer []byte) {
 	//robot.Lock.Lock()
 	for _, v := range res.GetFish() {
 		//if config.GetRobotLockFishes(v.GetFishId()) {
-		//	robot.changeRobotBehaviour(v.GetId())
+		//	robot.changeRobotBehaviour(v.GetID())
 		//}
 		robot.Fishes.Store(v.GetId(), v.GetBornTime())
 		robot.FisheIds.Store(v.GetId(), v.GetFishId())

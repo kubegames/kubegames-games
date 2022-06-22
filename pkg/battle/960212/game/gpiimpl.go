@@ -2,8 +2,9 @@ package game
 
 import (
 	"fmt"
-	"game_poker/doudizhu/msg"
 	"reflect"
+
+	"github.com/kubegames/kubegames-games/pkg/battle/960212/msg"
 
 	"github.com/kubegames/kubegames-sdk/pkg/log"
 

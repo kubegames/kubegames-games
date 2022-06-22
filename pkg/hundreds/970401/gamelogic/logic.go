@@ -1,7 +1,6 @@
 package gamelogic
 
 import (
-	"common/score"
 	"fmt"
 	"game_LaBa/benzbmw/config"
 	"game_LaBa/benzbmw/model"
@@ -11,6 +10,8 @@ import (
 	"sort"
 	"sync"
 	"time"
+
+	"github.com/kubegames/kubegames-games/internal/pkg/score"
 
 	"github.com/kubegames/kubegames-sdk/pkg/log"
 
@@ -72,7 +73,7 @@ func NewGame(table table.TableInterface) *Game {
 
 func (game *Game) GetUser(user player.PlayerInterface) *User {
 
-	u, ok := game.UserMap[user.GetId()]
+	u, ok := game.UserMap[user.GetID()]
 	if !ok {
 		u = NewUser(game, user)
 		if user.IsRobot() {
@@ -80,13 +81,13 @@ func (game *Game) GetUser(user player.PlayerInterface) *User {
 			aiUser := user.BindRobot(rb)
 			rb.BindUser(aiUser)
 		}
-		game.UserMap[user.GetId()] = u
+		game.UserMap[user.GetID()] = u
 	} else {
-		game.UserMap[user.GetId()].user = user
+		game.UserMap[user.GetID()].user = user
 	}
 	// 重新进入检查一下是否在移除队列中
 	for i, v := range game.leaveUserID {
-		if v == user.GetId() {
+		if v == user.GetID() {
 			game.leaveUserID = append(game.leaveUserID[:i], game.leaveUserID[i+1:]...)
 		}
 	}
@@ -105,11 +106,11 @@ func (game *Game) SendSceneMsg(user player.PlayerInterface) {
 	game.topUser = game.GetTopUser()
 	for _, v := range game.topUser {
 		var isBigWinner bool
-		if game.BigWinner != nil && game.BigWinner.user.GetId() == v.user.GetId() {
+		if game.BigWinner != nil && game.BigWinner.user.GetID() == v.user.GetID() {
 			isBigWinner = true
 		}
 		topUsers = append(topUsers, &proto.SettleTopUserInfo{
-			UserID:      v.user.GetId(),
+			UserID:      v.user.GetID(),
 			WinGold:     v.LastWinGold,
 			TakeGold:    v.user.GetScore(),
 			Avatar:      v.user.GetHead(),
@@ -123,7 +124,7 @@ func (game *Game) SendSceneMsg(user player.PlayerInterface) {
 	for index, v := range u.BetInfo {
 		msg.MyBets[index] = &proto.SceneMyBet{
 			AllGold:  game.UserBetInfo[index] + game.AIBetInfo[index],
-			UserID:   user.GetId(),
+			UserID:   user.GetID(),
 			UserGold: v,
 		}
 	}
@@ -182,11 +183,11 @@ func (game *Game) UserBet(buf []byte, user player.PlayerInterface) {
 			game.UserBetInfo[msg.BetType] += betGold
 		}
 		u.BetInfo[msg.BetType] += betGold
-		msg.UserID = u.user.GetId()
+		msg.UserID = u.user.GetID()
 
 		// 如果在座位上，下注消息进行广播
 		for _, topUser := range game.topUser {
-			if topUser.user.GetId() == u.user.GetId() {
+			if topUser.user.GetID() == u.user.GetID() {
 				game.table.Broadcast(int32(proto.SendToClientMessageType_BetRet), msg)
 				return
 			}
@@ -322,12 +323,12 @@ func (game *Game) SettleMsg() {
 		}
 		v.taxGold = taxMoney
 		output := v.LastWinGold - taxMoney
-		fmt.Printf("发送结算消息时；用户id = %d , 赢 = %d , 税 = %d , output = %d , 税率 = %v\n", v.user.GetId(), v.LastWinGold, taxMoney, output, game.table.GetRoomRate())
+		fmt.Printf("发送结算消息时；用户id = %d , 赢 = %d , 税 = %d , output = %d , 税率 = %v\n", v.user.GetID(), v.LastWinGold, taxMoney, output, game.table.GetRoomRate())
 
 		// 税后
 		v.LastWinGold = output
 		userSettleInfos[index] = &proto.UserSettleInfo{
-			UserID:   v.user.GetId(),
+			UserID:   v.user.GetID(),
 			Avatar:   v.user.GetHead(),
 			NickName: v.user.GetNike(),
 			WinGold:  v.LastWinGold, // 最后一局赢得金额
@@ -360,7 +361,7 @@ func (game *Game) SettleMsg() {
 		userSettleInfos = nil
 		for _, v := range topUser {
 			userSettleInfos = append(userSettleInfos, &proto.UserSettleInfo{
-				UserID:   v.user.GetId(),
+				UserID:   v.user.GetID(),
 				Avatar:   v.user.GetHead(),
 				NickName: v.user.GetNike(),
 				WinGold:  v.LastWinGold, // 最后一局赢得金额
@@ -377,7 +378,7 @@ func (game *Game) SettleMsg() {
 		// 设置bigWinner的值
 		mymsg := new(proto.SettleMsg)
 		mymsg.Self = &proto.UserSettleInfo{
-			UserID:   v.user.GetId(),
+			UserID:   v.user.GetID(),
 			Avatar:   v.user.GetHead(),
 			NickName: v.user.GetNike(),
 			WinGold:  v.LastWinGold,
@@ -435,7 +436,7 @@ func (game *Game) CalcTopUser() []*User {
 	} else {
 		topUsers = append(topUsers, game.BigWinner)
 		for _, v := range game.UserMap {
-			if v.user.GetId() == game.BigWinner.user.GetId() {
+			if v.user.GetID() == game.BigWinner.user.GetID() {
 				continue
 			}
 			topUsers = append(topUsers, v)
@@ -469,12 +470,12 @@ func (game *Game) SendTopUserMsg() {
 	game.topUser = game.CalcTopUser()
 	for _, v := range game.topUser {
 		var isBigWinner bool
-		if game.BigWinner != nil && game.BigWinner.user.GetId() == v.user.GetId() {
+		if game.BigWinner != nil && game.BigWinner.user.GetID() == v.user.GetID() {
 			isBigWinner = true
 		}
 
 		msg.List = append(msg.List, &proto.SettleTopUserInfo{
-			UserID:      v.user.GetId(),
+			UserID:      v.user.GetID(),
 			TakeGold:    v.user.GetScore(),
 			Avatar:      v.user.GetHead(),
 			NickName:    v.user.GetNike(),
@@ -499,7 +500,7 @@ func (game *Game) SendTopUserWin() {
 			isBigWinner = false
 		}
 		msg.List = append(msg.List, &proto.SettleTopUserInfo{
-			UserID:      v.user.GetId(),
+			UserID:      v.user.GetID(),
 			WinGold:     v.LastWinGold,
 			TakeGold:    v.user.GetScore(),
 			Avatar:      v.user.GetHead(),
@@ -573,7 +574,7 @@ func (game *Game) getUserList(buf []byte, user player.PlayerInterface) {
 		temp = append(temp, game.BigWinner)
 		for _, v := range game.UserMap {
 			// temp = append(temp, v)
-			if v.user.GetId() == game.BigWinner.user.GetId() {
+			if v.user.GetID() == game.BigWinner.user.GetID() {
 				continue
 			}
 			temp = append(temp, v)
@@ -596,7 +597,7 @@ func (game *Game) getUserList(buf []byte, user player.PlayerInterface) {
 		ui := new(proto.UserInfo)
 		ui.NickName = v.user.GetNike()
 		ui.Gold = v.user.GetScore()
-		ui.ID = v.user.GetId()
+		ui.ID = v.user.GetID()
 		ui.WinGold = v.WinGold
 		ui.WinTimes = v.WinTimes
 		ui.Avatar = v.user.GetHead()
@@ -607,7 +608,7 @@ func (game *Game) getUserList(buf []byte, user player.PlayerInterface) {
 }
 
 func (game *Game) UserOut(user player.PlayerInterface) {
-	delete(game.UserMap, user.GetId())
+	delete(game.UserMap, user.GetID())
 }
 
 // 计算赢的金额
@@ -931,7 +932,7 @@ func (game *Game) settle4UserAfterGame() {
 		}
 		// 设置每个玩家的分数
 		// 此处lastWinGold是已经扣过税了
-		fmt.Printf("用户id == %d , 赢  == %d\n", v.user.GetId(), v.LastWinGold)
+		fmt.Printf("用户id == %d , 赢  == %d\n", v.user.GetID(), v.LastWinGold)
 		v.user.SetScore(game.table.GetGameNum(), v.LastWinGold, 0)
 		v.user.SendRecord(game.table.GetGameNum(), v.LastWinGold-v.BetGoldNow, v.BetGoldNow, v.taxGold, v.LastWinGold, "")
 		var allBet int64
@@ -986,9 +987,9 @@ func (game *Game) BetRept(bts []byte, user player.PlayerInterface) {
 	u.user.SetScore(u.game.table.GetGameNum(), -1*allBet, 0)
 
 	for _, user := range game.topUser {
-		if user.user.GetId() == u.user.GetId() {
+		if user.user.GetID() == u.user.GetID() {
 			mymsg := new(proto.BetReptRespNoticeMsg)
-			mymsg.UserID = u.user.GetId()
+			mymsg.UserID = u.user.GetID()
 			mymsg.BetGold = msg.BetGold
 			game.table.Broadcast(int32(proto.SendToClientMessageType_BetReptRespNotice), mymsg)
 		}
@@ -1004,7 +1005,7 @@ func (game *Game) clearUser() {
 			user.Reset()
 		}
 		delete(game.UserMap, id)
-		if game.BigWinner != nil && game.BigWinner.user.GetId() == id {
+		if game.BigWinner != nil && game.BigWinner.user.GetID() == id {
 			game.BigWinner = nil
 		}
 	}
@@ -1015,7 +1016,7 @@ func (game *Game) clearUser() {
 func (game *Game) goldNowNotice() {
 	for _, user := range game.UserMap {
 		msg := new(proto.GoldNowMsg)
-		msg.UserID = user.user.GetId()
+		msg.UserID = user.user.GetID()
 		msg.GoldNow = user.user.GetScore()
 		user.user.SendMsg(int32(proto.SendToClientMessageType_GoldNowNotice), msg)
 	}
@@ -1148,7 +1149,7 @@ func (game Game) writeLog() {
 
 		userTmpl += fmt.Sprintf("]，总输赢：%v;", user.LastWinGold)
 
-		game.table.WriteLogs(user.user.GetId(), userTmpl)
+		game.table.WriteLogs(user.user.GetID(), userTmpl)
 		if user.LastWinGold > WinMostGold {
 			WinMostGold = user.LastWinGold
 			WinMostUserID = user.user.GetID()

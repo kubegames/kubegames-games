@@ -1,9 +1,10 @@
 package poker
 
 import (
-	"common/rand"
-	"game_poker/ddzall/msg"
 	"testing"
+
+	"github.com/kubegames/kubegames-games/internal/pkg/rand"
+	"github.com/kubegames/kubegames-games/pkg/battle/960213/msg"
 )
 
 const MaxTurnCount = 1000000

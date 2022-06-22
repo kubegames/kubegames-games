@@ -14,7 +14,6 @@ require (
 	github.com/bitly/go-simplejson v0.5.0
 	github.com/gogf/gf/v2 v2.0.6
 	github.com/golang/protobuf v1.5.2
-	github.com/gorilla/websocket v1.5.0
 	github.com/kubegames/kubegames-sdk v1.0.0
 	github.com/magicsea/behavior3go v0.0.0-20220421032646-522bd9a35d7a
 	github.com/mohae/deepcopy v0.0.0-20170929034955-c48cc78d4826
@@ -44,12 +43,13 @@ require (
 	github.com/golang/snappy v0.0.1 // indirect
 	github.com/google/go-cmp v0.5.7 // indirect
 	github.com/google/gofuzz v1.2.0 // indirect
+	github.com/gorilla/websocket v1.5.0 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.8.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
-	github.com/kubegames/kubegames-ctl v1.0.0 // indirect
 	github.com/kubegames/kubegames-hall v1.0.0 // indirect
 	github.com/kubegames/kubegames-operator v1.0.0 // indirect
 	github.com/kubegames/kubegames-proxy v1.0.0 // indirect
+	github.com/kubegames/protobuf v1.0.0 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
 	github.com/marspere/goencrypt v1.0.4 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect

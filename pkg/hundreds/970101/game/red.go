@@ -1,13 +1,14 @@
 package game
 
 import (
-	"common/rand"
 	"game_buyu/crazy_red/config"
 	"game_buyu/crazy_red/data"
 	"game_buyu/crazy_red/global"
 	"game_buyu/crazy_red/msg"
 	"sync"
 	"time"
+
+	"github.com/kubegames/kubegames-games/internal/pkg/rand"
 
 	"github.com/kubegames/kubegames-sdk/pkg/log"
 )
@@ -70,18 +71,18 @@ func (red *Red) GetRedInfo2C() *msg.S2CRedInfo {
 func (red *Red) GetCurRed2C() *msg.S2CCurRed {
 	return &msg.S2CCurRed{
 		RedId: red.Id, UserName: red.sender.Name, Amount: red.OriginAmount, MineNum: red.MineNum,
-		SenderId: red.sender.User.GetId(),
+		SenderId: red.sender.User.GetID(),
 	}
 }
 
 //score : 玩家积分
 func (red *Red) NewRobbedRed(isMine bool, robAmount int64, robUser *data.User) *msg.S2CRobRed {
 	if !robUser.User.IsRobot() {
-		log.Traceln("发送金额：", robUser.User.GetId(), "  ", robUser.User.GetScore())
+		log.Traceln("发送金额：", robUser.User.GetID(), "  ", robUser.User.GetScore())
 	}
 	s2cRobRed := &msg.S2CRobRed{
 		RedId: red.Id, IsMine: isMine, RobbedAmount: robAmount, Amount: red.OriginAmount, NotRobbedCount: red.RedFlood - red.RobbedCount,
-		SenderName: red.sender.Name, MineNum: red.MineNum, Level: red.level, Score: robUser.User.GetScore(), UserId: robUser.User.GetId(),
+		SenderName: red.sender.Name, MineNum: red.MineNum, Level: red.level, Score: robUser.User.GetScore(), UserId: robUser.User.GetID(),
 		RobberHead: robUser.User.GetHead(), RobberName: robUser.User.GetNike(),
 	}
 	return s2cRobRed
@@ -137,7 +138,7 @@ func (red *Red) GetRobAmount(robUser *data.User, isMine bool) int64 {
 	}
 	amount := rand.RandInt(1, int(max))
 	if !robUser.User.IsRobot() && !red.sender.User.IsRobot() {
-		log.Traceln("抢包人和发包人都是真实玩家，不做控制", robUser.User.GetId(), red.sender.User.GetId())
+		log.Traceln("抢包人和发包人都是真实玩家，不做控制", robUser.User.GetID(), red.sender.User.GetID())
 		return int64(amount)
 	}
 	if isMine {

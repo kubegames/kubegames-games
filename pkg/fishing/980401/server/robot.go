@@ -1,23 +1,22 @@
 package server
 
 import (
-	"go-game-sdk/example/game_buyu/980401/config"
-	"go-game-sdk/example/game_buyu/980401/msg"
-	"go-game-sdk/example/game_buyu/980401/tools"
-	"go-game-sdk/inter"
 	"sync"
 	"time"
 
-	"github.com/kubegames/kubegames-games/internal/pkg/rand"
-
 	"github.com/golang/protobuf/proto"
+	"github.com/kubegames/kubegames-games/internal/pkg/rand"
+	"github.com/kubegames/kubegames-games/pkg/fishing/980401/config"
+	"github.com/kubegames/kubegames-games/pkg/fishing/980401/msg"
+	"github.com/kubegames/kubegames-games/pkg/fishing/980401/tools"
+	"github.com/kubegames/kubegames-sdk/pkg/player"
 	"github.com/kubegames/kubegames-sdk/pkg/table"
 )
 
 type Robot struct {
 	BulletNum    int32
 	Table        table.TableInterface
-	AI           inter.AIUserInter
+	AI           player.RobotInterface
 	TargetFishId int32
 	ShootTime    int32
 	FixBulletLv  bool
@@ -157,7 +156,7 @@ func (robot *Robot) refresh(buffer []byte) {
 	//robot.Lock.Lock()
 	for _, v := range res.GetFish() {
 		//if config.GetRobotLockFishes(v.GetFishId()) {
-		//	robot.changeRobotBehaviour(v.GetId())
+		//	robot.changeRobotBehaviour(v.GetID())
 		//}
 		robot.Fishes.Store(v.GetId(), v.GetBornTime())
 		robot.FisheIds.Store(v.GetId(), v.GetFishId())
@@ -439,7 +438,7 @@ func (robot *Robot) checkSkillFrozen() {
 		req := &msg.SkillReq{}
 		fishes := make([]int32, 0)
 		//robot.Lock.Lock()
-		//for k, _ := range robot.Fishes {
+		//for k:= range robot.Fishes {
 		//	fishes = append(fishes, k)
 		//}
 		//robot.Lock.Unlock()

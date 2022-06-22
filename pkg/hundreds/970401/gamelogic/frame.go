@@ -2,7 +2,6 @@ package gamelogic
 
 import (
 	proto "game_LaBa/benzbmw/msg"
-	"game_frame_v2/game/inter"
 
 	"github.com/kubegames/kubegames-sdk/pkg/log"
 
@@ -22,7 +21,7 @@ func (bbr *BenzBMWRoom) InitTable(table table.TableInterface) {
 func (bbr *BenzBMWRoom) UserExit(user player.PlayerInterface) {
 }
 
-func (bbr *BenzBMWRoom) AIUserLogin(user inter.AIUserInter, game table.TableHandler) {
+func (bbr *BenzBMWRoom) AIUserLogin(user player.RobotInterface, game table.TableHandler) {
 }
 
 // 实现接口
@@ -45,7 +44,7 @@ func (game *Game) ResetTable() {
 
 func (game *Game) OnActionUserSitDown(user player.PlayerInterface, chairId int, config string) int {
 
-	if oldUser := game.UserMap[user.GetId()]; oldUser != nil {
+	if oldUser := game.UserMap[user.GetID()]; oldUser != nil {
 		oldUser.user = user
 	} else {
 		u := NewUser(game, user)
@@ -54,7 +53,7 @@ func (game *Game) OnActionUserSitDown(user player.PlayerInterface, chairId int, 
 			aiUser := user.BindRobot(rb)
 			rb.BindUser(aiUser)
 		}
-		game.UserMap[user.GetId()] = u
+		game.UserMap[user.GetID()] = u
 	}
 
 	return 1
@@ -109,31 +108,31 @@ func (game *Game) GameStart(player.PlayerInterface) bool {
 }
 
 func (game *Game) UserExit(user player.PlayerInterface) bool {
-	log.Tracef("user close %d", user.GetId())
-	u, ok := game.UserMap[user.GetId()]
+	log.Tracef("user close %d", user.GetID())
+	u, ok := game.UserMap[user.GetID()]
 	if !ok {
 		return true
 	}
 	//有下注时不让玩家离开
 	if !u.user.IsRobot() && u.BetGoldNow != 0 {
 		log.Tracef("有下注时不让玩家离开")
-		game.leaveUserID = append(game.leaveUserID, user.GetId())
+		game.leaveUserID = append(game.leaveUserID, user.GetID())
 		return false
 	} else {
-		log.Tracef("玩家离开 %d", user.GetId())
+		log.Tracef("玩家离开 %d", user.GetID())
 	}
-	game.leaveUserID = append(game.leaveUserID, user.GetId())
+	game.leaveUserID = append(game.leaveUserID, user.GetID())
 	return true
 }
 
 func (game *Game) LeaveGame(user player.PlayerInterface) bool {
-	u, ok := game.UserMap[user.GetId()]
+	u, ok := game.UserMap[user.GetID()]
 	if ok {
 		if u.BetGoldNow != 0 {
-			game.leaveUserID = append(game.leaveUserID, user.GetId())
+			game.leaveUserID = append(game.leaveUserID, user.GetID())
 			return false
 		}
-		game.leaveUserID = append(game.leaveUserID, user.GetId())
+		game.leaveUserID = append(game.leaveUserID, user.GetID())
 	}
 	return true
 }

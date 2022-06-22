@@ -1,8 +1,7 @@
 package gamelogic
 
 import (
-	proto "go-game-sdk/example/game_LaBa/970501/msg"
-	"go-game-sdk/inter"
+	proto "github.com/kubegames/kubegames-games/pkg/slots/970501/msg"
 
 	"github.com/kubegames/kubegames-sdk/pkg/log"
 	"github.com/kubegames/kubegames-sdk/pkg/player"
@@ -22,7 +21,7 @@ func (bbr *Room) InitTable(table table.TableInterface) {
 func (bbr *Room) UserExit(user player.PlayerInterface) {
 }
 
-func (bbr *Room) AIUserLogin(user inter.AIUserInter, game table.TableHandler) {
+func (bbr *Room) AIUserLogin(user player.RobotInterface, game table.TableHandler) {
 }
 
 // 实现接口

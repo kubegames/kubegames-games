@@ -1,8 +1,6 @@
 package game
 
 import (
-	"common/rand"
-	"common/score"
 	"container/list"
 	"encoding/json"
 	"fmt"
@@ -10,10 +8,14 @@ import (
 	"game_buyu/crazy_red/data"
 	"game_buyu/crazy_red/global"
 	"game_buyu/crazy_red/msg"
-	"game_frame_v2/define"
+
+	"github.com/kubegames/kubegames-games/internal/pkg/score"
+
+	"github.com/kubegames/kubegames-games/internal/pkg/rand"
 
 	"github.com/kubegames/kubegames-sdk/pkg/log"
 	"github.com/kubegames/kubegames-sdk/pkg/player"
+	"github.com/kubegames/kubegames-sdk/pkg/table"
 )
 
 func (game *Game) UserReady(user player.PlayerInterface) bool {
@@ -26,14 +28,14 @@ func (game *Game) UserReady(user player.PlayerInterface) bool {
 func (game *Game) OnActionUserSitDown(userInter player.PlayerInterface, chairId int, configStr string) int {
 	game.isClosed = false
 	//log.Traceln("frame >>>>>>> OnActionUserSitDown")
-	user := game.GetUserListMap(userInter.GetId())
+	user := game.GetUserListMap(userInter.GetID())
 	if user != nil {
 		log.Traceln("分配房间成功,用户掉线重新连回来", user.Id, "chair id : ", user.ChairId, " 用户状态：", user.Status, "房间号：", game.Id)
 		user.User = userInter
 		game.UpdateRedSender(user)
-		return define.SIT_DOWN_OK
+		return table.SitDownOk
 	} else {
-		user = data.NewUser(userInter.GetId(), userInter.GetNike(), userInter.IsRobot(), game.Table)
+		user = data.NewUser(userInter.GetID(), userInter.GetNike(), userInter.IsRobot(), game.Table)
 	}
 	if userInter.IsRobot() {
 		//log.Traceln("性格总数：", len(config.json.AiRobConfigArr))
@@ -53,17 +55,17 @@ func (game *Game) OnActionUserSitDown(userInter player.PlayerInterface, chairId 
 		game.isClosed = false
 	}
 
-	return define.SIT_DOWN_OK
+	return table.SitDownOk
 }
 
 func (game *Game) UserExit(userInter player.PlayerInterface) bool {
 	//log.Traceln("frame >>>>>>> UserExit")
-	user := game.GetUserListMap(userInter.GetId())
+	user := game.GetUserListMap(userInter.GetID())
 	if user == nil {
 		log.Traceln("UserExit 用户没在桌子上 ")
 		return true
 	}
-	red := game.GetRedFromListByUid(user.User.GetId())
+	red := game.GetRedFromListByUid(user.User.GetID())
 	if red != nil {
 		log.Traceln("UserExit 用户还有红包没被抢完，不能离开 ")
 		_ = userInter.SendMsg(global.ERROR_CODE_CANT_LEAVE, &msg.S2CString{
@@ -71,7 +73,7 @@ func (game *Game) UserExit(userInter player.PlayerInterface) bool {
 		})
 		return false
 	}
-	if game.CurRed != nil && game.CurRed.sender.User.GetId() == userInter.GetId() && game.CurRed.RobbedCount < 10 {
+	if game.CurRed != nil && game.CurRed.sender.User.GetID() == userInter.GetID() && game.CurRed.RobbedCount < 10 {
 		log.Traceln("UserExit 当前红包正在被抢，不能离开 ")
 		_ = userInter.SendMsg(global.ERROR_CODE_CANT_LEAVE, &msg.S2CString{
 			Msg: "您发送的红包正在被抢，暂时无法退出游戏",
@@ -79,7 +81,7 @@ func (game *Game) UserExit(userInter player.PlayerInterface) bool {
 		return false
 	}
 	//game.BroadCast(global.S2C_LEAVE_TABLE, user.GetUserMsgInfo())
-	game.DelUserListMap(userInter.GetId())
+	game.DelUserListMap(userInter.GetID())
 	userCount := game.userList.Len()
 	game.BroadCast(global.S2C_CUR_USER_COUNT, &msg.S2CUserCount{
 		Count: int64(userCount),
@@ -91,7 +93,7 @@ func (game *Game) UserExit(userInter player.PlayerInterface) bool {
 //游戏消息
 func (game *Game) OnGameMessage(subCmd int32, buffer []byte, userInter player.PlayerInterface) {
 	//log.Traceln("frame >>>>>>> OnGameMessage")
-	user := game.GetUserListMap(userInter.GetId())
+	user := game.GetUserListMap(userInter.GetID())
 	if user == nil {
 		log.Traceln("OnGameMessage user nil ")
 		return
@@ -126,7 +128,7 @@ type TableConfig struct {
 }
 
 func (game *Game) GameStart(user player.PlayerInterface) bool {
-	if game.Table.GetId() < 0 {
+	if game.Table.GetID() < 0 {
 		log.Traceln("房间id < 0 ")
 		return false
 	}
@@ -158,7 +160,7 @@ func (game *Game) SendScene(userInter player.PlayerInterface) bool {
 	//log.Traceln("frame >>>>>>> SendScene")
 	//log.Traceln("table level : ",game.Table.GetLevel())
 	//log.Traceln(config.GetRobotConfByLevel(game.Table.GetLevel()))
-	user := game.GetUserListMap(userInter.GetId())
+	user := game.GetUserListMap(userInter.GetID())
 	if user == nil {
 		log.Traceln("SendScene user nil ")
 		return false
@@ -166,7 +168,7 @@ func (game *Game) SendScene(userInter player.PlayerInterface) bool {
 	tableInfo := game.GetRoomBaseInfo2C(user)
 	//log.Traceln("table Info : ",tableInfo)
 	userInter.SendMsg(global.S2C_INTO_ROOM, tableInfo)
-	//game.BroadNoSelf(userInter.GetId(), global.S2C_OTHER_INTO_ROOM, user.GetUserMsgInfo())
+	//game.BroadNoSelf(userInter.GetID(), global.S2C_OTHER_INTO_ROOM, user.GetUserMsgInfo())
 	//game.Table.Broadcast()
 	userCount := game.userList.Len()
 	game.BroadCast(global.S2C_CUR_USER_COUNT, &msg.S2CUserCount{
@@ -194,19 +196,19 @@ func (game *Game) ClearRobbingRed(red *Red) {
 			senderOutput += recordScore
 			game.mineFrameLogSum(red, profitAmount, mineAmount-profitAmount)
 			sendRecord = v.Red.sender.AddRedMineAmount(v.Red.Id, mineAmount)
-			game.Table.WriteLogs(v.User.User.GetId(), "抢红包中雷，赔付金额："+score.GetScoreStr(mineAmount-v.RobbedAmount)+" 余额："+score.GetScoreStr(v.User.User.GetScore())+
+			game.Table.WriteLogs(v.User.User.GetID(), "抢红包中雷，赔付金额："+score.GetScoreStr(mineAmount-v.RobbedAmount)+" 余额："+score.GetScoreStr(v.User.User.GetScore())+
 				"抢包玩家中雷，作弊率："+fmt.Sprintf(`%d`, v.User.Cheat)+" 系统作弊率："+fmt.Sprintf(`%d`, roomProb)+
 				"红包被抢次数："+fmt.Sprintf(`%d`, v.RedRobbedCount)+"红包剩余金额："+score.GetScoreStr(v.RedRemainAmount)+
 				"发包人id："+fmt.Sprintf(`%d`, red.sender.User.GetID())+"抢包人id："+fmt.Sprintf(`%d`, v.User.User.GetID())+"雷号："+fmt.Sprintf(`%d`, v.MineNum)+
 				"红包id："+fmt.Sprintf(`%d`, v.Red.Id))
-			game.Table.WriteLogs(v.Red.sender.User.GetId(), "收到玩家中雷赔付金额："+score.GetScoreStr(mineAmount)+" 余额："+score.GetScoreStr(v.Red.sender.User.GetScore())+
+			game.Table.WriteLogs(v.Red.sender.User.GetID(), "收到玩家中雷赔付金额："+score.GetScoreStr(mineAmount)+" 余额："+score.GetScoreStr(v.Red.sender.User.GetScore())+
 				"发包玩家作弊率："+fmt.Sprintf(`%d`, v.Red.sender.Cheat)+" 系统作弊率："+fmt.Sprintf(`%d`, roomProb)+
 				"红包被抢次数："+fmt.Sprintf(`%d`, v.RedRobbedCount)+"红包剩余金额："+score.GetScoreStr(v.RedRemainAmount)+
 				"发包人id："+fmt.Sprintf(`%d`, red.sender.User.GetID())+"抢包人id："+fmt.Sprintf(`%d`, v.User.User.GetID())+"雷号："+fmt.Sprintf(`%d`, v.MineNum)+
 				"红包id："+fmt.Sprintf(`%d`, v.Red.Id))
 			game.TriggerHorseLamp(red.sender, mineAmount)
 			//输家打码量
-			if v.User.User.GetId() != red.sender.User.GetId() {
+			if v.User.User.GetID() != red.sender.User.GetID() {
 				if !v.User.User.IsRobot() {
 					log.Traceln("中雷打码量：", mineAmount)
 				}
@@ -218,13 +220,13 @@ func (game *Game) ClearRobbingRed(red *Red) {
 			}
 		} else {
 			_, _ = v.User.User.SetScore(game.Table.GetGameNum(), v.RobbedAmount, 0)
-			game.Table.WriteLogs(v.User.User.GetId(), "抢红包金额："+score.GetScoreStr(v.RobbedAmount)+" 余额："+score.GetScoreStr(v.User.User.GetScore())+
+			game.Table.WriteLogs(v.User.User.GetID(), "抢红包金额："+score.GetScoreStr(v.RobbedAmount)+" 余额："+score.GetScoreStr(v.User.User.GetScore())+
 				"抢包玩家作弊率："+fmt.Sprintf(`%d`, v.User.Cheat)+" 系统作弊率："+fmt.Sprintf(`%d`, roomProb)+
 				"红包被抢次数："+fmt.Sprintf(`%d`, v.RedRobbedCount)+"红包剩余金额："+score.GetScoreStr(v.RedRemainAmount)+
-				"发包人id："+fmt.Sprintf(`%d`, red.sender.User.GetId())+"抢包人id："+fmt.Sprintf(`%d`, v.User.User.GetId())+"雷号："+fmt.Sprintf(`%d`, v.MineNum)+
+				"发包人id："+fmt.Sprintf(`%d`, red.sender.User.GetID())+"抢包人id："+fmt.Sprintf(`%d`, v.User.User.GetID())+"雷号："+fmt.Sprintf(`%d`, v.MineNum)+
 				"红包id："+fmt.Sprintf(`%d`, v.Red.Id))
 		}
-		if v.User.User.GetId() == red.sender.User.GetId() {
+		if v.User.User.GetID() == red.sender.User.GetID() {
 			senderOutput += v.RobbedAmount
 		} else {
 			var userBetsAmount int64 = 0
@@ -242,7 +244,7 @@ func (game *Game) ClearRobbingRed(red *Red) {
 		game.TriggerHorseLamp(v.User, v.RobbedAmount)
 	}
 	//发包者单独发送战绩
-	//log.Traceln("clear robbing red 红包发送者战绩，打码量，总投入：",red.sender.User.GetId(),senderTotal,senderChip,red.sender.BetsAmount)
+	//log.Traceln("clear robbing red 红包发送者战绩，打码量，总投入：",red.sender.User.GetID(),senderTotal,senderChip,red.sender.BetsAmount)
 	red.sender.User.SendChip(senderChip)
 	//red.sender.User.SetBetsAmount(senderBets)
 	red.sender.User.SendRecord(game.Table.GetGameNum(), senderOutput, senderBets, senderDrawAmount, senderOutput, "")
@@ -257,18 +259,18 @@ func (game *Game) ClearRobbingRed(red *Red) {
 //通知关闭桌子
 func (game *Game) CloseTable() {
 	game.isClosed = true
-	log.Traceln("清退所有用户的时候，归还红包 222 ", game.redList.Len(), game.Table.GetId())
+	log.Traceln("清退所有用户的时候，归还红包 222 ", game.redList.Len(), game.Table.GetID())
 	for e := game.redList.Front(); e != nil; e = e.Next() {
 		red := e.Value.(*Red)
 		if red.OriginAmount != red.Amount {
 			log.Traceln("red 正在抢", red.Id)
 			game.ClearRobbingRed(red)
 		} else {
-			log.Traceln("关闭桌子 ，退回：", red.sender.User.GetId(), "红包金额：", red.OriginAmount)
+			log.Traceln("关闭桌子 ，退回：", red.sender.User.GetID(), "红包金额：", red.OriginAmount)
 			//red.sender.User.SetBetsAmount(red.OriginAmount)
 			_, _ = red.sender.User.SetScore(game.Table.GetGameNum(), red.OriginAmount, 0)
 			//red.sender.User.SendRecord(red.sender.User.GetRoomNum(), red.OriginAmount,red.OriginAmount,0,red.OriginAmount,"关桌子退红包金额")
-			game.Table.WriteLogs(red.sender.User.GetId(), "退还红包金额："+score.GetScoreStr(red.Amount)+" 余额："+score.GetScoreStr(red.sender.User.GetScore()))
+			game.Table.WriteLogs(red.sender.User.GetID(), "退还红包金额："+score.GetScoreStr(red.Amount)+" 余额："+score.GetScoreStr(red.sender.User.GetScore()))
 		}
 	}
 	for e := game.userList.Front(); e != nil; e = e.Next() {
@@ -279,7 +281,7 @@ func (game *Game) CloseTable() {
 	game.redList = nil
 	game.userList = list.New()
 	game.redList = list.New()
-	log.Traceln("清空玩家和红包列表,清退所有用户的时候，归还红包 222 ", game.redList.Len(), game.Table.GetId())
+	log.Traceln("清空玩家和红包列表,清退所有用户的时候，归还红包 222 ", game.redList.Len(), game.Table.GetID())
 	game.Table.StartGame()
 	game.Table.AddTimer(3000, func() {
 		log.Traceln("执行end game")
@@ -305,7 +307,7 @@ func (game *Game) ResetTable() {
 	//
 	//}
 	//game.redList = list.New()
-	log.Traceln("清退所有用户的时候，归还红包 111 红包列表：房间id：人数：", game.redList.Len(), game.Table.GetId(), game.userList.Len())
+	log.Traceln("清退所有用户的时候，归还红包 111 红包列表：房间id：人数：", game.redList.Len(), game.Table.GetID(), game.userList.Len())
 	game.isStarted = false
 	for e := game.redList.Front(); e != nil; e = e.Next() {
 		red := e.Value.(*Red)
@@ -313,11 +315,11 @@ func (game *Game) ResetTable() {
 			log.Traceln("red 正在抢", red.Id)
 			game.ClearRobbingRed(red)
 		} else {
-			log.Traceln("关闭桌子 ，退回：", red.sender.User.GetId(), "红包金额：", red.OriginAmount)
+			log.Traceln("关闭桌子 ，退回：", red.sender.User.GetID(), "红包金额：", red.OriginAmount)
 			//red.sender.User.SetBetsAmount(red.OriginAmount)
 			_, _ = red.sender.User.SetScore(game.Table.GetGameNum(), red.OriginAmount, 0)
 			//red.sender.User.SendRecord(red.sender.User.GetRoomNum(), red.OriginAmount,red.OriginAmount,0,red.OriginAmount,"关桌子退红包金额")
-			game.Table.WriteLogs(red.sender.User.GetId(), "退还红包金额："+score.GetScoreStr(red.Amount)+" 余额："+score.GetScoreStr(red.sender.User.GetScore()))
+			game.Table.WriteLogs(red.sender.User.GetID(), "退还红包金额："+score.GetScoreStr(red.Amount)+" 余额："+score.GetScoreStr(red.sender.User.GetScore()))
 		}
 	}
 	for e := game.userList.Front(); e != nil; e = e.Next() {
@@ -328,7 +330,7 @@ func (game *Game) ResetTable() {
 	game.redList = nil
 	game.userList = list.New()
 	game.redList = list.New()
-	log.Traceln("清空两个列表，清退所有用户的时候，归还红包 111 ", game.redList.Len(), game.Table.GetId())
+	log.Traceln("清空两个列表，清退所有用户的时候，归还红包 111 ", game.redList.Len(), game.Table.GetID())
 	//game.Table.EndGame()
 }
 

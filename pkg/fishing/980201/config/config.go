@@ -2,16 +2,15 @@ package config
 
 import (
 	"encoding/json"
-	"go-game-sdk/example/game_buyu/980201/msg"
-	"go-game-sdk/example/game_buyu/980201/tools"
 	"io/ioutil"
 	"os"
 	"strconv"
 	"time"
 
-	"github.com/kubegames/kubegames-sdk/pkg/log"
-
 	"github.com/bitly/go-simplejson"
+	"github.com/kubegames/kubegames-games/pkg/fishing/980201/msg"
+	"github.com/kubegames/kubegames-games/pkg/fishing/980201/tools"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 )
 
 type config struct {
@@ -59,7 +58,7 @@ func LoadJsonConfig(_filename string, _config interface{}) (err error) {
 }
 
 func Load() { //(/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/|[ \t]*//.*)  去掉注释的正则
-	f, err := ioutil.ReadFile("config/yu.json")
+	f, err := ioutil.ReadFile("./conf/yu.json")
 	if err == nil {
 		YuConf, err = simplejson.NewJson(f)
 		if err != nil {
@@ -67,7 +66,7 @@ func Load() { //(/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/|[ \t]*//.*)  去掉�
 			return
 		}
 	}
-	f, err = ioutil.ReadFile("config/shuaxin.json")
+	f, err = ioutil.ReadFile("./conf/shuaxin.json")
 	if err == nil {
 		shuaxin, err := simplejson.NewJson(f)
 		if err != nil {
@@ -77,7 +76,7 @@ func Load() { //(/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/|[ \t]*//.*)  去掉�
 		s, _ := shuaxin.Map()
 		YuConf.Set("2", s)
 	}
-	f, err = ioutil.ReadFile("config/changjin.json")
+	f, err = ioutil.ReadFile("./conf/changjin.json")
 	if err == nil {
 		ChangJingConf, err = simplejson.NewJson(f)
 		if err != nil {
@@ -85,7 +84,7 @@ func Load() { //(/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/|[ \t]*//.*)  去掉�
 			return
 		}
 	}
-	f, err = ioutil.ReadFile("config/pao.json")
+	f, err = ioutil.ReadFile("./conf/pao.json")
 	if err == nil {
 		PaoConf, err = simplejson.NewJson(f)
 		if err != nil {
@@ -93,7 +92,7 @@ func Load() { //(/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/|[ \t]*//.*)  去掉�
 			return
 		}
 	}
-	f, err = ioutil.ReadFile("config/paodan.json")
+	f, err = ioutil.ReadFile("./conf/paodan.json")
 	if err == nil {
 		PaoDanConf, err = simplejson.NewJson(f)
 		if err != nil {
@@ -101,7 +100,7 @@ func Load() { //(/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/|[ \t]*//.*)  去掉�
 			return
 		}
 	}
-	f, err = ioutil.ReadFile("config/jiqirAI.json")
+	f, err = ioutil.ReadFile("./conf/jiqirAI.json")
 	if err == nil {
 		RobotConf, err = simplejson.NewJson(f)
 		if err != nil {
@@ -109,7 +108,7 @@ func Load() { //(/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/|[ \t]*//.*)  去掉�
 			return
 		}
 	}
-	f, err = ioutil.ReadFile("config/yuzhen.json")
+	f, err = ioutil.ReadFile("./conf/yuzhen.json")
 	if err == nil {
 		formation, err := simplejson.NewJson(f)
 		f, err := formation.Map()
@@ -119,7 +118,7 @@ func Load() { //(/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/|[ \t]*//.*)  去掉�
 		}
 		FormationConf.Set("yuzhen", f)
 	}
-	f, err = ioutil.ReadFile("config/yuzhen2.json")
+	f, err = ioutil.ReadFile("./conf/yuzhen2.json")
 	if err == nil {
 		formation, err := simplejson.NewJson(f)
 		f, err := formation.Map()
@@ -129,7 +128,7 @@ func Load() { //(/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/|[ \t]*//.*)  去掉�
 		}
 		FormationConf.Set("yuzhen2", f)
 	}
-	f, err = ioutil.ReadFile("config/xuechi.json")
+	f, err = ioutil.ReadFile("./conf/xuechi.json")
 	if err == nil {
 		PoolConf, err = simplejson.NewJson(f)
 		if err != nil {
@@ -137,7 +136,7 @@ func Load() { //(/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/|[ \t]*//.*)  去掉�
 			return
 		}
 	}
-	f, err = ioutil.ReadFile("config/jineng.json")
+	f, err = ioutil.ReadFile("./conf/jineng.json")
 	if err == nil {
 		SkillConf, err = simplejson.NewJson(f)
 		if err != nil {
@@ -151,7 +150,7 @@ func Load() { //(/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/|[ \t]*//.*)  去掉�
 }
 
 func loadFishLine() {
-	f, err := ioutil.ReadFile("config/quxian.json")
+	f, err := ioutil.ReadFile("./conf/quxian.json")
 	if err == nil {
 		//LineConf, err = simplejson.NewJson(f)
 		dayu01, err := simplejson.NewJson(f)
@@ -166,7 +165,7 @@ func loadFishLine() {
 		}
 		LineConf.Set("quxian", dayu02)
 	}
-	f, err = ioutil.ReadFile("config/quxian2.json")
+	f, err = ioutil.ReadFile("./conf/quxian2.json")
 	if err == nil {
 		//LineConf, err = simplejson.NewJson(f)
 		dayu01, err := simplejson.NewJson(f)
@@ -181,7 +180,7 @@ func loadFishLine() {
 		}
 		LineConf.Set("quxian2", dayu02)
 	}
-	f, err = ioutil.ReadFile("config/zhixian(1).json")
+	f, err = ioutil.ReadFile("./conf/zhixian(1).json")
 	if err == nil {
 		//LineConf, err = simplejson.NewJson(f)
 		dayu01, err := simplejson.NewJson(f)
@@ -196,7 +195,7 @@ func loadFishLine() {
 		}
 		LineConf.Set("zhixian(1)", dayu02)
 	}
-	f, err = ioutil.ReadFile("config/zhixian(2).json")
+	f, err = ioutil.ReadFile("./conf/zhixian(2).json")
 	if err == nil {
 		//LineConf, err = simplejson.NewJson(f)
 		dayu01, err := simplejson.NewJson(f)
@@ -211,7 +210,7 @@ func loadFishLine() {
 		}
 		LineConf.Set("zhixian(2)", dayu02)
 	}
-	f, err = ioutil.ReadFile("config/zhaohuan.json")
+	f, err = ioutil.ReadFile("./conf/zhaohuan.json")
 	if err == nil {
 		//LineConf, err = simplejson.NewJson(f)
 		dayu01, err := simplejson.NewJson(f)
@@ -226,7 +225,7 @@ func loadFishLine() {
 		}
 		LineConf.Set("zhaohuan", dayu02)
 	}
-	f, err = ioutil.ReadFile("config/boss33luxian.json")
+	f, err = ioutil.ReadFile("./conf/boss33luxian.json")
 	if err == nil {
 		//LineConf, err = simplejson.NewJson(f)
 		dayu01, err := simplejson.NewJson(f)
@@ -256,7 +255,7 @@ func loadFishType() {
 		log.Errorf("", err)
 		return
 	}
-	for k, _ := range all {
+	for k := range all {
 		keys = append(keys, k)
 	}
 	for _, k := range keys {
@@ -591,7 +590,7 @@ func GetSkills() []*msg.Skill {
 	if err != nil {
 		log.Errorf("SkillConf err", err)
 	}
-	for k, _ := range s {
+	for k := range s {
 		skill := GetSkillinfo(k)
 		skills = append(skills, skill)
 	}
@@ -961,7 +960,7 @@ func GetAFormationKey(file string) string {
 		return ""
 	}
 	keys := make([]string, 0)
-	for k, _ := range formation {
+	for k := range formation {
 		keys = append(keys, k)
 	}
 	return keys[tools.RandInt(0, len(keys), 0)]

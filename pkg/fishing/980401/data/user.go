@@ -1,10 +1,8 @@
 package data
 
 import (
-	"go-game-sdk/example/game_buyu/980401/msg"
-
+	"github.com/kubegames/kubegames-games/pkg/fishing/980401/msg"
 	frameMsg "github.com/kubegames/kubegames-sdk/app/message"
-
 	"github.com/kubegames/kubegames-sdk/pkg/player"
 	"github.com/kubegames/kubegames-sdk/pkg/table"
 )

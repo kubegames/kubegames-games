@@ -2,9 +2,10 @@ package gamelogic
 
 import (
 	"fmt"
-	"go-game-sdk/example/game_LaBa/970501/config"
-	proto "go-game-sdk/example/game_LaBa/970501/msg"
 	"sync"
+
+	"github.com/kubegames/kubegames-games/pkg/slots/970501/config"
+	proto "github.com/kubegames/kubegames-games/pkg/slots/970501/msg"
 
 	"github.com/kubegames/kubegames-sdk/pkg/player"
 )

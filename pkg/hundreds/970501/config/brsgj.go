@@ -3,9 +3,10 @@ package config
 import (
 	"encoding/json"
 	"fmt"
-	"go-game-sdk/example/game_LaBa/970501/model"
 	"io/ioutil"
 	"log"
+
+	"github.com/kubegames/kubegames-games/pkg/slots/970501/model"
 
 	"github.com/tidwall/gjson"
 )

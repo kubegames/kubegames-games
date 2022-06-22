@@ -2,7 +2,6 @@ package model
 
 import (
 	BRNN "go-game-sdk/example/game_poker/960303/msg"
-	"go-game-sdk/inter"
 	"math/rand"
 
 	"github.com/kubegames/kubegames-sdk/pkg/player"
@@ -157,7 +156,7 @@ func (si *SceneInfo) GetAiUser() player.PlayerInterface {
 	return nil
 }
 
-func (si *SceneInfo) IsSitDown(user inter.AIUserInter) bool {
+func (si *SceneInfo) IsSitDown(user player.RobotInterface) bool {
 	_, ok := si.UserSeat[user.GetID()]
 	return ok
 }
@@ -174,6 +173,6 @@ func (si *SceneInfo) CheckUserOnChair(userId int64) bool {
 }
 
 //func (si *SceneInfo) IsUserSitDown(user player.PlayerInterface) bool {
-//	_, ok := si.UserSeat[user.GetId()]
+//	_, ok := si.UserSeat[user.GetID()]
 //	return ok
 //}

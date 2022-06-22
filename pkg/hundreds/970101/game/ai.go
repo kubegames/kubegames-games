@@ -1,11 +1,12 @@
 package game
 
 import (
-	"common/rand"
 	"game_buyu/crazy_red/config"
 	"game_buyu/crazy_red/data"
 	"game_buyu/crazy_red/global"
 	"game_buyu/crazy_red/msg"
+
+	"github.com/kubegames/kubegames-games/internal/pkg/rand"
 
 	"github.com/golang/protobuf/proto"
 	"github.com/kubegames/kubegames-sdk/pkg/log"

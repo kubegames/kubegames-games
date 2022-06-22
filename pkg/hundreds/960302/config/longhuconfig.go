@@ -3,8 +3,8 @@ package config
 import (
 	"fmt"
 	"io/ioutil"
-	"log"
 
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 	"github.com/tidwall/gjson"
 )
 
@@ -51,7 +51,7 @@ var LongHuConfig InitLHConfig
 func LoadLongHuConfig() {
 	data, err := ioutil.ReadFile("./conf/longhuconfig.json")
 	if err != nil {
-		log.Println("longhuconfig Error ", err.Error())
+		log.Errorf("longhuconfig Error %s", err.Error())
 		return
 	}
 	result := gjson.Parse(string(data))

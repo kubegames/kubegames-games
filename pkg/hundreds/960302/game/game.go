@@ -2,21 +2,19 @@ package game
 
 import (
 	"fmt"
-	"game_poker/longhu/config"
-	"game_poker/longhu/model"
 	"math"
-	"math/rand"
 	"sort"
 	"time"
 
-	"github.com/kubegames/kubegames-sdk/pkg/log"
-
-	"game_frame_v2/game/clock"
-
-	"common/score"
-
 	"github.com/bitly/go-simplejson"
 	"github.com/golang/protobuf/proto"
+	"github.com/kubegames/kubegames-games/internal/pkg/rand"
+	"github.com/kubegames/kubegames-games/internal/pkg/score"
+	"github.com/kubegames/kubegames-games/pkg/hundreds/960302/config"
+	"github.com/kubegames/kubegames-games/pkg/hundreds/960302/model"
+	longhu "github.com/kubegames/kubegames-games/pkg/hundreds/960302/msg"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
+	"github.com/kubegames/kubegames-sdk/pkg/platform"
 	"github.com/kubegames/kubegames-sdk/pkg/player"
 	"github.com/kubegames/kubegames-sdk/pkg/table"
 )
@@ -43,8 +41,8 @@ type Game struct {
 	BetTotal            [3]int64              //龙虎和的下注统计
 	TotalUserBet        [3]int64              //龙虎和的下注统计
 	SenceSeat           model.SceneInfo       //下注的玩家列表
-	TimerJob            *clock.Job            //job
-	RobotTimerJob       *clock.Job            //机器人job
+	TimerJob            *table.Job            //job
+	RobotTimerJob       *table.Job            //机器人job
 	LastMasterBetType   int32                 //最近一次神算子下注的类型
 	WinTrend            []int32               //赢的走势
 	CountUserList       []*model.User         //统计后的玩家列表
@@ -73,16 +71,13 @@ func (game *Game) UserReady(user player.PlayerInterface) bool {
 }
 
 //用户坐下
-func (game *Game) OnActionUserSitDown(user player.PlayerInterface, chairId int, config string) int {
-	//game.WinCardTypeTrend = make([]int32, 0)
-	//game.WinTrend = make([]int32, 0)
+func (game *Game) OnActionUserSitDown(user player.PlayerInterface, chairId int, config string) table.MatchKind {
 	game.getUser(user)
 
-	//game.RandSelectUserSitDownChair(nil)
-	return 1 //business.OnActionUserSitDownHandler()
+	return table.SitDownOk
 }
 
-func (game *Game) UserExit(user player.PlayerInterface) bool {
+func (game *Game) UserOffline(user player.PlayerInterface) bool {
 	u := game.getUser(user)
 	//有下注时不让玩家离开
 	if u.TotalBet != 0 {
@@ -92,13 +87,13 @@ func (game *Game) UserExit(user player.PlayerInterface) bool {
 	if u.SceneChairId != 0 {
 		game.OnUserStanUp(user)
 	}
-	delete(game.AllUserList, user.GetId())
+	delete(game.AllUserList, user.GetID())
 	game.DeleteExitUserFromOnlineUserListSlice(u)
 	//game.RandSelectUserSitDownChair()
 	return true
 }
 
-func (game *Game) LeaveGame(user player.PlayerInterface) bool {
+func (game *Game) UserLeaveGame(user player.PlayerInterface) bool {
 	u := game.getUser(user)
 	if u.TotalBet != 0 {
 		msg := new(longhu.ExitFail)
@@ -110,7 +105,7 @@ func (game *Game) LeaveGame(user player.PlayerInterface) bool {
 	if u.SceneChairId != 0 {
 		game.OnUserStanUp(user)
 	}
-	delete(game.AllUserList, user.GetId())
+	delete(game.AllUserList, user.GetID())
 	game.DeleteExitUserFromOnlineUserListSlice(u)
 	//game.RandSelectUserSitDownChair()
 	return true
@@ -133,16 +128,21 @@ func (game *Game) OnGameMessage(subCmd int32, buffer []byte, user player.PlayerI
 	}
 }
 
-func (game *Game) SendScene(user player.PlayerInterface) bool {
+func (game *Game) BindRobot(ai player.RobotInterface) player.RobotHandler {
+	robot := new(Robot)
+	robot.Init(ai, game)
+	return robot
+}
+
+func (game *Game) SendScene(user player.PlayerInterface) {
 	game.GetRoomconfig()
 	u := game.getUser(user)
-	if user.IsRobot() {
-		robot := new(Robot)
-		robotUser := user.BindRobot(robot)
-		robot.Init(robotUser, game)
-		return true
-	}
-
+	// if user.IsRobot() {
+	// 	robot := new(Robot)
+	// 	robotUser := user.BindRobot(robot)
+	// 	robot.Init(robotUser, game)
+	// 	return true
+	// }
 	game.SendRuleInfo(user)
 	game.SendSceneMsg(user)
 	game.SendUserBet(u)
@@ -161,26 +161,23 @@ func (game *Game) SendScene(user player.PlayerInterface) bool {
 	}
 
 	game.SendTrend(user)
-
-	return true
 }
 
 func (game *Game) Start() {
-	game.checkUserBet()
 	//选择列表中前6个用户上座
 	game.SelectUserListInfoBefore6SitDownChair()
-	if game.Table.GetRoomID() == -1 {
-		game.Status = 0
-		return
-	}
+	// if game.Table.GetRoomID() == -1 {
+	// 	game.Status = 0
+	// 	return
+	// }
 
 	game.LastMasterBetType = -1
 	game.Table.StartGame()
 	//if game.RobotTimerJob == nil {
 	//	//r := rand.Intn(RConfig.SitDownTime[1]-RConfig.SitDownTime[0]) + RConfig.SitDownTime[0]
-	//	//game.RobotTimerJob, _ = game.Table.AddTimer(time.Duration(r), game.RobotSitDown)
+	//	//game.RobotTimerJob, _ = game.Table.AddTimer(int64(r), game.RobotSitDown)
 	//	//r1 := rand.Intn(RConfig.StandUpTime[1]-RConfig.StandUpTime[0]) + RConfig.StandUpTime[0]
-	//	//game.Table.AddTimer(time.Duration(r1), game.RobotStandUp)
+	//	//game.Table.AddTimer(int64(r1), game.RobotStandUp)
 	//}
 	//game.RandSelectUserSitDownChair()
 	//坐下限制取消
@@ -191,7 +188,7 @@ func (game *Game) Start() {
 	//}
 
 	game.Status = longhu.GameStatus_StartMovie
-	game.TimerJob, _ = game.Table.AddTimer(time.Duration(config.LongHuConfig.Taketimes.Startmove), game.StartBet)
+	game.TimerJob, _ = game.Table.AddTimer(int64(config.LongHuConfig.Taketimes.Startmove), game.StartBet)
 
 	//开始动画消息
 	game.SendStatusMsg(config.LongHuConfig.Taketimes.Startmove)
@@ -200,14 +197,14 @@ func (game *Game) Start() {
 func (game *Game) StartBet() {
 	game.ResetData()
 	game.Status = longhu.GameStatus_BetStatus
-	game.TimerJob, _ = game.Table.AddTimer(time.Duration(config.LongHuConfig.Taketimes.Startbet), game.EndBet)
+	game.TimerJob, _ = game.Table.AddTimer(int64(config.LongHuConfig.Taketimes.Startbet), game.EndBet)
 	//发送开始下注消息
 	game.SendStatusMsg(config.LongHuConfig.Taketimes.Startbet)
 }
 
 func (game *Game) EndBet() {
 	game.Status = longhu.GameStatus_EndBetMovie
-	game.TimerJob, _ = game.Table.AddTimer(time.Duration(config.LongHuConfig.Taketimes.Endmove), game.getResult)
+	game.TimerJob, _ = game.Table.AddTimer(int64(config.LongHuConfig.Taketimes.Endmove), game.getResult)
 	//发送开始下注消息
 	game.SendStatusMsg(config.LongHuConfig.Taketimes.Endmove)
 }
@@ -217,11 +214,43 @@ func (game *Game) Settle() {
 	game.Status = longhu.GameStatus_SettleStatus
 	//game.getResult()
 	game.sendSettleMsg()
-	//game.checkUserBet()
-	game.TimerJob, _ = game.Table.AddTimer(time.Duration(config.LongHuConfig.Taketimes.Endpay), game.Start)
+
 	//发送开始下注消息
 	game.SendStatusMsg(config.LongHuConfig.Taketimes.Endpay)
+
+	//结束游戏
 	game.Table.EndGame()
+
+	//踢出离线用户
+	for _, u := range game.AllUserList {
+		if u.User.IsOnline() == false {
+			game.Table.KickOut(u.User)
+		}
+	}
+
+	//检测下注情况
+	game.checkUserBet()
+
+	//桌子是否需要关闭
+	if game.Table.IsClose() {
+		//踢人
+		for k, u := range game.AllUserList {
+			//踢掉所以用户
+			u.NoBetCount = 0
+			if u.SceneChairId != 0 {
+				game.OnUserStanUp(u.User)
+			}
+			delete(game.AllUserList, k)
+			game.DeleteExitUserFromOnlineUserListSlice(u)
+			game.Table.KickOut(u.User)
+		}
+		if game.Table.PlayerCount() <= 0 {
+			game.Table.Close()
+			return
+		}
+	}
+
+	game.TimerJob, _ = game.Table.AddTimer(int64(config.LongHuConfig.Taketimes.Endpay), game.Start)
 }
 
 func (game *Game) SendStatusMsg(StatusTime int) {
@@ -260,7 +289,7 @@ func (game *Game) Bet(buffer []byte, user player.PlayerInterface) {
 	//	game.LastMasterBetType = BetPb.BetType
 	//}
 	//神算子下注区域
-	u1, ok := game.SenceSeat.UserSeat[user.GetId()]
+	u1, ok := game.SenceSeat.UserSeat[user.GetID()]
 	if ok {
 		if u1.User.Icon == 1 {
 			game.LastMasterBetType = BetPb.BetType
@@ -272,7 +301,7 @@ func (game *Game) Bet(buffer []byte, user player.PlayerInterface) {
 func (game *Game) UserSitDown(buffer []byte, user player.PlayerInterface) {
 	us := &longhu.UserSitDown{}
 	proto.Unmarshal(buffer, us)
-	u, ok := game.AllUserList[user.GetId()]
+	u, ok := game.AllUserList[user.GetID()]
 	if ok {
 		if game.SenceSeat.SitScene(u, int(us.ChairNo)) {
 			u.SceneChairId = int(us.ChairNo)
@@ -355,6 +384,9 @@ func (game *Game) sendSettleMsg() {
 	HeStr := fmt.Sprintf("和区域：总：%v 机器人：%v 真人：%v ",
 		score.GetScoreStr(game.BetTotal[HE]), score.GetScoreStr(game.BetTotal[HE]-game.TotalUserBet[HE]), game.TotalUserBet[HE])
 
+	//战绩
+	var records []*platform.PlayerRecord
+
 	for _, u := range game.AllUserList {
 		u.NoBetCount++
 		if !u.User.IsRobot() {
@@ -375,8 +407,8 @@ func (game *Game) sendSettleMsg() {
 			if game.Win == 0 {
 				msg.UserLongWin += u.BetLong
 				win += u.BetLong * 2
-				Gold, _ := u.User.SetScore(game.Table.GetGameNum(), u.BetLong, game.Table.GetRoomRate())
-				capital, _ := u.User.SetScore(game.Table.GetGameNum(), u.BetLong, 0)
+				Gold := u.User.SetScore(game.Table.GetGameNum(), u.BetLong, game.Table.GetRoomRate())
+				capital := u.User.SetScore(game.Table.GetGameNum(), u.BetLong, 0)
 				Gold += capital
 				totalTax += u.BetLong*2 - Gold
 				msg.TotalWin += Gold
@@ -386,8 +418,8 @@ func (game *Game) sendSettleMsg() {
 			} else if game.Win == 1 {
 				msg.UserHuWin += u.BetHu
 				win += u.BetHu * 2
-				Gold, _ := u.User.SetScore(game.Table.GetGameNum(), u.BetHu, game.Table.GetRoomRate())
-				capital, _ := u.User.SetScore(game.Table.GetGameNum(), u.BetHu, 0)
+				Gold := u.User.SetScore(game.Table.GetGameNum(), u.BetHu, game.Table.GetRoomRate())
+				capital := u.User.SetScore(game.Table.GetGameNum(), u.BetHu, 0)
 				Gold += capital
 				totalTax += u.BetHu*2 - Gold
 				msg.TotalWin += Gold
@@ -397,8 +429,8 @@ func (game *Game) sendSettleMsg() {
 			} else if game.Win == HE {
 				msg.HeWin = u.BetHe * int64(HEODDS)
 				win += u.BetHe*int64(HEODDS+1) + u.BetLong + u.BetHu
-				Gold, _ := u.User.SetScore(game.Table.GetGameNum(), u.BetHe*int64(HEODDS), game.Table.GetRoomRate())
-				capital, _ := u.User.SetScore(game.Table.GetGameNum(), u.BetHe, 0)
+				Gold := u.User.SetScore(game.Table.GetGameNum(), u.BetHe*int64(HEODDS), game.Table.GetRoomRate())
+				capital := u.User.SetScore(game.Table.GetGameNum(), u.BetHe, 0)
 				Gold += capital
 				totalTax += u.BetHe*int64(HEODDS+1) - Gold
 				msg.TotalWin += Gold + u.BetLong + u.BetHu
@@ -447,7 +479,7 @@ func (game *Game) sendSettleMsg() {
 			}
 			temp1 += fmt.Sprintf(" 总输赢：%v，用户剩余金额：%v \r\n", score.GetScoreStr(win-u.TotalBet), score.GetScoreStr(u.User.GetScore()))
 			temp += temp1
-			game.Table.WriteLogs(u.User.GetId(), temp)
+			game.Table.WriteLogs(u.User.GetID(), temp)
 		}
 
 		if u.BetHe != 0 {
@@ -460,7 +492,7 @@ func (game *Game) sendSettleMsg() {
 		SceneUserInfo.BetHu = msg.UserBetHu
 		SceneUserInfo.BetHe = msg.UserBetHe
 		SceneUserInfo.TotalWin = msg.TotalWin
-		SceneUserInfo.UserID = int64(u.User.GetId())
+		SceneUserInfo.UserID = int64(u.User.GetID())
 		SceneUserInfo.SceneSeatID = int32(u.SceneChairId)
 		//统计玩家信息
 		if (win) > u.TotalBet {
@@ -499,11 +531,31 @@ func (game *Game) sendSettleMsg() {
 		betsAmount := u.TotalBet
 		profitAmount := u.User.GetScore() - user.CruenSorce
 		u.ResetUserData()
-		u.User.SendRecord(game.Table.GetGameNum(), profitAmount, betsAmount, totalTax, msg.TotalWin, "")
+		//u.User.SendRecord(game.Table.GetGameNum(), profitAmount, betsAmount, totalTax, msg.TotalWin, "")
+		if !u.User.IsRobot() {
+			records = append(records, &platform.PlayerRecord{
+				PlayerID:     uint32(u.User.GetID()),
+				GameNum:      game.Table.GetGameNum(),
+				ProfitAmount: profitAmount,
+				BetsAmount:   betsAmount,
+				DrawAmount:   totalTax,
+				OutputAmount: msg.TotalWin,
+				Balance:      u.User.GetScore(),
+				UpdatedAt:    time.Now(),
+				CreatedAt:    time.Now(),
+			})
+		}
+
 		if u.SceneChairId != 0 {
 			SceneSettleMsg.UserList = append(SceneSettleMsg.UserList, SceneUserInfo)
 		}
 	}
+	if len(records) > 0 {
+		if _, err := game.Table.UploadPlayerRecord(records); err != nil {
+			log.Errorf("upload player record error %s", err.Error())
+		}
+	}
+
 	cou := model.Usercount{}
 	cou = game.CountUserList
 	sort.Sort(cou)
@@ -537,7 +589,7 @@ func (game *Game) sendSettleMsg() {
 
 func (game *Game) getResult() {
 	game.Status = longhu.GameStatus_ShowPoker
-	test, _ := game.Table.GetRoomProb()
+	test := game.Table.GetRoomProb()
 	if test == 0 {
 		game.sysCheat = "获取作弊率为0 "
 		test = 1000
@@ -603,14 +655,14 @@ func (game *Game) getResult() {
 	game.PokerMsg.Win = int32(game.Win)
 	game.Table.Broadcast(int32(longhu.SendToClientMessageType_PokerInfo), game.PokerMsg)
 	game.SendStatusMsg(config.LongHuConfig.Taketimes.ShowPoker)
-	game.Table.AddTimer(time.Duration(config.LongHuConfig.Taketimes.ShowPoker), game.Settle)
+	game.Table.AddTimer(int64(config.LongHuConfig.Taketimes.ShowPoker), game.Settle)
 }
 
 func (game *Game) getUser(user player.PlayerInterface) *model.User {
-	u, ok := game.AllUserList[user.GetId()]
+	u, ok := game.AllUserList[user.GetID()]
 	if !ok {
 		u = new(model.User)
-		game.AllUserList[user.GetId()] = u
+		game.AllUserList[user.GetID()] = u
 		u.Table = game.Table
 		u.User = user
 		u.Rule = &game.Rule
@@ -634,7 +686,7 @@ func (game *Game) SendSceneMsg(u player.PlayerInterface) {
 		su.Nick = v.User.User.GetNike()
 		su.Score = v.User.User.GetScore()
 		su.SeatId = int32(v.SeatNo)
-		su.UserID = int64(v.User.User.GetId())
+		su.UserID = int64(v.User.User.GetID())
 		su.IsMaster = false
 		su.IsBigWinner = false
 		su.IsMillionaire = false
@@ -748,7 +800,7 @@ func (game *Game) ResetData() {
 
 func (game *Game) OnUserStanUp(user player.PlayerInterface) {
 	game.SenceSeat.UserStandUp(user)
-	u, ok := game.AllUserList[user.GetId()]
+	u, ok := game.AllUserList[user.GetID()]
 	if ok {
 		u.SceneChairId = 0
 	}
@@ -776,7 +828,7 @@ func (game *Game) RobotSitDown() {
 	} else {
 		r = rand.Intn(RConfig.SitDownTime[1]-RConfig.SitDownTime[0]) + RConfig.SitDownTime[0]
 	}
-	game.RobotTimerJob, _ = game.Table.AddTimer(time.Duration(r), game.RobotSitDown)
+	game.RobotTimerJob, _ = game.Table.AddTimer(int64(r), game.RobotSitDown)
 
 	count := game.SenceSeat.GetSitDownUserCount()
 	if count < len(RConfig.SitDownProbability) {
@@ -810,7 +862,7 @@ func (game *Game) RobotSitDown() {
 
 func (game *Game) RobotStandUp() {
 	r := rand.Intn(RConfig.StandUpTime[1]-RConfig.StandUpTime[0]) + RConfig.StandUpTime[0]
-	game.Table.AddTimer(time.Duration(r), game.RobotStandUp)
+	game.Table.AddTimer(int64(r), game.RobotStandUp)
 
 	count := game.SenceSeat.GetSitDownUserCount()
 	//log.Tracef("有多少个人坐下%v", count)
@@ -846,7 +898,7 @@ func (game *Game) BrodCastSceneMsg() {
 		su.Nick = v.User.User.GetNike()
 		su.Score = v.User.User.GetScore()
 		su.SeatId = int32(v.SeatNo)
-		su.UserID = int64(v.User.User.GetId())
+		su.UserID = int64(v.User.User.GetID())
 		if bigwinner == v.SeatNo {
 			su.IsBigWinner = true
 		} else {
@@ -865,13 +917,11 @@ func (game *Game) BrodCastSceneMsg() {
 	game.Table.Broadcast(int32(longhu.SendToClientMessageType_SceneID), msg)
 }
 
-func (game *Game) GameStart(user player.PlayerInterface) bool {
+func (game *Game) GameStart() {
 	if game.Status == 0 {
 		game.Start()
 		game.Table.AddTimerRepeat(1000, 0, game.SendRoomInfo)
-	} else if game.TimerJob != nil {
 	}
-	return true
 }
 
 func (game *Game) GetRoomconfig() {
@@ -938,13 +988,13 @@ func (game *Game) SendRoomInfo() {
 	msg.GameStatus = new(longhu.StatusMessage)
 	msg.GameStatus.Status = int32(game.Status)
 	msg.GameStatus.StatusTime = int32(game.TimerJob.GetTimeDifference())
-	msg.RoomID = game.Table.GetRoomID()
+	msg.RoomID = int64(game.Table.GetRoomID())
 	msg.BaseBet = int64(game.Rule.BetList[0])
 	msg.UserLimit = game.Rule.UserBetLimit
 	//发送给框架
 	//b, _ := proto.Marshal(msg)
 	//game.Table.BroadcastAll(int32(rbwar.SendToClientMessageType_RoomSenceInfo), b)
-	game.Table.BroadcastAll(int32(longhu.SendToClientMessageType_RoomSenceInfo), msg)
+	game.Table.SendToHall(int32(longhu.SendToClientMessageType_RoomSenceInfo), msg)
 }
 
 func (game *Game) ResetTable() {
@@ -1003,7 +1053,7 @@ func (game *Game) RandSelectUserSitDownChair() {
 			//	continue
 			//}
 			//检测遍历到的用户是否在椅子上，如无此用户 让用户坐下
-			if game.SenceSeat.CheckUserOnChair(u.User.GetId()) {
+			if game.SenceSeat.CheckUserOnChair(u.User.GetID()) {
 				if game.SenceSeat.SitScene(u, ChairId) {
 					u.SceneChairId = ChairId
 				}
@@ -1017,7 +1067,7 @@ func (game *Game) RandSelectUserSitDownChair() {
 func (game *Game) SelectUserListInfoBefore6SitDownChair() {
 	//game.SenceSeat.Init()
 	for _, v := range game.SenceSeat.SenceSeat {
-		u, ok := game.AllUserList[v.User.User.GetId()]
+		u, ok := game.AllUserList[v.User.User.GetID()]
 		if ok {
 			u.SceneChairId = 0
 		}
@@ -1038,7 +1088,7 @@ func (game *Game) SelectUserListInfoBefore6SitDownChair() {
 		//	continue
 		//}
 		//检测遍历到的用户是否在椅子上，如无此用户 让用户坐下
-		if game.SenceSeat.CheckUserOnChair(u.User.GetId()) {
+		if game.SenceSeat.CheckUserOnChair(u.User.GetID()) {
 			if game.SenceSeat.SitScene(u, ChairId) {
 				u.SceneChairId = ChairId
 			}
@@ -1168,12 +1218,12 @@ func (game *Game) SetIcon() {
 	if len(user) < 1 {
 		return
 	}
-	Millionaireid = user[0].User.GetId()
+	Millionaireid = user[0].User.GetID()
 
 	u, ok := game.AllUserList[Millionaireid]
 	if ok {
 		u.Icon = Millionaire
-		//log.Traceln("大赢家", u.User.GetId())
+		//log.Traceln("大赢家", u.User.GetID())
 	}
 	if len(user) == 1 {
 		return
@@ -1182,27 +1232,27 @@ func (game *Game) SetIcon() {
 	// 大富豪
 	sort.Sort(model.RegalUser(user))
 	for i := 0; i < len(user); i++ {
-		if user[i].User.GetId() != Millionaireid {
-			bigWinnerid = user[i].User.GetId()
+		if user[i].User.GetID() != Millionaireid {
+			bigWinnerid = user[i].User.GetID()
 			break
 		}
 	}
 	u1, ok1 := game.AllUserList[bigWinnerid]
 	if ok1 {
 		u1.Icon = bigWinner
-		//log.Traceln("大富豪",u1.User.GetId())
+		//log.Traceln("大富豪",u1.User.GetID())
 	}
 	//神算子
 	sort.Sort(model.MasterUser(user))
 	for i := 0; i < len(user); i++ {
-		if user[i].User.GetId() != Millionaireid && user[i].User.GetId() != bigWinnerid {
-			mastid = user[i].User.GetId()
+		if user[i].User.GetID() != Millionaireid && user[i].User.GetID() != bigWinnerid {
+			mastid = user[i].User.GetID()
 			break
 		}
 	}
 	u2, ok2 := game.AllUserList[mastid]
 	if ok2 {
 		u2.Icon = Master
-		//log.Traceln("神算子",u2.User.GetId())
+		//log.Traceln("神算子",u2.User.GetID())
 	}
 }

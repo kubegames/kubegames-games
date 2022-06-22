@@ -1,11 +1,12 @@
 package model
 
 import (
-	bridanimal "go-game-sdk/example/game_LaBa/990601/msg"
 	"math/rand"
 	"sort"
 	"sync"
 	"time"
+
+	bridanimal "github.com/kubegames/kubegames-games/pkg/slots/990601/msg"
 )
 
 var (

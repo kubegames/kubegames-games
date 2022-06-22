@@ -3,8 +3,8 @@ package game
 //
 //import (
 //	"github.com/kubegames/kubegames-sdk/pkg/log"
-//	"common/rand"
-//	"game_poker/ddzall/poker"
+//	"github.com/kubegames/kubegames-games/internal/pkg/rand"
+//	"github.com/kubegames/kubegames-games/pkg/battle/960213/poker"
 //)
 //
 //type SolutionSequence struct {
@@ -80,10 +80,10 @@ package game
 //
 //	roomProb, err := game.Table.GetRoomProb()
 //	if err != nil {
-//		log.Errorf("游戏 %d 获取血池作弊率错误：%v", game.Table.GetId(), err.Error())
+//		log.Errorf("游戏 %d 获取血池作弊率错误：%v", game.Table.GetID(), err.Error())
 //		return
 //	}
-//	log.Tracef("游戏 %d 获取血池值 %d", game.Table.GetId(), roomProb)
+//	log.Tracef("游戏 %d 获取血池值 %d", game.Table.GetID(), roomProb)
 //
 //	// 血池值为0， 默认为1000
 //	if roomProb == 0 {
@@ -115,7 +115,7 @@ package game
 //		// 检测血池值
 //		probIndex := game.checkProb(matchProb)
 //		if probIndex == -1 {
-//			log.Errorf("游戏 %d 错误的作弊率值: %d", game.Table.GetId(), matchProb)
+//			log.Errorf("游戏 %d 错误的作弊率值: %d", game.Table.GetID(), matchProb)
 //			// 默认 1000 作弊率的 索引
 //			probIndex = 2
 //			if game.UserList[id].User.IsRobot() {

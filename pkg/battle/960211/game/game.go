@@ -502,9 +502,9 @@ func (game *Game) qiangMsg(bts []byte, user player.PlayerInterface) {
 	msg.Val = u.QiangMulti
 
 	// if user.IsRobot() {
-	// 	fmt.Printf("收到机器人[%d]--座位号[%d]---抢庄倍数：%v   时间：%v\n", user.GetId(), chairID, game.multi.QiangMulti[qiang.Index], game.job.GetIntervalTime())
+	// 	fmt.Printf("收到机器人[%d]--座位号[%d]---抢庄倍数：%v   时间：%v\n", user.GetID(), chairID, game.multi.QiangMulti[qiang.Index], game.job.GetIntervalTime())
 	// } else {
-	// 	fmt.Printf("收到真人[%d]--座位号[%d]---抢庄倍数：%v    时间：%v\n", user.GetId(), chairID, game.multi.QiangMulti[qiang.Index], game.job.GetIntervalTime())
+	// 	fmt.Printf("收到真人[%d]--座位号[%d]---抢庄倍数：%v    时间：%v\n", user.GetID(), chairID, game.multi.QiangMulti[qiang.Index], game.job.GetIntervalTime())
 	// }
 	game.table.Broadcast(int32(pai9.SendToClientMessageType_QiangZhuangResp), msg)
 	if game.qiangNum != TABLE_NUM {
@@ -589,9 +589,9 @@ func (game *Game) betMsg(bts []byte, user player.PlayerInterface) {
 	msg.Val = u.BetMulti
 
 	// if user.IsRobot() {
-	// 	fmt.Printf("收到机器人[%d]--座位号[%d]---下注倍数：%v   时间：%v\n", user.GetId(), chairID, u.BetMulti, game.job.GetIntervalTime())
+	// 	fmt.Printf("收到机器人[%d]--座位号[%d]---下注倍数：%v   时间：%v\n", user.GetID(), chairID, u.BetMulti, game.job.GetIntervalTime())
 	// } else {
-	// 	fmt.Printf("收到真人[%d]--座位号[%d]---下注倍数：%v    时间：%v\n", user.GetId(), chairID, u.BetMulti, game.job.GetIntervalTime())
+	// 	fmt.Printf("收到真人[%d]--座位号[%d]---下注倍数：%v    时间：%v\n", user.GetID(), chairID, u.BetMulti, game.job.GetIntervalTime())
 	// }
 	game.table.Broadcast(int32(pai9.SendToClientMessageType_BetMultiResp), msg)
 	if game.betNum != TABLE_NUM-1 {

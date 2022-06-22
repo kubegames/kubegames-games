@@ -3,13 +3,14 @@ package main
 import (
 	recover_handle "common/recover"
 	game_frame2 "game_frame_v2/game/logic"
-	"game_poker/ddzall/config"
-	"game_poker/ddzall/game"
 	"math/rand"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
+
+	"github.com/kubegames/kubegames-games/pkg/battle/960213/config"
+	"github.com/kubegames/kubegames-games/pkg/battle/960213/game"
 
 	"github.com/kubegames/kubegames-sdk/pkg/log"
 )

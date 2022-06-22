@@ -1,9 +1,7 @@
 package frameinter
 
 import (
-	"game_poker/longhu/game"
-
-	"github.com/kubegames/kubegames-sdk/pkg/player"
+	"github.com/kubegames/kubegames-games/pkg/hundreds/960302/game"
 	"github.com/kubegames/kubegames-sdk/pkg/table"
 )
 
@@ -14,8 +12,9 @@ type LongHuRoom struct {
 func (lhRoom *LongHuRoom) InitTable(table table.TableInterface) {
 	g := new(game.Game)
 	g.Init(table)
-	table.BindGame(g)
-}
-
-func (lhRoom *LongHuRoom) UserExit(user player.PlayerInterface) {
+	//桌子启动
+	table.Start(g, func() {
+		//百人游戏，开启桌子就启动游戏
+		g.GameStart()
+	}, nil)
 }

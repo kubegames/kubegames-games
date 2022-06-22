@@ -1,12 +1,10 @@
 package game
 
 import (
-	"common/rand"
-	"game_poker/ddzall/data"
-	"game_poker/ddzall/msg"
-	"game_poker/ddzall/poker"
-	"time"
-
+	"github.com/kubegames/kubegames-games/internal/pkg/rand"
+	"github.com/kubegames/kubegames-games/pkg/battle/960213/data"
+	"github.com/kubegames/kubegames-games/pkg/battle/960213/msg"
+	"github.com/kubegames/kubegames-games/pkg/battle/960213/poker"
 	"github.com/kubegames/kubegames-sdk/pkg/log"
 )
 
@@ -45,7 +43,7 @@ func (game *DouDizhu) GetEmptyChair() (chairID int) {
 
 	// 没有空座位
 	if len(emptySeats) == 0 {
-		log.Warnf("游戏 %d 申请空座位失败，已经满员, 游戏座位: %v", game.Table.GetId(), game.Chairs)
+		log.Warnf("游戏 %d 申请空座位失败，已经满员, 游戏座位: %v", game.Table.GetID(), game.Chairs)
 		return -1
 	}
 
@@ -113,7 +111,7 @@ func (game *DouDizhu) FindNextPlayer() {
 	game.SendCurrentPlayer()
 
 	// 定时检查
-	game.TimerJob, _ = game.Table.AddTimer(time.Duration(game.CurrentPlayer.ActionTime), game.CheckAction)
+	game.TimerJob, _ = game.Table.AddTimer(int64(game.CurrentPlayer.ActionTime), game.CheckAction)
 }
 
 // GetUserActionPermission 获取用户的权限
@@ -216,14 +214,14 @@ func (game *DouDizhu) RobotSitCheck() {
 
 	// 游戏状态检测
 	if game.Status != int32(msg.GameStatus_GameInitStatus) {
-		log.Errorf("游戏 %d 在状态为 %d 请求机器人", game.Table.GetId(), game.Status)
+		log.Errorf("游戏 %d 在状态为 %d 请求机器人", game.Table.GetID(), game.Status)
 		return
 	}
 
 	if 3-count > 0 {
-		err := game.Table.GetRobot(int32(3 - count))
+		err := game.Table.GetRobot(uint32(3-count), game.Table.GetConfig().RobotMinBalance, game.Table.GetConfig().RobotMaxBalance)
 		if err != nil {
-			log.Errorf("游戏 %d 请求机器人失败：%v", game.Table.GetId(), err)
+			log.Errorf("游戏 %d 请求机器人失败：%v", game.Table.GetID(), err)
 		}
 	}
 }
@@ -249,11 +247,7 @@ func (game *DouDizhu) SettleDivision(userID int64) int64 {
 	// 结果
 	result := user.CurAmount - user.InitAmount
 
-	profit, err := game.UserList[userID].User.SetScore(game.Table.GetGameNum(), result, game.RoomCfg.TaxRate)
-	if err != nil {
-		log.Errorf("用户 %d 上下分失败：%v", user.ID, err.Error())
-		return 0
-	}
+	profit := game.UserList[userID].User.SetScore(game.Table.GetGameNum(), result, game.RoomCfg.TaxRate)
 
 	// 打码量
 	var chip int64
@@ -283,7 +277,7 @@ func (game *DouDizhu) SetChip(userID int64, chip int64) {
 
 // SetExitPermit 设置用户退出权限
 func (game *DouDizhu) SetExitPermit(permit bool) {
-	for id, _ := range game.UserList {
+	for id := range game.UserList {
 		game.UserList[id].ExitPermit = permit
 	}
 }

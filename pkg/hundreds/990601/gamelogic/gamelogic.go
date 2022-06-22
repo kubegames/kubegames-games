@@ -2,15 +2,15 @@ package gamelogic
 
 import (
 	"fmt"
-	"go-game-sdk/example/game_LaBa/990601/config"
-	"go-game-sdk/example/game_LaBa/990601/model"
-	bridanimal "go-game-sdk/example/game_LaBa/990601/msg"
-	"go-game-sdk/inter"
 	"go-game-sdk/lib/clock"
 	"math/rand"
 	"sort"
 	"sync"
 	"time"
+
+	"github.com/kubegames/kubegames-games/pkg/slots/990601/config"
+	"github.com/kubegames/kubegames-games/pkg/slots/990601/model"
+	bridanimal "github.com/kubegames/kubegames-games/pkg/slots/990601/msg"
 
 	"github.com/kubegames/kubegames-games/internal/pkg/score"
 
@@ -106,7 +106,7 @@ func (g *Game) OnUserBet(buffer []byte, user player.PlayerInterface) {
 	}
 }
 
-func (g *Game) BindRobot(ai inter.AIUserInter) player.RobotHandler {
+func (g *Game) BindRobot(ai player.RobotInterface) player.RobotHandler {
 	rb := NewRobot(g)
 	rb.BindUser(ai)
 	return rb

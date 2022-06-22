@@ -1,18 +1,13 @@
 package game
 
 import (
-	"common/rand"
-	"game_frame_v2/define"
-	"game_frame_v2/game/clock"
-	"game_poker/ddzall/config"
-	"game_poker/ddzall/data"
-	"game_poker/ddzall/msg"
-	"game_poker/ddzall/poker"
-	"time"
-
-	"github.com/kubegames/kubegames-sdk/pkg/log"
-
 	"github.com/bitly/go-simplejson"
+	"github.com/kubegames/kubegames-games/internal/pkg/rand"
+	"github.com/kubegames/kubegames-games/pkg/battle/960213/config"
+	"github.com/kubegames/kubegames-games/pkg/battle/960213/data"
+	"github.com/kubegames/kubegames-games/pkg/battle/960213/msg"
+	"github.com/kubegames/kubegames-games/pkg/battle/960213/poker"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
 	"github.com/kubegames/kubegames-sdk/pkg/player"
 	"github.com/kubegames/kubegames-sdk/pkg/table"
 )
@@ -28,8 +23,8 @@ type DouDizhu struct {
 	bottomCards           []byte               // 底牌
 	Poker                 *poker.GamePoker     // 牌堆
 	Dizhu                 *data.User           // 地主
-	TimerJob              *clock.Job           // job
-	RobotTimer            *clock.Job           // 轮训机器人检测
+	TimerJob              *table.Job           // job
+	RobotTimer            *table.Job           // 轮训机器人检测
 	Status                int32                // 游戏的状态
 	TimeCfg               *config.TimeConfig   // 时间配置
 	GameCfg               *config.GameConfig   // 游戏配置
@@ -111,23 +106,23 @@ func (game *DouDizhu) InitConfig() {
 }
 
 // OnActionUserSitDown 用户坐下
-func (game *DouDizhu) OnActionUserSitDown(userInter player.PlayerInterface, orderIndex int, config string) int {
-	userID := userInter.GetId()
-	log.Tracef("玩家 %d 进入房间 %d", userID, game.Table.GetId())
+func (game *DouDizhu) OnActionUserSitDown(userInter player.PlayerInterface, orderIndex int, config string) table.MatchKind {
+	userID := userInter.GetID()
+	log.Tracef("玩家 %d 进入房间 %d", userID, game.Table.GetID())
 
 	// 用户不再玩家列表中，
 	if _, ok := game.UserList[userID]; !ok {
 
 		// 游戏中不能进入
 		if game.Status != int32(msg.GameStatus_GameInitStatus) {
-			return define.SIT_DOWN_ERROR_NORMAL
+			return table.SitDownErrorNomal
 		}
 
 		// 获取一个空座位
 		chairID := game.GetEmptyChair()
 		if chairID < 0 {
-			log.Warnf("游戏 %d 玩家 %d 获取座位失败", game.Table.GetId(), userID)
-			return define.SIT_DOWN_ERROR_OVER
+			log.Warnf("游戏 %d 玩家 %d 获取座位失败", game.Table.GetID(), userID)
+			return table.SitDownErrorOver
 		}
 
 		user := &data.User{
@@ -150,33 +145,41 @@ func (game *DouDizhu) OnActionUserSitDown(userInter player.PlayerInterface, orde
 		game.Chairs[chairID] = user
 
 		// 加入玩家是机器人加载机器人配置
-		if userInter.IsRobot() {
-			robot := new(Robot)
-			robotUser := userInter.BindRobot(robot)
-			if game.RobotCfg == nil {
-				log.Errorf("游戏 %v 第一个玩家为机器人", game)
-			} else {
-				robot.Init(robotUser, game, *game.RobotCfg)
+		// if userInter.IsRobot() {
+		// 	robot := new(Robot)
+		// 	robotUser := userInter.BindRobot(robot)
+		// 	if game.RobotCfg == nil {
+		// 		log.Errorf("游戏 %v 第一个玩家为机器人", game)
+		// 	} else {
+		// 		robot.Init(robotUser, game, *game.RobotCfg)
 
-			}
-		}
-
+		// 	}
+		// }
 	} else {
-
 		// 断线用户重新登陆
 		game.UserList[userID].ReConnect = true
 	}
+	return table.SitDownOk
+}
 
-	return define.SIT_DOWN_OK
+//BindRobot 绑定机器人
+func (game *DouDizhu) BindRobot(ai player.RobotInterface) player.RobotHandler {
+	robot := new(Robot)
+	if game.RobotCfg == nil {
+		log.Errorf("游戏 %v 第一个玩家为机器人", game)
+	} else {
+		robot.Init(ai, game, *game.RobotCfg)
+	}
+	return robot
 }
 
 // SendScene 发送场景消息
-func (game *DouDizhu) SendScene(userInter player.PlayerInterface) bool {
-	userID := userInter.GetId()
+func (game *DouDizhu) SendScene(userInter player.PlayerInterface) {
+	userID := userInter.GetID()
 	user, ok := game.UserList[userID]
 	if !ok {
 		log.Errorf("获取玩家异常！！！！")
-		return false
+		return
 	}
 
 	// 第一个玩家进入加载配置文件
@@ -197,13 +200,13 @@ func (game *DouDizhu) SendScene(userInter player.PlayerInterface) bool {
 	}
 
 	game.UserList[userID].ReConnect = false
-	return true
+	return
 }
 
 // UserReady 用户准备
 func (game *DouDizhu) UserReady(userInter player.PlayerInterface) bool {
-	userID := userInter.GetId()
-	log.Tracef("玩家 %d 在房间 %d 准备，游戏状态为 %d", userID, game.Table.GetId(), game.Status)
+	userID := userInter.GetID()
+	log.Tracef("玩家 %d 在房间 %d 准备，游戏状态为 %d", userID, game.Table.GetID(), game.Status)
 
 	//game.UserList[userID].Status = int32(msg.UserStatus_UserNormal)
 	// 第一个玩家进入，预加载机器人
@@ -223,7 +226,7 @@ func (game *DouDizhu) UserReady(userInter player.PlayerInterface) bool {
 			}
 			lastRate = rate
 		}
-		game.RobotTimer, _ = game.Table.AddTimer(time.Duration(fullTableTime*1000), game.RobotSitCheck)
+		game.RobotTimer, _ = game.Table.AddTimer(int64(fullTableTime*1000), game.RobotSitCheck)
 	}
 
 	return true
@@ -242,18 +245,15 @@ func (game *DouDizhu) GameStart() {
 
 		if allReady {
 			game.Start()
-			return true
+			return
 		}
-
 	}
-
-	return false
 }
 
-// UserExit 用户离线
-func (game *DouDizhu) UserExit(userInter player.PlayerInterface) bool {
+// UserOffline 用户离线
+func (game *DouDizhu) UserOffline(userInter player.PlayerInterface) bool {
 
-	userID := userInter.GetId()
+	userID := userInter.GetID()
 
 	user, ok := game.UserList[userID]
 	if !ok {
@@ -287,13 +287,13 @@ func (game *DouDizhu) UserExit(userInter player.PlayerInterface) bool {
 		case int32(msg.GameStatus_GameInitStatus):
 			log.Tracef("重置了定时器")
 			if game.TimerJob != nil {
-				game.TimerJob.Cancel()
+				game.Table.DeleteJob(game.TimerJob)
 				game.TimerJob = nil
 
 			}
 
 			if game.RobotTimer != nil {
-				game.RobotTimer.Cancel()
+				game.Table.DeleteJob(game.RobotTimer)
 				game.RobotTimer = nil
 			}
 			break
@@ -303,10 +303,10 @@ func (game *DouDizhu) UserExit(userInter player.PlayerInterface) bool {
 	return exitPermit
 }
 
-// LeaveGame 用户正常申请离开
-func (game *DouDizhu) LeaveGame(userInter player.PlayerInterface) bool {
+// UserLeaveGame 用户正常申请离开
+func (game *DouDizhu) UserLeaveGame(userInter player.PlayerInterface) bool {
 
-	userID := userInter.GetId()
+	userID := userInter.GetID()
 
 	user, ok := game.UserList[userID]
 	if !ok {
@@ -340,13 +340,13 @@ func (game *DouDizhu) LeaveGame(userInter player.PlayerInterface) bool {
 		case int32(msg.GameStatus_GameInitStatus):
 			log.Tracef("重置了定时器")
 			if game.TimerJob != nil {
-				game.TimerJob.Cancel()
+				game.Table.DeleteJob(game.TimerJob)
 				game.TimerJob = nil
 
 			}
 
 			if game.RobotTimer != nil {
-				game.RobotTimer.Cancel()
+				game.Table.DeleteJob(game.RobotTimer)
 				game.RobotTimer = nil
 			}
 			break
@@ -358,8 +358,6 @@ func (game *DouDizhu) LeaveGame(userInter player.PlayerInterface) bool {
 
 // OnGameMessage 接受用户发送信息
 func (game *DouDizhu) OnGameMessage(subCmd int32, buffer []byte, userInter player.PlayerInterface) {
-	log.Tracef(" 收到客户端消息 ：%d", subCmd)
-
 	switch subCmd {
 	// 抢地主请求
 	case int32(msg.ReceiveMessageType_C2SRob):

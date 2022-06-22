@@ -2,7 +2,6 @@ package game
 
 import (
 	"encoding/json"
-	"go-game-sdk/define"
 	"go-game-sdk/example/game_poker/saima/config"
 	"go-game-sdk/example/game_poker/saima/model"
 	"go-game-sdk/example/game_poker/saima/msg"
@@ -14,6 +13,7 @@ import (
 	"time"
 
 	"github.com/kubegames/kubegames-sdk/pkg/log"
+	"github.com/kubegames/kubegames-sdk/pkg/table"
 
 	"github.com/golang/protobuf/proto"
 )
@@ -80,10 +80,10 @@ func (game *Game) UserReady(user UserInetr) bool {
 func (game *Game) OnActionUserSitDown(user UserInetr, chairId int, config string) int {
 	_, ok := game.AllUserList[user.GetID()]
 	if !ok && user.GetScore() < game.Table.GetEntranceRestrictions() {
-		return define.SIT_DOWN_ERROR_OVER
+		return table.SitDownErrorOver
 	}
 	if !ok && len(game.AllUserList) >= int(global.GConfig.MaxPeople) {
-		return define.SIT_DOWN_ERROR_NORMAL
+		return table.SitDownErrorNomal
 	}
 	if !ok {
 		u := &model.User{
@@ -100,7 +100,7 @@ func (game *Game) OnActionUserSitDown(user UserInetr, chairId int, config string
 		game.AllUserList[user.GetID()] = u
 	}
 
-	return define.SIT_DOWN_OK
+	return table.SitDownOk
 }
 
 func (game *Game) UserExit(user UserInetr) bool {
@@ -507,7 +507,7 @@ func (game *Game) getTimeList() []*msg.TimeList {
 	sum := make([]int, 8)
 	tem := make(map[int]*msg.TimeList, 8)
 	list := config.GetTimeList()
-	for k, _ := range list {
+	for k := range list {
 		times, s := game.getOneTimeList(list[k].([]interface{}))
 		tem[s] = times
 		sum[k] = s
@@ -526,7 +526,7 @@ func (game *Game) getTimeList() []*msg.TimeList {
 func (game *Game) getOneTimeList(list []interface{}) (*msg.TimeList, int) {
 	times := make([]int32, len(list))
 	sum := 0
-	for k, _ := range list {
+	for k := range list {
 		value, _ := strconv.Atoi(list[k].(json.Number).String())
 		times[k] = int32(value)
 		sum += value

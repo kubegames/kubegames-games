@@ -46,7 +46,7 @@ func (game *Game) OnActionUserSitDown(userInter player.PlayerInterface, chairId 
 	}
 	if userInter.GetScore() < tableConfig.Bottom_Pouring {
 		log.Traceln("玩家金币不够底注：", userInter.GetScore(), "  ", tableConfig.Bottom_Pouring)
-		//return define.SIT_DOWN_ERROR_NORMAL
+		//return table.SitDownErrorNomal
 		return table.SitDownErrorOver
 	}
 	//log.Traceln("user id : ", userInter.GetID(), " 坐下的牌桌：：： ", game.Table.GetID(), "房间人数：", len(game.userListMap))

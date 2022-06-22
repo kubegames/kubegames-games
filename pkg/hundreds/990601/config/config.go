@@ -3,11 +3,12 @@ package config
 import (
 	"encoding/json"
 	"fmt"
-	"go-game-sdk/example/game_LaBa/990601/model"
-	bridanimal "go-game-sdk/example/game_LaBa/990601/msg"
 	"io/ioutil"
 	"log"
 	"math/rand"
+
+	"github.com/kubegames/kubegames-games/pkg/slots/990601/model"
+	bridanimal "github.com/kubegames/kubegames-games/pkg/slots/990601/msg"
 
 	"github.com/tidwall/gjson"
 )

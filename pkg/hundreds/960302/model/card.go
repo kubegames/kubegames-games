@@ -2,7 +2,8 @@ package model
 
 import (
 	"fmt"
-	"math/rand"
+
+	"github.com/kubegames/kubegames-games/internal/pkg/rand"
 )
 
 // 黑红梅方

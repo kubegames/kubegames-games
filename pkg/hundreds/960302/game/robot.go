@@ -1,24 +1,18 @@
 package game
 
 import (
-	//"github.com/kubegames/kubegames-sdk/pkg/log"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"strconv"
-	"time"
-
-	"game_frame_v2/game/clock"
-
-	"github.com/golang/protobuf/proto"
-	"github.com/kubegames/kubegames-sdk/pkg/log"
-	"github.com/kubegames/kubegames-sdk/pkg/table"
-
-	"game_frame_v2/game/inter"
-
-	"math/rand"
 
 	"github.com/bitly/go-simplejson"
+	"github.com/golang/protobuf/proto"
+	"github.com/kubegames/kubegames-games/internal/pkg/rand"
+	longhu "github.com/kubegames/kubegames-games/pkg/hundreds/960302/msg"
+	"github.com/kubegames/kubegames-sdk/pkg/log"
+	"github.com/kubegames/kubegames-sdk/pkg/player"
+	"github.com/kubegames/kubegames-sdk/pkg/table"
 	"github.com/sipt/GoJsoner"
 )
 
@@ -54,11 +48,11 @@ type RobotConfig struct {
 }
 
 type Robot struct {
-	User         inter.AIUserInter
+	User         player.RobotInterface
 	GameLogic    *Game
-	BetCount     int        //下注限制
-	TimerJob     *clock.Job //job
-	LastBetPlace int        //机器人上次下注的区域
+	BetCount     int         //下注限制
+	TimerJob     *player.Job //job
+	LastBetPlace int         //机器人上次下注的区域
 }
 
 var RConfig RobotConfig
@@ -243,7 +237,7 @@ func (r *Robot) OnGameMessage(subCmd int32, buffer []byte) {
 	}
 }
 
-func (r *Robot) Init(User inter.AIUserInter, g table.TableHandler) {
+func (r *Robot) Init(User player.RobotInterface, g table.TableHandler) {
 	r.User = User
 	r.GameLogic = g.(*Game)
 }
@@ -256,7 +250,7 @@ func (r *Robot) OnStatusMsg(b []byte) {
 		r.AddBetTimer()
 	} else if msg.Status == int32(longhu.GameStatus_EndBetMovie) {
 		if r.TimerJob != nil {
-			r.TimerJob.Cancel()
+			r.User.DeleteJob(r.TimerJob)
 			r.TimerJob = nil
 		}
 	}
@@ -365,7 +359,7 @@ func (r *Robot) AddBetTimer() {
 	//达到限制次数了以后就不下注了
 	if r.BetCount >= RConfig.Limit {
 		if r.TimerJob != nil {
-			r.TimerJob.Cancel()
+			r.User.DeleteJob(r.TimerJob)
 			r.TimerJob = nil
 		}
 		return
@@ -377,5 +371,5 @@ func (r *Robot) AddBetTimer() {
 	//}
 	t := rand.Intn((RConfig.BetTime[1] - RConfig.BetTime[0])) + RConfig.BetTime[0]
 	//	log.Tracef("AddBetTimer %v %v", t, r.User)
-	r.TimerJob, _ = r.User.AddTimer(time.Duration(t), r.RobotBet)
+	r.TimerJob, _ = r.User.AddTimer(int64(t), r.RobotBet)
 }

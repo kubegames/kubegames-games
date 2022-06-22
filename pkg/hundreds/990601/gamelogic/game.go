@@ -1,8 +1,7 @@
 package gamelogic
 
 import (
-	bridanimal "go-game-sdk/example/game_LaBa/990601/msg"
-	"go-game-sdk/inter"
+	bridanimal "github.com/kubegames/kubegames-games/pkg/slots/990601/msg"
 
 	"github.com/kubegames/kubegames-sdk/pkg/log"
 	"github.com/kubegames/kubegames-sdk/pkg/player"
@@ -28,7 +27,7 @@ func (lbr *LaBaRoom) InitTable(table table.TableInterface) {
 func (lbr *LaBaRoom) UserExit(user player.PlayerInterface) {
 }
 
-func (lbr *LaBaRoom) AIUserLogin(user inter.AIUserInter, game table.TableHandler) {
+func (lbr *LaBaRoom) AIUserLogin(user player.RobotInterface, game table.TableHandler) {
 }
 
 func (g *Game) InitTable(table table.TableInterface) {

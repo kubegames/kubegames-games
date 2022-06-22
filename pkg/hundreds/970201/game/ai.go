@@ -1,11 +1,12 @@
 package game
 
 import (
-	"common/rand"
 	"game_buyu/rob_red/config"
 	"game_buyu/rob_red/data"
 	"game_buyu/rob_red/global"
 	"game_buyu/rob_red/msg"
+
+	"github.com/kubegames/kubegames-games/internal/pkg/rand"
 
 	"github.com/golang/protobuf/proto"
 	"github.com/kubegames/kubegames-sdk/pkg/log"
@@ -41,7 +42,7 @@ func (game *Game) AiSendRedTimer() {
 			//log.Traceln("ai == nil ",game.Table.GetLevel())
 			return
 		}
-		//log.Traceln("机器人发红包..............房间等级：",game.Table.GetLevel(),"机器人id：",ai.User.GetId())
+		//log.Traceln("机器人发红包..............房间等级：",game.Table.GetLevel(),"机器人id：",ai.User.GetID())
 		c2sMsg := &msg.C2SSendRed{MineNum: int64(rand.RandInt(0, 9)), Amount: amount, Count: int32(count), UserId: ai.Id}
 		c2sMsgB, _ := proto.Marshal(c2sMsg)
 		game.ProcSendRed(c2sMsgB, ai)
@@ -56,7 +57,7 @@ func (game *Game) aiGetSendRedCountAmount(sendRate, count1, c2, amount1, a2, a3 
 		return
 	}
 	if rand.RateToExecWithIn(sendRate, global.WAN_RATE_TOTAL) {
-		//log.Traceln("game.sendAmount 111 ",game.sendAmount," game id : ",game.Table.GetId())
+		//log.Traceln("game.sendAmount 111 ",game.sendAmount," game id : ",game.Table.GetID())
 		isSend = true
 		if rand.RateToExecWithIn(count1, global.WAN_RATE_TOTAL) {
 			count = config.AiSendConfig.SendCount1
